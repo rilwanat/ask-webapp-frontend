@@ -39,7 +39,7 @@ function AskFooter({ gotoPage }) {
         <div className="flex flex-col bg-theme">
             <div className="flex flex-col h-auto px-8 sm:px-16 md:px-32 py-4 pb-8">
                 <div className="flex flex-col items-start md:flex-row md:items-center md:justify-between ">
-                    <div className="flex flex-col md:items-start md:w-1/3 my-4 md:h-40">
+                    <div className="flex flex-col md:items-start md:w-2/4 my-4 md:h-40">
                         <div className="flex items-center mb-2">
                             <img
                                 className="block h-16 w-auto max-w-none"
@@ -52,11 +52,11 @@ function AskFooter({ gotoPage }) {
                             />
                         </div>
                         <div className='flex flex-col'>  
-                            <p className='text-white' style={{  }}>Ashabi Shobande Kokumo Foundation</p>
-                            <div className='flex mt-1'><PhoneIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>+234 912 2090 051</p></div>
-                            <div className='flex mt-1'><PhoneIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>+44 786 4869 571</p></div>
-                            <div className='flex mt-1'><EmailIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>info@askfoundations.org</p></div>
-                            <div className='flex mt-1'><PlaceIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>69 Avenue Road, Bexleyheath Kent DA7 4EQ, London.</p></div>
+                            <p className='text-white mb-2' style={{  }}>Ashabi Shobande Kokumo Foundation</p>
+                            <div className='flex my-1'><PhoneIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>+234 912 2090 051, +44 786 4869 571</p></div>
+                            {/* <div className='flex my-1'><PhoneIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>+44 786 4869 571</p></div> */}
+                            <div className='flex my-1'><EmailIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>info@askfoundations.org</p></div>
+                            <div className='flex my-1'><PlaceIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>69 Avenue Road, Bexleyheath Kent DA7 4EQ, London.</p></div>
                         </div>
  
                         <div className="flex mt-4">
@@ -109,8 +109,8 @@ function AskFooter({ gotoPage }) {
                         <p className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>Contact Us</p>
                     </div> */}
 
-                    <div className="flex flex-col md:w-1/3 my-4 md:h-40">
-                        {/* <div className="flex flex-col items-start mb-4">
+                    <div className="flex flex-col md:w-2/4 my-4 md:h-40">
+                        <div className="flex flex-col items-start mb-4">
                             <p
                                 className="text-white mb-2"
                                 style={{ color: '', fontSize: '20px' }}
@@ -124,13 +124,13 @@ function AskFooter({ gotoPage }) {
                                 Connect with people, share similar experiences and history to
                                 better your health experiences and well-being.
                             </p>
-                        </div> */}
-                        {/* <div className="flex flex-col sm:flex-row relative">
+                        </div>
+                        <div className="flex flex-col sm:flex-row relative">
                             <input
                                 type="text"
                                 placeholder="Your Email"
                                 className="pl-4 border border-gray-300 rounded-lg py-1 px-2 text-center"
-                                onChange={(e) => setEmail(e.target.value)}
+                                // onChange={(e) => setEmail(e.target.value)}
                                 value={email}
                             />
                             <div
@@ -140,8 +140,8 @@ function AskFooter({ gotoPage }) {
                             >
                                 Subscribe
                             </div>
-                        </div> */}
-                        <div className="flex py-2">
+                        </div>
+                        <div className="flex py-2 my-2">
                             <img
                                 onClick={() => {
                                     alert('googleplay');
