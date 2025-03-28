@@ -187,7 +187,7 @@ const isValidEmail = (email) => {
 
 
 
-        <div className="px-8 md:px-4 lg:px-16 xl:px-24 2xl:px-80 py-2"
+        <div className="px-0 md:px-4 lg:px-16 xl:px-24 2xl:px-80 py-2"
             
             
             // style={{
@@ -379,7 +379,7 @@ style={{  }}
 <div className='flex flex-col sm:flex-row relative  '>
 <textarea
 type='text'
-placeholder='Messgae*'
+placeholder='Message*'
 className='pl-4 border border-gray-300 rounded-sm py-2 px-2 w-full my-2 bg-white'
 value={message}
 onChange={(e) => setMessage(e.target.value)}
