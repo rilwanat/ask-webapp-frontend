@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import askLogo from '../../assets/images/ask-logo.png';
 
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -22,7 +25,7 @@ import { ClipLoader } from 'react-spinners'
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
+import DonateAndAsk from '../widgets/DonateAndAsk';
 
 
 // Styled component for the sliding account
@@ -482,6 +485,9 @@ export default function AskHeaderHead({}) {
                     </>
                 </div> */}
 
+
+
+<DonateAndAsk />
                 
 
 {!isAuthenticated() ?

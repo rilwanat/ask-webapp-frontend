@@ -5,6 +5,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import AskFooter from './AskFooter';
 
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 
 import styles from './AdminMobileNavbar.module.css';
 import { NavLink } from 'react-router-dom';
@@ -43,7 +45,7 @@ import { ClipLoader } from 'react-spinners'
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
+import DonateAndAsk from '../widgets/DonateAndAsk';
 
 const SlideInMenu = styled(motion.div)`
   position: fixed;
@@ -381,7 +383,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
 
 
   return (
-    <div className="bg-white shadow-lg px-4" style={{ height: '80px' }}>
+    <div className="flex flex-col bg-white shadow-lg px-4" style={{ height: '80px' }}>
       <div className="flex justify-between">
         <div className="flex items-center">
           <img
@@ -395,6 +397,10 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
         </div>
 
         <div className="flex items-center " style={{ height: '80px' }}>
+
+        <DonateAndAsk />
+
+
           <div className="md:flex justify-end" style={{}}>
             <div className="text-right">
               {/* <p className='text-sm '>{storedAdminDetails && storedAdminDetails.Email}</p> */}
@@ -456,6 +462,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
           </div> */}
         </div>
       </div>
+
 
   
 
