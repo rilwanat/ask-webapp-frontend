@@ -269,14 +269,14 @@ const isValidEmail = (email) => {
 <LocalPhoneIcon className="mb-2" style={{ width: '40px', height: '40px', color: '#161c34' }}/>
 
 <div className="px-8 text-center"  style={{fontSize: '16px',   }}>
-+234 912 2090 051, <br/>+44 786 4869 571
+<a onClick={() => {window.location.href = "tel:+2349122090051";}}>+234 912 2090 051</a>, <br/><a onClick={() => {window.location.href = "tel:+447864869571";}}>+44 786 4869 571</a>
 </div>
 </div>
 <div className='flex flex-col w-full md:w-1/3 justify-center items-center rounded-lg shadow-md m-2 p-4 bg-white min-h-[200px]   '>
 
 <div className="mb-4" style={{ fontWeight: '600', fontSize: '16px' }}>Email Address</div>
 <AttachEmailIcon className="mb-2" style={{ width: '40px', height: '40px', color: '#161c34' }}/>
-<div className="px-8 text-center"  style={{fontSize: '16px',   }}>
+<div className="px-8 text-center"  style={{fontSize: '16px',   }} onClick={() => {window.location.href = "mailto:info@askfoundations.org";}}>
 info@askfoundations.org
 </div>
 </div>

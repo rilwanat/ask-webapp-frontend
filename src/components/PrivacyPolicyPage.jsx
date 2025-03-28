@@ -436,7 +436,7 @@ className="text-lg text-gray-600 mb-6"
         </p>
 
         <ul className='ml-8 list-disc'>
-            <li className='mb-2'><strong>By email:</strong> info@askfoundations.org</li>
+            <li className='mb-2' onClick={() => {window.location.href = "mailto:info@askfoundations.org";}}><strong>By email:</strong> info@askfoundations.org</li>
             <li className='mb-2'><strong>By visiting this page on our website:</strong> askfoundations.org</li>
         </ul>
     </div>

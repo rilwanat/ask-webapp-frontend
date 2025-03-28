@@ -284,7 +284,7 @@ className="text-lg text-gray-600 mb-6"
             Dispute Resolution
         </p>
         <p className='mb-2' >
-            In case of disputes, You agree to attempt informal resolution by contacting Us at <strong>info@askfoundations.org</strong> before pursuing legal remedies.
+            In case of disputes, You agree to attempt informal resolution by contacting Us at <strong><a onClick={() => {window.location.href = "mailto:info@askfoundations.org";}}>info@askfoundations.org</a></strong> before pursuing legal remedies.
         </p>
 
         <hr className='my-4'/>
@@ -324,7 +324,7 @@ className="text-lg text-gray-600 mb-6"
             For inquiries about these Terms:
         </p>
         <ul className='ml-8 list-disc'>
-            <li className='mb-2' ><strong>Email:</strong> info@askfoundations.org</li>
+            <li className='mb-2' onClick={() => {window.location.href = "mailto:info@askfoundations.org";}}><strong>Email:</strong> info@askfoundations.org</li>
             <li className='mb-2' ><strong>Visit:</strong> www.askfoundations.org</li>
         </ul>
 

@@ -53,9 +53,8 @@ function AskFooter({ gotoPage }) {
                         </div>
                         <div className='flex flex-col'>  
                             <p className='text-white mb-2' style={{  }}>Ashabi Shobande Kokumo Foundation</p>
-                            <div className='flex my-1'><PhoneIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>+234 912 2090 051, +44 786 4869 571</p></div>
-                            {/* <div className='flex my-1'><PhoneIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>+44 786 4869 571</p></div> */}
-                            <div className='flex my-1'><EmailIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>info@askfoundations.org</p></div>
+                            <div className='flex my-1' ><PhoneIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}><a onClick={() => {window.location.href = "tel:+2349122090051";}}>+234 912 2090 051</a>, <a onClick={() => {window.location.href = "tel:+447864869571";}}>+44 786 4869 571</a></p></div>
+                            <div className='flex my-1' onClick={() => {window.location.href = "mailto:info@askfoundations.org";}}><EmailIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>info@askfoundations.org</p></div>
                             <div className='flex my-1'><PlaceIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>69 Avenue Road, Bexleyheath Kent DA7 4EQ, London.</p></div>
                         </div>
  
@@ -129,7 +128,7 @@ function AskFooter({ gotoPage }) {
                             <input
                                 type="text"
                                 placeholder="Your Email"
-                                className="pl-4 border border-gray-300 rounded-lg py-1 px-2 text-center"
+                                className="pl-4 border border-gray-300 rounded-lg py-1 px-2 text-center text-white"
                                 // onChange={(e) => setEmail(e.target.value)}
                                 value={email}
                             />
