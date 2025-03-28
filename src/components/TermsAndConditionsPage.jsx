@@ -40,7 +40,7 @@ export default function TermsAndConditionsPage() {
 
     return (
         <div className="">
-            <AskHeader gotoPage={gotoPage} showMarqees={true} />
+            <AskHeader gotoPage={gotoPage} showMarqees={false} />
 
             
             {/* <Hero/> */}

@@ -11,31 +11,20 @@ import { motion } from 'framer-motion';
 
 import Hero from './widgets/Hero';
 import HeaderParallax from './widgets/HeaderParallax';
-import WidgetAboutForAbout from './widgets/WidgetAboutForAbout';
+import Contact from './widgets/Contact';
 // import Services from './widgets/Services';
 // import LatestNews from './widgets/LatestNews';
 
 
 
-export default function AboutUsPage() {
+export default function SingleSponsorPage() {
     const navigate = useNavigate();
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
     useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []); 
     const gotoPage = (pageName) => {
         navigate("/" + pageName)
     }
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 500);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
 
 
     return (
@@ -46,11 +35,11 @@ export default function AboutUsPage() {
             {/* <Hero/> */}
             <HeaderParallax 
                 // imageUrl={askLogo}
-                title={"About Us"}
+                title={""}
                 subtitle={""}
             />
 
-            <WidgetAboutForAbout/>
+            {/* <Contact/> */}
 
 
             {/* <LatestNews/> */}

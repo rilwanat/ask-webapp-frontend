@@ -96,28 +96,11 @@ const WidgetHelpRequests = () => {
               onChange={(index) => setCurrentSlide(index)}
               className="rounded-lg overflow-hidden  w-full"
             >
-              {/* {carouselItems.map((item, index) => (
-                <div key={item.id} className="relative h-96">
-                  <img 
-                    className="rounded-lg w-full h-full object-cover"
-                    src={item.image}
-                    alt={item.title}
-                    style={{
-                      transform: zoomedItemId === index ? 'scale(1.05)' : 'scale(1)',
-                      transition: 'transform 0.8s ease',
-                    }}
-                    onMouseEnter={() => setZoomedItemId(index)}
-                    onMouseLeave={() => setZoomedItemId(null)}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                    <h3 className="text-2xl font-bold text-white">{item.title}</h3>
-                    <p className="text-white mt-2">{item.description}</p>
-                  </div>
-                </div>
-              ))} */}
-              
+            
               {carouselItems.map((item, index) => (
-                <div key={item.id} className="flex flex-col h-full">
+                <div key={item.id} className="flex flex-col h-full"
+                onClick={() => {navigateTo('/single-request');}}
+                >
                   <p className="text-theme font-bold my-2">{item.description}</p>
                 <div className="flex-1 overflow-hidden ">
                   <img 

@@ -10,6 +10,10 @@ import ContactUsPage from './components/ContactUsPage.jsx';
 import TermsAndConditionsPage from './components/TermsAndConditionsPage.jsx';
 import PrivacyPolicyPage from './components/PrivacyPolicyPage.jsx';
 
+
+import SingleRequestsPage from './components/SingleRequestsPage.jsx';
+import SingleSponsorPage from './components/SingleSponsorPage.jsx';
+import SingleBeneficiaryPage from './components/SingleBeneficiaryPage.jsx';
  
 
 function App() {
@@ -34,6 +38,10 @@ function App() {
             <Route path='/terms-and-conditions' element={<TermsAndConditionsPage  />}/>
             <Route path='/privacy-policy' element={<PrivacyPolicyPage  />}/>
 
+            <Route path='/single-request' element={<SingleRequestsPage  />}/>
+            <Route path='/single-sponsor' element={<SingleSponsorPage  />}/>
+            <Route path='/single-beneficiary' element={<SingleBeneficiaryPage  />}/>
+            
             </Routes>
             
         </div>
