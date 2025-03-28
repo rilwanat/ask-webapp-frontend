@@ -27,7 +27,7 @@ import NotificationModal from '../modals/NotificationModal';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 
-const VideoContainer = ({ }) => {
+const WidgetVideo = ({ }) => {
 
     const getEmbedUrl = (url) => {
         const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
@@ -73,4 +73,4 @@ const VideoContainer = ({ }) => {
     );
 }
 
-export default VideoContainer;
+export default WidgetVideo;

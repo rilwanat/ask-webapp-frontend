@@ -27,7 +27,7 @@ import NotificationModal from '../modals/NotificationModal';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 
-const DonateAndAsk = ({ }) => {
+const WidgetDonateAndAsk = ({ }) => {
     return(
 <div className='flex mr-2'>
 <div
@@ -63,4 +63,4 @@ const DonateAndAsk = ({ }) => {
     );
 }
 
-export default DonateAndAsk;
+export default WidgetDonateAndAsk;

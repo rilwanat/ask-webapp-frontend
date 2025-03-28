@@ -25,7 +25,7 @@ import { ClipLoader } from 'react-spinners'
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import DonateAndAsk from '../widgets/DonateAndAsk';
+import DonateAndAsk from '../widgets/WidgetDonateAndAsk';
 import AccountOptions from '../widgets/AccountOptions';
 
 

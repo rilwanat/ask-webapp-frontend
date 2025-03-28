@@ -12,7 +12,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share'; 
 
-const HelpRequests = () => {
+const WidgetSponsors = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [zoomedItemId, setZoomedItemId] = useState(null);
@@ -28,28 +28,37 @@ const HelpRequests = () => {
       image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       title: "Community Support",
       description: "My name is .. and ...",
-      score: "81"
+      score: "81",
+      name: "Sponsor One",
+      date: "2025-02-24 03:47:17",
+      price: "N30,000.00"
     },
     {
       id: 2,
       image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       title: "Environmental Care",
       description: "Good morning, My name is .. and ...",
-      score: "93"
+      score: "93",
+      name: "Sponsor One",
+      date: "2025-02-24 03:47:17",
+      price: "N40,000.00"
     },
     {
       id: 3,
       image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       title: "Youth Empowerment",
       description: "I am a .. and ...",
-      score: "44"
+      score: "44",
+      name: "Sponsor One",
+      date: "2025-02-24 03:47:17",
+      price: "N50,000.00"
     }
   ];
 
   return (
-    <div className="w-full bg-teal-300">
-      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 py-4 pb-8">
-        <div className="w-full p-4 my-4">
+    <div className="w-full">
+      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
+        <div className="w-full p-4">
           <div className="flex flex-col  items-center justify-between">
 
 
@@ -60,7 +69,7 @@ const HelpRequests = () => {
               transition={{ duration: 0.5 }}
               className=" flex items-center justify-center "
               >
-              <div className="mx-auto py-8 ">
+              <div className="mx-auto">
               
               <motion.h1
               initial={{ y: -50, opacity: 0 }}
@@ -69,7 +78,7 @@ const HelpRequests = () => {
               className="text-2xl font-bold text-gray-800 mb-2"
               >
               <div className='flex flex-col items-center justify-center mt-0 mb-2'>
-              <p className=' mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Help Requests</p>
+              <p className=' mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Sponsors</p>
               <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
               </div>
               
@@ -118,7 +127,6 @@ const HelpRequests = () => {
               
               {carouselItems.map((item, index) => (
                 <div key={item.id} className="flex flex-col h-full">
-                  <p className="text-theme font-bold my-2">{item.description}</p>
                 <div className="flex-1 overflow-hidden ">
                   <img 
                     className="rounded-lg w-full h-full object-contain "
@@ -137,13 +145,11 @@ const HelpRequests = () => {
                   />
                 </div>
                 <div className="p-4 mt-auto">
-                  <h3 className="text-2xl font-bold text-theme">{item.score}</h3>
-                  <p className="text-theme mt-2">{item.description}</p>
+                  <h3 className="text-2xl font-bold text-theme">{item.name}</h3>
+                  {/* <p className="text-theme font-bold mt-1">{item.price}</p> */}
+                  {/* <p className="text-theme mt-1">{item.date}</p> */}
                 </div>
-                <div className='flex flex-col items-center'>
-                  <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'>Nominate <CheckIcon className='ml-2' /></div>
-                  <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'>Share <ShareIcon className='ml-2' /></div>
-                </div>
+                
                 
               </div>
               ))}
@@ -158,4 +164,4 @@ const HelpRequests = () => {
   );
 };
 
-export default HelpRequests;
+export default WidgetSponsors;

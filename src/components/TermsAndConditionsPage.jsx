@@ -11,7 +11,7 @@ import { motion } from 'framer-motion';
 
 import Hero from './widgets/Hero';
 import HeaderParallax from './widgets/HeaderParallax';
-import AboutForAbout from './widgets/AboutForAbout';
+// import WidgetAboutForAbout from './widgets/WidgetAboutForAbout';
 // import Services from './widgets/Services';
 // import LatestNews from './widgets/LatestNews';
 

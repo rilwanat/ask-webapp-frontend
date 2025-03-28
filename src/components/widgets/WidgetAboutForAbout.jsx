@@ -21,7 +21,7 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
 
 
-const AboutForAbout = ({ }) => {
+const WidgetAboutForAbout = ({ }) => {
   const navigate = useNavigate();
 
   const navigateTo = (route) => {
@@ -30,8 +30,8 @@ const AboutForAbout = ({ }) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 py-4 pb-8">
-        <div className="w-full p-4 my-4">
+      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
+        <div className="w-full p-4">
 
 
 
@@ -53,7 +53,7 @@ exit={{ opacity: 0 }}
 transition={{ duration: 0.5 }}
 className=" flex items-center justify-center "
 >
-<div className="mx-auto py-8">
+<div className="mx-auto">
 
 <motion.h1
 initial={{ y: -50, opacity: 0 }}
@@ -255,4 +255,4 @@ At A.S.K. Foundation, our vision is a world where kindness is abundant, and ever
   );
 };
 
-export default AboutForAbout;
+export default WidgetAboutForAbout;

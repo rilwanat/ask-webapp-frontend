@@ -13,10 +13,11 @@ import { motion } from 'framer-motion';
 import Parallax from './widgets/Parallax';
 
 import Hero from './widgets/Hero';
-import AboutForHome from './widgets/AboutForHome';
-import HelpRequests from './widgets/HelpRequests';
-import Beneficiaries from './widgets/Beneficiaries';
-import VideoContainer from './widgets/VideoContainer';
+import WidgetAboutForHome from './widgets/WidgetAboutForHome';
+import WidgetHelpRequests from './widgets/WidgetHelpRequests';
+import WidgetBeneficiaries from './widgets/WidgetBeneficiaries';
+import WidgetSponsors from './widgets/WidgetSponsors';
+import WidgetVideo from './widgets/WidgetVideo';
 
 // import Services from './widgets/Services';
 // import LatestNews from './widgets/LatestNews';
@@ -50,13 +51,15 @@ export default function LandingPage() {
             
             <Hero/>
 
-            <AboutForHome/>
+            <WidgetAboutForHome/>
 
-            <HelpRequests/>
+            <WidgetHelpRequests/>
 
-            <Beneficiaries/>
+            <WidgetBeneficiaries/>
+            
+            <WidgetSponsors/>
 
-            <VideoContainer />
+            <WidgetVideo />
 
 
             {/* <LatestNews/> */}

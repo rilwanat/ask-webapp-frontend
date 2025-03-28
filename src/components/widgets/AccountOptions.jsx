@@ -404,7 +404,7 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
                       <div className=" mx-4 mt-4" >
                         <div className="justify-center">
                         
-                            <div className='flex flex-col sm:flex-row relative my-2 '>
+                            {/* <div className='flex flex-col sm:flex-row relative my-2 '>
                                 <input 
                                 type='text' name='user_firstname' inputMode="text" autoComplete='given-name'
                                 placeholder='Enter your Firstname' 
@@ -422,7 +422,7 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
                                 onChange={(e) => setRegistrationLastname(e.target.value)}
                                 style={{  }} 
                                 />
-                             </div>
+                             </div> */}
 
                              <div className='flex flex-col sm:flex-row relative  '>
                                 <input 
