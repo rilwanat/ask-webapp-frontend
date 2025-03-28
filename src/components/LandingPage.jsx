@@ -16,6 +16,7 @@ import Hero from './widgets/Hero';
 import AboutForHome from './widgets/AboutForHome';
 import HelpRequests from './widgets/HelpRequests';
 import Beneficiaries from './widgets/Beneficiaries';
+import VideoContainer from './widgets/VideoContainer';
 
 // import Services from './widgets/Services';
 // import LatestNews from './widgets/LatestNews';
@@ -54,6 +55,8 @@ export default function LandingPage() {
             <HelpRequests/>
 
             <Beneficiaries/>
+
+            <VideoContainer />
 
 
             {/* <LatestNews/> */}
