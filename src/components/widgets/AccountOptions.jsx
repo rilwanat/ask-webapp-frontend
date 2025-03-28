@@ -424,35 +424,49 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
                                 />
                              </div> */}
 
-                             <div className='flex flex-col sm:flex-row relative  '>
+                             <div className='flex flex-col sm:flex-row relative my-2 '>
                                 <input 
                                 type='email'  name='user_email' inputMode="text" autoComplete='given-name'
                                 placeholder='Enter your Email' 
-                                className='border border-gray-300 rounded-sm py-2 px-2 w-full my-2 bg-white'
+                                className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
                                 value={registrationEmailAddress}
                                 onChange={(e) => setRegistrationEmailAddress(e.target.value)}
                                 style={{  }} 
                                 />
                              </div>
 
-                             <div className='flex flex-col sm:flex-row relative my-2 '>
+                            <div className='flex flex-col sm:flex-row  mt-2'>
+                             <div className='flex flex-col sm:flex-row relative sm:w-1/2 w-full'>
                                 <input 
-                                type='text' name='user_password' inputMode="text" autoComplete='given-name'
+                                type={passwordVisible ? 'text' : 'password'} name='user_password' inputMode="text" autoComplete='given-name'
                                 placeholder='Enter a Password' 
-                                className='border border-gray-300 rounded-sm py-2 px-2 w-full mr-1 bg-white'
+                                className='border border-gray-300 rounded-sm py-2 px-2 w-full md:mr-2 mt-0 bg-white'
                                 value={registrationPassword}
                                 onChange={(e) => setRegistrationPassword(e.target.value)}
                                 style={{  }} 
                                 />
+                                                              <div className="absolute inset-y-0 right-0 flex items-center pr-2 mt-1 mr-2">
+                                    <div tabIndex="-1" onClick={() => setPasswordVisible(!passwordVisible)}>
+                                        {passwordVisible ? <VisibilityOff className='p-1'/> : <Visibility className='p-1'/>}
+                                    </div>
+                              </div>
+                              </div>
                                 
+                              <div className='flex flex-col sm:flex-row relative sm:w-1/2 w-full '>
                                 <input 
-                                type='text'  name='user_lastname' inputMode="text" autoComplete='given-name'
+                                type={passwordVisible ? 'text' : 'password'}  name='user_confitm_password' inputMode="text" autoComplete='given-name'
                                 placeholder='Enter Confirm Passowrd' 
-                                className='border border-gray-300 rounded-sm py-2 px-2 w-full md:ml-2 mt-4 md:mt-0 bg-white'
+                                className='border border-gray-300 rounded-sm py-2 px-2 w-full md:ml-2 mt-2 md:mt-0 bg-white'
                                 value={registrationConfirmPassword}
                                 onChange={(e) => setRegistrationConfirmPassword(e.target.value)}
                                 style={{  }} 
                                 />
+                                                              <div className="absolute inset-y-0 right-0 flex items-center pr-2 mt-1 mr-2">
+                                    <div tabIndex="-1" onClick={() => setPasswordVisible(!passwordVisible)}>
+                                        {passwordVisible ? <VisibilityOff className='p-1'/> : <Visibility className='p-1'/>}
+                                    </div>
+                                </div>
+                              </div>
                              </div>
                              
 
@@ -468,6 +482,26 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
                             {isLoading ? 'Please wait..' : 'Register'}
                             </div>
                           </div>
+
+
+                          <div className='flex justify-between items-center flex-col md:flex-row '>
+                            
+                          <div  
+                          // onClick={(e) => {if (!isLoading) registerUser(e)}} 
+                          style={{ borderWidth: '0px', width: '100%' }} 
+                          className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
+                            {isLoading ? 'Please wait..' : 'Register with Google'}
+                            </div>
+
+                            <div  
+                          // onClick={(e) => {if (!isLoading) registerUser(e)}} 
+                          style={{ borderWidth: '0px', width: '100%' }} 
+                          className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
+                            {isLoading ? 'Please wait..' : 'Register with Apple'}
+                            </div>
+                          </div>
+
+
 
                           <div className='mt-4'>
                             <div className='mt-4 flex justify-center'>                                          
@@ -528,7 +562,7 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
                                 <input 
                                 type={passwordVisible ? 'text' : 'password'} name='user_password' inputMode="text" autoComplete='given-name'
                                 placeholder='Enter your Password' 
-                                className='border border-gray-300 rounded-sm py-2 px-2 w-full my-2 bg-white'
+                                className='border border-gray-300 rounded-sm py-2 px-2 w-full mb-0 bg-white'
                                 value={loginPassword}
                                 onChange={(e) => setLoginPassword(e.target.value)}
                                 style={{  }} 
@@ -564,6 +598,25 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
                             {isLoading ? 'Please wait..' : 'Login'}
                             </div>
                           </div>
+
+                          <div className='flex justify-between items-center flex-col md:flex-row '>
+                            
+                          <div  
+                          // onClick={(e) => {if (!isLoading) registerUser(e)}} 
+                          style={{ borderWidth: '0px', width: '100%' }} 
+                          className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
+                            {isLoading ? 'Please wait..' : 'Login with Google'}
+                            </div>
+
+                            <div  
+                          // onClick={(e) => {if (!isLoading) registerUser(e)}} 
+                          style={{ borderWidth: '0px', width: '100%' }} 
+                          className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
+                            {isLoading ? 'Please wait..' : 'Login with Apple'}
+                            </div>
+                          </div>
+
+
 
                           <div className='mt-4'>
                             <div className='mt-4 flex justify-center'>                                            
