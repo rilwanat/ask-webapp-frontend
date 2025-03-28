@@ -13,6 +13,8 @@ import Parallax from './widgets/Parallax';
 
 import Hero from './widgets/Hero';
 import AboutForHome from './widgets/AboutForHome';
+import HelpRequests from './widgets/HelpRequests';
+import Beneficiaries from './widgets/Beneficiaries';
 
 // import Services from './widgets/Services';
 // import LatestNews from './widgets/LatestNews';
@@ -49,6 +51,10 @@ export default function LandingPage() {
 
             <AboutForHome/>
 
+            <HelpRequests/>
+
+            <Beneficiaries/>
+
 
             {/* <LatestNews/> */}
             <Parallax 
@@ -56,6 +62,7 @@ export default function LandingPage() {
                 title={"Contact Us"}
                 subtitle={"Click here to reach out to us"}
             />
+            
 
 
             <AskFooter gotoPage={gotoPage} />
