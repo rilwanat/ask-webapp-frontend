@@ -111,7 +111,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
 
 
   return (
-    <div className="flex flex-col bg-white shadow-lg px-4" style={{ height: '80px' }}>
+    <div className="fixed top-0 left-0 w-full z-50    flex flex-col bg-white shadow-lg px-4" style={{ height: '80px' }}>
       <div className="flex justify-between">
         <div className="flex items-center">
           <img
