@@ -115,7 +115,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
       <div className="flex justify-between">
         <div className="flex items-center">
           <img
-            className="block h-32 w-auto max-w-none z-100"
+            className="block h-28 w-auto max-w-none z-100"
             src={askLogo}
             alt="Logo"
             // onClick={toggleMenu}

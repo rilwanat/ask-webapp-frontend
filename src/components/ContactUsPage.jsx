@@ -20,22 +20,22 @@ import Contact from './widgets/Contact';
 export default function ContactUsPage() {
     const navigate = useNavigate();
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+    // const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
     useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []); 
     const gotoPage = (pageName) => {
         navigate("/" + pageName)
     }
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 500);
-        };
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         setIsMobile(window.innerWidth <= 500);
+    //     };
 
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+    //     window.addEventListener('resize', handleResize);
+    //     return () => {
+    //         window.removeEventListener('resize', handleResize);
+    //     };
+    // }, []);
 
 
     return (
