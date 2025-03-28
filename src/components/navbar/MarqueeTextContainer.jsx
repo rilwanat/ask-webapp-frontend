@@ -6,7 +6,7 @@ const MarqueeTextContainer = () => {
   ];
 
   return (
-    <div className='bg-theme py-2.5 flex justify-center text-white' style={{ overflow: 'hidden', width: '100%', whiteSpace: 'nowrap' }}>
+    <div className='bg-theme py-2.5 flex justify-center text-white' style={{ overflow: 'hidden', width: '100%', whiteSpace: 'nowrap', fontSize: '14px' }}>
         {sampleTexts[0]}
     </div>
   );
