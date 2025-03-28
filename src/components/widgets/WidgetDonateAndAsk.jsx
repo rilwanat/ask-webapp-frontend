@@ -36,7 +36,7 @@ const WidgetDonateAndAsk = ({ }) => {
                                 // navigate('/donate');
                             }}
                         >
-                            <MonetizationOnIcon className='mr-2'/>
+                            <MonetizationOnIcon className='mr-1'/>
                             <p
                                 className="text-sm cursor-pointer"
                                 style={{ fontWeight: '600' }}
@@ -51,7 +51,7 @@ const WidgetDonateAndAsk = ({ }) => {
                                 // navigate('/i-ask');
                             }}
                         >
-                            <LiveHelpIcon className='mr-2'/>
+                            <LiveHelpIcon className='mr-1'/>
                             <p
                                 className="text-sm cursor-pointer"
                                 style={{ fontWeight: '600' }}
