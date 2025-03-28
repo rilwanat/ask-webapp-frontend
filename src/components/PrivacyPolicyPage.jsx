@@ -83,7 +83,7 @@ transition={{ delay: 0.2, duration: 0.5 }}
 className="text-2xl font-bold text-theme mb-2"
 >
 <div className='flex flex-col items-center justify-center mt-0 mb-2'>
-<p className=' mb-2' style={{ color: '', fontWeight: '700', fontSize: '28px' }}>Privacy Policy</p>
+<p className=' mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Privacy Policy</p>
 <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
 </div>
 
@@ -125,7 +125,7 @@ className="text-lg text-gray-600 mb-6"
     >
         {/*       
         <div className='flex flex-col items-center justify-center mt-16 mb-2'>
-            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '28px' }}>About Us</p>
+            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>About Us</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
         </div> 
         */}
