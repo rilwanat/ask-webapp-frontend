@@ -6,6 +6,7 @@ import AskHeader from './navbar/AskHeader';
 import AskFooter from './navbar/AskFooter';
 
 import askLogo from '../assets/images/ask-logo.png';
+import contactUs from '../assets/images/contact-us.jpg';
 
 import { motion } from 'framer-motion';
 
@@ -24,7 +25,6 @@ import Beneficiaries from './widgets/Beneficiaries';
 export default function LandingPage() {
     const navigate = useNavigate();
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
     useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []); 
     const gotoPage = (pageName) => {
         navigate("/" + pageName)
@@ -58,7 +58,7 @@ export default function LandingPage() {
 
             {/* <LatestNews/> */}
             <Parallax 
-                // imageUrl={askLogo}
+                imageUrl={contactUs}
                 title={"Contact Us"}
                 subtitle={"Click here to reach out to us"}
             />

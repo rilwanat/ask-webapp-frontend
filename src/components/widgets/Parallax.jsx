@@ -1,9 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 function Parallax({ imageUrl, title, subtitle  }) {
 
+  const navigate = useNavigate();
+
   const gotoPage = (pageName) => {
-    navigate("/" + pageName)
+    navigate(pageName);
 }
 
   return (
