@@ -17,8 +17,8 @@ const WidgetBeneficiaries = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [zoomedItemId, setZoomedItemId] = useState(null);
 
-  const navigateTo = (route) => {
-    navigate(route);
+  const navigateTo = (route, data) => {
+    navigate(route, { state: data });
   };
 
   // Sample carousel data
@@ -108,7 +108,7 @@ const WidgetBeneficiaries = () => {
               
               {carouselItems.map((item, index) => (
                 <div key={item.id} className="flex flex-col h-full"
-                onClick={() => {navigateTo('/single-beneficiary');}}
+                onClick={() => {navigateTo('/single-beneficiary', { selectedItem: item, allItems: carouselItems  });}}
                 >
                 <div className="flex-1 overflow-hidden ">
                   <img 

@@ -17,8 +17,8 @@ const WidgetHelpRequests = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [zoomedItemId, setZoomedItemId] = useState(null);
 
-  const navigateTo = (route) => {
-    navigate(route);
+  const navigateTo = (route, data) => {
+    navigate(route, { state: data });
   };
 
   // Sample carousel data
@@ -99,7 +99,7 @@ const WidgetHelpRequests = () => {
             
               {carouselItems.map((item, index) => (
                 <div key={item.id} className="flex flex-col h-full"
-                onClick={() => {navigateTo('/single-request');}}
+                onClick={() => {navigateTo('/single-request', { selectedItem: item, allItems: carouselItems  });}}
                 >
                   <p className="text-theme font-bold my-2">{item.description}</p>
                 <div className="flex-1 overflow-hidden ">

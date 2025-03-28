@@ -61,7 +61,7 @@ export default function AskHeaderHead({}) {
             <div className="flex flex-col md:flex-row justify-between items-center">
                 <div className="flex items-center mr-8">
                     <img
-                        className="block h-16 w-auto max-w-none"
+                        className="block h-24 w-auto max-w-none"
                         src={askLogo}
                         alt="Logo"
                         onClick={() => {

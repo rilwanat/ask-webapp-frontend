@@ -17,8 +17,8 @@ const WidgetSponsors = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [zoomedItemId, setZoomedItemId] = useState(null);
 
-  const navigateTo = (route) => {
-    navigate(route);
+  const navigateTo = (route, data) => {
+    navigate(route, { state: data });
   };
 
   // Sample carousel data
@@ -108,7 +108,7 @@ const WidgetSponsors = () => {
               
               {carouselItems.map((item, index) => (
                 <div key={item.id} className="flex flex-col h-full"
-                onClick={() => {navigateTo('/single-sponsor');}}
+                onClick={() => {navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselItems  });}}
                 >
                 <div className="flex-1 overflow-hidden ">
                   <img 
