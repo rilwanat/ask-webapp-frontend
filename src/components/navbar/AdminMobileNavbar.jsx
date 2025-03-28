@@ -48,6 +48,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import DonateAndAsk from '../widgets/WidgetDonateAndAsk';
 import AccountOptions from '../widgets/AccountOptions';
 
+import MenuIcon from '@mui/icons-material/Menu';
+
+
 const SlideInMenu = styled(motion.div)`
   position: fixed;
   top: 0;
@@ -123,7 +126,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
 
         <div className="flex items-center " style={{ height: '80px' }}>
 
-        <DonateAndAsk />
+        {/* <DonateAndAsk /> */}
 
 
           <div className="md:flex justify-end" style={{}}>
@@ -135,7 +138,20 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
              
              
               
-            <IconButton
+              <div
+                            className="flex items-center cursor-pointer px-2 py-1 rounded-md mr-4  bg-softTheme hover:bg-theme hover:text-white"
+                            onClick={toggleMenu}
+                            style={{ height: '40px', borderRadius: '4px' }}
+                        >
+                            <MenuIcon className='mr-1'/>
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Menu
+                            </p>
+                        </div>
+            {/* <IconButton
               edge="start"
               aria-label="menu"
               sx={{  marginRight: 2 }} 
@@ -146,7 +162,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
                 <div style={{ width: '20px', height: '1px', backgroundColor: '#055D4F', marginBottom: '6px' }}></div>
                 <div style={{ width: '20px', height: '1px', backgroundColor: '#055D4F' }}></div>
               </div>
-            </IconButton>
+            </IconButton> */}
           
 
 
