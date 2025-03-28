@@ -9,17 +9,15 @@ import askLogo from '../assets/images/ask-logo.png';
 
 import { motion } from 'framer-motion';
 
-import Parallax from './widgets/Parallax';
-
 import Hero from './widgets/Hero';
-import AboutForHome from './widgets/AboutForHome';
-
+import HeaderParallax from './widgets/HeaderParallax';
+import AboutForAbout from './widgets/AboutForAbout';
 // import Services from './widgets/Services';
 // import LatestNews from './widgets/LatestNews';
 
 
 
-export default function LandingPage() {
+export default function AboutUsPage() {
     const navigate = useNavigate();
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
@@ -45,17 +43,18 @@ export default function LandingPage() {
             <AskHeader gotoPage={gotoPage} showMarqees={true} />
 
             
-            <Hero/>
+            {/* <Hero/> */}
+            <HeaderParallax 
+                // imageUrl={askLogo}
+                title={"About Us"}
+                subtitle={""}
+            />
 
-            <AboutForHome/>
+            <AboutForAbout/>
 
 
             {/* <LatestNews/> */}
-            <Parallax 
-                // imageUrl={askLogo}
-                title={"Contact Us"}
-                subtitle={"Click here to reach out to us"}
-            />
+
 
 
             <AskFooter gotoPage={gotoPage} />

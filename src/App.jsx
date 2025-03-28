@@ -2,29 +2,21 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 
-import './App.css'
 
 import LandingPage from './components/LandingPage.jsx';
+import AboutUsPage from './components/AboutUsPage.jsx';
+import ContactUsPage from './components/ContactUsPage.jsx';
+
+import TermsAndConditionsPage from './components/TermsAndConditionsPage.jsx';
+import PrivacyPolicyPage from './components/PrivacyPolicyPage.jsx';
+
+ 
 
 function App() {
-
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
+  
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1000);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    // initAuth();
   }, []);
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
-  };
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
 
   return (
     <Router>
@@ -34,7 +26,13 @@ function App() {
           <Routes>
 
             <Route path="/*" element={<div>NOT FOUND</div>} />            
-            <Route path='/' element={<LandingPage isMobile={isMobile} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} closeMenu={closeMenu} />}/>
+            <Route path='/' element={<LandingPage  />}/>
+            <Route path='/about-us' element={<AboutUsPage  />}/>
+            <Route path='/contact-us' element={<ContactUsPage  />}/>
+
+
+            <Route path='/terms-and-conditions' element={<TermsAndConditionsPage  />}/>
+            <Route path='/privacy-policy' element={<PrivacyPolicyPage  />}/>
 
             </Routes>
             
