@@ -37,7 +37,7 @@ const WidgetVideo = ({ }) => {
 
 
     return(
-<div className="video-container mb-0" 
+<div className="video-container  mt-4" 
 // style={{
 //   position: "relative",
 //   width: "380px",

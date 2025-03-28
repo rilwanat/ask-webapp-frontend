@@ -56,7 +56,7 @@ const WidgetSponsors = () => {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-4">
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
           <div className="flex flex-col  items-center justify-between">
