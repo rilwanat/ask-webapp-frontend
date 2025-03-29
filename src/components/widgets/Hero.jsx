@@ -56,7 +56,7 @@ const Hero = ({  }) => {
   }
 
   return (
-      <div className="relative w-full  h-[440px] overflow-hidden mt-20 sm:mt-0">
+      <div className="relative w-full  h-[500px] overflow-hidden mt-20 sm:mt-0">
 
       <AnimatePresence>
         <motion.img
@@ -72,7 +72,7 @@ const Hero = ({  }) => {
         />
       </AnimatePresence>
 
-      <div className="absolute inset-0 bg-black opacity-50 flex flex-col justify-center items-center p-4"></div>
+      {/* <div className="absolute inset-0 bg-black opacity-50 flex flex-col justify-center items-center p-4"></div> */}
 
       <div className="absolute inset-0 flex flex-col justify-center  text-white px-8 md:px-4 lg:px-16 xl:px-32 2xl:px-80 ">
         
@@ -85,7 +85,7 @@ const Hero = ({  }) => {
           exit="exit"
           transition={{ duration: 0.8 }}
         >
-          {headerText[currentImageIndex]}
+          {/* {headerText[currentImageIndex]} */}
         </motion.h1>
 
         <motion.p
@@ -96,7 +96,7 @@ const Hero = ({  }) => {
           exit="exit"
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {subText[currentImageIndex]}
+          {/* {subText[currentImageIndex]} */}
         </motion.p>
 
         

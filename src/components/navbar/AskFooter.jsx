@@ -64,7 +64,7 @@ function AskFooter({ gotoPage }) {
                         <div className="relative z-20">
               <ul className="flex">
                 <li className='mr-4'>
-                  <a href="https://www.whatsapp.com" target='_blank'>
+                  <a href="https://whatsapp.com/channel/0029VapJPNX05MUYgWDwWR0m" target='_blank'>
                     <WhatsAppIcon style={{cursor: "pointer", color: "#ffffff" }}/>
                   </a>
                 </li>
