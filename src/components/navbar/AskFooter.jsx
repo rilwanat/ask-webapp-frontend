@@ -69,33 +69,33 @@ function AskFooter({ gotoPage }) {
                   </a>
                 </li>
                 <li className='mr-4'>
-                  <a href="https://www.telegram.com" target='_blank'>
+                  <a href="https://t.me/askfoundations" target='_blank'>
                     <TelegramIcon style={{cursor: "pointer", color: "#ffffff" }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
-                  <a href="https://www.facebook.com/" target='_blank'>
+                  <a href="https://www.facebook.com/askfoundationpage" target='_blank'>
                     <FacebookIcon style={{cursor: "pointer", color: "#ffffff" }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
-                  <a href="https://www.twitter.com/" target='_blank'>
+                  <a href="https://www.twitter.com/askfoundations" target='_blank'>
                     <XIcon style={{cursor: "pointer", color: "#ffffff" }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
-                  <a href="https://www.instagram.com" target='_blank'>
+                  <a href="https://www.instagram.com/askfoundations" target='_blank'>
                     <InstagramIcon style={{cursor: "pointer", color: "#ffffff" }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
-                  <a href="https://www.tiktok.com" target='_blank'>
+                  <a href="https://www.tiktok.com/@askfoundations" target='_blank'>
                     {/* <TiktokIcon style={{cursor: "pointer", color: "#ffffff" }}/> */}
                     <FontAwesomeIcon icon={faTiktok} style={{cursor: "pointer", color: "#ffffff", }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
-                  <a href="https://www.youtube.com" target='_blank'>
+                  <a href="https://www.youtube.com/@Askfoundations" target='_blank'>
                     <YouTubeIcon style={{cursor: "pointer", color: "#ffffff" }}/>
                   </a>
                 </li>
