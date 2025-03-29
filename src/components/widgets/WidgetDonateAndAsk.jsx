@@ -46,7 +46,7 @@ const WidgetDonateAndAsk = ({ }) => {
                         </div>
 
                         <div
-                            className="flex items-center cursor-pointer px-2 py-1 rounded-md ml-1  bg-softTheme hover:bg-theme hover:text-white"
+                            className="flex items-center cursor-pointer px-2 py-1 rounded-md ml-1 text-white  bg-red-700 hover:bg-theme hover:text-white"
                             onClick={() => {
                                 // navigate('/i-ask');
                             }}

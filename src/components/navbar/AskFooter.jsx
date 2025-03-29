@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import askLogo from '../../assets/images/ask-logo.png';
 
 
-import TwitterIcon from '@mui/icons-material/Twitter';
+import XIcon from '@mui/icons-material/X';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTiktok } from '@fortawesome/free-brands-svg-icons';
 
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -68,7 +70,7 @@ function AskFooter({ gotoPage }) {
                 </li>
                 <li className='mr-4'>
                   <a href="https://www.twitter.com/" target='_blank'>
-                    <TwitterIcon style={{cursor: "pointer", color: "#ffffff" }}/>
+                    <XIcon style={{cursor: "pointer", color: "#ffffff" }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
@@ -86,11 +88,12 @@ function AskFooter({ gotoPage }) {
                     <TelegramIcon style={{cursor: "pointer", color: "#ffffff" }}/>
                   </a>
                 </li>
-                {/* <li className='mr-4'>
+                <li className='mr-4'>
                   <a href="https://www.tiktok.com" target='_blank'>
-                    <TiktokIcon style={{cursor: "pointer", color: "#ffffff" }}/>
+                    {/* <TiktokIcon style={{cursor: "pointer", color: "#ffffff" }}/> */}
+                    <FontAwesomeIcon icon={faTiktok} style={{cursor: "pointer", color: "#ffffff", }}/>
                   </a>
-                </li> */}
+                </li>
                 <li className='mr-4'>
                   <a href="https://www.telegram.com" target='_blank'>
                     <WhatsAppIcon style={{cursor: "pointer", color: "#ffffff" }}/>
@@ -173,8 +176,8 @@ function AskFooter({ gotoPage }) {
                     </div>
                 </div>
 
-                <div className='flex flex-col sm:flex-row justify-end items-center sm:items-center sm:justify-end text-center sm:text-left mt-4 '>
-                    <span className="text-white text-sm cursor-pointer block my-2 sm:mr-8" 
+                <div className='flex flex-row justify-center sm:justify-end items-center  text-center  mt-4 '>
+                    <span className="text-white text-sm cursor-pointer block my-2 mr-8" 
                     onClick={() => { gotoPage("terms-and-conditions"); }}>
                         Terms and Conditions
                     </span>

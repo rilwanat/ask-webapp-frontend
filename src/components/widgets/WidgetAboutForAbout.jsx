@@ -111,16 +111,16 @@ A community-based charity initiative
 
         <div className='flex flex-col sm:flex-row '>
             <div className=''>
-                <p className='mt-4 pt-2' style={{ fontSize: '18px',  }}>
+                <p className='mt-4 pt-2 text-justify' style={{ fontSize: '18px',  }}>
                 The A.S.K. Foundation is a community-based charity inspired by the life and legacy of Madam Esther Ashabi Shobande Kokumo. This initiative honors her unwavering dedication to building a society where resources are shared equitably, ensuring that acts of kindness benefit everyone.
                 </p>
-                <p className='mt-4 pt-2' style={{ fontSize: '18px',   }}>
+                <p className='mt-4 pt-2 text-justify' style={{ fontSize: '18px',   }}>
 Our mission is rooted in the belief that everyone deserves support, and it takes courage to ask for help. To uphold this principle, we have developed a community-driven selection process that provides assistance without imposing burdensome interrogations, safeguarding the dignity and mental well-being of those in need.
 </p>
-<p className='mt-4 pt-2' style={{ fontSize: '18px',   }}>
+<p className='mt-4 pt-2 text-justify' style={{ fontSize: '18px',   }}>
 What sets the A.S.K. Foundation apart is its innovative, decentralized approach to beneficiary selection. Through a transparent, technology-driven community nomination system, we ensure equal opportunities for those seeking support.
 </p>
-<p className='mt-4 pt-2' style={{ fontSize: '18px',  }}>
+<p className='mt-4 pt-2 text-justify' style={{ fontSize: '18px',  }}>
 For donors committed to making a real difference, the A.S.K. Foundation serves as a trusted platform, ensuring that contributions reach the most vulnerable efficiently and deliver meaningful, lasting change where it is needed most.
                 </p>
             </div>
@@ -228,9 +228,9 @@ For donors committed to making a real difference, the A.S.K. Foundation serves a
 
 
 
-<div className='flex flex-col sm:flex-row '>
+<div className='flex flex-col sm:flex-row mb-8'>
             <div className=''>
-            <p className='mt-4 pt-2' style={{ fontSize: '18px', color: '#000000' }}>
+            <p className='mt-4 pt-2 text-justify' style={{ fontSize: '18px', color: '#000000' }}>
 
 At A.S.K. Foundation, our vision is a world where kindness is abundant, and every person enjoys their fair share of compassion and support.
 </p>

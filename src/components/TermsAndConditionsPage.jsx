@@ -140,7 +140,7 @@ className="text-lg text-gray-600 mb-6"
             <li className='' ><strong>Effective Date:</strong> October 2024</li>
         </ul>
 
-        <p className='mt-4 mb-2' style={{ fontSize: '18px' }}>
+        <p className='mt-4 mb-2 text-justify' style={{ fontSize: '18px' }}>
             Welcome to askfoundations.org, operated by the <strong>Ashabi Shobande Kokumo Foundation</strong> ("A.S.K Foundation"). These Terms and Conditions ("Terms") govern your use of our website and services. By accessing or using our platform, you agree to comply with these Terms. If you do not agree, you must discontinue using our services.
         </p>
         
@@ -152,7 +152,7 @@ className="text-lg text-gray-600 mb-6"
         <p className='mt-4 mb-2' style={{ fontSize: '18px' }}>
             {'Interpretation'.toUpperCase()}
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             Words with initial capital letters have meanings defined below. The definitions apply whether words appear in singular or plural form.
         </p>
 
@@ -161,15 +161,15 @@ className="text-lg text-gray-600 mb-6"
         </p>
 
         <ul className='ml-8 list-disc'>
-            <li className='mb-2' ><strong>Affiliate</strong> Any entity under common control with a party, where control means 50% or more ownership of voting securities.</li>
-            <li className='mb-2' ><strong>Country</strong> Nigeria.</li>
-            <li className='mb-2' ><strong>Company</strong> Refers to Ashabi Shobande Kokumo Foundation, also referred to as "A.S.K Foundation" "We," "Us," or "Our."</li>
-            <li className='mb-2' ><strong>Device</strong> Any tool that can access the Service, such as computers, mobile phones, or tablets.</li>
-            <li className='mb-2' ><strong>Service</strong> Refers to the Website (askfoundations.org)</li>
-            <li className='mb-2' ><strong>Terms</strong> and Conditions This agreement between You and the Company regarding the use of our Service.</li>
-            <li className='mb-2' ><strong>Third-party Social Media Service</strong> External content, services, or products integrated into our Service.</li>
-            <li className='mb-2' ><strong>Website</strong> The A.S.K Foundation platform, accessible via askfoundations.org.</li>
-            <li className='mb-2' ><strong>You</strong> The individual or entity using the Service.</li>
+            <li className='mb-2 text-justify' ><strong>Affiliate</strong> Any entity under common control with a party, where control means 50% or more ownership of voting securities.</li>
+            <li className='mb-2 text-justify' ><strong>Country</strong> Nigeria.</li>
+            <li className='mb-2 text-justify' ><strong>Company</strong> Refers to Ashabi Shobande Kokumo Foundation, also referred to as "A.S.K Foundation" "We," "Us," or "Our."</li>
+            <li className='mb-2 text-justify' ><strong>Device</strong> Any tool that can access the Service, such as computers, mobile phones, or tablets.</li>
+            <li className='mb-2 text-justify' ><strong>Service</strong> Refers to the Website (askfoundations.org)</li>
+            <li className='mb-2 text-justify' ><strong>Terms</strong> and Conditions This agreement between You and the Company regarding the use of our Service.</li>
+            <li className='mb-2 text-justify' ><strong>Third-party Social Media Service</strong> External content, services, or products integrated into our Service.</li>
+            <li className='mb-2 text-justify' ><strong>Website</strong> The A.S.K Foundation platform, accessible via askfoundations.org.</li>
+            <li className='mb-2 text-justify' ><strong>You</strong> The individual or entity using the Service.</li>
         </ul>
 
         <hr className='my-4'/>
@@ -177,13 +177,13 @@ className="text-lg text-gray-600 mb-6"
         <p className='mt-4 mb-2' style={{ fontSize: '18px' }}>
             {'Acknowledgment'.toUpperCase()}
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             These Terms outline the agreement between You and the Company, establishing the rights and obligations of both parties. By accessing or using our services, You confirm that
         </p>
 
         <ol className='ml-8 list-decimal'>
-            <li className='mb-2' >You are at least 18 years old.</li>
-            <li className='mb-2' >You accept our Privacy Policy, which governs how we collect, use, and protect your data</li>
+            <li className='mb-2 text-justify' >You are at least 18 years old.</li>
+            <li className='mb-2 text-justify' >You accept our Privacy Policy, which governs how we collect, use, and protect your data</li>
         </ol>
 
         <hr className='my-4'/>
@@ -194,7 +194,7 @@ className="text-lg text-gray-600 mb-6"
         <p className='mt-4 mb-2 font-bold' style={{ fontSize: '18px' }}>
             Data Protection
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             A.S.K Foundation complies with international laws such as GDPR and NDPR to protect your personal data.
         </p>
 
@@ -205,37 +205,37 @@ className="text-lg text-gray-600 mb-6"
             Your information will:
         </p>
         <ul className='ml-8 list-disc'>
-            <li className='mb-2' >Not be used for commercial purposes.</li>
-            <li className='mb-2' >Be used internally for accountability, transparency, and reporting to donors.</li>
+            <li className='mb-2 text-justify' >Not be used for commercial purposes.</li>
+            <li className='mb-2 text-justify' >Be used internally for accountability, transparency, and reporting to donors.</li>
         </ul>
 
         <p className='mt-4 mb-2 font-bold' style={{ fontSize: '18px' }}>
             Account Creation and Usage
         </p>
         <ul className='ml-8 list-disc'>
-            <li className='mb-2' >Each user is permitted to create only one account on the A.S.K Foundation platform</li>
-            <li className='mb-2' >Creating multiple accounts is strictly prohibited.</li>
-            <li className='mb-2' >Any user found to have created multiple accounts will be immediately disqualified as a beneficiary of A.S.K Foundation programs</li>
+            <li className='mb-2 text-justify' >Each user is permitted to create only one account on the A.S.K Foundation platform</li>
+            <li className='mb-2 text-justify' >Creating multiple accounts is strictly prohibited.</li>
+            <li className='mb-2 text-justify' >Any user found to have created multiple accounts will be immediately disqualified as a beneficiary of A.S.K Foundation programs</li>
         </ul>
 
         <p className='mt-4 mb-2 font-bold' style={{ fontSize: '18px' }}>
             Processing Fees
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             A.S.K Foundation reserves the right to introduce processing fees (e.g., for KYC verification) without prior notice. Continued use of the Service constitutes acceptance of these fees. 
         </p>
 
         <p className='mt-4 mb-2 font-bold' style={{ fontSize: '18px' }}>
             Advertisements
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             We may include paid advertisements on the platform to support internal revenue. No user data will be shared with advertisers 
         </p>
 
         <p className='mt-4 mb-2 font-bold' style={{ fontSize: '18px' }}>
             Third-Party Website Management
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             Our website is managed by external providers bound by our data protection policies. 
         </p>
 
@@ -244,7 +244,7 @@ className="text-lg text-gray-600 mb-6"
         <p className='mt-4 mb-2' style={{ fontSize: '18px' }}>
             {'Indemnity'.toUpperCase()}
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             You agree to indemnify and hold harmless the A.S.K Foundation, its Affiliates, officers, and service providers from and against any claims, damages, or losses arising from:
         </p>
 
@@ -259,7 +259,7 @@ className="text-lg text-gray-600 mb-6"
         <p className='mt-4 mb-2' style={{ fontSize: '18px' }}>
             {'Links to Other Websites'.toUpperCase()}
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             Our Service may include links to third-party websites. We do not control their content, policies, or practices and disclaim liability for any issues arising from their use.
         </p>
 
@@ -268,7 +268,7 @@ className="text-lg text-gray-600 mb-6"
         <p className='mt-4 mb-2' style={{ fontSize: '18px' }}>
             {'Termination'.toUpperCase()}
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             We may suspend or terminate access to the Service without notice if You breach these Terms.
         </p>
 
@@ -277,13 +277,13 @@ className="text-lg text-gray-600 mb-6"
         <p className='mt-4 mb-2' style={{ fontSize: '18px' }}>
             {'Governing Law'.toUpperCase()}
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             This Agreement is governed by the laws of the Federal Republic of Nigeria.
         </p>
         <p className='mt-4 mb-2 font-bold' style={{ fontSize: '18px' }}>
             Dispute Resolution
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             In case of disputes, You agree to attempt informal resolution by contacting Us at <strong><a onClick={() => {window.location.href = "mailto:info@askfoundations.org";}}>info@askfoundations.org</a></strong> before pursuing legal remedies.
         </p>
 
@@ -295,14 +295,14 @@ className="text-lg text-gray-600 mb-6"
         <p className='mt-4 mb-2 font-bold' style={{ fontSize: '18px' }}>
             Severability
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             If any part of these Terms is found invalid, the remaining provisions will remain enforceable.
         </p>
 
         <p className='mt-4 mb-2 font-bold' style={{ fontSize: '18px' }}>
             Waiver
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             Failure to enforce any provision does not constitute a waiver of that provision. 
         </p>
 
@@ -311,7 +311,7 @@ className="text-lg text-gray-600 mb-6"
         <p className='mt-4 mb-2' style={{ fontSize: '18px' }}>
             {'Changes to These Terms and Conditions'.toUpperCase()}
         </p>
-        <p className='mb-2' >
+        <p className='mb-2 text-justify' >
             A.S.K Foundation reserves the right to modify these Terms at any time. Changes will be effective upon posting. Continued use signifies acceptance of updated terms.
         </p>
 
@@ -328,7 +328,7 @@ className="text-lg text-gray-600 mb-6"
             <li className='mb-2' ><strong>Visit:</strong> www.askfoundations.org</li>
         </ul>
 
-        <p className='mt-4 mb-2' >
+        <p className='mt-4 mb-2 text-justify' >
             By using the A.S.K Foundation Website, You agree to these Terms and Conditions. 
         </p>
     </div>

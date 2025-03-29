@@ -4,7 +4,7 @@ function HeaderParallax({ imageUrl, title, subtitle  }) {
 
   return (
     <div
-      className="relative h-[300px] overflow-hidden"
+      className="relative h-[150px] overflow-hidden"
       style={{
         backgroundImage: `url(${imageUrl})`,
         backgroundAttachment: 'fixed',

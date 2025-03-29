@@ -54,16 +54,16 @@ export default function SingleBeneficiaryPage() {
 
                 <div className="w-full max-w-3xl mt-4">
                     <Carousel 
-                        showIndicators={true}
+                        showIndicators={false}
                         showArrows={true}
                         showStatus={false}
-                        showThumbs={true}
+                        showThumbs={false}
                         infiniteLoop={false}
                         autoPlay={false} // 👈 Disabled auto-slide
                         swipeable={true} // 👈 Enables manual swiping
                         emulateTouch={true} // ✅ Fix swipe gestures on mobile
                         // useKeyboardArrows={true} // ✅ Allow left/right keyboard navigation
-                        dynamicHeight={true} // 👈 Adjusts height based on content
+                        // dynamicHeight={true} // 👈 Adjusts height based on content
                     >
                         {allItems?.map((item) => (
                             <div key={item.id} className="flex flex-col items-center">

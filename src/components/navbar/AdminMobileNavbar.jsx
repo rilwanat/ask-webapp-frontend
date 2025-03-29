@@ -109,6 +109,11 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 
+  
+  const navigateTo = (route, data) => {
+    navigate(route, { state: data });
+  };
+
 
   return (
     <div className="fixed top-0 left-0 w-full z-50    flex flex-col bg-white shadow-lg px-4" style={{ height: '80px' }}>
@@ -126,7 +131,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
 
         <div className="flex items-center " style={{ height: '80px' }}>
 
-        {/* <DonateAndAsk /> */}
+        <DonateAndAsk />
 
 
           <div className="md:flex justify-end" style={{}}>
@@ -143,13 +148,13 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
                             onClick={toggleMenu}
                             style={{ height: '40px', borderRadius: '4px' }}
                         >
-                            <MenuIcon className='mr-1'/>
-                            <p
+                            <MenuIcon className=''/>
+                            {/* <p
                                 className="text-sm cursor-pointer"
                                 style={{ fontWeight: '600' }}
                             >
                                 Menu
-                            </p>
+                            </p> */}
                         </div>
             {/* <IconButton
               edge="start"
@@ -262,7 +267,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          // onClick={() => {gotoPage('requests');}}
+          onClick={() => {navigateTo('/single-request', { selectedItem: carouselItems[0], allItems: carouselItems  });}}
         >
           Requests
         </motion.span>
@@ -273,9 +278,9 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          // onClick={() => {gotoPage('gallery');}}
+          onClick={() => {navigateTo('/single-beneficiary', { selectedItem: carouselItems[0], allItems: carouselItems  });}}
         >
-          Gallery
+          Beneficiary
         </motion.span>
 
         <motion.span
@@ -284,21 +289,12 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          // onClick={() => {gotoPage('gallery');}}
+          onClick={() => {navigateTo('/single-sponsor', { selectedItem: carouselItems[0], allItems: carouselItems  });}}
         >
           Sponsor
         </motion.span>
 
-        <motion.span
-          variants={menuItemVariants}
-          initial="hidden"
-          animate={isMenuOpen ? "visible" : "hidden"}
-          className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
-          style={{ fontWeight: '600' }}
-          // onClick={() => {gotoPage('gallery');}}
-        >
-          Beneficiary
-        </motion.span>
+
 
         <motion.span
           variants={menuItemVariants}

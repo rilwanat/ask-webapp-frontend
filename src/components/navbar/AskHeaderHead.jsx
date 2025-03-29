@@ -47,7 +47,9 @@ export default function AskHeaderHead({}) {
     };
 
 
-
+    const navigateTo = (route, data) => {
+        navigate(route, { state: data });
+      };
 
     useEffect(() => {
         // Initial useEffect logic if needed
@@ -104,7 +106,7 @@ export default function AskHeaderHead({}) {
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
                             onClick={() => {
-                                // navigate('/requests');
+                                navigateTo('/single-request', { selectedItem: carouselItems[0], allItems: carouselItems  });
                             }}
                         >
                             <p
@@ -118,21 +120,21 @@ export default function AskHeaderHead({}) {
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
                             onClick={() => {
-                                // navigate('/gallery');
+                                navigateTo('/single-beneficiary', { selectedItem: carouselItems[0], allItems: carouselItems  });
                             }}
                         >
                             <p
                                 className="text-sm cursor-pointer"
                                 style={{ fontWeight: '600' }}
                             >
-                                Gallery
+                                Beneficiary
                             </p>
                         </div>
 
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
                             onClick={() => {
-                                // navigate('/gallery');
+                                navigateTo('/single-sponsor', { selectedItem: carouselItems[0], allItems: carouselItems  });
                             }}
                         >
                             <p
@@ -143,19 +145,7 @@ export default function AskHeaderHead({}) {
                             </p>
                         </div>
 
-                        <div
-                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
-                            onClick={() => {
-                                // navigate('/gallery');
-                            }}
-                        >
-                            <p
-                                className="text-sm cursor-pointer"
-                                style={{ fontWeight: '600' }}
-                            >
-                                Beneficiary
-                            </p>
-                        </div>
+
 
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"

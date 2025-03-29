@@ -109,7 +109,7 @@ A community-based charity initiative
 
         <div className='flex flex-col sm:flex-row relative'>
             <div className='md:w-5/5'>
-                <p className='my-0 pt-2' style={{ fontSize: '18px', color: '#000000' }}>
+                <p className='my-0 pt-2 text-justify' style={{ fontSize: '18px', color: '#000000' }}>
                     The A.S.K. Foundation is a community-based charity that honors Madam Esther Ashabi Shobande Kokumo's legacy. 
                     It uses a fair and open process (CBSPro) to choose people to help, making sure everyone has an equal chance. 
                     This approach respects people's dignity and mental health. By being efficient and targeting real needs, 

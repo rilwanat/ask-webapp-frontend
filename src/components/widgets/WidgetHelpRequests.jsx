@@ -124,8 +124,8 @@ const WidgetHelpRequests = () => {
                   <p className="text-theme mt-2">{item.description}</p>
                 </div>
                 <div className='flex flex-col items-center'>
-                  <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'>Nominate <CheckIcon className='ml-2' /></div>
-                  <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'>Share <ShareIcon className='ml-2' /></div>
+                  <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-red-700 text-white p-2 my-1'>Nominate <CheckIcon className='ml-2' /></div>
+                  <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-red-700 text-white p-2 my-1'>Share <ShareIcon className='ml-2' /></div>
                 </div>
                 
               </div>
