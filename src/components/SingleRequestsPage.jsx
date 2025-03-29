@@ -26,7 +26,11 @@ import ShareIcon from '@mui/icons-material/Share';
 
 
 
-export default function SingleRequestsPage() {
+export default function SingleRequestsPage({ 
+    currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
+    currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
+    currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+ }) {
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -41,13 +45,17 @@ export default function SingleRequestsPage() {
 
     return (
         <div className="">
-            <AskHeader gotoPage={gotoPage} showMarqees={false} />
+            <AskHeader 
+            carouselRequestItems={carouselRequestItems} 
+            carouselBeneficiaryItems={carouselBeneficiaryItems}
+            carouselSponsorItems={carouselSponsorItems} 
+            gotoPage={gotoPage} showMarqees={false} />
 
             
             {/* <Hero/> */}
             <HeaderParallax 
                 // imageUrl={askLogo}
-                title={"This is a sample Implementation"}
+                title={"This is a sample Requests Implementation"}
                 subtitle={"..and will be improved"}
             />
 

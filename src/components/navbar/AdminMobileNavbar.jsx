@@ -81,7 +81,7 @@ const menuItemVariants = {
 
 
 
-export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage }) {
+export default function AdminMobileNavbar({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage }) {
 
   const navigate = useNavigate();
   
@@ -267,7 +267,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/single-request', { selectedItem: carouselItems[0], allItems: carouselItems  });}}
+          onClick={() => {navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });}}
         >
           Requests
         </motion.span>
@@ -278,7 +278,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/single-beneficiary', { selectedItem: carouselItems[0], allItems: carouselItems  });}}
+          onClick={() => {navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });}}
         >
           Beneficiary
         </motion.span>
@@ -289,7 +289,7 @@ export default function AdminMobileNavbar({ isLive, parsedAdminData, gotoPage })
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/single-sponsor', { selectedItem: carouselItems[0], allItems: carouselItems  });}}
+          onClick={() => {navigateTo('/single-sponsor', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });}}
         >
           Sponsor
         </motion.span>

@@ -18,6 +18,107 @@ import SingleBeneficiaryPage from './components/SingleBeneficiaryPage.jsx';
 
 function App() {
   
+
+  const [currentRequestSlide, setCurrentRequestSlide] = useState(0);
+    const [currentBeneficiarySlide, setCurrentBeneficiarySlide] = useState(0);
+    const [currentSponsorSlide, setCurrentSponsorSlide] = useState(0);
+
+        // Sample carouseRequestlItems
+        const carouselRequestItems = [
+            {
+              id: 1,
+              image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+              title: "Community Support",
+              description: "My name is .. and ...",
+              score: "81"
+            },
+            {
+              id: 2,
+              image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+              title: "Environmental Care",
+              description: "Good morning, My name is .. and ...",
+              score: "93"
+            },
+            {
+              id: 3,
+              image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+              title: "Youth Empowerment",
+              description: "I am a .. and ...",
+              score: "44"
+            }
+          ];
+    
+      // Sample carouselBeneficiaryItems
+      const carouselBeneficiaryItems = [
+        {
+          id: 1,
+          image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+          title: "Community Support",
+          description: "My name is .. and ...",
+          score: "81",
+          name: "Mr Audu Eze",
+          date: "2025-02-24 03:47:17",
+          price: "N30,000.00"
+        },
+        {
+          id: 2,
+          image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+          title: "Environmental Care",
+          description: "Good morning, My name is .. and ...",
+          score: "93",
+          name: "Mrs Chiamaka James",
+          date: "2025-02-24 03:47:17",
+          price: "N40,000.00"
+        },
+        {
+          id: 3,
+          image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+          title: "Youth Empowerment",
+          description: "I am a .. and ...",
+          score: "44",
+          name: "Ms Jane Paul",
+          date: "2025-02-24 03:47:17",
+          price: "N50,000.00"
+        }
+      ];
+      
+      // Sample carouselSponsorItems
+        const carouselSponsorItems = [
+          {
+            id: 1,
+            image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            title: "Community Support",
+            description: "My name is .. and ...",
+            score: "81",
+            name: "Sponsor One",
+            date: "2025-02-24 03:47:17",
+            price: "N30,000.00"
+          },
+          {
+            id: 2,
+            image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            title: "Environmental Care",
+            description: "Good morning, My name is .. and ...",
+            score: "93",
+            name: "Sponsor One",
+            date: "2025-02-24 03:47:17",
+            price: "N40,000.00"
+          },
+          {
+            id: 3,
+            image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            title: "Youth Empowerment",
+            description: "I am a .. and ...",
+            score: "44",
+            name: "Sponsor One",
+            date: "2025-02-24 03:47:17",
+            price: "N50,000.00"
+          }
+        ];
+
+
+
+
   useEffect(() => {
     // initAuth();
   }, []);
@@ -30,17 +131,49 @@ function App() {
           <Routes>
 
             <Route path="/*" element={<div>NOT FOUND</div>} />            
-            <Route path='/' element={<LandingPage  />}/>
-            <Route path='/about-us' element={<AboutUsPage  />}/>
-            <Route path='/contact-us' element={<ContactUsPage  />}/>
+            <Route path='/' element={<LandingPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            />}/>
+            <Route path='/about-us' element={<AboutUsPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             />}/>
+            <Route path='/contact-us' element={<ContactUsPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             />}/>
 
 
-            <Route path='/terms-and-conditions' element={<TermsAndConditionsPage  />}/>
-            <Route path='/privacy-policy' element={<PrivacyPolicyPage  />}/>
+            <Route path='/terms-and-conditions' element={<TermsAndConditionsPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             />}/>
+            <Route path='/privacy-policy' element={<PrivacyPolicyPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             />}/>
 
-            <Route path='/single-request' element={<SingleRequestsPage  />}/>
-            <Route path='/single-sponsor' element={<SingleSponsorPage  />}/>
-            <Route path='/single-beneficiary' element={<SingleBeneficiaryPage  />}/>
+            <Route path='/single-request' element={<SingleRequestsPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             />}/>
+            <Route path='/single-sponsor' element={<SingleSponsorPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             />}/>
+            <Route path='/single-beneficiary' element={<SingleBeneficiaryPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             />}/>
             
             </Routes>
             

@@ -24,7 +24,12 @@ import WidgetVideo from './widgets/WidgetVideo';
 
 
 
-export default function LandingPage() {
+export default function LandingPage({ 
+    currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
+    currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
+    currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+
+}) {
     const navigate = useNavigate();
     
     // const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
@@ -34,32 +39,40 @@ export default function LandingPage() {
         navigate("/" + pageName)
     }
 
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         setIsMobile(window.innerWidth <= 500);
-    //     };
 
-    //     window.addEventListener('resize', handleResize);
-    //     return () => {
-    //         window.removeEventListener('resize', handleResize);
-    //     };
-    // }, []);
-
+    
+    
 
     return (
         <div className="">
-            <AskHeader gotoPage={gotoPage} showMarqees={false} />
+            <AskHeader 
+            carouselRequestItems={carouselRequestItems} 
+            carouselBeneficiaryItems={carouselBeneficiaryItems}
+            carouselSponsorItems={carouselSponsorItems} 
+            gotoPage={gotoPage} showMarqees={false} />
 
             
             <Hero/>
 
             <WidgetAboutForHome/>
 
-            <WidgetHelpRequests/>
+            <WidgetHelpRequests 
+            currentRequestSlide={currentRequestSlide} 
+            carouselRequestItems={carouselRequestItems} 
+            setCurrentRequestSlide={setCurrentRequestSlide}
+            />
 
-            <WidgetBeneficiaries/>
+            <WidgetBeneficiaries 
+            currentBeneficiarySlide={currentBeneficiarySlide} 
+            carouselBeneficiaryItems={carouselBeneficiaryItems} 
+            setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            />
 
-            <WidgetSponsors/>
+            <WidgetSponsors 
+            currentSponsorSlide={currentSponsorSlide} 
+            carouselSponsorItems={carouselSponsorItems} 
+            setCurrentSponsorSlide={setCurrentSponsorSlide}
+            />
 
             <WidgetVideo />
 

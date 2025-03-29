@@ -17,7 +17,11 @@ import Contact from './widgets/Contact';
 
 
 
-export default function ContactUsPage() {
+export default function ContactUsPage({ 
+    currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
+    currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
+    currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+ }) {
     const navigate = useNavigate();
 
     // const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
@@ -40,7 +44,11 @@ export default function ContactUsPage() {
 
     return (
         <div className="">
-            <AskHeader gotoPage={gotoPage} showMarqees={false} />
+            <AskHeader 
+            carouselRequestItems={carouselRequestItems} 
+            carouselBeneficiaryItems={carouselBeneficiaryItems}
+            carouselSponsorItems={carouselSponsorItems} 
+            gotoPage={gotoPage} showMarqees={false} />
 
             
             {/* <Hero/> */}

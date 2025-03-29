@@ -20,7 +20,11 @@ import Contact from './widgets/Contact';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-export default function SingleSponsorPage() {
+export default function SingleSponsorPage({ 
+    currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
+    currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
+    currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+ }) {
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -35,13 +39,17 @@ export default function SingleSponsorPage() {
 
     return (
         <div className="">
-            <AskHeader gotoPage={gotoPage} showMarqees={false} />
+            <AskHeader 
+            carouselRequestItems={carouselRequestItems} 
+            carouselBeneficiaryItems={carouselBeneficiaryItems}
+            carouselSponsorItems={carouselSponsorItems} 
+            gotoPage={gotoPage} showMarqees={false} />
 
             
             {/* <Hero/> */}
             <HeaderParallax 
                 // imageUrl={askLogo}
-                title={"This is a sample Implementation"}
+                title={"This is a sample Sponsor Implementation"}
                 subtitle={"..and will be improved"}
             />
 

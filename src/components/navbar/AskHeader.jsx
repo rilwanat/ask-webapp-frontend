@@ -5,7 +5,7 @@ import AdminMobileNavbar from './AdminMobileNavbar';
 
 import MarqueeTextContainer from "./MarqueeTextContainer";
 
-export default function AskHeader({ gotoPage, showMarqees}) {
+export default function AskHeader({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage, showMarqees}) {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
 
     useEffect(() => {
@@ -27,11 +27,19 @@ export default function AskHeader({ gotoPage, showMarqees}) {
         <div>
             { showMarqees ? <MarqueeTextContainer /> : <div></div> }
             <div>
-                {isMobile ? <AdminMobileNavbar gotoPage={gotoPage} /> : <div></div>}
+                {isMobile ? <AdminMobileNavbar 
+                carouselRequestItems={carouselRequestItems} 
+                carouselBeneficiaryItems={carouselBeneficiaryItems}
+                carouselSponsorItems={carouselSponsorItems}
+                gotoPage={gotoPage} /> : <div></div>}
             </div>
             <div className="flex w-full">
                 <div className="w-full">
-                    {isMobile ? <div></div> : <AskHeaderHead gotoPage={gotoPage} />}
+                    {isMobile ? <div></div> : <AskHeaderHead 
+                    carouselRequestItems={carouselRequestItems} 
+                    carouselBeneficiaryItems={carouselBeneficiaryItems}
+                    carouselSponsorItems={carouselSponsorItems}
+                    gotoPage={gotoPage} />}
                 </div>
             </div>
         </div>

@@ -17,7 +17,11 @@ import WidgetAboutForAbout from './widgets/WidgetAboutForAbout';
 
 
 
-export default function AboutUsPage() {
+export default function AboutUsPage({ 
+    currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
+    currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
+    currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+}) {
     const navigate = useNavigate();
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
@@ -40,7 +44,11 @@ export default function AboutUsPage() {
 
     return (
         <div className="">
-            <AskHeader gotoPage={gotoPage} showMarqees={false} />
+            <AskHeader 
+            carouselRequestItems={carouselRequestItems} 
+            carouselBeneficiaryItems={carouselBeneficiaryItems}
+            carouselSponsorItems={carouselSponsorItems} 
+            gotoPage={gotoPage} showMarqees={false} />
 
             
             {/* <Hero/> */}

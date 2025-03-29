@@ -31,7 +31,7 @@ import AccountOptions from '../widgets/AccountOptions';
 
 
 
-export default function AskHeaderHead({}) {
+export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems }) {
     const navigate = useNavigate();
     
 
@@ -106,7 +106,7 @@ export default function AskHeaderHead({}) {
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
                             onClick={() => {
-                                navigateTo('/single-request', { selectedItem: carouselItems[0], allItems: carouselItems  });
+                                navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });
                             }}
                         >
                             <p
@@ -120,7 +120,7 @@ export default function AskHeaderHead({}) {
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
                             onClick={() => {
-                                navigateTo('/single-beneficiary', { selectedItem: carouselItems[0], allItems: carouselItems  });
+                                navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });
                             }}
                         >
                             <p
@@ -134,7 +134,7 @@ export default function AskHeaderHead({}) {
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
                             onClick={() => {
-                                navigateTo('/single-sponsor', { selectedItem: carouselItems[0], allItems: carouselItems  });
+                                navigateTo('/single-sponsor', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });
                             }}
                         >
                             <p

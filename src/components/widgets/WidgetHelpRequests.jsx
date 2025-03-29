@@ -12,39 +12,17 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share'; 
 
-const WidgetHelpRequests = () => {
+const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurrentRequestSlide }) => {
   const navigate = useNavigate();
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [zoomedItemId, setZoomedItemId] = useState(null);
+  // const [currentRequestSlide, setCurrentRequestSlide] = useState(0);
+  // const [zoomedItemId, setZoomedItemId] = useState(null);
 
   const navigateTo = (route, data) => {
     navigate(route, { state: data });
   };
 
   // Sample carousel data
-  const carouselItems = [
-    {
-      id: 1,
-      image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      title: "Community Support",
-      description: "My name is .. and ...",
-      score: "81"
-    },
-    {
-      id: 2,
-      image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      title: "Environmental Care",
-      description: "Good morning, My name is .. and ...",
-      score: "93"
-    },
-    {
-      id: 3,
-      image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      title: "Youth Empowerment",
-      description: "I am a .. and ...",
-      score: "44"
-    }
-  ];
+
 
   return (
     <div className="w-full mt-4">
@@ -92,12 +70,12 @@ const WidgetHelpRequests = () => {
               infiniteLoop={true}
               autoPlay={true}
               interval={5000}
-              selectedItem={currentSlide}
-              onChange={(index) => setCurrentSlide(index)}
+              selectedItem={currentRequestSlide}
+              onChange={(index) => setCurrentRequestSlide(index)}
               className="rounded-lg overflow-hidden  w-full"
             >
             
-              {carouselItems.map((item, index) => (
+              {carouselRequestItems.map((item, index) => (
                 <div key={item.id} className="flex flex-col h-full"
                 onClick={() => {navigateTo('/single-request', { selectedItem: item, allItems: carouselItems  });}}
                 >
@@ -108,15 +86,15 @@ const WidgetHelpRequests = () => {
                     src={item.image}
                     alt={item.title}
                     style={{
-                      transform: zoomedItemId === index ? 'scale(1.05)' : 'scale(1)',
+                      // transform: zoomedItemId === index ? 'scale(1.05)' : 'scale(1)',
                       transition: 'transform 0.8s ease',
                       maxHeight: '70vh', // Adjust this as needed
                       width: 'auto',
                       margin: '0 auto',
                       display: 'block'
                     }}
-                    onMouseEnter={() => setZoomedItemId(index)}
-                    onMouseLeave={() => setZoomedItemId(null)}
+                    // onMouseEnter={() => setZoomedItemId(index)}
+                    // onMouseLeave={() => setZoomedItemId(null)}
                   />
                 </div>
                 <div className="p-4 mt-auto">

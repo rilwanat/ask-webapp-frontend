@@ -17,7 +17,11 @@ import HeaderParallax from './widgets/HeaderParallax';
 
 
 
-export default function TermsAndConditionsPage() {
+export default function TermsAndConditionsPage({ 
+    currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
+    currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
+    currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+ }) {
     const navigate = useNavigate();
 
     // const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
@@ -40,7 +44,11 @@ export default function TermsAndConditionsPage() {
 
     return (
         <div className="">
-            <AskHeader gotoPage={gotoPage} showMarqees={false} />
+            <AskHeader 
+            carouselRequestItems={carouselRequestItems} 
+            carouselBeneficiaryItems={carouselBeneficiaryItems}
+            carouselSponsorItems={carouselSponsorItems} 
+            gotoPage={gotoPage} showMarqees={false} />
 
             
             {/* <Hero/> */}
