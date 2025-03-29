@@ -55,7 +55,7 @@ const Hero = ({  }) => {
   }
 
   return (
-      <div className="relative w-full  h-[400px] overflow-hidden">
+      <div className="relative w-full  h-[400px] overflow-hidden mt-20 sm:mt-0">
 
       <AnimatePresence>
         <motion.img
