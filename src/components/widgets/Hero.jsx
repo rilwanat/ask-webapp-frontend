@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 import hero1 from '../../assets/images/hero/hero1.jpg';
+import hero2 from '../../assets/images/hero/hero2.jpg';
 
 const Hero = ({  }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -11,7 +12,7 @@ const Hero = ({  }) => {
   //
   const images = [
     hero1,
-    hero1,
+    hero2,
     hero1,
   ];
 
