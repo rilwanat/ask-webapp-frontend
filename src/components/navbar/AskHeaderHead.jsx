@@ -57,13 +57,14 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
 
 
     return (
-        <div className="flex flex-col h-auto px-4 sm:px-16 md:px-32 py-4 pb-4 bg-white shadow-lg">
+        <div className="fixed top-0 left-0 w-full z-50   flex flex-col h-auto px-4 sm:px-16 md:px-32 py-4 pb-4 bg-theme shadow-lg">
             
 
             <div className="flex flex-col md:flex-row justify-between items-center">
                 <div className="flex items-center mr-8">
                     <img
-                        className="block h-24 w-auto max-w-none"
+                        // className="block h-24 w-auto max-w-none"
+                        className="absolute top-4 block h-24 w-auto max-w-none"
                         src={askLogo}
                         alt="Logo"
                         onClick={() => {
@@ -73,7 +74,7 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
                     />
                 </div>
 
-                <div className='text-center w-full'>
+                <div className='text-center w-full text-white'>
                     <div className="flex items-center z-50" style={{ height: "40px" }}>
                         {/* <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
@@ -90,7 +91,7 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
                         </div> */}
 
                         <div
-                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
+                            className="cursor-pointer ml-24 px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
                                 navigate('/about-us');
                             }}
@@ -104,7 +105,7 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
                         </div>
 
                         <div
-                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
                                 navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });
                             }}
@@ -118,7 +119,7 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
                         </div>
 
                         <div
-                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
                                 navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });
                             }}
@@ -132,7 +133,7 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
                         </div>
 
                         <div
-                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
                                 navigateTo('/single-sponsor', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });
                             }}
@@ -148,7 +149,7 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
 
 
                         <div
-                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
                                 navigate('/contact-us');
                             }}
