@@ -31,7 +31,7 @@ const WidgetDonateAndAsk = ({ }) => {
     return(
 <div className='flex mr-2'>
 <div
-                            className="flex items-center cursor-pointer px-2 py-1 rounded-md mr-1  bg-softTheme hover:bg-theme hover:text-white"
+                            className="flex items-center cursor-pointer px-2 py-1 rounded-md mr-1 text-white bg-theme  hover:bg-white hover:text-theme"
                             onClick={() => {
                                 // navigate('/donate');
                             }}
@@ -46,7 +46,7 @@ const WidgetDonateAndAsk = ({ }) => {
                         </div>
 
                         <div
-                            className="flex items-center cursor-pointer px-2 py-1 rounded-md ml-1 text-white  bg-red-700 hover:bg-theme hover:text-white"
+                            className="flex items-center cursor-pointer px-2 py-1 rounded-md ml-1 text-white  bg-red-700 hover:bg-white hover:text-theme"
                             onClick={() => {
                                 // navigate('/i-ask');
                             }}

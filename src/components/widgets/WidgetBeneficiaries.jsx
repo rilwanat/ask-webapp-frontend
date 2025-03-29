@@ -95,10 +95,15 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
                     // onMouseLeave={() => setZoomedItemId(null)}
                   />
                 </div>
-                <div className="p-4 mt-auto">
+                <div className="pt-4 mt-auto">
                   <h3 className="text-2xl font-bold text-theme">{item.name}</h3>
                   <p className="text-theme font-bold mt-1">{item.price}</p>
                   <p className="text-theme mt-1">{item.date}</p>
+                </div>
+                <div className="flex flex-col items-center  mt-auto">
+                  {/* <h3 className="text-2xl font-bold text-theme">{item.score}</h3> */}
+                  <div className='flex  p-1 rounded-lg items-center justify-center w-70 bg-softTheme mt-2'><p className="text-theme">{'remark: ' + item.remark}</p> </div>
+                  <div className='flex  p-1 rounded-lg items-center justify-center w-70 bg-softTheme mt-2'><p className="text-theme">{'status: ' + item.status}</p></div>
                 </div>
                 
                 

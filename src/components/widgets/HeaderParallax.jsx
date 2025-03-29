@@ -4,7 +4,7 @@ function HeaderParallax({ imageUrl, title, subtitle  }) {
 
   return (
     <div
-      className="relative h-[150px] overflow-hidden mt-20 sm:mt-0"
+      className="relative h-[150px] overflow-hidden mt-20 sm:mt-20"
       style={{
         backgroundImage: `url(${imageUrl})`,
         backgroundAttachment: 'fixed',
@@ -17,10 +17,10 @@ function HeaderParallax({ imageUrl, title, subtitle  }) {
         <p className="text-lg z-1000">{subtitle}</p> */}
       </div>
 
-      <div className="absolute inset-0  flex flex-col justify-center items-center text-gray-200 text-center p-4">
+      {/* <div className="absolute inset-0  flex flex-col justify-center items-center text-gray-200 text-center p-4">
         <h2 className="text-3xl font-bold mb-2 z-[90]">{title}</h2>
         <p className="text-lg z-1000">{subtitle}</p>        
-      </div>
+      </div> */}
     </div>
   );
 }

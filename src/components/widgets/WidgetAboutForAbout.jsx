@@ -102,12 +102,12 @@ A community-based charity initiative
         transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 }} // Smooth animation
         className="flex flex-col w-full h-full items-center justify-center mt-4"
     >
-        {/*       
-        <div className='flex flex-col items-center justify-center mt-16 mb-2'>
-            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>About Us</p>
+              
+        <div className='flex flex-col items-start justify-center mt-16 mb-2  w-full'>
+            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Our Mission</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
         </div> 
-        */}
+       
 
         <div className='flex flex-col sm:flex-row '>
             <div className=''>
@@ -227,6 +227,13 @@ For donors committed to making a real difference, the A.S.K. Foundation serves a
 
 
 
+
+
+
+<div className='flex flex-col items-start justify-center mt-16 mb-2  w-full'>
+            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Our Vision</p>
+            <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
+        </div> 
 
 <div className='flex flex-col sm:flex-row mb-8'>
             <div className=''>

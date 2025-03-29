@@ -97,9 +97,10 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
                     // onMouseLeave={() => setZoomedItemId(null)}
                   />
                 </div>
-                <div className="p-4 mt-auto">
+                <div className="flex flex-col items-center p-4 mt-auto">
                   <h3 className="text-2xl font-bold text-theme">{item.score}</h3>
-                  <p className="text-theme mt-2">{item.description}</p>
+                  <div className='flex  p-1 rounded-lg items-center justify-center w-70 bg-softTheme mt-2'><p className="text-theme">{'remark: ' + item.remark}</p> </div>
+                  <div className='flex  p-1 rounded-lg items-center justify-center w-70 bg-softTheme mt-2'><p className="text-theme">{'status: ' + item.status}</p></div>
                 </div>
                 <div className='flex flex-col items-center'>
                   <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-red-700 text-white p-2 my-1'>Nominate <CheckIcon className='ml-2' /></div>

@@ -30,21 +30,27 @@ function App() {
               image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
               title: "Community Support",
               description: "My name is .. and ...",
-              score: "81"
+              score: "81",
+              remark: "Financial Support",
+              status: "Processing"
             },
             {
               id: 2,
               image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
               title: "Environmental Care",
               description: "Good morning, My name is .. and ...",
-              score: "93"
+              score: "93",
+              remark: "Financial Support",
+              status: "Processing"
             },
             {
               id: 3,
               image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
               title: "Youth Empowerment",
               description: "I am a .. and ...",
-              score: "44"
+              score: "44",
+              remark: "Financial Support",
+              status: "Processing"
             }
           ];
     
@@ -58,7 +64,9 @@ function App() {
           score: "81",
           name: "Mr Audu Eze",
           date: "2025-02-24 03:47:17",
-          price: "N30,000.00"
+          price: "N30,000.00",
+          remark: "Financial Support",
+          status: "Processed"
         },
         {
           id: 2,
@@ -68,7 +76,9 @@ function App() {
           score: "93",
           name: "Mrs Chiamaka James",
           date: "2025-02-24 03:47:17",
-          price: "N40,000.00"
+          price: "N40,000.00",
+          remark: "Financial Support",
+          status: "Processed"
         },
         {
           id: 3,
@@ -78,7 +88,9 @@ function App() {
           score: "44",
           name: "Ms Jane Paul",
           date: "2025-02-24 03:47:17",
-          price: "N50,000.00"
+          price: "N50,000.00",
+          remark: "Financial Support",
+          status: "Processed"
         }
       ];
       

@@ -131,7 +131,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
 
         <div className="flex items-center " style={{ height: '80px' }}>
 
-        <DonateAndAsk />
+        {/* <DonateAndAsk /> */}
 
 
           <div className="md:flex justify-end" style={{}}>
@@ -208,6 +208,11 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           </div> */}
         </div>
       </div>
+
+<div className="fixed top-15 left-35 w-full z-100">
+<DonateAndAsk />
+</div>
+      
 
 
   
