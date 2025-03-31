@@ -54,7 +54,7 @@ export default function ContactUsPage({
             {/* <Hero/> */}
             <HeaderParallax 
                 // imageUrl={askLogo}
-                title={""}
+                title={"Contact Us"}
                 subtitle={""}
             />
 

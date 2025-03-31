@@ -6,6 +6,7 @@ import AskHeader from './navbar/AskHeader';
 import AskFooter from './navbar/AskFooter';
 
 import askLogo from '../assets/images/ask-logo.png';
+import contactUs from '../assets/images/contact-us.jpg';
 
 import { motion } from 'framer-motion';
 
@@ -53,9 +54,9 @@ export default function AboutUsPage({
             
             {/* <Hero/> */}
             <HeaderParallax 
-                // imageUrl={askLogo}
-                title={"About Us"}
-                subtitle={""}
+                // imageUrl={contactUs}
+                title={"About A.S.K Foundation"}
+                subtitle={"A community-based charity initiative"}
             />
 
             <WidgetAboutForAbout/>

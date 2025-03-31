@@ -50,8 +50,8 @@ export default function SingleBeneficiaryPage({
             {/* <Hero/> */}
             <HeaderParallax 
                 // imageUrl={askLogo}
-                title={"This is a sample Beneficiary Implementation"}
-                subtitle={"..and will be improved"}
+                title={"A.S.K Beneficiary"}
+                subtitle={""}
             />
 
             {/* <Contact/> */}

@@ -61,14 +61,14 @@ animate={{ y: 0, opacity: 1 }}
 transition={{ delay: 0.2, duration: 0.5 }}
 className="text-2xl font-bold text-theme mb-2"
 >
-<div className='flex flex-col items-center justify-center mt-0 mb-2'>
+{/* <div className='flex flex-col items-center justify-center mt-0 mb-2'>
 <p className=' mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>About A.S.K Foundation</p>
 <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-</div>
+</div> */}
 
 </motion.h1>
 
-<motion.div
+{/* <motion.div
 initial={{ y: 50, opacity: 0 }}
 animate={{ y: 0, opacity: 1 }}
 transition={{ delay: 0.4, duration: 0.5 }}
@@ -77,7 +77,7 @@ className="text-lg text-gray-600 mb-6"
 <div className='mb-8 text-center' style={{fontSize: '16px',   }}>
 A community-based charity initiative
 </div>
-</motion.div>
+</motion.div> */}
 
 
 
@@ -103,7 +103,7 @@ A community-based charity initiative
         className="flex flex-col w-full h-full items-center justify-center mt-4"
     >
               
-        <div className='flex flex-col items-start justify-center mt-16 mb-2  w-full'>
+        <div className='flex flex-col items-start justify-center mt-0 mb-2  w-full'>
             <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Our Mission</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
         </div> 
@@ -169,10 +169,13 @@ For donors committed to making a real difference, the A.S.K. Foundation serves a
             <div className='p-4 mb-4 rounded-lg bg-theme flex items-center justify-center'>
                 <PublicIcon className='text-white text-3xl' />
             </div>
-            <h2 className="text-2xl font-semibold text-theme">Providing Humanitarian Aid</h2>
+            <h2 className="text-2xl font-semibold text-theme">Initiatives</h2>
         </div>
         <p className="text-lg text-gray-700">
-            We respond to emergencies with medical supplies, shelter, and relief efforts, aiding those in dire situations.
+            <ul className='ml-8 list-disc'>
+                <li>Weekly Fincancial Support</li>
+                <li>Feeding Vulnerable Children</li>
+            </ul>
         </p>
     </div>
 

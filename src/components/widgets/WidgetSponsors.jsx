@@ -23,7 +23,7 @@ const WidgetSponsors = ({ currentSponsorSlide, carouselSponsorItems, setCurrentS
 
 
   return (
-    <div className="w-full mt-4">
+    <div className="w-full mt-4 bg-theme">
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
           <div className="flex flex-col  items-center justify-between">
@@ -45,8 +45,8 @@ const WidgetSponsors = ({ currentSponsorSlide, carouselSponsorItems, setCurrentS
               className="text-2xl font-bold text-gray-800 mb-2"
               >
               <div className='flex flex-col items-center justify-center mt-0 mb-2'>
-              <p className=' mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Sponsors</p>
-              <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
+              <p className='text-softTheme mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Sponsors</p>
+              <div className='bg-softTheme mb-2' style={{ width: '80px', height: '4px' }}></div>
               </div>
               
               </motion.h1>
@@ -74,7 +74,7 @@ const WidgetSponsors = ({ currentSponsorSlide, carouselSponsorItems, setCurrentS
             >
               
               {carouselSponsorItems.map((item, index) => (
-                <div key={item.id} className="flex flex-col h-full"
+                <div key={item.id} className="flex flex-col h-full "
                 onClick={() => {navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselItems  });}}
                 >
                 <div className="flex-1 overflow-hidden ">
@@ -95,7 +95,7 @@ const WidgetSponsors = ({ currentSponsorSlide, carouselSponsorItems, setCurrentS
                   />
                 </div>
                 <div className="p-4 mt-auto">
-                  <h3 className="text-2xl font-bold text-theme">{item.name}</h3>
+                  <h3 className="text-2xl font-bold text-softTheme">{item.name}</h3>
                   {/* <p className="text-theme font-bold mt-1">{item.price}</p> */}
                   {/* <p className="text-theme mt-1">{item.date}</p> */}
                 </div>

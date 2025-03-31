@@ -55,8 +55,8 @@ export default function SingleRequestsPage({
             {/* <Hero/> */}
             <HeaderParallax 
                 // imageUrl={askLogo}
-                title={"This is a sample Requests Implementation"}
-                subtitle={"..and will be improved"}
+                title={"A.S.K Requests"}
+                subtitle={""}
             />
 
             {/* <Contact/> */}

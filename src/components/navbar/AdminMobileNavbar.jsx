@@ -116,7 +116,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
 
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50    flex flex-col bg-white shadow-lg px-4" style={{ height: '80px' }}>
+    <div className="fixed top-0 left-0 w-full z-5000    flex flex-col bg-theme shadow-lg px-4" style={{ height: '80px' }}>
       <div className="flex justify-between">
         <div className="flex items-center">
           <img
@@ -175,7 +175,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           </div>
 
           <div
-            className="bg-theme flex items-center justify-center"
+            className="bg-theme border-1 border-softTheme flex items-center justify-center"
             style={{ height: '40px', width: '40px', borderRadius: '4px' }}
             onClick={() => { toggleAccount(); }}
           >

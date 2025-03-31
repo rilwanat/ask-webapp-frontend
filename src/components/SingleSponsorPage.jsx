@@ -49,8 +49,8 @@ export default function SingleSponsorPage({
             {/* <Hero/> */}
             <HeaderParallax 
                 // imageUrl={askLogo}
-                title={"This is a sample Sponsor Implementation"}
-                subtitle={"..and will be improved"}
+                title={"A.S.K Sponsors"}
+                subtitle={""}
             />
 
             {/* <Contact/> */}

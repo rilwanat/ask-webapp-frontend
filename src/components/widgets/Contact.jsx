@@ -24,6 +24,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import NotificationModal from '../modals/NotificationModal';
 
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+
 const Contact = ({ }) => {
   const navigate = useNavigate();
 
@@ -180,8 +182,8 @@ const isValidEmail = (email) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 py-4 pb-8">
-        <div className="w-full p-4 my-4">
+      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
+        <div className="w-full p-4">
 
 
 
@@ -205,7 +207,7 @@ const isValidEmail = (email) => {
               transition={{ duration: 0.5 }}
               className=" flex items-center justify-center "
               >
-              <div className="mx-auto py-8 ">
+              <div className="mx-auto">
               
               <motion.h1
               initial={{ y: -50, opacity: 0 }}
@@ -213,10 +215,10 @@ const isValidEmail = (email) => {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="text-2xl font-bold text-gray-800 mb-2"
               >
-              <div className='flex flex-col items-center justify-center mt-16 mb-2'>
+              {/* <div className='flex flex-col items-center justify-center mt-0 mb-2'>
               <p className=' mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Contact Us</p>
               <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-              </div>
+              </div> */}
               
               </motion.h1>
               
@@ -263,7 +265,7 @@ const isValidEmail = (email) => {
               
                       
                       
-              <div className=' flex flex-col md:flex-row items-center justify-between mt-4'>
+              <div className=' flex flex-col md:flex-row items-center justify-between mt-0'>
 <div className='flex flex-col w-full md:w-1/3 justify-center items-center rounded-lg shadow-md m-2 p-4 bg-white min-h-[200px]   '>
 <div className="mb-4" style={{ fontWeight: '600', fontSize: '16px' }}>Phone Number</div>
 <LocalPhoneIcon className="mb-2" style={{ width: '40px', height: '40px', color: '#161c34' }}/>
@@ -271,7 +273,7 @@ const isValidEmail = (email) => {
 <div className="px-8 text-center"  style={{fontSize: '16px',   }}>
 <a onClick={() => {window.location.href = "tel:+2349122090051";}}>+234 912 2090 051</a>, 
 <br/><a onClick={() => {window.location.href = "tel:+447864869571";}}>+44 786 4869 571</a>
-<br/><a onClick={() => {window.location.href = "tel:+447864869571";}}>+234 905 1047 138</a>
+<br/><a onClick={() => {window.location.href = "tel:+447864869571";}}><WhatsAppIcon style={{cursor: "pointer", color: "#000000" }}/> +234 905 1047 138</a>
 </div>
 </div>
 <div className='flex flex-col w-full md:w-1/3 justify-center items-center rounded-lg shadow-md m-2 p-4 bg-white min-h-[200px]   '>
@@ -305,9 +307,16 @@ info@askfoundations.org
 
 
 
+              <div className="flex flex-col justify-center items-center text-gray-200 text-center p-4">
+        {/* <h2 className="text-3xl font-bold mb-2 z-90">{title}</h2> */}
+        <div className='bg-theme mb-2 z-90' style={{ width: '80px', height: '4px' }}></div>
+        {/* <p className="text-lg z-90">{subtitle}</p>         */}
+      </div>
 
 
-              <div className=" py-2 mt-8"
+
+
+              <div className=" py-2 mt-0"
 
 
 // style={{

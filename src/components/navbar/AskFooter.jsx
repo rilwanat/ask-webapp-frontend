@@ -120,13 +120,12 @@ function AskFooter({ gotoPage }) {
                             >
                                 Subscribe to our Newsletter
                             </p>
-                            <p
+                            {/* <p
                                 className="text-white"
                                 style={{ color: '', fontSize: '12px' }}
                             >
-                                Connect with people, share similar experiences and history to
-                                better your health experiences and well-being.
-                            </p>
+                                
+                            </p> */}
                         </div>
                         <div className="flex flex-col sm:flex-row relative">
                             <input
