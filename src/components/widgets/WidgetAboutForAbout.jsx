@@ -16,9 +16,12 @@ import HandshakeIcon from '@mui/icons-material/Handshake';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 import PsychologyIcon from '@mui/icons-material/Psychology';
+
+
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
-
-
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import ElderlyIcon from '@mui/icons-material/Elderly';
 
 
 const WidgetAboutForAbout = ({ }) => {
@@ -155,77 +158,56 @@ For donors committed to making a real difference, the A.S.K. Foundation serves a
     <div className="bg-softTheme p-8 rounded-lg">
         <div className='flex flex-col items-start mb-4'>
             <div className='p-4 mb-4 rounded-lg bg-theme flex items-center justify-center'>
-                <LocalShippingIcon className='text-white text-3xl' />
+                <MonetizationOnIcon  className='text-white text-3xl' />
             </div>
-            <h2 className="text-2xl font-semibold text-theme">Alleviating Poverty and Hunger</h2>
+            <h2 className="text-2xl font-semibold text-theme">Economic Empowerment</h2>
         </div>
         <p className="text-lg text-gray-700">
-            We provide food, financial aid, and essential resources to struggling communities, ensuring no one goes hungry.
+        We provide weekly financial support to boost small-scale businesses and encourage entrepreneurial efforts.
         </p>
     </div>
 
     <div className="bg-softTheme p-8 rounded-lg">
         <div className='flex flex-col items-start mb-4'>
             <div className='p-4 mb-4 rounded-lg bg-theme flex items-center justify-center'>
-                <PublicIcon className='text-white text-3xl' />
+                <VolunteerActivismIcon  className='text-white text-3xl' />
             </div>
-            <h2 className="text-2xl font-semibold text-theme">Initiatives</h2>
+            <h2 className="text-2xl font-semibold text-theme">Poverty Alleviation</h2>
         </div>
         <p className="text-lg text-gray-700">
-            <ul className='ml-8 list-disc'>
+            {/* <ul className='ml-8 list-disc'>
                 <li>Weekly Fincancial Support</li>
                 <li>Feeding Vulnerable Children</li>
-            </ul>
+            </ul> */}
+            We aim to eradicate hunger among children and vulnerable young single parents through economic empowerment.
         </p>
     </div>
 
     <div className="bg-softTheme p-8 rounded-lg">
         <div className='flex flex-col items-start mb-4'>
             <div className='p-4 mb-4 rounded-lg bg-theme flex items-center justify-center'>
-                <CompareArrowsIcon className='text-white text-3xl' />
+                <Diversity3Icon  className='text-white text-3xl' />
             </div>
-            <h2 className="text-2xl font-semibold text-gray-800">Supporting Vulnerable Members of Society</h2>
+            <h2 className="text-2xl font-semibold text-gray-800">Humanitarian Aid</h2>
         </div>
         <p className="text-lg text-gray-700">
-            We offer assistance to at-risk groups, including children, the elderly, and marginalized communities, ensuring dignity and care.
+            We offer assistance to young single parents and children, promoting dignity and care.
         </p>
     </div>
 
     <div className="bg-softTheme p-8 rounded-lg">
         <div className='flex flex-col items-start mb-4'>
             <div className='p-4 mb-4 rounded-lg bg-theme flex items-center justify-center'>
-                <PsychologyIcon className='text-white text-3xl' />
+                <ElderlyIcon  className='text-white text-3xl' />
             </div>
-            <h2 className="text-2xl font-semibold text-theme">Fostering Societal Reform</h2>
+            <h2 className="text-2xl font-semibold text-theme">Supporting the Vulnerables</h2>
         </div>
         <p className="text-lg text-gray-700">
-            We promote awareness, education, and community engagement to inspire positive societal transformation and long-term behavioral change.
+        We aim to provide essential support to vulnerable members of society. Promoting safety, dignity and well-being.
         </p>
     </div>
 
-    <div className="bg-softTheme p-8 rounded-lg">
-        <div className='flex flex-col items-start mb-4'>
-            <div className='p-4 mb-4 rounded-lg bg-theme flex items-center justify-center'>
-                <HandshakeIcon className='text-white text-3xl' />
-            </div>
-            <h2 className="text-2xl font-semibold text-theme">Promoting Economic Empowerment</h2>
-        </div>
-        <p className="text-lg text-gray-700">
-            We provide skills training, microloans, and entrepreneurship programs to help individuals achieve financial independence.
-        </p>
-    </div>
 
-    <div className="bg-softTheme p-8 rounded-lg">
-        <div className='flex flex-col items-start mb-4'>
-            <div className='p-4 mb-4 rounded-lg bg-theme flex items-center justify-center'>
-                <VolunteerActivismIcon className='text-white text-3xl' />
-            </div>
-            <h2 className="text-2xl font-semibold text-theme">Encouraging Volunteerism</h2>
-        </div>
-        <p className="text-lg text-gray-700">
-            We foster a culture of giving back by encouraging volunteerism, mentorship, and active participation in social impact initiatives.
-        </p>
-    </div>
 </motion.div>
 
 
