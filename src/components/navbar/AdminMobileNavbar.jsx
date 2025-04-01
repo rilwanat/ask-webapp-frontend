@@ -116,15 +116,15 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
 
 
   return (
-    <div className="fixed top-0 left-0 w-full z-5000    flex flex-col bg-theme shadow-lg px-4" style={{ height: '80px' }}>
+    <div className="fixed top-0 left-0 w-full z-5000    flex flex-col bg-theme shadow-lg px-4" style={{ height: '88px' }}>
       <div className="flex justify-between">
         <div className="flex items-center">
           <img
-            className="block h-24 w-auto max-w-none z-100"
+            className="block h-24 w-auto max-w-none z-100 mt-2"
             src={askLogo}
             alt="Logo"
             // onClick={toggleMenu}
-            // onClick={() => {navigate(isLive ? process.env.REACT_APP_API_SERVER_LIVE_URL : '/');}}
+            onClick={() => {navigate('/');}}
             style={{ cursor: 'pointer' }}
           />
         </div>
@@ -134,7 +134,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
         {/* <DonateAndAsk /> */}
 
 
-          <div className="md:flex justify-end" style={{}}>
+          <div className="md:flex justify-end z-200" style={{}}>
             <div className="text-right">
               {/* <p className='text-sm '>{storedAdminDetails && storedAdminDetails.Email}</p> */}
               {/* { parsedAdminData && <p className='text-sm font-bold text-white'>{ parsedAdminData.fullname }</p> } */}
@@ -175,7 +175,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           </div>
 
           <div
-            className="bg-theme border-1 border-softTheme flex items-center justify-center"
+            className="bg-theme border-1 border-softTheme flex items-center justify-center  z-200"
             style={{ height: '40px', width: '40px', borderRadius: '4px' }}
             onClick={() => { toggleAccount(); }}
           >
