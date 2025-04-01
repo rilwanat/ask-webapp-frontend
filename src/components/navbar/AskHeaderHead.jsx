@@ -76,8 +76,8 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
 
                 <div className='text-center w-full text-white'>
                     <div className="flex items-center z-50" style={{ height: "40px" }}>
-                        {/* <div
-                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-theme hover:text-white"
+                        <div
+                            className="cursor-pointer ml-24 px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
                                 navigate('/');
                             }}
@@ -88,10 +88,10 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
                             >
                                 Home
                             </p>
-                        </div> */}
+                        </div>
 
                         <div
-                            className="cursor-pointer ml-24 px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
                                 navigate('/about-us');
                             }}
@@ -211,8 +211,9 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
 <DonateAndAsk />
                 
 
+{/* <div className='bg-white z-1000'> */}
 {!isAuthenticated() ?
-         <IconButton aria-label="shopping cart" sx={{ color: '#161c34' }}
+         <IconButton aria-label="shopping cart" sx={{ color: '#ffffff' }}
         onClick={() => {
           //navigateToSignIn();
           toggleAccount();
@@ -220,7 +221,7 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
         >
           <AccountCircleOutlinedIcon />
         </IconButton>
- : <IconButton aria-label="shopping cart" sx={{ color: '#161c34' }}
+ : <IconButton aria-label="shopping cart" sx={{ color: '#ffffff' }}
  onClick={() => {
   // toggleProfileMenu();
   gotoUserProfile();
@@ -228,6 +229,7 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
  >
    <AccountCircleOutlinedIcon />
  </IconButton>} 
+ {/* </div> */}
 
 
 

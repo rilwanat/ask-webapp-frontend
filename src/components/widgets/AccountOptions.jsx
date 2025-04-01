@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import background from '../../assets/images/ask-logo.png';
 
+import googleIcon from '../../assets/icons/google-icon.png';
+import appleIcon from '../../assets/icons/apple-icon.png';
+
 import RecyclingIcon from '@mui/icons-material/Recycling';
 import PublicIcon from '@mui/icons-material/Public';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
@@ -584,7 +587,21 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
                                 />
                              </div>
 
-                          
+                          {/* Remember Me & Forgot Password Section */}
+        <div className='flex justify-between items-center my-3 text-sm'>
+          <label className='flex items-center cursor-pointer'>
+            <input type='checkbox' className='mr-2' 
+            // onChange={(e) => setRememberMe(e.target.checked)} 
+            />
+            Remember Me
+          </label>
+          <span 
+            className='text-theme cursor-pointer hover:underline' 
+            // onClick={() => handleForgotPassword()}
+          >
+            Forgot Password?
+          </span>
+        </div>
 
                           <div className='my-2 text-sm' style={{ color: '#c2572b' }}>{errorMessage.message}</div>
 
@@ -601,19 +618,28 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
 
                           <div className='flex justify-between items-center flex-col md:flex-row '>
                             
+
+                            
                           <div  
                           // onClick={(e) => {if (!isLoading) registerUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
-                          className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
+                          className='flex mt-4 text-center justify-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
+                            <div className='flex items-center '>
+                            <img src={googleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
                             {isLoading ? 'Please wait..' : 'Login with Google'}
                             </div>
+                            </div>
 
+                            
                             <div  
                           // onClick={(e) => {if (!isLoading) registerUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
-                          className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
+                          className='flex mt-4 text-center justify-center rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
+                            <div className='flex items-center'>
+                            <img src={appleIcon} className='w-5 h-5 mr-2 mt-0.5' />
                             {isLoading ? 'Please wait..' : 'Login with Apple'}
                             </div>
+                          </div>
                           </div>
 
 
