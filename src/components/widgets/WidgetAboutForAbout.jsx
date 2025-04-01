@@ -107,7 +107,7 @@ A community-based charity initiative
     >
               
         <div className='flex flex-col items-start justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Our Mission</p>
+            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>About Us</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
         </div> 
        
@@ -147,13 +147,17 @@ For donors committed to making a real difference, the A.S.K. Foundation serves a
 
 
 
+<div className='flex flex-col items-start justify-center mt-16 mb-2  w-full'>
+            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Our Mission</p>
+            <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
+        </div> 
 
 
 <motion.div
     initial={{ scale: 0.8, opacity: 0 }}
     animate={{ scale: 1, opacity: 1 }}
     transition={{ delay: 0.6, duration: 0.5 }}
-    className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"
+    className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-6"
 >
     <div className="bg-softTheme p-8 rounded-lg">
         <div className='flex flex-col items-start mb-4'>
