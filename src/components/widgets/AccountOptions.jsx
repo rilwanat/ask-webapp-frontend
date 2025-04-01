@@ -493,15 +493,21 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
                           // onClick={(e) => {if (!isLoading) registerUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
+                            <div className='flex items-center '>
+                            <img src={googleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
                             {isLoading ? 'Please wait..' : 'Register with Google'}
-                            </div>
+                          </div>
+                          </div>
 
                             <div  
                           // onClick={(e) => {if (!isLoading) registerUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
+                            <div className='flex items-center '>
+                            <img src={appleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
                             {isLoading ? 'Please wait..' : 'Register with Apple'}
                             </div>
+                          </div>
                           </div>
 
 
