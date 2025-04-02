@@ -120,7 +120,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
       <div className="flex justify-between">
         <div className="flex items-center">
           <img
-            className="block h-24 w-auto max-w-none z-100 mt-2"
+            className="block h-28 w-auto max-w-none z-100 mt-2"
             src={askLogo}
             alt="Logo"
             // onClick={toggleMenu}
@@ -209,7 +209,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
         </div>
       </div>
 
-<div className="fixed top-2 left-35 w-full z-100">
+      <div className="fixed top-17 left-35 w-full z-100">
 <DonateAndAsk />
 </div>
       

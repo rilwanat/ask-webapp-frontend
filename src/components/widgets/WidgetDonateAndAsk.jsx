@@ -29,9 +29,9 @@ import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 
 const WidgetDonateAndAsk = ({ }) => {
     return(
-<div className='flex flex-col sm:flex-row mr-2'>
+<div className='flex mr-2'>
 <div
-                            className="flex items-center cursor-pointer px-2 py-1 rounded-md sm:w-full w-[100px] sm:mr-1 mb-2 sm:mb-0 text-theme bg-softTheme  hover:bg-white hover:text-theme"
+                            className="flex items-center cursor-pointer px-2 py-1 rounded-md mr-1 text-white bg-theme  hover:bg-white hover:text-theme"
                             onClick={() => {
                                 // navigate('/donate');
                             }}
@@ -46,7 +46,7 @@ const WidgetDonateAndAsk = ({ }) => {
                         </div>
 
                         <div
-                            className="flex items-center cursor-pointer px-2 py-1 rounded-md sm:w-full w-[100px] sm:ml-1 text-white  bg-red-700 hover:bg-white hover:text-theme"
+                            className="flex items-center cursor-pointer px-2 py-1 rounded-md ml-1 text-white  bg-red-700 hover:bg-white hover:text-theme"
                             onClick={() => {
                                 // navigate('/i-ask');
                             }}
