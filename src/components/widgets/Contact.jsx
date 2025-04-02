@@ -395,6 +395,7 @@ className='pl-4 border border-gray-300 rounded-sm py-2 px-2 w-full my-2 bg-white
 value={message}
 onChange={(e) => setMessage(e.target.value)}
 style={{  }}
+rows="4"
 />
 </div> 
 

@@ -28,6 +28,7 @@ function App() {
             {
               id: 1,
               image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+              name: "Emeka Eze",
               title: "Community Support",
               description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
               score: "81",
@@ -37,6 +38,7 @@ function App() {
             {
               id: 2,
               image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+              name: "Chinwe Musa",
               title: "Environmental Care",
               description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
               score: "93",
@@ -46,6 +48,7 @@ function App() {
             {
               id: 3,
               image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+              name: "Audu Mallam",
               title: "Youth Empowerment",
               description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
               score: "44",

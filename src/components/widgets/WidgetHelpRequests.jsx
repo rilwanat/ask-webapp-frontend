@@ -68,7 +68,7 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
               showStatus={false}
               showThumbs={false}
               infiniteLoop={true}
-              autoPlay={true}
+              // autoPlay={true}
               interval={5000}
               selectedItem={currentRequestSlide}
               onChange={(index) => setCurrentRequestSlide(index)}
@@ -76,10 +76,13 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
             >
             
               {carouselRequestItems.map((item, index) => (
-                <div key={item.id} className="flex flex-col items-center h-full"
-                onClick={() => {navigateTo('/single-request', { selectedItem: item, allItems: carouselItems  });}}
+                <div key={item.id} className="flex flex-col items-center h-full cursor-pointer z-1000"
+                onClick={() => {
+                  // e.stopPropagation();
+                  navigateTo('/single-request', { selectedItem: item, allItems: carouselRequestItems  });
+                }}
                 >
-                  <p className="w-3/4 truncate text-center  text-theme font-bold my-2">{item.description}</p>
+                  <p className="w-3/4  text-center  text-theme font-bold my-2">{item.description}</p>
                 <div className="flex-1 overflow-hidden ">
                   <img 
                     className="rounded-lg w-full h-full object-contain "

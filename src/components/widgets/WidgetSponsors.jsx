@@ -75,7 +75,10 @@ const WidgetSponsors = ({ currentSponsorSlide, carouselSponsorItems, setCurrentS
               
               {carouselSponsorItems.map((item, index) => (
                 <div key={item.id} className="flex flex-col h-full "
-                onClick={() => {navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselItems  });}}
+                onClick={() => {
+                  // e.stopPropagation();
+                  navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems  });
+                }}
                 >
                 <div className="flex-1 overflow-hidden ">
                   <img 

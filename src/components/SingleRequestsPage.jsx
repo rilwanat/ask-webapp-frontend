@@ -24,6 +24,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share'; 
 
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
 export default function SingleRequestsPage({ 
@@ -62,7 +63,7 @@ export default function SingleRequestsPage({
             {/* <Contact/> */}
 
             <div className="flex flex-col items-center p-4">
-                <h1 className="text-2xl font-bold text-gray-800">{selectedItem?.title || "No Title"}</h1>
+                <h1 className="text-2xl font-bold text-gray-800">You are viewing {selectedItem?.name}'s help request</h1>
                 <p className="text-gray-600 mt-2">{selectedItem?.description || "No Description Available"}</p>
 
                 <div className="w-full max-w-3xl mt-4">
@@ -85,17 +86,19 @@ export default function SingleRequestsPage({
                                     alt={item.title} 
                                     className="rounded-lg w-full h-64 object-cover"
                                 />
-                                <h3 className="text-lg font-semibold text-gray-800 mt-2">{item.title}</h3>
-                                <p className="text-gray-600">{item.description}</p>
-                                <p className="text-theme font-bold my-1">Score: {item.score}</p>
+                                {/* <h3 className="text-lg font-semibold text-gray-800 mt-2">{item.title}</h3> */}
+                                {/* <p className="text-gray-600">{item.description}</p> */}
+                                {/* <p className="text-theme font-bold my-1">Score: {item.score}</p> */}
 
-                                <div className="p-4 mt-auto">
-                                    <h3 className="text-2xl font-bold text-theme">{item.score}</h3>
-                                    <p className="text-theme mt-2">{item.description}</p>
+                                <div className="flex p-4 mt-auto items-center">
+                                    <h3 className="text-3xl font-bold text-theme">{item.score}</h3>
+                                    {/* <p className="text-theme mt-2">{item.description}</p> */}
+
+                                    <FavoriteIcon className='ml-2' style={{ width: '28px', height: '28px' }}/>
                                 </div>
                                 <div className='flex flex-col items-center'>
                                     <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-red-700 text-white p-2 my-1'>Nominate <CheckIcon className='ml-2' /></div>
-                                    <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-red-700 text-white p-2 my-1'>Share <ShareIcon className='ml-2' /></div>
+                                    <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'>Share <ShareIcon className='ml-2' /></div>
                                 </div>
                             </div>
                         ))}
