@@ -55,9 +55,9 @@ export default function SingleSponsorPage({
 
             {/* <Contact/> */}
 
-            <div className="flex flex-col items-center p-4">
+            {/* <div className="flex flex-col items-center p-4">
                 <h1 className="text-2xl font-bold text-gray-800">{selectedItem?.name || "No Name"}</h1>
-                {/* <p className="text-gray-600 mt-2">{selectedItem?.description || "No Description Available"}</p> */}
+                <p className="text-gray-600 mt-2">{selectedItem?.description || "No Description Available"}</p>
 
                 <div className="w-full max-w-3xl mt-4">
                     <Carousel 
@@ -80,13 +80,13 @@ export default function SingleSponsorPage({
                                     className="rounded-lg w-full h-64 object-cover"
                                 />
                                 <h3 className="text-lg font-semibold text-gray-800 mt-2">{item.name}</h3>
-                                {/* <p className="text-gray-600">{item.description}</p> */}
-                                {/* <p className="text-theme font-bold my-1">Score: {item.score}</p> */}
+                                <p className="text-gray-600">{item.description}</p>
+                                <p className="text-theme font-bold my-1">Score: {item.score}</p>
                             </div>
                         ))}
                     </Carousel>
                 </div>
-            </div>
+            </div> */}
 
 
             {/* <LatestNews/> */}

@@ -75,7 +75,7 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
             >
               
               {carouselBeneficiaryItems.map((item, index) => (
-                <div key={item.id} className="flex flex-col h-full"
+                <div key={item.id} className="flex flex-col h-full cursor-pointer z-1000"
                 onClick={() => {
                   // e.stopPropagation();
                   navigateTo('/single-beneficiary', { selectedItem: item, allItems: carouselBeneficiaryItems  });
