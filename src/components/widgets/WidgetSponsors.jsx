@@ -12,6 +12,8 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share'; 
 
+import sponsor from '../../assets/images/sponsors/sponsor.jpg';
+
 const WidgetSponsors = ({ currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide }) => {
   const navigate = useNavigate();
   // const [currentSponsorSlide, setCurrentSponsorSlide] = useState(0);
@@ -83,7 +85,8 @@ const WidgetSponsors = ({ currentSponsorSlide, carouselSponsorItems, setCurrentS
                 <div className="flex-1 overflow-hidden ">
                   <img 
                     className="rounded-lg w-full h-full object-contain "
-                    src={item.image}
+                    // src={item.image}
+                    src={sponsor}
                     alt={item.title}
                     style={{
                       // transform: zoomedItemId === index ? 'scale(1.05)' : 'scale(1)',

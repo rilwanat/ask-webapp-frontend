@@ -69,7 +69,7 @@ function AskFooter({ gotoPage }) {
                             <div className='flex my-1'><PlaceIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>69 Avenue Road, Bexleyheath Kent DA7 4EQ, London.</p></div>
                         </div>
  
-                        <div className="flex mt-4">
+                        {/* <div className="flex mt-4">
                         <div className="relative z-20">
               <ul className="flex">
                 <li className='mr-4'>
@@ -99,7 +99,6 @@ function AskFooter({ gotoPage }) {
                 </li>
                 <li className='mr-4'>
                   <a href="https://www.tiktok.com/@askfoundations" target='_blank'>
-                    {/* <TiktokIcon style={{cursor: "pointer", color: "#ffffff" }}/> */}
                     <img src={TikTokIcon} icon={faTiktok} style={{cursor: "pointer", color: "#ffffff", width:'24px', height:'24px' }}/>
                   </a>
                 </li>
@@ -111,7 +110,7 @@ function AskFooter({ gotoPage }) {
 
               </ul>
             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* <div className="flex flex-col md:items-start md:w-1/3  my-4 md:h-40">
@@ -205,11 +204,62 @@ function AskFooter({ gotoPage }) {
 
             <div className="mt-auto ">
                 <div className="bottom-0 w-full text-center">
-                    <p className="text-xs py-4 text-white">
+                    <p className="text-xs pt-6 pb-2 text-white">
                         &copy; 2025 ASK Foundation. All rights reserved.
                     </p>
                 </div>
             </div>
+
+
+
+
+
+
+
+            <div className="flex justify-center mb-8  bg-theme   fixed bottom-0  w-full z-5000">
+                        <div className="relative z-20">
+              <ul className="flex">
+                <li className='mr-4'>
+                  <a href="https://whatsapp.com/channel/0029VapJPNX05MUYgWDwWR0m" target='_blank'>
+                    <img src={WhatsAppIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
+                  </a>
+                </li>
+                <li className='mr-4'>
+                  <a href="https://t.me/askfoundations" target='_blank'>
+                    <img src={TelegramIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
+                  </a>
+                </li>
+                <li className='mr-4'>
+                  <a href="https://www.facebook.com/askfoundationpage" target='_blank'>
+                    <img src={FacebookIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
+                  </a>
+                </li>
+                <li className='mr-4'>
+                  <a href="https://www.twitter.com/askfoundations" target='_blank'>
+                    <img src={XIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
+                  </a>
+                </li>
+                <li className='mr-4'>
+                  <a href="https://www.instagram.com/askfoundations" target='_blank'>
+                    <img src={InstagramIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
+                  </a>
+                </li>
+                <li className='mr-4'>
+                  <a href="https://www.tiktok.com/@askfoundations" target='_blank'>
+                    <img src={TikTokIcon} icon={faTiktok} style={{cursor: "pointer", color: "#ffffff", width:'24px', height:'24px' }}/>
+                  </a>
+                </li>
+                <li className='mr-4'>
+                  <a href="https://www.youtube.com/@Askfoundations" target='_blank'>
+                    <img src={YouTubeIcon} style={{cursor: "pointer", color: "#ffffff", width:'24px', height:'24px' }}/>
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+                        </div>
+
+            
         </div>
     );
 }

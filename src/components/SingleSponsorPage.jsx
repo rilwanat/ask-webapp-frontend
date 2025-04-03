@@ -15,6 +15,7 @@ import Contact from './widgets/Contact';
 // import Services from './widgets/Services';
 // import LatestNews from './widgets/LatestNews';
 
+import sponsor from '../assets/images/sponsors/sponsor.jpg';
 
 
 import { Carousel } from 'react-responsive-carousel';
@@ -126,7 +127,8 @@ export default function SingleSponsorPage({
             <tr key={item.id} className="text-center">
                 <td className="border border-gray-300 p-2">{item.id}</td>
               <td className="border border-gray-300 p-2">
-                <img src={item.image} alt={item.title} className="w-16 h-16 object-cover rounded-md" />
+                {/* <img src={item.image} alt={item.title} className="w-16 h-16 object-cover rounded-md" /> */}
+                <img src={sponsor} alt={item.title} className="w-16 h-16 object-cover rounded-md" />
               </td>
               <td className="border border-gray-300 p-2">{item.title}</td>
               <td className="border border-gray-300 p-2 text-sm">{item.description}</td>
