@@ -108,7 +108,7 @@ export default function SingleSponsorPage({
       </div> */}
 
       
-    <div className="w-full overflow-x-auto p-4">
+    {/* <div className="w-full overflow-x-auto p-4">
       <table className="w-full border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-100">
@@ -127,7 +127,6 @@ export default function SingleSponsorPage({
             <tr key={item.id} className="text-center">
                 <td className="border border-gray-300 p-2">{item.id}</td>
               <td className="border border-gray-300 p-2">
-                {/* <img src={item.image} alt={item.title} className="w-16 h-16 object-cover rounded-md" /> */}
                 <img src={sponsor} alt={item.title} className="w-16 h-16 object-cover rounded-md" />
               </td>
               <td className="border border-gray-300 p-2">{item.title}</td>
@@ -140,6 +139,22 @@ export default function SingleSponsorPage({
           ))}
         </tbody>
       </table>
+    </div> */}
+
+
+<div className="w-full p-4 flex justify-center">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {carouselSponsorItems.map((item) => (
+          <div key={item.id} className="
+          border border-gray-300 shadow-md
+           p-2 rounded-lg">
+            <img 
+            // src={item.image} 
+            src={sponsor}
+            alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md" />
+          </div>
+        ))}
+      </div>
     </div>
             
 

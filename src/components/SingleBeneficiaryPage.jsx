@@ -109,7 +109,7 @@ export default function SingleBeneficiaryPage({
       </div> */}
 
       
-    <div className="w-full overflow-x-auto p-4">
+    {/* <div className="w-full overflow-x-auto p-4">
       <table className="w-full border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-100">
@@ -140,8 +140,17 @@ export default function SingleBeneficiaryPage({
           ))}
         </tbody>
       </table>
-    </div>
+    </div> */}
             
+            <div className="w-full p-4 flex justify-center">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {carouselBeneficiaryItems.map((item) => (
+          <div key={item.id} className=" p-2 rounded-lg ">
+            <img src={item.image} alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md" />
+          </div>
+        ))}
+      </div>
+    </div>
 
         </div>
     </div>
