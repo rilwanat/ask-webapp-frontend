@@ -55,6 +55,8 @@ export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiar
         // Initial useEffect logic if needed
     }, []);
 
+    
+
 
     return (
         <div className="fixed top-0 left-0 w-full z-5000   flex flex-col h-auto px-4 sm:px-16 md:px-32 py-4 pb-4 bg-theme shadow-lg">

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import hero1 from '../../assets/images/hero/hero1.jpg';
 import hero2 from '../../assets/images/hero/hero2.jpg';
+import hero3 from '../../assets/images/hero/hero3.jpg';
 
 const Hero = ({  }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -13,7 +14,7 @@ const Hero = ({  }) => {
   const images = [
     hero1,
     hero2,
-    hero1,
+    hero3,
   ];
 
   const headerText = [
@@ -56,7 +57,7 @@ const Hero = ({  }) => {
   }
 
   return (
-      <div className="relative w-full  h-[360px] overflow-hidden mt-20 sm:mt-20">
+      <div className="relative w-full  h-[360px] overflow-hidden mt-24 sm:mt-20">
 
       <AnimatePresence>
         <motion.img

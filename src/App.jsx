@@ -14,6 +14,10 @@ import PrivacyPolicyPage from './components/PrivacyPolicyPage.jsx';
 import SingleRequestsPage from './components/SingleRequestsPage.jsx';
 import SingleSponsorPage from './components/SingleSponsorPage.jsx';
 import SingleBeneficiaryPage from './components/SingleBeneficiaryPage.jsx';
+
+import DonatePage from './components/DonatePage.jsx';
+import AskPage from './components/AskPage.jsx';
+
  
 
 function App() {
@@ -185,6 +189,18 @@ function App() {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
             <Route path='/single-beneficiary' element={<SingleBeneficiaryPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             />}/>
+
+
+            <Route path='/donate' element={<DonatePage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             />}/>
+             <Route path='/i-ask' element={<AskPage 
             currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}

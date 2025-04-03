@@ -90,6 +90,65 @@ export default function SingleBeneficiaryPage({
             </div> */}
 
 
+<div className="w-full mt-4">
+    <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
+        <div className="w-full p-4 ">
+
+        {/* <div className="flex flex-col md:flex space-x-4">
+        {carouselSponsorItems.map((item) => (
+          <div key={item.id} className="w-full md:w-1/3 bg-white shadow-lg rounded-lg p-4">
+            <img src={item.image} alt={item.title} className="w-full h-40 object-cover rounded-md" />
+            <h2 className="text-lg font-semibold mt-2">{item.title}</h2>
+            <p className=" text-sm">{item.description}</p>
+            <div className="flex justify-between items-center mt-2">
+              <span className="text-sm font-semibold">{item.price}</span>
+              <span className="text-sm text-gray-500">{item.score} pts</span>
+            </div>
+          </div>
+        ))}
+      </div> */}
+
+      
+    <div className="w-full overflow-x-auto p-4">
+      <table className="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border border-gray-300 p-2">#</th>
+            <th className="border border-gray-300 p-2">Image</th>
+            <th className="border border-gray-300 p-2">Title</th>
+            <th className="border border-gray-300 p-2">Description</th>
+            <th className="border border-gray-300 p-2">Score</th>
+            <th className="border border-gray-300 p-2">Beneficiary</th>
+            <th className="border border-gray-300 p-2">Date</th>
+            <th className="border border-gray-300 p-2">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {carouselBeneficiaryItems.map((item) => (
+            <tr key={item.id} className="text-center">
+                <td className="border border-gray-300 p-2">{item.id}</td>
+              <td className="border border-gray-300 p-2">
+                <img src={item.image} alt={item.title} className="w-16 h-16 object-cover rounded-md" />
+              </td>
+              <td className="border border-gray-300 p-2">{item.title}</td>
+              <td className="border border-gray-300 p-2 text-sm">{item.description}</td>
+              <td className="border border-gray-300 p-2">{item.score}</td>
+              <td className="border border-gray-300 p-2">{item.name}</td>
+              <td className="border border-gray-300 p-2">{item.date}</td>
+              <td className="border border-gray-300 p-2 font-semibold">{item.price}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+            
+
+        </div>
+    </div>
+
+</div>
+
+
             {/* <LatestNews/> */}
 
 

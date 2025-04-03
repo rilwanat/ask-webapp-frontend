@@ -4,12 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import askLogo from '../../assets/images/ask-logo.png';
 
 
-import XIcon from '@mui/icons-material/X';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import TelegramIcon from '@mui/icons-material/Telegram';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import XIcon from '../../assets/images/socials/x.png';
+import FacebookIcon from '../../assets/images/socials/facebook.png';
+import InstagramIcon from '../../assets/images/socials/instagram.png';
+import YouTubeIcon from '../../assets/images/socials/youtube.png';
+import TelegramIcon from '../../assets/images/socials/telegram.png';
+import WhatsAppIcon from '../../assets/images/socials/whatsapp.png';
+import TikTokIcon from '../../assets/images/socials/tiktok.png';
+
+
+// import XIcon from '@mui/icons-material/X';
+// import FacebookIcon from '@mui/icons-material/Facebook';
+// import InstagramIcon from '@mui/icons-material/Instagram';
+// import YouTubeIcon from '@mui/icons-material/YouTube';
+// import TelegramIcon from '@mui/icons-material/Telegram';
+// import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTiktok } from '@fortawesome/free-brands-svg-icons';
 
@@ -65,38 +74,38 @@ function AskFooter({ gotoPage }) {
               <ul className="flex">
                 <li className='mr-4'>
                   <a href="https://whatsapp.com/channel/0029VapJPNX05MUYgWDwWR0m" target='_blank'>
-                    <WhatsAppIcon style={{cursor: "pointer", color: "#ffffff" }}/>
+                    <img src={WhatsAppIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
                   <a href="https://t.me/askfoundations" target='_blank'>
-                    <TelegramIcon style={{cursor: "pointer", color: "#ffffff" }}/>
+                    <img src={TelegramIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
                   <a href="https://www.facebook.com/askfoundationpage" target='_blank'>
-                    <FacebookIcon style={{cursor: "pointer", color: "#ffffff" }}/>
+                    <img src={FacebookIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
                   <a href="https://www.twitter.com/askfoundations" target='_blank'>
-                    <XIcon style={{cursor: "pointer", color: "#ffffff" }}/>
+                    <img src={XIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
                   <a href="https://www.instagram.com/askfoundations" target='_blank'>
-                    <InstagramIcon style={{cursor: "pointer", color: "#ffffff" }}/>
+                    <img src={InstagramIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
                   <a href="https://www.tiktok.com/@askfoundations" target='_blank'>
                     {/* <TiktokIcon style={{cursor: "pointer", color: "#ffffff" }}/> */}
-                    <FontAwesomeIcon icon={faTiktok} style={{cursor: "pointer", color: "#ffffff", }}/>
+                    <img src={TikTokIcon} icon={faTiktok} style={{cursor: "pointer", color: "#ffffff", width:'24px', height:'24px' }}/>
                   </a>
                 </li>
                 <li className='mr-4'>
                   <a href="https://www.youtube.com/@Askfoundations" target='_blank'>
-                    <YouTubeIcon style={{cursor: "pointer", color: "#ffffff" }}/>
+                    <img src={YouTubeIcon} style={{cursor: "pointer", color: "#ffffff", width:'24px', height:'24px' }}/>
                   </a>
                 </li>
 

@@ -106,7 +106,7 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
                   <div className='flex  p-1 rounded-lg items-center justify-center w-70 bg-softTheme mt-2'><p className="text-theme">{'status: ' + item.status}</p></div> */}
                 </div>
                 <div className='flex flex-col items-center'>
-                  <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-red-700 text-white p-2 my-1'>Nominate <CheckIcon className='ml-2' /></div>
+                  <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-orange text-white p-2 my-1'>Nominate <CheckIcon className='ml-2' /></div>
                   <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'>Share <ShareIcon className='ml-2' /></div>
                 </div>
                 

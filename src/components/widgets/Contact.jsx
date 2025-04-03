@@ -271,7 +271,7 @@ const isValidEmail = (email) => {
 <LocalPhoneIcon className="mb-2" style={{ width: '40px', height: '40px', color: '#161c34' }}/>
 
 <div className="px-8 text-center"  style={{fontSize: '16px',   }}>
-<a className='cursor-pointer' onClick={() => {window.location.href = "tel:+2349122090051";}}>+234 912 2090 051</a>, 
+<a className='cursor-pointer' onClick={() => {window.location.href = "tel:+2349122090051";}}>+234 912 2090 051</a>
 <br/><a className='cursor-pointer' onClick={() => {window.location.href = "tel:+447864869571";}}>+44 786 4869 571</a>
 <br/><a className='cursor-pointer' onClick={() => {window.location.href = "tel:+2349051047138";}}><WhatsAppIcon style={{cursor: "pointer", color: "#000000" }}/> +234 905 1047 138</a>
 </div>
@@ -348,7 +348,7 @@ info@askfoundations.org
 <div className='flex flex-col sm:flex-row relative  '>
 <input
 type='text'
-placeholder='Name*'
+placeholder='Name'
 className='pl-4 border border-gray-300 rounded-sm py-2 px-2 w-full my-2 bg-white'
 value={contactName}
 onChange={(e) => setContactName(e.target.value)}
@@ -360,7 +360,7 @@ style={{  }}
 <div className='flex flex-col sm:flex-row relative'>
 <input
 type='text'
-placeholder='Phone Number*'
+placeholder='Phone Number'
 className='pl-4 border border-gray-300 rounded-sm py-2 px-2 w-full sm:mr-2   my-2 bg-white'
 value={phoneNumber}
 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -379,7 +379,7 @@ style={{  }}
 <div className='flex flex-col sm:flex-row relative  '>
 <input
 type='text'
-placeholder='Address*'
+placeholder='Address'
 className='pl-4 border border-gray-300 rounded-sm py-2 px-2 w-full my-2 bg-white'
 value={address}
 onChange={(e) => setAddress(e.target.value)}
