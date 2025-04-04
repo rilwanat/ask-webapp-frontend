@@ -82,7 +82,18 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
                   navigateTo('/single-request', { selectedItem: item, allItems: carouselRequestItems  });
                 }}
                 >
-                  <p className="w-3/4  text-center  text-theme font-bold my-2">{item.description}</p>
+
+<div 
+style={{
+    width: '400px',   
+}}
+>
+<p className="truncate text-center  text-theme font-bold my-2">{item.description}</p>
+
+</div>
+
+
+                  
                 <div className="flex-1 overflow-hidden ">
                   <img 
                     className="rounded-lg w-full h-full object-cover  "
