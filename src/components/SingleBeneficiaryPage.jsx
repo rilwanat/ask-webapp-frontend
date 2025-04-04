@@ -145,8 +145,17 @@ export default function SingleBeneficiaryPage({
             <div className="w-full p-4 flex justify-center">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {carouselBeneficiaryItems.map((item) => (
-          <div key={item.id} className=" p-2 rounded-lg ">
-            <img src={item.image} alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md" />
+          <div key={item.id} className="
+          border border-gray-300 shadow-md
+           p-2 rounded-lg ">
+            <img src={item.image} alt={`Item ${item.id}`} className="w-full h-40 object-contain rounded-md" />
+
+            <div className="flex flex-col items-center mb-2 mt-auto">
+                  {/* <h3 className="text-2xl font-bold text-theme">{item.score}</h3> */}
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-2'><p className="text-theme">{'' + item.name}</p> </div>
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-0'><p className="text-theme">{'' + item.price}</p></div>
+                </div>
+
           </div>
         ))}
       </div>

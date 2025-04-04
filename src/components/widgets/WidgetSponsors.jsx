@@ -22,7 +22,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
   }, [carouselSponsorItems.length]);
 
   return (
-    <div className="w-full mt-4 bg-gold overflow-hidden h-80"> {/* Hide overflow */}
+    <div className="w-full mt-4 bg-gold overflow-hidden h-96"> {/* Hide overflow */}
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
           <div className="flex flex-col items-center justify-between">
@@ -68,13 +68,20 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                     onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
                   >
                     <img
-                      className="w-full h-40 object-contain rounded-t-lg"
+                      className="w-full h-40 object-contain rounded-lg mt-4"
                       src={sponsor}
                       alt={item.title}
                     />
-                    <div className="p-4 flex justify-center">
+                    <div className="flex flex-col p-4 items-center justify-center">
                       <h3 className="text-xl font-bold text-theme">{item.name}</h3>
+                      <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-0'><p className="text-theme">{'' + item.type}</p></div>
                     </div>
+
+                    {/* <div className="flex flex-col items-center  mb-2 mt-auto">
+                  <h3 className="text-2xl font-bold text-theme">{item.score}</h3>
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-2'><p className="text-theme">{'' + item.name}</p> </div>
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-0'><p className="text-theme">{'' + item.type}</p></div>
+                </div> */}
                   </div>
                 ))}
               </div>

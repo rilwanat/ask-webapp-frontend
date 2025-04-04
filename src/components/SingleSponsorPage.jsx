@@ -151,7 +151,15 @@ export default function SingleSponsorPage({
             <img 
             // src={item.image} 
             src={sponsor}
-            alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md" />
+            alt={`Item ${item.id}`} className="w-full h-40 object-contain rounded-md" />
+
+<div className="flex flex-col items-center  mb-2 mt-auto">
+                  {/* <h3 className="text-2xl font-bold text-theme">{item.score}</h3> */}
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-2'><p className="text-theme">{'' + item.name}</p> </div>
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-0'><p className="text-theme">{'' + item.type}</p></div>
+                </div>
+
+
           </div>
         ))}
       </div>

@@ -147,7 +147,8 @@ function App() {
             score: "81",
             name: "Sponsor One",
             date: "2025-02-24 03:47:17",
-            price: "N30,000.00"
+            price: "N30,000.00",
+            type: "Sponsor"
           },
           {
             id: 2,
@@ -157,7 +158,8 @@ function App() {
             score: "93",
             name: "Sponsor One",
             date: "2025-02-24 03:47:17",
-            price: "N40,000.00"
+            price: "N40,000.00",
+            type: "Donor"
           },
           {
             id: 3,
@@ -167,7 +169,8 @@ function App() {
             score: "44",
             name: "Sponsor One",
             date: "2025-02-24 03:47:17",
-            price: "N50,000.00"
+            price: "N50,000.00",
+            type: "Partner"
           },
           {
             id: 4,
@@ -177,7 +180,8 @@ function App() {
             score: "44",
             name: "Sponsor One",
             date: "2025-02-24 03:47:17",
-            price: "N50,000.00"
+            price: "N50,000.00",
+            type: "Sponsor"
           },
           {
             id: 5,
@@ -187,7 +191,8 @@ function App() {
             score: "44",
             name: "Sponsor One",
             date: "2025-02-24 03:47:17",
-            price: "N50,000.00"
+            price: "N50,000.00",
+            type: "Partner"
           }
         ];
 

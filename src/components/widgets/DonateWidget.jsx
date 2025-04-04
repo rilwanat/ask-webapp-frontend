@@ -19,6 +19,9 @@ const DonateWidget = ({  }) => {
   // const [currentRequestSlide, setCurrentRequestSlide] = useState(0);
   // const [zoomedItemId, setZoomedItemId] = useState(null);
 
+
+  const [donateType, setDonateType] = useState("naira");
+
   //notification modal
       const [notificationType, setNotificationType] = useState(false);
       const [notificationTitle, setNotificationTitle] = useState("");
@@ -49,8 +52,8 @@ const DonateWidget = ({  }) => {
     10_000_000
   ];
 
-  const showSelectedPriceToPay = (price) => {
-    openNotificationModal(true, "Donate Now", `You are about to donate ${'₦' + price}`);
+  const showSelectedPriceToPay = (price, symbol) => {
+    openNotificationModal(true, "Donate Now", `You are about to donate ${symbol + price}`);
         setIsNotificationModalOpen(true);
   };
 
@@ -92,22 +95,65 @@ const DonateWidget = ({  }) => {
                   <div className="w-full md:w-1/2 p-4  rounded-lg">
                     <h2 className="text-lg font-semibold mb-2">Donate Now</h2>
                     <p className=" text-gray-600" style={{ fontSize: '18px',  }}>Kindly support us with your kind donations to help us share the pie of kindness to the vulnerable in the society. Together, we can make the world a better place.</p>
+                  <div className='flex mt-4 justify-center'>
+                    <div className={`mx-2 px-4 py-1 rounded-lg  cursor-pointer border-2 border-theme
+                      ${donateType === 'naira' ? 'bg-theme text-softTheme' : 'bg-white text-theme'}
+                      `} onClick={() => {setDonateType('naira');}}>Naira</div>
+                    <div className={`mx-2 px-4 py-1 rounded-lg cursor-pointer  border-2 border-theme
+                      ${donateType === 'dollar' ? 'bg-theme text-softTheme' : 'bg-white text-theme'}`} onClick={() => {setDonateType('dollar');}}>Dollar</div>
+                    <div className={`mx-2 px-4 py-1 rounded-lg cursor-pointer  border-2 border-theme
+                      ${donateType === 'crypto' ? 'bg-theme text-softTheme' : 'bg-white text-theme'}`} onClick={() => {setDonateType('crypto');}}>Crypto</div>
+                  </div>
                   </div>
 
                   {/* Right Div */}
+{donateType === "naira" ?
                   <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
                     {/* <h2 className="text-lg font-semibold mb-2 text-softTheme">Right Section</h2> */}
                     
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
                     {numbers.map((num, index) => (
                     <div key={index} 
-                    onClick={() => { showSelectedPriceToPay(num.toLocaleString());}}
+                    onClick={() => { showSelectedPriceToPay(num.toLocaleString(), '₦');}}
                     className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
                     {'₦' + num.toLocaleString()}
                     </div>
                     ))}
                     </div>
-                  </div>
+                  </div> : <></>
+}
+
+{donateType === "dollar" ?
+                  <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
+                    {/* <h2 className="text-lg font-semibold mb-2 text-softTheme">Right Section</h2> */}
+                    
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+                    {numbers.map((num, index) => (
+                    <div key={index} 
+                    onClick={() => { showSelectedPriceToPay(num.toLocaleString(), '$');}}
+                    className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
+                    {'$' + num.toLocaleString()}
+                    </div>
+                    ))}
+                    </div>
+                  </div>: <></>
+}
+
+{donateType === "crypto" ?
+                  <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
+                    {/* <h2 className="text-lg font-semibold mb-2 text-softTheme">Right Section</h2> */}
+                    
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+                    {numbers.map((num, index) => (
+                    <div key={index} 
+                    onClick={() => { showSelectedPriceToPay(num.toLocaleString(), '#');}}
+                    className="cursor-pointer px-2 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
+                    {'#' + num.toLocaleString()}
+                    </div>
+                    ))}
+                    </div>
+                  </div>: <></>
+}
                 </div>
 
 

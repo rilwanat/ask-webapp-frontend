@@ -34,8 +34,47 @@ import googleplay from '../../assets/icons/google-play.png';
 // import axios from 'axios';
 // import axiosInstance from '../../../axiosConfig';
 
+import NotificationModal from '../modals/NotificationModal';
+
 function AskFooter({ gotoPage }) {
+
+  //notification modal
+        const [notificationType, setNotificationType] = useState(false);
+        const [notificationTitle, setNotificationTitle] = useState("");
+        const [notificationMessage, setNotificationMessage] = useState("");
+        const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+        const openNotificationModal = (type, title, message) => {
+          setNotificationType(type);
+          setNotificationTitle(title);
+          setNotificationMessage(message);
+      
+          setIsNotificationModalOpen(true);
+        };
+        const closeNotificationModal = () => {
+          setIsNotificationModalOpen(false);
+        };
+        //notification modal
+
+
+
     const [email, setEmail] = useState("");
+    const handleSubscribeToNewsletter = () => {
+        if (isValidEmail(email)) {
+            // Perform subscription logic here
+            
+            openNotificationModal(true, "Subscribe To Newsletter", `Email address is okay.`);
+            setIsNotificationModalOpen(true);
+
+            setEmail("");
+        } else {
+
+          openNotificationModal(false, "Subscribe To Newsletter", `Please enter a valid email address.`);
+          setIsNotificationModalOpen(true);
+
+            // alert("Please enter a valid email address.");
+        }
+
+    }
 
     useEffect(() => {}, []);
 
@@ -69,48 +108,6 @@ function AskFooter({ gotoPage }) {
                             <div className='flex my-1'><PlaceIcon className='mr-2' style={{ color: "#ffffff" }}/><p className="text-white text-sm" style={{  }}>69 Avenue Road, Bexleyheath Kent DA7 4EQ, London.</p></div>
                         </div>
  
-                        {/* <div className="flex mt-4">
-                        <div className="relative z-20">
-              <ul className="flex">
-                <li className='mr-4'>
-                  <a href="https://whatsapp.com/channel/0029VapJPNX05MUYgWDwWR0m" target='_blank'>
-                    <img src={WhatsAppIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
-                  </a>
-                </li>
-                <li className='mr-4'>
-                  <a href="https://t.me/askfoundations" target='_blank'>
-                    <img src={TelegramIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
-                  </a>
-                </li>
-                <li className='mr-4'>
-                  <a href="https://www.facebook.com/askfoundationpage" target='_blank'>
-                    <img src={FacebookIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
-                  </a>
-                </li>
-                <li className='mr-4'>
-                  <a href="https://www.twitter.com/askfoundations" target='_blank'>
-                    <img src={XIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
-                  </a>
-                </li>
-                <li className='mr-4'>
-                  <a href="https://www.instagram.com/askfoundations" target='_blank'>
-                    <img src={InstagramIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
-                  </a>
-                </li>
-                <li className='mr-4'>
-                  <a href="https://www.tiktok.com/@askfoundations" target='_blank'>
-                    <img src={TikTokIcon} icon={faTiktok} style={{cursor: "pointer", color: "#ffffff", width:'24px', height:'24px' }}/>
-                  </a>
-                </li>
-                <li className='mr-4'>
-                  <a href="https://www.youtube.com/@Askfoundations" target='_blank'>
-                    <img src={YouTubeIcon} style={{cursor: "pointer", color: "#ffffff", width:'24px', height:'24px' }}/>
-                  </a>
-                </li>
-
-              </ul>
-            </div>
-                        </div> */}
                     </div>
 
                     {/* <div className="flex flex-col md:items-start md:w-1/3  my-4 md:h-40">
@@ -140,11 +137,11 @@ function AskFooter({ gotoPage }) {
                                 type="text"
                                 placeholder="Your Email"
                                 className="pl-4 border border-gray-300 rounded-lg py-1 px-2 text-center text-white"
-                                // onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setEmail(e.target.value)} 
                                 value={email}
                             />
                             <div
-                                // onClick={() => { handleSubscribeToNewsletter() }}
+                                onClick={() => { handleSubscribeToNewsletter() }}
                                 style={{ borderWidth: '1px' }}
                                 className="text-center mt-4 sm:mt-0 sm:ml-2 border-white rounded-lg px-4 py-2 text-white text-sm cursor-pointer"
                             >
@@ -260,6 +257,18 @@ function AskFooter({ gotoPage }) {
                         </div>
 
             
+
+
+                        <NotificationModal
+              isOpen={isNotificationModalOpen}
+              onRequestClose={closeNotificationModal}
+              notificationType={notificationType}
+              notificationTitle={notificationTitle}
+              notificationMessage={notificationMessage}
+            />
+
+
+
         </div>
     );
 }
