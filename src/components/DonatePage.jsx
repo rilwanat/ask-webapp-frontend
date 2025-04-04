@@ -62,7 +62,7 @@ export default function DonatePage({
 
 
             {/* <LatestNews/> */}
-            <WidgetVideo />
+            <WidgetVideo link={"https://www.youtube.com/watch?v=TA_T5S-5ssY"}/>
 
 
             <AskFooter gotoPage={gotoPage} />

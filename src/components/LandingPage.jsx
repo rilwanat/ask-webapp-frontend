@@ -74,7 +74,9 @@ export default function LandingPage({
             setCurrentSponsorSlide={setCurrentSponsorSlide}
             />
 
-            <WidgetVideo />
+
+            
+            <WidgetVideo link={"https://www.youtube.com/watch?v=WDL5oNdAC1o"}/>
 
 
             {/* <LatestNews/> */}

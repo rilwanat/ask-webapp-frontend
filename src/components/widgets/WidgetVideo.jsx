@@ -27,7 +27,7 @@ import NotificationModal from '../modals/NotificationModal';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 
-const WidgetVideo = ({ }) => {
+const WidgetVideo = ({ link }) => {
 
     const getEmbedUrl = (url) => {
         const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
@@ -57,7 +57,8 @@ const WidgetVideo = ({ }) => {
           <iframe
             width="100%"
             height="700px"
-            src={getEmbedUrl("https://www.youtube.com/watch?v=WDL5oNdAC1o")}
+            src={getEmbedUrl(link)}
+            
             // title={`YouTube Video ${index + 1}`}
             frameBorder="0"
             allow="autoplay; encrypted-media"
