@@ -1,117 +1,84 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
-import background from '../../assets/images/ask-logo.png';
-import RecyclingIcon from '@mui/icons-material/Recycling';
-import PublicIcon from '@mui/icons-material/Public';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-
-import CheckIcon from '@mui/icons-material/Check';
-import ShareIcon from '@mui/icons-material/Share'; 
 
 import sponsor from '../../assets/images/sponsors/sponsor.jpg';
 
-const WidgetSponsors = ({ currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide }) => {
+const WidgetSponsors = ({ carouselSponsorItems }) => {
   const navigate = useNavigate();
-  // const [currentSponsorSlide, setCurrentSponsorSlide] = useState(0);
-  // const [zoomedItemId, setZoomedItemId] = useState(null);
+  const listRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   const navigateTo = (route, data) => {
     navigate(route, { state: data });
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setScrollPosition((prev) => (prev + 1) % (carouselSponsorItems.length * 300)); // Adjust item width (300px per item)
+    }, 30); // Adjust speed
+
+    return () => clearInterval(interval);
+  }, [carouselSponsorItems.length]);
 
   return (
-    <div className="w-full mt-4 bg-gold">
+    <div className="w-full mt-4 bg-gold overflow-hidden h-80"> {/* Hide overflow */}
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
-          <div className="flex flex-col  items-center justify-between">
+          <div className="flex flex-col items-center justify-between">
 
-
-          <motion.div
+            {/* Header */}
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className=" flex items-center justify-center "
-              >
-              <div className="mx-auto">
-              
-              <motion.h1
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-2xl font-bold text-gray-800 mb-2"
-              >
-              <div className='flex flex-col items-center justify-center mt-0 mb-2'>
-              <p className='text-softTheme mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Sponsors</p>
-              <div className='bg-softTheme mb-2' style={{ width: '80px', height: '4px' }}></div>
-              </div>
-              
-              </motion.h1>
-              
-              </div>
-              </motion.div>
-
-
-
-
-
-
-            
-            <Carousel
-              showIndicators={false}
-              showArrows={false}
-              showStatus={false}
-              showThumbs={false}
-              infiniteLoop={true}
-              autoPlay={true}
-              interval={5000}
-              selectedItem={currentSponsorSlide}
-              onChange={(index) => setCurrentSponsorSlide(index)}
-              className="rounded-lg overflow-hidden  w-full"
+              className="flex items-center justify-center"
             >
-              
-              {carouselSponsorItems.map((item, index) => (
-                <div key={item.id} className="flex flex-col h-full cursor-pointer z-1000"
-                onClick={() => {
-                  // e.stopPropagation();
-                  navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems  });
-                }}
+              <div className="mx-auto">
+                <motion.h1
+                  initial={{ y: -50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="text-2xl font-bold text-gray-800 mb-2"
                 >
-                <div className="flex-1 overflow-hidden ">
-                  <img 
-                    className="rounded-lg w-full h-full object-contain "
-                    // src={item.image}
-                    src={sponsor}
-                    alt={item.title}
-                    style={{
-                      // transform: zoomedItemId === index ? 'scale(1.05)' : 'scale(1)',
-                      transition: 'transform 0.8s ease',
-                      maxHeight: '70vh', // Adjust this as needed
-                      width: 'auto',
-                      margin: '0 auto',
-                      display: 'block'
-                    }}
-                    // onMouseEnter={() => setZoomedItemId(index)}
-                    // onMouseLeave={() => setZoomedItemId(null)}
-                  />
-                </div>
-                <div className="p-4 mt-auto">
-                  <h3 className="text-2xl font-bold text-softTheme">{item.name}</h3>
-                  {/* <p className="text-theme font-bold mt-1">{item.price}</p> */}
-                  {/* <p className="text-theme mt-1">{item.date}</p> */}
-                </div>
-                
-                
+                  <div className='flex flex-col items-center justify-center mt-0 mb-2'>
+                    <p className='text-softTheme mb-2' style={{ fontWeight: '700', fontSize: '24px' }}>Sponsors</p>
+                    <div className='bg-softTheme mb-2' style={{ width: '80px', height: '4px' }}></div>
+                  </div>
+                </motion.h1>
               </div>
-              ))}
+            </motion.div>
 
-
-            </Carousel>
+            {/* Scrollable Sponsor List */}
+            <div className="relative w-full h-48"> {/* Container with fixed height */}
+              <div
+                ref={listRef}
+                className="absolute flex space-x-4"
+                style={{
+                  transform: `translateX(-${scrollPosition}px)`,
+                  transition: "transform 0.1s linear", // Smooth movement
+                  width: `${carouselSponsorItems.length * 300}px`, // Ensure all items fit
+                }}
+              >
+                {carouselSponsorItems.concat(carouselSponsorItems).map((item, index) => ( // Duplicate for infinite loop
+                  <div
+                    key={index}
+                    className="flex-none w-72 cursor-pointer bg-white rounded-lg shadow-md"
+                    onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
+                  >
+                    <img
+                      className="w-full h-40 object-contain rounded-t-lg"
+                      src={sponsor}
+                      alt={item.title}
+                    />
+                    <div className="p-4 flex justify-center">
+                      <h3 className="text-xl font-bold text-theme">{item.name}</h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
           </div>
         </div>
