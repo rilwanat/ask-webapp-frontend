@@ -48,8 +48,8 @@ function AskFooter({ gotoPage }) {
 
     return (
         <div className="flex flex-col bg-theme">
-            <div className="flex flex-col h-auto px-8 sm:px-16 md:px-32 py-4 pb-8">
-                <div className="flex flex-col items-start md:flex-row md:items-center md:justify-between ">
+            <div className="flex flex-col h-auto px-8 sm:px-16 md:px-32 py-4 pb-2">
+                <div className="flex flex-col items-start md:flex-row md:items-center md:justify-between">
                     <div className="flex flex-col md:items-start md:w-2/4 my-4 md:h-40">
                         <div className="flex items-center mb-2">
                             <img
@@ -120,7 +120,7 @@ function AskFooter({ gotoPage }) {
                         <p className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>Contact Us</p>
                     </div> */}
 
-                    <div className="flex flex-col md:w-2/4 my-4 md:h-40">
+                    <div className="flex flex-col md:w-2/4 mt-4 md:h-40 ">
                         <div className="flex flex-col items-start mb-4">
                             <p
                                 className="text-white mb-2"
@@ -184,7 +184,7 @@ function AskFooter({ gotoPage }) {
                     </div>
                 </div>
 
-                <div className='flex flex-row justify-center sm:justify-end items-center  text-center  mt-4 '>
+                <div className='flex flex-row justify-center sm:justify-end items-center  text-center  mt-2 '>
                     <span className="text-white text-sm cursor-pointer block my-2 mr-8" 
                     onClick={() => { gotoPage("terms-and-conditions"); }}>
                         Terms and Conditions
@@ -202,9 +202,9 @@ function AskFooter({ gotoPage }) {
             
 
 
-            <div className="mt-auto ">
+            <div className="mt-auto mb-10">
                 <div className="bottom-0 w-full text-center">
-                    <p className="text-xs pt-6 pb-2 text-white">
+                    <p className="text-xs py-2 text-white">
                         &copy; 2025 ASK Foundation. All rights reserved.
                     </p>
                 </div>
@@ -216,7 +216,7 @@ function AskFooter({ gotoPage }) {
 
 
 
-            <div className="flex justify-center mb-8  bg-theme   fixed bottom-0  w-full z-5000">
+            <div className="flex justify-center mb-0 py-2  bg-theme   fixed bottom-0  w-full z-5000">
                         <div className="relative z-20">
               <ul className="flex">
                 <li className='mr-4'>
