@@ -83,14 +83,16 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
                 >
                 <div className="flex-1 overflow-hidden ">
                   <img 
-                    className="rounded-lg w-full h-full object-contain "
+                    className="rounded-lg w-full h-full object-cover "
                     src={item.image}
                     alt={item.title}
                     style={{
                       // transform: zoomedItemId === index ? 'scale(1.05)' : 'scale(1)',
                       transition: 'transform 0.8s ease',
-                      maxHeight: '70vh', // Adjust this as needed
-                      width: 'auto',
+                      // maxHeight: '70vh', // Adjust this as needed
+                      // width: 'auto',
+                      width: '400px',       // or any fixed square size like 200px, 400px
+    height: '400px',
                       margin: '0 auto',
                       display: 'block'
                     }}

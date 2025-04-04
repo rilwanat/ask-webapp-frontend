@@ -85,14 +85,16 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
                   <p className="w-3/4  text-center  text-theme font-bold my-2">{item.description}</p>
                 <div className="flex-1 overflow-hidden ">
                   <img 
-                    className="rounded-lg w-full h-full object-contain "
+                    className="rounded-lg w-full h-full object-cover  "
                     src={item.image}
                     alt={item.title}
                     style={{
                       // transform: zoomedItemId === index ? 'scale(1.05)' : 'scale(1)',
                       transition: 'transform 0.8s ease',
-                      maxHeight: '70vh', // Adjust this as needed
-                      width: 'auto',
+                      // maxHeight: '70vh', // Adjust this as needed
+                      // width: 'auto',
+                      width: '400px',       // or any fixed square size like 200px, 400px
+    height: '400px',
                       margin: '0 auto',
                       display: 'block'
                     }}
@@ -101,7 +103,7 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
                   />
                 </div>
                 <div className="flex flex-col items-center p-4 mt-auto">
-                  <h3 className="text-2xl font-bold text-theme">{item.score}</h3>
+                  <h3 className="text-2xl font-bold text-theme">{(item.score >= 1000 ? (item.score / 1000).toFixed(1) + 'K' : item.score)}</h3>
                   {/* <div className='flex  p-1 rounded-lg items-center justify-center w-70 bg-softTheme mt-2'><p className="text-theme">{'remark: ' + item.remark}</p> </div>
                   <div className='flex  p-1 rounded-lg items-center justify-center w-70 bg-softTheme mt-2'><p className="text-theme">{'status: ' + item.status}</p></div> */}
                 </div>

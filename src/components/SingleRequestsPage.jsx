@@ -63,9 +63,7 @@ export default function SingleRequestsPage({
             {/* <Contact/> */}
 
             <div className="flex flex-col items-center p-4">
-                <h1 className="text-2xl font-bold text-gray-800">You are viewing {selectedItem?.name}'s help request</h1>
-                <p className="text-gray-600 mt-2">{selectedItem?.description || "No Description Available"}</p>
-
+                
                 <div className="w-full max-w-3xl mt-4">
                     <Carousel 
                         showIndicators={false}
@@ -80,18 +78,44 @@ export default function SingleRequestsPage({
                         // dynamicHeight={true} // 👈 Adjusts height based on content
                     >
                         {allItems?.map((item) => (
-                            <div key={item.id} className="flex flex-col items-center">
+                            <div key={item.id} className="flex flex-col items-center justify-center w-full" 
+                            style={{
+                                // width: '400px',   
+                            }}
+                            >
+
+
+<div 
+style={{
+    width: '400px',   
+}}
+>
+<h1 className="text-2xl font-bold text-gray-800">You are viewing {item.name}'s help request</h1>
+                <p className="text-gray-600 my-2">{item.description || "No Description Available"}</p>
+
+</div>
+
+
+
+
+
                                 <img 
                                     src={item.image} 
                                     alt={item.title} 
                                     className="rounded-lg w-full h-64 object-cover"
+                                    style={{ 
+                                        // maxHeight: '70vh', // Adjust this as needed
+                      // width: 'auto',
+                      width: '400px',       // or any fixed square size like 200px, 400px
+                      height: '400px',
+                                    }} // Adjusted styles for better responsiveness
                                 />
                                 {/* <h3 className="text-lg font-semibold text-gray-800 mt-2">{item.title}</h3> */}
                                 {/* <p className="text-gray-600">{item.description}</p> */}
                                 {/* <p className="text-theme font-bold my-1">Score: {item.score}</p> */}
 
                                 <div className="flex p-4 mt-auto items-center">
-                                    <h3 className="text-3xl font-bold text-theme">{item.score}</h3>
+                                    <h3 className="text-3xl font-bold text-theme">{(item.score >= 1000 ? (item.score / 1000).toFixed(1) + 'K' : item.score)}</h3>
                                     {/* <p className="text-theme mt-2">{item.description}</p> */}
 
                                     <FavoriteIcon className='ml-2' style={{ width: '28px', height: '28px' }}/>
