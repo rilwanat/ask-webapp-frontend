@@ -145,7 +145,7 @@ function App() {
             title: "Community Support",
             description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
             score: "43281",
-            name: "Sponsor One",
+            name: "Koksons Seasons",
             date: "2025-02-24 03:47:17",
             price: "N30,000.00",
             type: "Sponsor"
@@ -156,7 +156,7 @@ function App() {
             title: "Environmental Care",
             description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
             score: "5293",
-            name: "Sponsor One",
+            name: "Koksons Seasons",
             date: "2025-02-24 03:47:17",
             price: "N40,000.00",
             type: "Donor"
@@ -167,7 +167,7 @@ function App() {
             title: "Youth Empowerment",
             description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
             score: "6244",
-            name: "Sponsor One",
+            name: "Koksons Seasons",
             date: "2025-02-24 03:47:17",
             price: "N50,000.00",
             type: "Partner"
@@ -178,7 +178,7 @@ function App() {
             title: "Youth Empowerment",
             description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
             score: "4534",
-            name: "Sponsor One",
+            name: "Koksons Seasons",
             date: "2025-02-24 03:47:17",
             price: "N50,000.00",
             type: "Sponsor"
@@ -189,7 +189,7 @@ function App() {
             title: "Youth Empowerment",
             description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
             score: "4734",
-            name: "Sponsor One",
+            name: "Koksons Seasons",
             date: "2025-02-24 03:47:17",
             price: "N50,000.00",
             type: "Partner"
