@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 import sponsor from '../../assets/images/sponsors/sponsor.jpg';
+import sponsor2 from '../../assets/images/sponsors/sponsor2.jpg';
 
 const WidgetSponsors = ({ carouselSponsorItems }) => {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                   >
                     <img
                       className="w-full h-40 object-contain rounded-lg mt-4"
-                      src={sponsor}
+                      src={item.type == 'Donor' ? sponsor2 : sponsor}
                       alt={item.title}
                     />
                     <div className="flex flex-col p-4 items-center justify-center">

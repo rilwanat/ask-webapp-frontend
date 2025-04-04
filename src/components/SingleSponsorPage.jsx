@@ -16,7 +16,7 @@ import Contact from './widgets/Contact';
 // import LatestNews from './widgets/LatestNews';
 
 import sponsor from '../assets/images/sponsors/sponsor.jpg';
-
+import sponsor2 from '../assets/images/sponsors/sponsor2.jpg';
 
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -91,7 +91,7 @@ export default function SingleSponsorPage({
 
 <div className="w-full mt-4">
     <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
-        <div className="w-full p-4 ">
+        <div className="w-full py-4">
 
         {/* <div className="flex flex-col md:flex space-x-4">
         {carouselSponsorItems.map((item) => (
@@ -142,15 +142,14 @@ export default function SingleSponsorPage({
     </div> */}
 
 
-<div className="w-full p-4 flex justify-center">
+<div className="w-full py-4 flex justify-center">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {carouselSponsorItems.map((item) => (
           <div key={item.id} className="
           border border-gray-300 shadow-md
            p-2 rounded-lg">
             <img 
-            // src={item.image} 
-            src={sponsor}
+            src={item.type == 'Donor' ? sponsor2 : sponsor}
             alt={`Item ${item.id}`} className="w-full h-40 object-contain rounded-md" />
 
 <div className="flex flex-col items-center  mb-2 mt-auto">

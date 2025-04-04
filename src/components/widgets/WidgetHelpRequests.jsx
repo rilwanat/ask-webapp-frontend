@@ -85,10 +85,10 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
 
 <div 
 style={{
-    width: '400px',   
+    width: '100%',   
 }}
 >
-<p className="truncate text-center  text-theme font-bold my-2">{item.description}</p>
+<p className="text-center  text-theme font-bold my-2 truncate w-full">{item.description}</p>
 
 </div>
 
