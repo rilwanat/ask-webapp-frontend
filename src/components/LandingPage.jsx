@@ -7,6 +7,7 @@ import AskFooter from './navbar/AskFooter';
 
 import askLogo from '../assets/images/ask-logo.png';
 import contactUs from '../assets/images/contact-us.jpg';
+import hero1 from '../assets/images/hero/hero1.jpg';
 
 import { motion } from 'framer-motion';
 
@@ -81,7 +82,7 @@ export default function LandingPage({
 
             {/* <LatestNews/> */}
             <Parallax 
-                imageUrl={contactUs}
+                imageUrl={hero1}
                 title={"Contact Us"}
                 subtitle={"Click here to reach out to us"}
             />
