@@ -58,9 +58,9 @@ const Contact = ({ }) => {
   const validateInputs = () => {
     const missingFields = [];
 
-    if (!contactName.trim()) missingFields.push('Contact Name');
-    if (!address.trim()) missingFields.push('Address');
-    if (!phoneNumber.trim()) missingFields.push('Phone Number');
+    // if (!contactName.trim()) missingFields.push('Contact Name');
+    // if (!address.trim()) missingFields.push('Address');
+    // if (!phoneNumber.trim()) missingFields.push('Phone Number');
     if (!email.trim()) missingFields.push('Email');
     if (!message.trim()) missingFields.push('Message');
 
@@ -98,14 +98,14 @@ const isValidEmail = (email) => {
       return;
     }
     
-    if (!validateInputs() 
-      // || !validateCheckboxes()
-    ) {
-      // alert("Please, enter a valid inputs");
-      // openNotificationModal(false, "ASK Foundation", "Please, enter a valid inputs");
-      // setIsNotificationModalOpen(true);
-        return;
-    }
+    // if (!validateInputs() 
+    //   // || !validateCheckboxes()
+    // ) {
+    //   // alert("Please, enter a valid inputs");
+    //   // openNotificationModal(false, "ASK Foundation", "Please, enter a valid inputs");
+    //   // setIsNotificationModalOpen(true);
+    //     return;
+    // }
   
   
     if (!isValidNumber(phoneNumber)) {
