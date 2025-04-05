@@ -92,7 +92,7 @@ export default function SingleBeneficiaryPage({
 
 <div className="w-full mt-4">
     <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
-        <div className="w-full p-0 ">
+        <div className="w-full py-4 ">
 
         {/* <div className="flex flex-col md:flex space-x-4">
         {carouselSponsorItems.map((item) => (
@@ -142,7 +142,7 @@ export default function SingleBeneficiaryPage({
       </table>
     </div> */}
             
-            <div className="w-full p-0 flex justify-center">
+            <div className="w-full py-4 flex justify-center">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 ">
         {carouselBeneficiaryItems.map((item) => (
           <div key={item.id} className="
