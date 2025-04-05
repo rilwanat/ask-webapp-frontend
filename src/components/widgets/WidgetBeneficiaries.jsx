@@ -91,8 +91,8 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
                       transition: 'transform 0.8s ease',
                       // maxHeight: '70vh', // Adjust this as needed
                       // width: 'auto',
-                      width: '400px',       // or any fixed square size like 200px, 400px
-    height: '400px',
+                      width: '200px',       // or any fixed square size like 200px, 400px
+    height: '200px',
                       margin: '0 auto',
                       display: 'block'
                     }}

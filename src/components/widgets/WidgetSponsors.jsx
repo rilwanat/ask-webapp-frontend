@@ -69,7 +69,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                     onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
                   >
                     <img
-                      className="w-full h-40 object-contain rounded-lg mt-4"
+                      className="w-full h-40 object-cover rounded-lg mt-4"
                       src={item.type == 'Donor' ? sponsor2 : sponsor}
                       alt={item.title}
                     />
