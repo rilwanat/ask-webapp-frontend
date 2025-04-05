@@ -39,7 +39,7 @@ export default function SingleBeneficiaryPage({
 
 
     return (
-        <div className="h-screen overflow-y-auto">
+        <div className="w-full mt-4 touch-pan-y">
             <AskHeader 
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
