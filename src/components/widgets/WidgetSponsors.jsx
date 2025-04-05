@@ -9,30 +9,21 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
   const navigate = useNavigate();
   const listRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
 
   const navigateTo = (route, data) => {
     navigate(route, { state: data });
   };
 
   useEffect(() => {
-    if (isHovered) return; // Pause on hover
-    
     const interval = setInterval(() => {
-      setScrollPosition((prev) => {
-        // Reset position when reaching the duplicated content
-        if (prev >= carouselSponsorItems.length * 300) {
-          return 1; // Small offset to prevent flickering
-        }
-        return prev + 0.5; // Slower scroll speed
-      });
-    }, 16); // ~60fps
+      setScrollPosition((prev) => (prev + 1) % (carouselSponsorItems.length * 300)); // Adjust item width (300px per item)
+    }, 30); // Adjust speed
 
     return () => clearInterval(interval);
-  }, [carouselSponsorItems.length, isHovered]);
+  }, [carouselSponsorItems.length]);
 
   return (
-    <div className="w-full mt-4 bg-gold overflow-hidden h-96 touch-pan-y">
+    <div className="w-full mt-4 bg-gold overflow-hidden h-96"> {/* Hide overflow */}
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
           <div className="flex flex-col items-center justify-between">
@@ -61,43 +52,42 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
             </motion.div>
 
             {/* Scrollable Sponsor List */}
-            <div 
-              className="relative w-full h-48 overflow-x-hidden touch-pan-y"
-              style={{ touchAction: 'pan-y' }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
+            <div className="relative w-full h-48"> {/* Container with fixed height */}
               <div
                 ref={listRef}
                 className="absolute flex space-x-4"
                 style={{
                   transform: `translateX(-${scrollPosition}px)`,
-                  transition: "transform 0.1s linear",
-                  width: `${carouselSponsorItems.length * 300}px`,
+                  transition: "transform 0.1s linear", // Smooth movement
+                  width: `${carouselSponsorItems.length * 300}px`, // Ensure all items fit
                 }}
               >
-                {[...carouselSponsorItems, ...carouselSponsorItems].map((item, index) => (
+                {carouselSponsorItems.concat(carouselSponsorItems).map((item, index) => ( // Duplicate for infinite loop
                   <div
-                    key={`${item.id}-${index}`}
-                    className="flex-none w-72 cursor-pointer bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                    key={index}
+                    className="flex-none w-72 cursor-pointer bg-white rounded-lg shadow-md"
                     onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
                   >
                     <img
                       className="w-full h-40 object-cover rounded-lg mt-4"
-                      src={item.type === 'Donor' ? sponsor2 : sponsor}
+                      src={item.type == 'Donor' ? sponsor2 : sponsor}
                       alt={item.title}
-                      loading="lazy" // Better performance
                     />
                     <div className="flex flex-col p-4 items-center justify-center">
                       <h3 className="text-xl font-bold text-theme">{item.name}</h3>
-                      <div className='flex text-sm rounded-lg items-center justify-center w-70 mt-0'>
-                        <p className="text-theme">{item.type}</p>
-                      </div>
+                      <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-0'><p className="text-theme">{'' + item.type}</p></div>
                     </div>
+
+                    {/* <div className="flex flex-col items-center  mb-2 mt-auto">
+                  <h3 className="text-2xl font-bold text-theme">{item.score}</h3>
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-2'><p className="text-theme">{'' + item.name}</p> </div>
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-0'><p className="text-theme">{'' + item.type}</p></div>
+                </div> */}
                   </div>
                 ))}
               </div>
             </div>
+
           </div>
         </div>
       </div>
