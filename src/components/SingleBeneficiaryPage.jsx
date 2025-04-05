@@ -39,7 +39,7 @@ export default function SingleBeneficiaryPage({
 
 
     return (
-        <div className="">
+        <div className="h-screen overflow-y-auto">
             <AskHeader 
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
