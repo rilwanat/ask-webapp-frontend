@@ -87,7 +87,7 @@ export default function SingleRequestsPage({
 
 <div 
 style={{
-    width: '400px',   
+    // width: '400px',   
 }}
 >
 <h1 className="text-2xl font-bold text-gray-800">You are viewing {item.name}'s help request</h1>
