@@ -65,7 +65,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                 {carouselSponsorItems.concat(carouselSponsorItems).map((item, index) => ( // Duplicate for infinite loop
                   <div
                     key={index}
-                    className="flex-none w-72 cursor-pointer bg-white rounded-lg shadow-md"
+                    className="flex-none w-64 cursor-pointer bg-white rounded-lg shadow-md"
                     onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
                   >
                     <div className="w-full flex justify-center">

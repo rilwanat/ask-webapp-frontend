@@ -117,7 +117,7 @@ function AskFooter({ gotoPage }) {
                         <p className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>Contact Us</p>
                     </div> */}
 
-                    <div className="flex flex-col md:w-2/4 mt-4 md:h-40 ">
+                    <div className="flex flex-col md:w-2/4 mt-4 md:h-40 w-full">
                         <div className="flex flex-col items-start mb-4">
                             <p
                                 className="text-white mb-2"
@@ -132,7 +132,7 @@ function AskFooter({ gotoPage }) {
                                 
                             </p> */}
                         </div>
-                        <div className="flex flex-col sm:flex-row relative">
+                        <div className="flex flex-col sm:flex-row relative ">
                             <input
                                 type="text"
                                 placeholder="Your Email"
@@ -148,7 +148,7 @@ function AskFooter({ gotoPage }) {
                                 Subscribe
                             </div>
                         </div>
-                        <div className="flex py-2 my-2">
+                        <div className="flex justify-center md:justify-start  py-2 my-2">
                             <img
                                 onClick={() => {
                                     alert('googleplay');
