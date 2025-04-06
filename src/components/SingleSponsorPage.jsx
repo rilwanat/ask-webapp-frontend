@@ -47,115 +47,34 @@ export default function SingleSponsorPage({
             gotoPage={gotoPage} showMarqees={false} />
 
             
-            {/* <Hero/> */}
             <HeaderParallax 
                 // imageUrl={askLogo}
                 title={"A.S.K Sponsors"}
                 subtitle={""}
             />
 
-            {/* <Contact/> */}
 
-            {/* <div className="flex flex-col items-center p-4">
-                <h1 className="text-2xl font-bold text-gray-800">{selectedItem?.name || "No Name"}</h1>
-                <p className="text-gray-600 mt-2">{selectedItem?.description || "No Description Available"}</p>
-
-                <div className="w-full max-w-3xl mt-4">
-                    <Carousel 
-                        showIndicators={false}
-                        showArrows={true}
-                        showStatus={false}
-                        showThumbs={false}
-                        infiniteLoop={false}
-                        autoPlay={false} // 👈 Disabled auto-slide
-                        swipeable={true} // 👈 Enables manual swiping
-                        emulateTouch={true} // ✅ Fix swipe gestures on mobile
-                        // useKeyboardArrows={true} // ✅ Allow left/right keyboard navigation
-                        // dynamicHeight={true} // 👈 Adjusts height based on content
-                    >
-                        {allItems?.map((item) => (
-                            <div key={item.id} className="flex flex-col items-center">
-                                <img 
-                                    src={item.image} 
-                                    alt={item.title} 
-                                    className="rounded-lg w-full h-64 object-cover"
-                                />
-                                <h3 className="text-lg font-semibold text-gray-800 mt-2">{item.name}</h3>
-                                <p className="text-gray-600">{item.description}</p>
-                                <p className="text-theme font-bold my-1">Score: {item.score}</p>
-                            </div>
-                        ))}
-                    </Carousel>
-                </div>
-            </div> */}
-
-<div className="w-full mt-4">
+<div className="w-full mt-4 ">
     <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
-        <div className="w-full py-4">
-
-        {/* <div className="flex flex-col md:flex space-x-4">
-        {carouselSponsorItems.map((item) => (
-          <div key={item.id} className="w-full md:w-1/3 bg-white shadow-lg rounded-lg p-4">
-            <img src={item.image} alt={item.title} className="w-full h-40 object-cover rounded-md" />
-            <h2 className="text-lg font-semibold mt-2">{item.title}</h2>
-            <p className=" text-sm">{item.description}</p>
-            <div className="flex justify-between items-center mt-2">
-              <span className="text-sm font-semibold">{item.price}</span>
-              <span className="text-sm text-gray-500">{item.score} pts</span>
-            </div>
-          </div>
-        ))}
-      </div> */}
-
-      
-    {/* <div className="w-full overflow-x-auto p-4">
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 p-2">#</th>
-            <th className="border border-gray-300 p-2">Image</th>
-            <th className="border border-gray-300 p-2">Title</th>
-            <th className="border border-gray-300 p-2">Description</th>
-            <th className="border border-gray-300 p-2">Score</th>
-            <th className="border border-gray-300 p-2">Sponsor</th>
-            <th className="border border-gray-300 p-2">Date</th>
-            <th className="border border-gray-300 p-2">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {carouselSponsorItems.map((item) => (
-            <tr key={item.id} className="text-center">
-                <td className="border border-gray-300 p-2">{item.id}</td>
-              <td className="border border-gray-300 p-2">
-                <img src={sponsor} alt={item.title} className="w-16 h-16 object-cover rounded-md" />
-              </td>
-              <td className="border border-gray-300 p-2">{item.title}</td>
-              <td className="border border-gray-300 p-2 text-sm">{item.description}</td>
-              <td className="border border-gray-300 p-2">{item.score}</td>
-              <td className="border border-gray-300 p-2">{item.name}</td>
-              <td className="border border-gray-300 p-2">{item.date}</td>
-              <td className="border border-gray-300 p-2 font-semibold">{item.price}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div> */}
+        <div className="">
 
 
-<div className="w-full py-4 flex justify-center">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+<div className="w-full py-4 flex justify-center ">
+      <div 
+      // className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4"
+      >
         {carouselSponsorItems.map((item) => (
           <div key={item.id} className="
           border border-gray-300 shadow-md
-           p-2 rounded-lg">
-            <div className="flex justify-center">
+           p-2 rounded-lg cursor-pointer m-4">
+            <div className="flex justify-center ">
             <img 
             src={item.type == 'Donor' ? sponsor2 : sponsor}
             style={{
-              height: '190px',
-              width: '190px',
+              height: '200px',
+              width: '200px',
           }}
-            alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md" />
+            alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md mt-4" />
               </div>
 
 <div className="flex flex-col items-center  mb-2 mt-auto">
@@ -175,8 +94,6 @@ export default function SingleSponsorPage({
     </div>
 
 </div>
-
-            {/* <LatestNews/> */}
 
 
 

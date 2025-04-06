@@ -61,22 +61,22 @@ export default function SingleBeneficiaryPage({
                         {/* Grid View */}
                         <div className="w-full py-4 flex justify-center">
                             <div 
-                                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 touch-pan-y"
+                                // className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 touch-pan-y"
                                 style={{ touchAction: 'pan-y' }}
                             >
                                 {carouselBeneficiaryItems.map((item) => (
                                     <motion.div
                                         key={item.id}
-                                        className="border border-gray-300 shadow-md p-2 rounded-lg cursor-pointer"
-                                        whileHover={{ scale: 1.03 }}
-                                        whileTap={{ scale: 0.97 }}
+                                        className="border border-gray-300 shadow-md p-2 rounded-lg cursor-pointer m-4"
+                                        // whileHover={{ scale: 1.03 }}
+                                        // whileTap={{ scale: 0.97 }}
                                         onClick={() => navigate('/single-beneficiary', { state: { selectedItem: item, allItems: carouselBeneficiaryItems }})}
                                     >
                                         <div className="flex justify-center">
                                         <img 
                                             src={item.image} 
                                             alt={`Item ${item.id}`} 
-                                            className="w-full object-cover rounded-md"
+                                            className="w-full object-cover rounded-md mt-4"
                                             style={{
                                                 height: '190px',
                                                 width: '190px',
@@ -97,32 +97,6 @@ export default function SingleBeneficiaryPage({
                             </div>
                         </div>
 
-                        {/* Carousel View (Alternative) */}
-                        {/* {selectedItem && (
-                            <div className="w-full max-w-3xl mx-auto mt-8 touch-pan-y">
-                                <Carousel {...carouselConfig}>
-                                    {allItems?.map((item) => (
-                                        <div 
-                                            key={item.id} 
-                                            className="flex flex-col items-center p-4 touch-pan-y"
-                                        >
-                                            <img 
-                                                src={item.image} 
-                                                alt={item.title} 
-                                                className="rounded-lg w-full h-64 object-cover"
-                                                loading="lazy"
-                                            />
-                                            <h3 className="text-lg font-semibold text-gray-800 mt-2">
-                                                {item.name}
-                                            </h3>
-                                            <p className="text-theme font-bold my-1">
-                                                {item.price} • {item.date}
-                                            </p>
-                                        </div>
-                                    ))}
-                                </Carousel>
-                            </div>
-                        )} */}
                     </div>
                 </div>
             </div>
