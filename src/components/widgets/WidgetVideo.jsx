@@ -56,7 +56,8 @@ const WidgetVideo = ({ link }) => {
         className="video-slide">
           <iframe
             width="100%"
-            height="700px"
+            height="400px"
+            // height="100%"
             src={getEmbedUrl(link)}
             
             // title={`YouTube Video ${index + 1}`}

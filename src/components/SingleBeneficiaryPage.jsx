@@ -61,13 +61,14 @@ export default function SingleBeneficiaryPage({
                         {/* Grid View */}
                         <div className="w-full py-4 flex justify-center">
                             <div 
-                                // className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 touch-pan-y"
+                                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 touch-pan-y"
                                 style={{ touchAction: 'pan-y' }}
                             >
                                 {carouselBeneficiaryItems.map((item) => (
                                     <motion.div
                                         key={item.id}
-                                        className="border border-gray-300 shadow-md p-2 rounded-lg cursor-pointer m-4"
+                                        className="border border-gray-300 shadow-md 
+                                        p-2 rounded-lg cursor-pointer "
                                         // whileHover={{ scale: 1.03 }}
                                         // whileTap={{ scale: 0.97 }}
                                         onClick={() => navigate('/single-beneficiary', { state: { selectedItem: item, allItems: carouselBeneficiaryItems }})}
@@ -85,10 +86,10 @@ export default function SingleBeneficiaryPage({
                                         />
                                         </div>
                                         <div className="flex flex-col items-center mb-2 mt-auto">
-                                            <div className='flex text-sm rounded-lg items-center justify-center w-70 mt-2'>
+                                            <div className='flex text-sm rounded-lg items-center justify-center w-full mt-2'>
                                                 <p className="text-theme">{item.name}</p>
                                             </div>
-                                            <div className='flex text-sm rounded-lg items-center justify-center w-70 mt-0'>
+                                            <div className='flex text-sm rounded-lg items-center justify-center w-full mt-0'>
                                                 <p className="text-theme">{item.price}</p>
                                             </div>
                                         </div>

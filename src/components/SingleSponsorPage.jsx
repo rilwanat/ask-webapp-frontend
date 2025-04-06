@@ -54,20 +54,20 @@ export default function SingleSponsorPage({
             />
 
 
-<div className="w-full mt-4 ">
+<div className="w-full mt-4 touch-pan-y">
     <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
-        <div className="">
+        <div className="w-full py-4">
 
 
 <div className="w-full py-4 flex justify-center ">
       <div 
-      // className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4"
+      className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4"
       >
         {carouselSponsorItems.map((item) => (
           <div key={item.id} className="
           border border-gray-300 shadow-md
-           p-2 rounded-lg cursor-pointer m-4">
-            <div className="flex justify-center ">
+           p-2 rounded-lg cursor-pointer ">
+            <div className="flex justify-center">
             <img 
             src={item.type == 'Donor' ? sponsor2 : sponsor}
             style={{
@@ -79,8 +79,8 @@ export default function SingleSponsorPage({
 
 <div className="flex flex-col items-center  mb-2 mt-auto">
                   {/* <h3 className="text-2xl font-bold text-theme">{item.score}</h3> */}
-                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-2'><p className="text-theme">{'' + item.name}</p> </div>
-                  <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-0'><p className="text-theme">{'' + item.type}</p></div>
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-2'><p className="text-theme">{'' + item.name}</p> </div>
+                  <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-0'><p className="text-theme">{'' + item.type}</p></div>
                 </div>
 
 

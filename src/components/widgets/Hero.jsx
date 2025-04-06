@@ -10,6 +10,9 @@ import hero3 from '../../assets/images/hero/hero3.jpg';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
 const Hero = ({  }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
@@ -126,23 +129,24 @@ const swipePower = (offset, velocity) => {
         dynamicHeight={false}
         useKeyboardArrows={true}
         stopOnHover={false}
-        autoPlay={false}
+        autoPlay={true}
+        showIndicators={false}
         renderArrowPrev={(clickHandler, hasPrev) => (
           <button 
             onClick={clickHandler}
-            className="absolute left-2 top-2/5 z-10 bg-black/50 text-white p-2 rounded-full"
+            className="absolute left-2 top-2/5 z-10 bg-black/50 text-white p-2 rounded-full cursor-pointer"
             disabled={!hasPrev}
           >
-            ‹
+            <ArrowBackIosNewIcon  />
           </button>
         )}
         renderArrowNext={(clickHandler, hasNext) => (
           <button 
             onClick={clickHandler}
-            className="absolute right-2 top-2/5 z-10 bg-black/50 text-white p-2 rounded-full"
+            className="absolute right-2 top-2/5 z-10 bg-black/50 text-white p-2 rounded-full cursor-pointer "
             disabled={!hasNext}
           >
-            ›
+            <ArrowForwardIosIcon />
           </button>
         )}
       >
