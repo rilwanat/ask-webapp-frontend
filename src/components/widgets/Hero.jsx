@@ -118,7 +118,7 @@ const swipePower = (offset, velocity) => {
 
 
 
-    <div className="w-full h-[280px] overflow-hidden mt-24 sm:mt-20">
+    <div className="w-full h-[280px] overflow-hidden mt-24 sm:mt-20 shadow-lg">
       <Carousel
         showArrows={true}
         showStatus={false}

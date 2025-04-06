@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AskHeader from '../navbar/AskHeader';
+import AskAdminHeader from '../navbar/AskAdminHeader';
 import AskFooter from '../navbar/AskFooter';
 
 import askLogo from '../../assets/images/ask-logo.png';
@@ -88,20 +89,20 @@ export default function ManageWebsiteImagesPage({
     return (
         <div className="">
 
-            {/* <AskHeader 
+            <AskAdminHeader 
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 
-            gotoPage={gotoPage} showMarqees={false} /> */}
+            gotoPage={gotoPage} showMarqees={false} />
 
             
             
 
-<div className='flex justify-center items-center '>
+<div className='flex flex-col justify-center items-center px-4 sm:px-16 md:px-24'>
       
       
 
-<div className='flex flex-col sm:flex-row gap-6 p-4 bg-amber-300 items-center justify-center'>
+<div className='flex flex-col sm:flex-row gap-6 mt-24 p-4 w-full bg-amber-300 items-center justify-center'>
   {[0, 1, 2].map((index) => (
     <div key={index} className="flex flex-col gap-2 items-start w-full sm:w-1/3">
       <label className="font-semibold">Slide {index + 1}</label>
@@ -126,8 +127,14 @@ export default function ManageWebsiteImagesPage({
       </button>
     </div>
   ))}
-  {message && <p className="text-sm text-green-600">{message}</p>}
+  
 </div>
+
+
+<div className='my-4'>
+  {message && <p className="text-sm text-red-600">{message}</p>}
+</div>
+
 
 
 
