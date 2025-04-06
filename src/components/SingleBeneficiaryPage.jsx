@@ -77,7 +77,7 @@ export default function SingleBeneficiaryPage({
                                         <img 
                                             src={item.image} 
                                             alt={`Item ${item.id}`} 
-                                            className="w-full object-cover rounded-md mt-4"
+                                            className="w-full object-cover rounded-md mt-1"
                                             style={{
                                                 height: '190px',
                                                 width: '190px',

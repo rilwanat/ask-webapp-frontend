@@ -74,7 +74,7 @@ export default function SingleSponsorPage({
               height: '200px',
               width: '200px',
           }}
-            alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md mt-4" />
+            alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md mt-1" />
               </div>
 
 <div className="flex flex-col items-center  mb-2 mt-auto">
