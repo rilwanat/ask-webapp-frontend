@@ -23,7 +23,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
   }, [carouselSponsorItems.length]);
 
   return (
-    <div className="w-full mt-4  bg-gold overflow-hidden h-80"> {/* Hide overflow */}
+    <div className="w-full mt-4  bg-gold overflow-hidden h-72"> {/* Hide overflow */}
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
           <div className="flex flex-col items-center justify-between">
@@ -65,22 +65,22 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                 {carouselSponsorItems.concat(carouselSponsorItems).map((item, index) => ( // Duplicate for infinite loop
                   <div
                     key={index}
-                    className="flex-none w-64 cursor-pointer bg-white rounded-lg shadow-md"
+                    className="flex-none w-56 cursor-pointer bg-white rounded-lg shadow-md"
                     onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
                   >
                     <div className="w-full flex justify-center">
                     <img
                       className="w-full  object-cover rounded-lg mt-4 "
                       style={{
-                        height: '128px',
-                        width: '128px',
+                        height: '108px',
+                        width: '108px',
                     }}
                       src={item.type == 'Donor' ? sponsor2 : sponsor}
                       alt={item.title}
                     />
                       </div>
-                    <div className="flex flex-col p-4 items-center justify-center">
-                      <h3 className="text-xl font-bold text-theme">{item.name}</h3>
+                    <div className="flex flex-col p-2 items-center justify-center">
+                      <h3 className="text-lg font-bold text-theme">{item.name}</h3>
                       <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-0'><p className="text-theme">{'' + item.type}</p></div>
                     </div>
 
