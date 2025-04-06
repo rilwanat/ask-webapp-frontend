@@ -242,7 +242,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
         {/* <hr /> */}
         {/* Apply variants to each menu item */}
         <div className='pb-2'>
-        {/* <motion.span
+        <motion.span
           variants={menuItemVariants}
           initial="hidden"
           animate={isMenuOpen ? "visible" : "hidden"}
@@ -253,7 +253,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
         }}
         >
           Home
-        </motion.span> */}
+        </motion.span>
 
         <motion.span
           variants={menuItemVariants}
