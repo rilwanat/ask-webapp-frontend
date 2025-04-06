@@ -23,7 +23,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
   }, [carouselSponsorItems.length]);
 
   return (
-    <div className="w-full mt-4 bg-gold overflow-hidden h-96"> {/* Hide overflow */}
+    <div className="w-full mt-4  bg-gold overflow-hidden h-80"> {/* Hide overflow */}
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
           <div className="flex flex-col items-center justify-between">
@@ -52,7 +52,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
             </motion.div>
 
             {/* Scrollable Sponsor List */}
-            <div className="relative w-full h-48"> {/* Container with fixed height */}
+            <div className="relative w-full "> {/* Container with fixed height */}
               <div
                 ref={listRef}
                 className="absolute flex space-x-4"
@@ -70,10 +70,10 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                   >
                     <div className="w-full flex justify-center">
                     <img
-                      className="w-full h-40 object-cover rounded-lg mt-4 "
+                      className="w-full  object-cover rounded-lg mt-4 "
                       style={{
-                        height: '190px',
-                        width: '190px',
+                        height: '128px',
+                        width: '128px',
                     }}
                       src={item.type == 'Donor' ? sponsor2 : sponsor}
                       alt={item.title}
@@ -81,7 +81,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                       </div>
                     <div className="flex flex-col p-4 items-center justify-center">
                       <h3 className="text-xl font-bold text-theme">{item.name}</h3>
-                      <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-0'><p className="text-theme">{'' + item.type}</p></div>
+                      <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-0'><p className="text-theme">{'' + item.type}</p></div>
                     </div>
 
                     {/* <div className="flex flex-col items-center  mb-2 mt-auto">
