@@ -25,7 +25,7 @@ export default function AboutUsPage({
 }) {
     const navigate = useNavigate();
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []); 
     const gotoPage = (pageName) => {
         navigate("/" + pageName)
@@ -33,7 +33,7 @@ export default function AboutUsPage({
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth <= 500);
+            setIsMobile(window.innerWidth <= 768);
         };
 
         window.addEventListener('resize', handleResize);

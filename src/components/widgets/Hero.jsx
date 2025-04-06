@@ -131,24 +131,24 @@ const swipePower = (offset, velocity) => {
         stopOnHover={false}
         autoPlay={true}
         showIndicators={false}
-        renderArrowPrev={(clickHandler, hasPrev) => (
-          <button 
-            onClick={clickHandler}
-            className="absolute left-2 top-2/5 z-10 bg-black/50 text-white p-2 rounded-full cursor-pointer"
-            disabled={!hasPrev}
-          >
-            <ArrowBackIosNewIcon  />
-          </button>
-        )}
-        renderArrowNext={(clickHandler, hasNext) => (
-          <button 
-            onClick={clickHandler}
-            className="absolute right-2 top-2/5 z-10 bg-black/50 text-white p-2 rounded-full cursor-pointer "
-            disabled={!hasNext}
-          >
-            <ArrowForwardIosIcon />
-          </button>
-        )}
+        // renderArrowPrev={(clickHandler, hasPrev) => (
+        //   <button 
+        //     onClick={clickHandler}
+        //     className="absolute left-2 top-2/5 z-10 bg-black/50 text-white p-2 rounded-full cursor-pointer"
+        //     disabled={!hasPrev}
+        //   >
+        //     <ArrowBackIosNewIcon  />
+        //   </button>
+        // )}
+        // renderArrowNext={(clickHandler, hasNext) => (
+        //   <button 
+        //     onClick={clickHandler}
+        //     className="absolute right-2 top-2/5 z-10 bg-black/50 text-white p-2 rounded-full cursor-pointer "
+        //     disabled={!hasNext}
+        //   >
+        //     <ArrowForwardIosIcon />
+        //   </button>
+        // )}
       >
         {images.map((img, index) => (
           <div key={index} className="h-64 md:h-96">

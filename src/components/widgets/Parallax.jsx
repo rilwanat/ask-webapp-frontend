@@ -28,7 +28,7 @@ function Parallax({ imageUrl, title, subtitle  }) {
 
         <div className='flex flex-col bg-lightTheme rounded-lg p-4 shadow-lg items-center justify-center'>
         <h2 className="text-3xl font-bold mb-4 z-1000 ">{title}</h2>
-        <div className='bg-theme mb-2' style={{ width: '100px', height: '2px' }}></div>
+        <div className='bg-white mb-2' style={{ width: '100px', height: '2px' }}></div>
         {/* <p className="text-lg z-1000">{subtitle}</p> */}
         <div 
               onClick={() => { gotoPage('/contact-us') }}

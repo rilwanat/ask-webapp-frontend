@@ -6,7 +6,7 @@ import AdminMobileNavbar from './AdminMobileNavbar';
 import MarqueeTextContainer from "./MarqueeTextContainer";
 
 export default function AskHeader({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage, showMarqees}) {
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     useEffect(() => {
         // Initial useEffect logic can be added here if needed
@@ -20,7 +20,7 @@ export default function AskHeader({ carouselRequestItems, carouselBeneficiaryIte
     }, []);
 
     const handleResize = () => {
-        setIsMobile(window.innerWidth <= 500);
+        setIsMobile(window.innerWidth <= 768);
     };
 
     return (

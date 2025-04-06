@@ -33,7 +33,7 @@ export default function AdminLandingPage({
 }) {
     const navigate = useNavigate();
     
-    // const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+    // const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     
     useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []); 
     const gotoPage = (pageName) => {

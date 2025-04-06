@@ -81,7 +81,7 @@ const menuItemVariants = {
 
 
 
-export default function AdminMobileAdminNavbar({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage }) {
+export default function AdminMobileNavbar({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage }) {
 
   const navigate = useNavigate();
   
@@ -110,8 +110,10 @@ export default function AdminMobileAdminNavbar({ carouselRequestItems, carouselB
 
 
   
-  const navigateTo = (route, data) => {
-    navigate(route, { state: data });
+  // const navigateTo = (route, data) => {
+    const navigateTo = (route) => {
+    // navigate(route, { state: data });
+    navigate(route);
   };
 
 
@@ -263,7 +265,7 @@ export default function AdminMobileAdminNavbar({ carouselRequestItems, carouselB
           style={{ fontWeight: '600' }}
           onClick={() => {gotoPage('about-us');}}
         >
-          About
+          Admin Home
         </motion.span>
 
         <motion.span
@@ -272,9 +274,9 @@ export default function AdminMobileAdminNavbar({ carouselRequestItems, carouselB
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });}}
+          onClick={() => {navigateTo('/manage-hero-images');}}
         >
-          Requests
+          Hero Images
         </motion.span>
 
         <motion.span
@@ -283,9 +285,9 @@ export default function AdminMobileAdminNavbar({ carouselRequestItems, carouselB
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });}}
+          onClick={() => {navigateTo('/admin-list-beneficiaries', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });}}
         >
-          Beneficiary
+          List Beneficiaries
         </motion.span>
 
         <motion.span
@@ -294,23 +296,13 @@ export default function AdminMobileAdminNavbar({ carouselRequestItems, carouselB
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/single-sponsor', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });}}
+          onClick={() => {navigateTo('/admin-list-sponsors', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });}}
         >
-          Sponsor
+          List Sponsors
         </motion.span>
 
 
 
-        <motion.span
-          variants={menuItemVariants}
-          initial="hidden"
-          animate={isMenuOpen ? "visible" : "hidden"}
-          className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
-          style={{ fontWeight: '600' }}
-          onClick={() => {gotoPage('contact-us');}}
-        >
-          Contact
-        </motion.span>
         </div>
         
 
