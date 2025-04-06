@@ -70,11 +70,22 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
                       });
                     }}
                   >
-                    <div style={{ width: '90%' }}>
-                      <p className="text-center text-theme font-bold my-2 truncate">
-                        {item.description}
-                      </p>
-                    </div>
+                    <div className='flex ' style={{ width: '200px' }}>
+  <p 
+    className="text-center text-theme font-bold my-2"
+    style={{
+      display: '-webkit-box',
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: 'vertical',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      width: '100%',
+      wordBreak: 'break-word'
+    }}
+  >
+    {item.description}
+  </p>
+</div>
 
                     <div className="flex-1 overflow-hidden">
                       <img 

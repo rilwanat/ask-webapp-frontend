@@ -72,6 +72,7 @@ export default function SingleBeneficiaryPage({
                                         whileTap={{ scale: 0.97 }}
                                         onClick={() => navigate('/single-beneficiary', { state: { selectedItem: item, allItems: carouselBeneficiaryItems }})}
                                     >
+                                        <div className="flex justify-center">
                                         <img 
                                             src={item.image} 
                                             alt={`Item ${item.id}`} 
@@ -82,6 +83,7 @@ export default function SingleBeneficiaryPage({
                                             }}
                                             loading="lazy"
                                         />
+                                        </div>
                                         <div className="flex flex-col items-center mb-2 mt-auto">
                                             <div className='flex text-sm rounded-lg items-center justify-center w-70 mt-2'>
                                                 <p className="text-theme">{item.name}</p>
@@ -96,7 +98,7 @@ export default function SingleBeneficiaryPage({
                         </div>
 
                         {/* Carousel View (Alternative) */}
-                        {selectedItem && (
+                        {/* {selectedItem && (
                             <div className="w-full max-w-3xl mx-auto mt-8 touch-pan-y">
                                 <Carousel {...carouselConfig}>
                                     {allItems?.map((item) => (
@@ -120,7 +122,7 @@ export default function SingleBeneficiaryPage({
                                     ))}
                                 </Carousel>
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
             </div>

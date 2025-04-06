@@ -68,11 +68,17 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                     className="flex-none w-72 cursor-pointer bg-white rounded-lg shadow-md"
                     onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
                   >
+                    <div className="w-full flex justify-center">
                     <img
-                      className="w-full h-40 object-cover rounded-lg mt-4"
+                      className="w-full h-40 object-cover rounded-lg mt-4 "
+                      style={{
+                        height: '190px',
+                        width: '190px',
+                    }}
                       src={item.type == 'Donor' ? sponsor2 : sponsor}
                       alt={item.title}
                     />
+                      </div>
                     <div className="flex flex-col p-4 items-center justify-center">
                       <h3 className="text-xl font-bold text-theme">{item.name}</h3>
                       <div className='flex text-sm  rounded-lg items-center justify-center w-70  mt-0'><p className="text-theme">{'' + item.type}</p></div>

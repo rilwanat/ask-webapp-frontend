@@ -148,9 +148,15 @@ export default function SingleSponsorPage({
           <div key={item.id} className="
           border border-gray-300 shadow-md
            p-2 rounded-lg">
+            <div className="flex justify-center">
             <img 
             src={item.type == 'Donor' ? sponsor2 : sponsor}
-            alt={`Item ${item.id}`} className="w-full h-40 object-contain rounded-md" />
+            style={{
+              height: '190px',
+              width: '190px',
+          }}
+            alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md" />
+              </div>
 
 <div className="flex flex-col items-center  mb-2 mt-auto">
                   {/* <h3 className="text-2xl font-bold text-theme">{item.score}</h3> */}

@@ -90,9 +90,9 @@ export default function SingleRequestsPage({
                                         alt={item.title} 
                                         className="rounded-lg object-cover"
                                         style={{ 
-                                            width: '400px',
-                                            height: '400px',
-                                            maxWidth: '100%' // Ensure responsiveness
+                                            width: '190px',
+                                            height: '190px',
+                                            // maxWidth: '100%' // Ensure responsiveness
                                         }}
                                         loading="lazy"
                                     />
