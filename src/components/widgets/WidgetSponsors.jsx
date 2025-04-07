@@ -63,7 +63,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                 }}
               >
                 {carouselSponsorItems.concat(carouselSponsorItems).map((item, index) => ( // Duplicate for infinite loop
-                <div key={item.id} 
+                <div key={index} 
                 onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
                  className="bg-white
                           border border-gray-300 shadow-md

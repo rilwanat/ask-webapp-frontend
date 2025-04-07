@@ -126,7 +126,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
             src={askLogo}
             alt="Logo"
             // onClick={toggleMenu}
-            onClick={() => {navigate('/');}}
+            onClick={() => {navigate('/admin-home');}}
             style={{ cursor: 'pointer' }}
           />
         </div>
@@ -177,7 +177,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           </div>
 
           <div
-            className="bg-theme border-1 border-softTheme flex items-center justify-center  z-200"
+            className="bg-red-900 border-1 border-softTheme flex items-center justify-center  z-200"
             style={{ height: '40px', width: '40px', borderRadius: '4px' }}
             onClick={() => { toggleAccount(); }}
           >
@@ -211,9 +211,9 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
         </div>
       </div>
 
-      <div className="fixed top-17 left-35 w-full z-100">
+      {/* <div className="fixed top-17 left-35 w-full z-100">
 <DonateAndAsk />
-</div>
+</div> */}
       
 
 
@@ -235,7 +235,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
             src={askLogo}
             alt="Logo"
             onClick={() => {
-              navigate('/');
+              navigate('/admin-home');
           }}
             style={{ cursor: 'pointer' }}
           />
@@ -263,7 +263,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {gotoPage('about-us');}}
+          onClick={() => {gotoPage('admin-home');}}
         >
           Admin Home
         </motion.span>
@@ -285,7 +285,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/admin-list-beneficiaries', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });}}
+          // onClick={() => {navigateTo('/admin-list-beneficiaries', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });}}
         >
           List Beneficiaries
         </motion.span>
@@ -296,7 +296,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/admin-list-sponsors', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });}}
+          // onClick={() => {navigateTo('/admin-list-sponsors', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });}}
         >
           List Sponsors
         </motion.span>
@@ -307,7 +307,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/admin-broadcast', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });}}
+          // onClick={() => {navigateTo('/admin-broadcast', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });}}
         >
           Broadcast
         </motion.span>

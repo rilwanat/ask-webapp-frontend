@@ -70,7 +70,7 @@ export default function AskHeaderAdminHead({ carouselRequestItems, carouselBenef
                         src={askLogo}
                         alt="Logo"
                         onClick={() => {
-                            navigate('/');
+                            navigate('/admin-home');
                         }}
                         style={{ cursor: 'pointer' }}
                     />
@@ -110,7 +110,7 @@ export default function AskHeaderAdminHead({ carouselRequestItems, carouselBenef
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
-                                navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });
+                                // navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });
                             }}
                         >
                             <p
@@ -124,7 +124,7 @@ export default function AskHeaderAdminHead({ carouselRequestItems, carouselBenef
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
-                                navigateTo('/single-sponsor', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });
+                                // navigateTo('/single-sponsor', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });
                             }}
                         >
                             <p
@@ -132,6 +132,20 @@ export default function AskHeaderAdminHead({ carouselRequestItems, carouselBenef
                                 style={{ fontWeight: '600' }}
                             >
                                 List Sponsors
+                            </p>
+                        </div>
+
+                        <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                // navigateTo('/single-sponsor', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Broadcast
                             </p>
                         </div>
 

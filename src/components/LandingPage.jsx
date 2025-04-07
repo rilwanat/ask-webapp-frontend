@@ -24,7 +24,6 @@ import WidgetVideo from './widgets/WidgetVideo';
 // import LatestNews from './widgets/LatestNews';
 
 
-
 export default function LandingPage({ 
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -77,7 +76,7 @@ export default function LandingPage({
 
 
             
-            <WidgetVideo link={"https://www.youtube.com/watch?v=WDL5oNdAC1o"}/>
+            {/* <WidgetVideo link={"https://www.youtube.com/watch?v=WDL5oNdAC1o"}/> */}
 
 
             {/* <LatestNews/> */}

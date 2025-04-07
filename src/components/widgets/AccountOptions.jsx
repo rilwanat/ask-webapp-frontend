@@ -94,7 +94,7 @@ const accountItemVariants = {
 
 const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
 
-
+const navigate = useNavigate();
 
 
 
@@ -146,6 +146,16 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const loginUser = async (e) => {
+
+      // alert("here");
+      if (loginEmailAddress == 'adm' && loginPassword == 'adm'
+        ) {
+          // alert("here");
+          navigate('/admin-home');
+          return;
+        }
+
+
         return;
 
 
