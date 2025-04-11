@@ -429,7 +429,101 @@ const navigate = useNavigate();
 
 
 
+      const handleForgotPassword = async (e) => {
 
+        // // alert("here");
+        // if (loginEmailAddress == 'adm' && loginPassword == 'adm'
+        //   ) {
+        //     // alert("here");
+        //     navigate('/admin-home');
+        //     return;
+        //   }
+  
+  
+          if (!isValidEmail(loginEmailAddress)) {
+            // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
+            // alert("Please, enter a valid email.");
+            // openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
+            // setIsNotificationModalOpen(true);
+  
+            setErrorMessage({ message: 'Please, enter a valid email.' });
+            return;
+        }
+  
+  
+  
+  
+          e.preventDefault();
+          setErrorMessage({ message: '' });
+        
+          setIsLoading(true);
+        
+          // setLoginEmailAddress();
+          // setLoginPassword();
+        
+          if (loginEmailAddress === 'Enter your email' || loginEmailAddress === '' 
+          ) {
+            setErrorMessage({ message: 'Password Reset Failed: Please enter a valid email' });
+            // setRegistrationStatus("Failed");
+            setIsLoading(false);
+            return;
+          }
+        
+          // alert("login user: " + loginEmailAddress + " " + loginPassword);
+          try {
+      
+            const requestData = {   
+              email: loginEmailAddress
+            };
+      
+            const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_FORGOT_PASSWORD, requestData, {
+              headers: {
+                    // 'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
+                },
+            });
+      
+            setIsLoading(false);
+            // alert("login: " + JSON.stringify(response.data, null, 2));
+      // return;
+      
+            if (response.data.status) {
+              // If login is successful
+              setErrorMessage({ message: '' });
+              
+              setLoginEmailAddress('');
+              setLoginPassword('');
+      
+      
+      
+      
+              // alert("Login Successful: " + response.data.message);
+              openNotificationModal(true, "ASK Password Reset", response.data.message);
+              setIsNotificationModalOpen(true);
+              
+            } else {
+              const errors = response.data.errors.map(error => error.msg);
+              setErrorMessage({ message: response.data.message, errors });
+              //alert("Failed1");
+            }
+          } catch (error) {
+            setIsLoading(false);
+  
+            // alert(error);
+          
+            if (error.response && error.response.data && error.response.data.message) {
+            const errorMessage = error.response.data.message;
+            setErrorMessage({ message: errorMessage });
+          } else if (error.response && error.response.data && error.response.data.errors) {
+            const { errors } = error.response.data;
+            const errorMessages = errors.map(error => error.msg);
+            const errorMessage = errorMessages.join(', '); // Join all error messages
+            setErrorMessage({ message: errorMessage });
+          } else {
+            setErrorMessage({ message: 'ASK Password Reset failed. Please check your credentials and try again.' });
+          }
+        }
+        };
 
 
 
@@ -686,7 +780,7 @@ const navigate = useNavigate();
           </label>
           <span 
             className='text-theme cursor-pointer hover:underline' 
-            // onClick={() => handleForgotPassword()}
+            onClick={(e) => {if (!isLoading) handleForgotPassword(e)}}
           >
             Forgot Password?
           </span>

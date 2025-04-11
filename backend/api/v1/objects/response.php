@@ -22,6 +22,7 @@ class Response
     private $bank_codes_table = "bank_codes_table";
 
     private $subscribe_table_name = "subscribe_table";
+    private $password_reset_tokens_table = "password_reset_tokens";
     
     
 
@@ -928,8 +929,40 @@ public function getEmailVerificationCode($email)
 
 
 
+ // // // password reset // //
+public function InsertPasswordResetTokenForUser($email, $token) {
+    $query = "REPLACE INTO " . $this->password_reset_tokens_table . " SET email_address = :email_address, token = :token";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email_address", $email);
+    $stmt->bindParam(":token", $token);
+    return $stmt->execute();
+}
 
+public function VerifyPasswordResetEmailToken($email, $token) {
+    $query = "SELECT token FROM " . $this->password_reset_tokens_table . " WHERE email_address = :email_address LIMIT 1";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email_address", $email);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row && $row['token'] === $token;
+}
 
+public function DeletePasswordResetEmailToken($email) {
+    $query = "DELETE FROM " . $this->password_reset_tokens_table . " WHERE email_address = :email_address";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email_address", $email);
+    return $stmt->execute();
+}
+
+public function UpdatePasswordResetUserPassword($email, $newPassword) {
+    $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
+    $query = "UPDATE " . $this->users_test_table . " SET access_key = :access_key WHERE email_address = :email_address";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email_address", $email);
+    $stmt->bindParam(":access_key", $hashed);
+    return $stmt->execute();
+}
+ // // // password reset // //
 
 //
 }

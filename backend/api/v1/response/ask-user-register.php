@@ -57,13 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             //
             $randomToken = "";
-			$codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			$codeAlphabet .= "abcdefghijklmnopqrstuvwxyz";
-			$codeAlphabet .= "0123456789";
-			$max = strlen($codeAlphabet);
+			$codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 			for ($i = 0; $i < 8; $i++) {
-				$randomToken .= $codeAlphabet[random_int(0, $max - 1)];
-			}
+                $randomToken .= $codeAlphabet[random_int(0, strlen($codeAlphabet) - 1)];
+            }
             $response->InsertEmailTokenForUser($data->email, $randomToken);
             //
                 
