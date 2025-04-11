@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import AskHeader from '../navbar/AskHeader';
-import AskAdminHeader from '../navbar/AskAdminHeader';
-import AskFooter from '../navbar/AskFooter';
+import AdminHeader from '../navbar/admin-navbar/AdminHeader';
+import AdminFooter from '../navbar/admin-navbar/AdminFooter';
 
 import askLogo from '../../assets/images/ask-logo.png';
 import contactUs from '../../assets/images/contact-us.jpg';
@@ -24,6 +23,11 @@ import WidgetVideo from '../widgets/WidgetVideo';
 // import Services from './widgets/Services';
 // import LatestNews from './widgets/LatestNews';
 
+//
+import axiosAdminInstance from '../../auth/axiosAdminConfig'; // Ensure the correct relative path
+import { setCookie, getCookie, deleteCookie } from '../../auth/authUtils'; // Ensure the correct relative path
+import { jwtDecode } from 'jwt-decode';
+//
 
 
 export default function ManageWebsiteImagesPage({ 
@@ -75,7 +79,7 @@ export default function ManageWebsiteImagesPage({
     const endpoint = process.env.REACT_APP_API_SERVER_URL + '/response/upload.php';
   
     try {
-      const response = await axiosInstance.post(endpoint, formData, {
+      const response = await axiosAdminInstance.post(endpoint, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setMessage(`Slide ${index + 1} uploaded successfully.`);
@@ -93,7 +97,7 @@ export default function ManageWebsiteImagesPage({
     return (
         <div className="bg-theme h-full">
 
-            <AskAdminHeader 
+            <AdminHeader 
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 
@@ -292,8 +296,10 @@ export default function ManageWebsiteImagesPage({
             /> */}
             
 
-{/* 
-            <AskFooter gotoPage={gotoPage} /> */}
+
+            <AdminFooter 
+            // gotoPage={gotoPage} 
+            />
         </div>
     );
 }

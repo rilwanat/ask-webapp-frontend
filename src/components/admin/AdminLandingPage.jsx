@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import AskHeader from '../navbar/AskHeader';
-import AskAdminHeader from '../navbar/AskAdminHeader';
-import AskFooter from '../navbar/AskFooter';
+import AdminHeader from '../navbar/admin-navbar/AdminHeader';
+import AdminFooter from '../navbar/admin-navbar/AdminFooter';
 
 import askLogo from '../../assets/images/ask-logo.png';
 import contactUs from '../../assets/images/contact-us.jpg';
@@ -45,15 +44,21 @@ import Loading from '../widgets/Loading';
 import MiniLoading from '../widgets/MiniLoading';
 
 
+import GroupIcon from '@mui/icons-material/Group';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import ElderlyIcon from '@mui/icons-material/Elderly';
 
-// //
-// import axiosInstance from '../../axiosConfig'; // Ensure the correct relative path
-// import { setCookie } from '../../authUtils'; // Ensure the correct relative path
-// import { jwtDecode } from 'jwt-decode';
-// import { getCookie, deleteCookie } from '../../authUtils'; // Import getCookie function
-// //
+//
+import axiosAdminInstance from '../../auth/axiosAdminConfig'; // Ensure the correct relative path
+import { setCookie, getCookie, deleteCookie } from '../../auth/authUtils'; // Ensure the correct relative path
+import { jwtDecode } from 'jwt-decode';
+//
 
-
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 
 
 export default function AdminLandingPage({ 
@@ -77,7 +82,9 @@ useEffect(() => {
 
 
 
-
+    const navigateTo = (route, data) => {
+      navigate(route, { state: data });
+    };
 
 
 
@@ -299,47 +306,24 @@ const sample1 = [
     handleData();
   }, []);
   const handleData = async () => {
+
     setIsDataLoading(true);
+
+
     try {
-    //   // API request to get doctors count
-    //   const doctorsCountEndpoint = process.env.REACT_APP_API_URL + process.env.REACT_APP_ADMIN_DASHBOARD_ALL_DOCTORS_COUNT;
-    //   const doctorsResponse = await axiosInstance.get(doctorsCountEndpoint, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-    //   setDashboardDoctorsCount(doctorsResponse.data.count);  // Update state with doctors count
+      // API request to get doctors count
+      const adminDashboardStatisticsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_DASHBOARD_STATISTICS;
+      // alert(adminDashboardStatisticsEndpoint);
+      const adminDashboardStatisticsResponse = await axiosAdminInstance.get(adminDashboardStatisticsEndpoint, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setDashboardData(adminDashboardStatisticsResponse.data);  // Update state with doctors count
   
-    //   // API request to get patients count
-    //   const patientsCountEndpoint = process.env.REACT_APP_API_URL + process.env.REACT_APP_ADMIN_DASHBOARD_ALL_PATIENTS_COUNT;
-    //   const patientsResponse = await axiosInstance.get(patientsCountEndpoint, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-    //   setDashboardPatientsCount(patientsResponse.data.count);  // Update state with patients count
   
-    //   // API request to get appointments count
-    //   const appointmentsCountEndpoint = process.env.REACT_APP_API_URL + process.env.REACT_APP_ADMIN_DASHBOARD_ALL_APPOINTMENTS_COUNT;
-    //   const appointmentsResponse = await axiosInstance.get(appointmentsCountEndpoint, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-    //   setDashboardApointmentsCount(appointmentsResponse.data.count);  // Update state with appointments count
-  
-
-
-
-    //   // API request to get sum payments
-    //   const dashboardSumEndpoint = process.env.REACT_APP_API_URL + process.env.REACT_APP_ADMIN_DASHBOARD_SUM_PAYMENTS;
-    //   const dashboardSumResponse = await axiosInstance.get(dashboardSumEndpoint, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-    //   setDashboardTotal(dashboardSumResponse.data.total_amount);  // Update state with appointments count
-    //   // alert(JSON.stringify(dashboardSumResponse.data.total_amount), null, 2);  // Update state with appointments count
+      // openNotificationModal(true, currentPageName, "");
+      // alert(JSON.stringify(adminDashboardStatisticsResponse.data), null, 2);  // Update state with appointments count
     //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
 
 
@@ -352,6 +336,7 @@ const sample1 = [
     } catch (error) {
       setIsDataLoading(false);
       
+      alert(error);
       // Handle errors
       if (error.response && error.response.data) {
         const errorMessage = error.response.data.message;
@@ -365,14 +350,19 @@ const sample1 = [
 
 
 
-
+  const formatAmount = (amount) => {
+    return Number(amount).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  };
     
     
 
     return (
         <div className="bg-theme h-full">
 
-            <AskAdminHeader 
+            <AdminHeader 
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 
@@ -424,10 +414,11 @@ const sample1 = [
                                       >
                                         <div className="flex flex-row items-center">
                                           <div className="py-2 mr-2">
-                                            <div className='bg-gray-300 rounded-3xl' style={{height: "48px", width: "48px", background: "#F4F7FE" }} >
-                                              <img className="w-12 h-12 object-scale-down p-1" 
+                                            <div className='flex items-center justify-center bg-gray-200 rounded-3xl' style={{height: "48px", width: "48px" }} >
+                                              {/* <img className="w-12 h-12 object-scale-down p-1" 
                                             //   src={naira} 
-                                              alt=""  />
+                                              alt=""  /> */}
+                                              <TrendingDownIcon />
                                             </div>
                                           </div>
                                           <div className="flex flex-col py-2 ml-2">
@@ -436,7 +427,7 @@ const sample1 = [
                                               isDataloading ? <div className='my-2'><MiniLoading /></div>
                                               :
                                               <> 
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>N{dashboardIncoming}</p>
+                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Incoming)}</p>
                                               {/* <div className='flex justify-end items-center'>
                                                 <ArrowDropDownIcon style={{ color: '#E63D46' }}/>
                                                 <p className='' style={{ fontSize: '12px', fontWeight: '600', color: '#E63D46' }}>+/-##%</p>
@@ -452,10 +443,11 @@ const sample1 = [
                                       >
                                         <div className="flex flex-row items-center">
                                           <div className="py-2 mr-2">
-                                            <div className='bg-gray-300 rounded-3xl' style={{height: "48px", width: "48px" }} >
-                                              <img className="w-12 h-12 object-scale-down " 
+                                            <div className='flex items-center justify-center bg-gray-200 rounded-3xl' style={{height: "48px", width: "48px" }} >
+                                              {/* <img className="w-12 h-12 object-scale-down " 
                                               // src={profile2user} 
-                                              alt=""  />
+                                              alt=""  /> */}
+                                              <TrendingUpIcon />
                                             </div>
                                           </div>
                                           <div className="flex flex-col py-2 ml-2">
@@ -464,7 +456,7 @@ const sample1 = [
                                               isDataloading ? <div className='my-2'><MiniLoading /></div>
                                               :
                                               <>
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>N{dashboardOutgoing}</p>
+                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Outgoing)}</p>
                                               {/* <div className='flex justify-end items-center'>
                                                 <ArrowDropDownIcon style={{ color: '#E63D46' }}/>
                                                 <p className='' style={{ fontSize: '12px', fontWeight: '600', color: '#E63D46' }}>+/-##%</p>
@@ -495,20 +487,20 @@ const sample1 = [
                                         <div className="flex flex-row items-center" >
                                           <div className="py-2 mr-2">
                                             <div className='' style={{height: "40px" }} >
-                                              {/* <AdjustIcon style={{fontSize: '40px' }} 
-                                              className="p-1 mb-2 text-white cursor-pointer rounded-3xl bg-black"/> */}
-                                              <img className="w-12 h-12 object-scale-down " 
+                                              <GroupIcon style={{fontSize: '40px' }} 
+                                              className="p-1 mb-2 text-white cursor-pointer rounded-3xl bg-theme"/>
+                                              {/* <img className="w-12 h-12 object-scale-down " 
                                             //   src={profile2user} 
-                                              alt=""  />
+                                              alt=""  /> */}
                                             </div>
                                           </div>
                                           <div className="flex flex-col py-2 ml-2">
                                             {
                                               isDataloading ? <MiniLoading />
                                               : 
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboardPatientsCount}</p>
+                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Users}</p>
                                             }                                
-                                            <p className=' text-eDoctorTextGray' style={{ fontSize: '18px', fontWeight: '500' }}>Help Requests</p>
+                                            <p className=' text-eDoctorTextGray' style={{ fontSize: '18px', fontWeight: '500' }}>Users</p>
                                             {/* <p className='text-sm'><strong>{!(dashboard.length > 0) ? '-' : dashboard[0].Total_Commodities}</strong></p> */}
                                             {/* <p className='text-sm'><strong>{dashboardData.Total_Users}</strong></p> */}
                                           </div>
@@ -516,25 +508,25 @@ const sample1 = [
                                       </div>
                                   
                                       <div className="rounded-lg p-4 flex my-2 mx-1 text-black  cursor-pointer"  style={{ backgroundColor: '#FEF3F2'}}
-                                    //   onClick={() =>  navigateToDoctors()}
+                                    onClick={() =>  navigateTo('/requests-list')}
                                       >
                                         <div className="flex flex-row items-center">
                                           <div className="py-2 mr-2">
                                             <div className='' style={{height: "40px" }} >
-                                              {/* <AdjustIcon style={{fontSize: '40px' }} 
-                                              className="p-1 mb-2 text-white cursor-pointer rounded-3xl bg-black"/> */}
-                                              <img className="w-12 h-12 object-scale-down " 
+                                              <ElderlyIcon style={{fontSize: '40px' }} 
+                                              className="p-1 mb-2 text-white cursor-pointer rounded-3xl bg-theme"/>
+                                              {/* <img className="w-12 h-12 object-scale-down " 
                                             //   src={users} 
-                                              alt=""  />
+                                              alt=""  /> */}
                                             </div>
                                           </div>
                                           <div className="flex flex-col py-2 ml-2">
                                           {
                                               isDataloading ? <MiniLoading />
                                               : 
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboardDoctorsCount}</p>
+                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Help_Requests}</p>
                                             }                                
-                                            <p className=' text-eDoctorTextGray' style={{ fontSize: '18px' }}>Beneficiaries</p>
+                                            <p className=' text-eDoctorTextGray' style={{ fontSize: '18px' }}>Help Requests</p>
                                             {/* <p className='text-sm'><strong>{!(dashboard.length > 0) ? '-' : dashboard[0].Total_Markets}</strong></p>  */}
                                             {/* <p className='text-sm'><strong>{dashboardData.Total_Products}</strong></p> */}
                                             {/* <p className='text-sm'><strong>{'0'}</strong></p> */}
@@ -542,26 +534,28 @@ const sample1 = [
                                         </div>
                                       </div>
             
-                                      <div className="rounded-lg p-4 flex my-2 mx-1 text-black  cursor-pointer"   style={{ backgroundColor: '#FEF7E6'}}
-                                    //   onClick={() =>  navigateToAppointment()}
+                                      <div className="rounded-lg p-4 flex my-2 mx-1 text-black  cursor-pointer"   style={{ 
+                                        backgroundColor: '#FEF7E6'
+                                      }}
+                                      
                                       >
                                         <div className="flex flex-row items-center">
                                           <div className="py-2 mr-2">
                                             <div className='' style={{height: "40px" }} >
-                                              {/* <AdjustIcon style={{fontSize: '40px' }} 
-                                              className="p-1 mb-2 text-white cursor-pointer rounded-3xl bg-black"/> */}
-                                              <img className="w-12 h-12 object-scale-down " 
+                                              <VolunteerActivismIcon style={{fontSize: '40px' }} 
+                                              className="p-1 mb-2 text-white cursor-pointer rounded-3xl bg-theme"/>
+                                              {/* <img className="w-12 h-12 object-scale-down " 
                                             //   src={Icon} 
-                                              alt=""  />
+                                              alt=""  /> */}
                                             </div>
                                           </div>
                                           <div className="flex flex-col py-2 ml-2">
                                           {
                                               isDataloading ? <MiniLoading />
                                               : 
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboardApointmentsCount}</p>
+                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Beneficiaries}</p>
                                             }                                
-                                            <p className=' text-eDoctorTextGray' style={{ fontSize: '18px' }}>Sponsors</p>
+                                            <p className=' text-eDoctorTextGray' style={{ fontSize: '18px' }}>Beneficiaries</p>
                                             {/* <p className='text-sm'><strong>{!(dashboard.length > 0) ? '-' : dashboard[0].Total_Markets}</strong></p>  */}
                                             {/* <p className='text-sm'><strong>{'0'}</strong></p> */}
                                             {/* <p className='text-sm'><strong>{dashboardData.Total_Sales}</strong></p> */}
@@ -670,8 +664,12 @@ const sample1 = [
                             <div className='rounded-lg shadow-lg px-4 mx-0 border-black-200 border-2 bg-white'>
                             <div className="flex justify-between my-2 pb-2 " style={{ }}>
                                 <div className="flex w-full items-center justify-between  bg-">
-                                    <div className="text-s font-bold pr-2">Top Nominations</div>
-                                    <div className="text-s px-2 mr-0 rounded bg-orange" style={{  color: '#ffffff' }}>3</div>
+                                    <div className="text-s font-bold pr-2">Nominations</div>
+                                    <div className="text-s px-2 mr-0 rounded bg-orange" style={{  color: '#ffffff' }}>{
+                                      isDataloading ? <MiniLoading />
+                                      : 
+                                    dashboard.dashboardData[0].Total_Nominations
+                                    }</div>
                                 </div>
                                 
                             </div>
@@ -865,8 +863,9 @@ const sample1 = [
 
             
                                 </div>
-{/* 
-            <AskFooter gotoPage={gotoPage} /> */}
+                                <AdminFooter 
+            // gotoPage={gotoPage} 
+            />
         </div>
     );
 }

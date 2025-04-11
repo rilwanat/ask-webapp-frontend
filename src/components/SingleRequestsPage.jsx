@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import AskHeader from './navbar/AskHeader';
-import AskFooter from './navbar/AskFooter';
+
+import GuestHeader from './navbar/guest-navbar/GuestHeader';
+import GuestFooter from './navbar/guest-navbar/GuestFooter';
+
 import HeaderParallax from './widgets/HeaderParallax';
 import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share'; 
@@ -18,14 +20,27 @@ export default function SingleRequestsPage({
     const navigate = useNavigate();
     const location = useLocation();
     const { selectedItem, allItems } = location.state || {};
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
     useEffect(() => { 
         window.scrollTo({ top: 0, behavior: 'smooth' }); 
-    }, []);
+
+          // Find the index of the selected item when component mounts
+          if (selectedItem && allItems) {
+            const index = allItems.findIndex(item => item.id === selectedItem.id);
+            if (index !== -1) {
+                setSelectedIndex(index);
+            }
+        }
+    }, [selectedItem, allItems]);
 
     const gotoPage = (pageName) => {
         navigate("/" + pageName);
     }
+
+    const handleChange = (index) => {
+        setSelectedIndex(index);
+    };
 
     // Custom carousel configuration to prevent scroll interference
     const carouselConfig = {
@@ -42,11 +57,13 @@ export default function SingleRequestsPage({
         verticalSwipe: 'natural',
         stopOnHover: false,
         className: "touch-pan-y", // Added to prevent scroll interference
+        selectedItem: selectedIndex, // Start with the selected item
+        onChange: handleChange, // Update selected index when carousel changes
     };
 
     return (
         <div className="touch-pan-y"> {/* Main container with touch action */}
-            <AskHeader 
+            <GuestHeader 
                 carouselRequestItems={carouselRequestItems} 
                 carouselBeneficiaryItems={carouselBeneficiaryItems}
                 carouselSponsorItems={carouselSponsorItems} 
@@ -73,7 +90,7 @@ export default function SingleRequestsPage({
                             >
                                 <div className="w-full text-center">
                                     <h1 className="text-2xl font-bold text-gray-800">
-                                        You are viewing {item.name}'s help request
+                                        You are viewing {item.user.fullname}'s help request
                                     </h1>
                                     <p className="text-gray-600 my-2">
                                         {item.description || "No Description Available"}
@@ -81,12 +98,13 @@ export default function SingleRequestsPage({
                                 </div>
 
                                 <motion.div
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
+                                    // whileHover={{ scale: 1.02 }}
+                                    // whileTap={{ scale: 0.98 }}
                                     className="w-full flex justify-center"
                                 >
                                     <img 
-                                        src={item.image} 
+                                        // src={item.image} 
+                                        src={import.meta.env.VITE_API_SERVER_URL + "../../../" + item.request_image}
                                         alt={item.title} 
                                         className="rounded-lg object-cover"
                                         style={{ 
@@ -100,18 +118,18 @@ export default function SingleRequestsPage({
 
                                 <div className="flex p-4 mt-auto items-center justify-center">
                                     <h3 className="text-3xl font-bold text-theme">
-                                        {item.score >= 1000 ? (item.score / 1000).toFixed(1) + 'K' : item.score}
+                                        {item.nomination_count >= 1000 ? (item.nomination_count / 1000).toFixed(1) + 'K' : item.nomination_count}
                                     </h3>
                                     <FavoriteIcon 
                                         className='ml-2' 
-                                        style={{ width: '28px', height: '28px' }}
+                                        style={{ width: '28px', height: '28px', marginTop: '2px' }}
                                     />
                                 </div>
 
                                 <div className='flex flex-col items-center touch-pan-y'>
                                     <motion.button
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
+                                        // whileHover={{ scale: 1.05 }}
+                                        // whileTap={{ scale: 0.95 }}
                                         className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-orange text-white p-2 my-1'
                                     >
                                         Nominate <CheckIcon className='ml-2' />
@@ -130,7 +148,7 @@ export default function SingleRequestsPage({
                 </div>
             </div>
 
-            <AskFooter gotoPage={gotoPage} />
+            <GuestFooter gotoPage={gotoPage} />
         </div>
     );
 }

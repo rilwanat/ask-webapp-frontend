@@ -3,8 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import AskHeader from './navbar/AskHeader';
-import AskFooter from './navbar/AskFooter';
+
+import GuestHeader from './navbar/guest-navbar/GuestHeader';
+import GuestFooter from './navbar/guest-navbar/GuestFooter';
+
 import HeaderParallax from './widgets/HeaderParallax';
 
 export default function SingleBeneficiaryPage({ 
@@ -40,9 +42,16 @@ export default function SingleBeneficiaryPage({
         stopOnHover: false
     };
 
+    const formatAmount = (amount) => {
+        return Number(amount).toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      };
+
     return (
         <div className="touch-pan-y">
-            <AskHeader 
+            <GuestHeader 
                 carouselRequestItems={carouselRequestItems} 
                 carouselBeneficiaryItems={carouselBeneficiaryItems}
                 carouselSponsorItems={carouselSponsorItems} 
@@ -51,7 +60,7 @@ export default function SingleBeneficiaryPage({
             />
 
             <HeaderParallax 
-                title={"A.S.K Beneficiary"}
+                title={"A.S.K Beneficiaries"}
                 subtitle={""}
             />
 
@@ -75,7 +84,7 @@ export default function SingleBeneficiaryPage({
                                     >
                                         <div className="flex justify-center">
                                         <img 
-                                            src={item.image} 
+                                            src={import.meta.env.VITE_API_SERVER_URL + "../../../../" + item.user.profile_picture}
                                             alt={`Item ${item.id}`} 
                                             className="w-full object-cover rounded-md mt-1"
                                             style={{
@@ -87,10 +96,11 @@ export default function SingleBeneficiaryPage({
                                         </div>
                                         <div className="flex flex-col items-center mb-2 mt-auto">
                                             <div className='flex text-sm rounded-lg items-center justify-center w-full mt-2'>
-                                                <p className="text-theme">{item.name}</p>
+                                                <p className="text-theme text-center">{item.user.fullname}</p>
                                             </div>
-                                            <div className='flex text-sm rounded-lg items-center justify-center w-full mt-0'>
-                                                <p className="text-theme">{item.price}</p>
+                                            <div className='flex flex-col text-sm rounded-lg items-center justify-center w-full mt-0'>
+                                                <p className="text-green  font-bold text-center">{'₦' + formatAmount(item.amount)}</p>
+                                                <p className="text-theme text-center">{item.date}</p>
                                             </div>
                                         </div>
                                     </motion.div>
@@ -102,7 +112,7 @@ export default function SingleBeneficiaryPage({
                 </div>
             </div>
 
-            <AskFooter gotoPage={gotoPage} />
+            <GuestFooter gotoPage={gotoPage} />
         </div>
     );
 }

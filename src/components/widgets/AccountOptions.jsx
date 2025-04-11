@@ -96,7 +96,22 @@ const AccountOptions = ({ toggleAccount, isAccountOpen, setIsAccountOpen }) => {
 
 const navigate = useNavigate();
 
-
+  //notification modal
+      const [notificationType, setNotificationType] = useState(false);
+      const [notificationTitle, setNotificationTitle] = useState("");
+      const [notificationMessage, setNotificationMessage] = useState("");
+      const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+      const openNotificationModal = (type, title, message) => {
+        setNotificationType(type);
+        setNotificationTitle(title);
+        setNotificationMessage(message);
+    
+        setIsNotificationModalOpen(true);
+      };
+      const closeNotificationModal = () => {
+        setIsNotificationModalOpen(false);
+      };
+      //notification modal
 
     const [menuWidthSignin, setMenuWidthSignin] = useState(0);
     const [menuWidthRegister, setMenuWidthRegister] = useState(0);
@@ -134,12 +149,48 @@ const navigate = useNavigate();
   
   
     const gotoUserProfile = () => {
-      navigate('/profile-dashboard');
+      navigate('/user-dashboard');
     }
+
+
+
+
+    const isValidNumber = (number) => {
+      const numberPattern = /^\d+$/;
+      return numberPattern.test(number);
+    };
+  const isValidateNigerianNumber = (ngPhoneNumber) => {
+      const nigerianPhonePattern = /^\+234(70|80|81|90|91)\d{8}$/;
+      return nigerianPhonePattern.test(ngPhoneNumber);
+    };
+  const isValidEmail = (email) => {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(email);
+    };
+
+    const isValidPassword = (password) => {
+      return password.length >= 8;
+    };
+    
+    const passwordsMatch = (password, confirmPassword) => {
+      return password === confirmPassword;
+    };
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [isGoogleLoginLoading, setIsGoogleLoginLoading] = useState(false);
+    const [isGoogleSignUpLoading, setIsGoogleSignUpLoading] = useState(false);
+    
+    const [isAppleLoginLoading, setIsAppleLoginLoading] = useState(false);
+    const [isAppleSignUpLoading, setIsAppleSignUpLoading] = useState(false);
+
+     
+     
+
 
     const [loginEmailAddress, setLoginEmailAddress] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+
     const [errorMessage, setErrorMessage] = useState('');
     // const [registrationStatus, setRegistrationStatus] = useState('');
   
@@ -147,16 +198,26 @@ const navigate = useNavigate();
 
     const loginUser = async (e) => {
 
-      // alert("here");
-      if (loginEmailAddress == 'adm' && loginPassword == 'adm'
-        ) {
-          // alert("here");
-          navigate('/admin-home');
+      // // alert("here");
+      // if (loginEmailAddress == 'adm' && loginPassword == 'adm'
+      //   ) {
+      //     // alert("here");
+      //     navigate('/admin-home');
+      //     return;
+      //   }
+
+
+        if (!isValidEmail(loginEmailAddress)) {
+          // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
+          // alert("Please, enter a valid email.");
+          // openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
+          // setIsNotificationModalOpen(true);
+
+          setErrorMessage({ message: 'Please, enter a valid email.' });
           return;
-        }
+      }
 
 
-        return;
 
 
         e.preventDefault();
@@ -177,7 +238,7 @@ const navigate = useNavigate();
           return;
         }
       
-        //alert("login user: " + loginEmailAddress + " " + loginPassword);
+        // alert("login user: " + loginEmailAddress + " " + loginPassword);
         try {
     
           const requestData = {   
@@ -185,8 +246,7 @@ const navigate = useNavigate();
             password: loginPassword
           };
     
-    
-          const response = await axios.post(process.env.REACT_APP_API_SERVER_URL + process.env.REACT_APP_USER_LOGIN, requestData, {
+          const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_LOGIN, requestData, {
             headers: {
                   // 'Content-Type': 'multipart/form-data',
                   'Content-Type': 'application/json',
@@ -206,7 +266,6 @@ const navigate = useNavigate();
     
     
     
-    
             const token = response.data.token;
             const decodedToken = jwtDecode(token);
             // alert(JSON.stringify(decodedToken), null, 2);
@@ -214,15 +273,13 @@ const navigate = useNavigate();
             const expirationDays = (decodedToken.exp - decodedToken.iat) / (24 * 60 * 60);
             // alert(expirationDays * (24 * 60 * 60)); //seconds
       
-            setCookie('valorhijab-user-token', token, expirationDays);
-            setCookie('valorhijab-userDetails', JSON.stringify(response.data.userData));
-    
-            
-    
+            setCookie('ask-user-token', token, expirationDays);
+            setCookie('ask-user-details', JSON.stringify(response.data.userData));
     
     
             // alert("Login Successful: " + response.data.message);
             openNotificationModal(true, "Login", response.data.message);
+            setIsNotificationModalOpen(true);
             
             gotoUserProfile();
           } else {
@@ -232,6 +289,8 @@ const navigate = useNavigate();
           }
         } catch (error) {
           setIsLoading(false);
+
+          // alert(error);
         
           if (error.response && error.response.data && error.response.data.message) {
           const errorMessage = error.response.data.message;
@@ -247,28 +306,24 @@ const navigate = useNavigate();
       }
       };
     
-      const [registrationFirstname, setRegistrationFirstname] = useState('');
-      const [registrationLastname, setRegistrationLastname] = useState('');
-      const [registrationEmailAddress, setRegistrationEmailAddress] = useState('');
-      const [registrationPassword, setRegistrationPassword] = useState('');
-      const [registrationConfirmPassword, setRegistrationConfirmPassword] = useState('');
+      // const [registrationFirstname, setRegistrationFirstname] = useState('');
+      // const [registrationLastname, setRegistrationLastname] = useState('');
+      const [registrationEmailAddress, setRegistrationEmailAddress] = useState('rilwan.at@gmail.com');
+      const [registrationPassword, setRegistrationPassword] = useState('rilwan12345');
+      const [registrationConfirmPassword, setRegistrationConfirmPassword] = useState('rilwan12345');
     
       const registerUser = async (e) => {
-        return;
-
-
+        
         
         e.preventDefault();
         setErrorMessage({ message: '' });
         //alert("");
     
-        setIsLoading(true);
+        
     
         if (registrationEmailAddress === 'Enter your email' || registrationEmailAddress === '' 
         || 
-        registrationFirstname === 'Enter your Firstname' || registrationFirstname === ''
-        || 
-        registrationLastname === 'Enter your Lastname' || registrationLastname === ''
+        registrationPassword === '' || registrationConfirmPassword === ''
         ) {
           setErrorMessage({ message: 'Registration Failed: Please enter valid credentials' });
           // setRegistrationStatus("Failed");
@@ -277,20 +332,35 @@ const navigate = useNavigate();
           //alert("");
           return;
         }
+
+
+        
+      if (!isValidPassword(registrationPassword)) {
+        setErrorMessage({ message: 'Password must be at least 8 characters.' });
+        return;
+      }
+
+      if (!passwordsMatch(registrationPassword, registrationConfirmPassword)) {
+        setErrorMessage({ message: 'Passwords must match.' });
+        return;
+      }
+
+
+
     
         //alert("login user: " + emailAddress + " " + firstname + " " + lastname);
-    
+        setIsLoading(true);
+
         try {
           const requestData = {   
-            firstname: registrationFirstname,  
-            lastname: registrationLastname,  
             email: registrationEmailAddress,  
-            password: "password"
+            password: registrationPassword,
+            confirmPassword: registrationConfirmPassword,
           };
     
           // alert(JSON.stringify(requestData, null, 2));
         
-          const response = await axios.post(process.env.REACT_APP_API_SERVER_URL + '/response/vh-register-user.php', requestData, {
+          const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_REGISTER, requestData, {
             headers: {
                 // 'Content-Type': 'multipart/form-data',
                 'Content-Type': 'application/json',
@@ -309,25 +379,27 @@ const navigate = useNavigate();
             // If registration is successful
             setErrorMessage({ message: '' });
     
-            //handleEmailAddress(emailAddress);
+            // //handleEmailAddress(emailAddress);
             
-            // navigate('/confirm-email/' + emailAddress);
-            //navigate('/confirm-email');
+            // // navigate('/confirm-email/' + emailAddress);
+            // //navigate('/confirm-email');
     
-            setLoginEmailAddress(registrationEmailAddress);
-            setLoginPassword('');
+            // setLoginEmailAddress(registrationEmailAddress);
+            // setLoginPassword('');
     
-            setRegistrationFirstname('');
-            setRegistrationLastname('');
-            setRegistrationEmailAddress('');
+            // setRegistrationFirstname('');
+            // setRegistrationLastname('');
+            // setRegistrationEmailAddress('');
     
             
     
+            toggleAccount();
             // alert(response.data.message + "\n\n Please check your mail for a link to reset your password");
             
-            openNotificationModal(true, "Registration", response.data.message + "\n\n Please check your mail for a link to reset your password");
-            
-            toggleAccountForSignIn();
+            openNotificationModal(true, "Registration", response.data.message + "\n\n Please check your mail for a verification code.");
+            setIsNotificationModalOpen(true);
+
+            // toggleAccountForSignIn();
           } else {
             // If there are errors in the response
             const errors = response.data.errors.map(error => error.msg);
@@ -365,6 +437,7 @@ const navigate = useNavigate();
 
 
     return(
+      <>
 <SlideInAccount 
   initial={{ x: '100%' }}
   animate={{ x: isAccountOpen ? 0 : '100%' }}
@@ -500,22 +573,22 @@ const navigate = useNavigate();
                           <div className='flex justify-between items-center flex-col md:flex-row '>
                             
                           <div  
-                          // onClick={(e) => {if (!isLoading) registerUser(e)}} 
+                          // onClick={(e) => {if (!isGoogleSignUpLoading) registerUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
                             <div className='flex items-center '>
                             <img src={googleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
-                            {isLoading ? 'Please wait..' : 'Register with Google'}
+                            {isGoogleSignUpLoading ? 'Please wait..' : 'Register with Google'}
                           </div>
                           </div>
 
                             <div  
-                          // onClick={(e) => {if (!isLoading) registerUser(e)}} 
+                          // onClick={(e) => {if (!isAppleSignUpLoading) registerUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
                             <div className='flex items-center '>
                             <img src={appleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
-                            {isLoading ? 'Please wait..' : 'Register with Apple'}
+                            {isAppleSignUpLoading ? 'Please wait..' : 'Register with Apple'}
                             </div>
                           </div>
                           </div>
@@ -637,23 +710,23 @@ const navigate = useNavigate();
 
                             
                           <div  
-                          // onClick={(e) => {if (!isLoading) registerUser(e)}} 
+                          // onClick={(e) => {if (!isGoogleLoginLoading) registerUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='flex mt-4 text-center justify-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
                             <div className='flex items-center '>
                             <img src={googleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
-                            {isLoading ? 'Please wait..' : 'Login with Google'}
+                            {isGoogleLoginLoading ? 'Please wait..' : 'Login with Google'}
                             </div>
                             </div>
 
                             
                             <div  
-                          // onClick={(e) => {if (!isLoading) registerUser(e)}} 
+                          // onClick={(e) => {if (!isAppleLoginLoading) registerUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='flex mt-4 text-center justify-center rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
                             <div className='flex items-center'>
                             <img src={appleIcon} className='w-5 h-5 mr-2 mt-0.5' />
-                            {isLoading ? 'Please wait..' : 'Login with Apple'}
+                            {isAppleLoginLoading ? 'Please wait..' : 'Login with Apple'}
                             </div>
                           </div>
                           </div>
@@ -680,9 +753,25 @@ const navigate = useNavigate();
           </div>
         </motion.span>
       </div>
+
+      <NotificationModal
+              isOpen={isNotificationModalOpen}
+              onRequestClose={closeNotificationModal}
+              notificationType={notificationType}
+              notificationTitle={notificationTitle}
+              notificationMessage={notificationMessage}
+            />
+
     </AccountContentInner>
   </AccountContent>
+
+  
+
+
 </SlideInAccount>
+
+      
+            </>
     );
 }
 

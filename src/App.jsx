@@ -19,19 +19,82 @@ import DonatePage from './components/DonatePage.jsx';
 import AskPage from './components/AskPage.jsx';
 
 
+
+import AdminLoginPage from './components/admin/AdminLoginPage.jsx';
 import AdminLandingPage from './components/admin/AdminLandingPage.jsx';
 import ManageWebsiteImagesPage from './components/admin/ManageWebsiteImagesPage.jsx';
- 
+import AdminListRequests from './components/admin/AdminListRequests.jsx';
+import AdminListBeneficiaries from './components/admin/AdminListBeneficiaries.jsx';
+import AdminListSponsors from './components/admin/AdminListSponsors.jsx';
+import AdminManageKyc from './components/admin/AdminManageKyc.jsx';
+import AdminListDonations from './components/admin/AdminListDonations.jsx';
+
+import AdminSpecificKyc from './components/admin/AdminSpecificKyc.jsx';
+import AdminSpecificRequest from './components/admin/AdminSpecificRequest.jsx';
+import AdminAddSponsorPage from './components/admin/AdminAddSponsorPage.jsx';
+
+
+
+import UserDashboardPage from './components/user/UserDashboardPage.jsx';
+
 
 import sponsor from './assets/images/sponsors/sponsor.jpg';
 import sponsor2 from './assets/images/sponsors/sponsor2.jpg';
 
+
+//
+import axiosInstance from './auth/axiosConfig'; // Ensure the correct relative path
+import { setCookie } from './auth/authUtils'; // Ensure the correct relative path
+import { jwtDecode } from 'jwt-decode';
+import { getCookie, deleteCookie } from './auth/authUtils'; // Import getCookie function
+//
+
+import ProtectedAdminRoute from './auth/protectedAdminRoute';
+import ProtectedRoute from './auth/protectedRoute';
+
+
+
+
+
 function App() {
   
+
+
+      //notification modal
+      const [notificationType, setNotificationType] = useState(false);
+      const [notificationTitle, setNotificationTitle] = useState("");
+      const [notificationMessage, setNotificationMessage] = useState("");
+      const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+      const openNotificationModal = (type, title, message) => {
+        setNotificationType(type);
+        setNotificationTitle(title);
+        setNotificationMessage(message);
+    
+        setIsNotificationModalOpen(true);
+      };
+      const closeNotificationModal = () => {
+        setIsNotificationModalOpen(false);
+      };
+      //notification modal
+
+
+      
+
+
+
 
   const [currentRequestSlide, setCurrentRequestSlide] = useState(0);
     const [currentBeneficiarySlide, setCurrentBeneficiarySlide] = useState(0);
     const [currentSponsorSlide, setCurrentSponsorSlide] = useState(0);
+
+
+
+      const [isDataloading, setIsDataLoading] = useState(true);
+      const [helpRequestsData, setHelpRequestsData] = useState([]);
+      const [beneficiariesData, setBeneficiariesData] = useState([]);
+      // const [donationsData, setDonationsData] = useState([]);
+
+
 
         // Sample carouseRequestlItems
         const carouselRequestItems = [
@@ -209,6 +272,109 @@ function App() {
     // initAuth();
   }, []);
 
+
+
+    useEffect(() => {
+      handleHelpRequestsData();
+      handleBeneficiariesData();
+    }, []);
+    const handleHelpRequestsData = async () => {
+  
+      setIsDataLoading(true);
+  
+  
+      try {
+        const helpRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_HELP_REQUESTS;
+        // alert(helpRequestsEndpoint);
+        const helpRequestsResponse = await axiosInstance.get(helpRequestsEndpoint, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setHelpRequestsData(helpRequestsResponse.data.data);  // Update state with doctors count
+    
+    
+        // openNotificationModal(true, currentPageName, "");
+        // alert(JSON.stringify(helpRequestsResponse.data.data), null, 2);  // Update state with appointments count
+      //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+  
+  
+  
+  
+  
+        // Once all data is fetched, set loading to false
+        setIsDataLoading(false);
+    
+      } catch (error) {
+        setIsDataLoading(false);
+        
+        alert(error);
+        // Handle errors
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
+          openNotificationModal(false, currentPageName + " Error", errorMessage);
+        } else {
+          openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+        }
+      }
+    };
+
+    const handleBeneficiariesData = async () => {
+  
+      setIsDataLoading(true);
+  
+  
+      try {
+        const beneficiariesRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_BENEFICIARIES;
+        // alert(beneficiariesRequestsEndpoint);
+        const beneficiariesRequestsResponse = await axiosInstance.get(beneficiariesRequestsEndpoint, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setBeneficiariesData(beneficiariesRequestsResponse.data.data);  // Update state with doctors count
+    
+    
+        // openNotificationModal(true, currentPageName, "");
+        // alert(JSON.stringify(helpRequestsResponse.data.data), null, 2);  // Update state with appointments count
+      //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+  
+  
+  
+  
+  
+        // Once all data is fetched, set loading to false
+        setIsDataLoading(false);
+    
+      } catch (error) {
+        setIsDataLoading(false);
+        
+        alert(error);
+        // Handle errors
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
+          openNotificationModal(false, currentPageName + " Error", errorMessage);
+        } else {
+          openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+        }
+      }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <Router>
       <div>
@@ -218,75 +384,141 @@ function App() {
 
             <Route path="/*" element={<div>NOT FOUND</div>} />            
             <Route path='/' element={<LandingPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
             />}/>
             <Route path='/about-us' element={<AboutUsPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
             <Route path='/contact-us' element={<ContactUsPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
 
 
             <Route path='/terms-and-conditions' element={<TermsAndConditionsPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
             <Route path='/privacy-policy' element={<PrivacyPolicyPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
 
             <Route path='/single-request' element={<SingleRequestsPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
             <Route path='/single-sponsor' element={<SingleSponsorPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
             <Route path='/single-beneficiary' element={<SingleBeneficiaryPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
 
 
             <Route path='/donate' element={<DonatePage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
              <Route path='/i-ask' element={<AskPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
 
 
 
 
-<Route path='/admin-home' element={<AdminLandingPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+<Route path='/ask-admin-login' element={<AdminLoginPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
 
-<Route path='/manage-hero-images' element={<ManageWebsiteImagesPage 
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={carouselRequestItems} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={carouselBeneficiaryItems} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+<Route path='/admin-home' element={<ProtectedAdminRoute><AdminLandingPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
-             />}/>
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/manage-hero-images' element={<ProtectedAdminRoute><ManageWebsiteImagesPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/manage-kyc' element={<ProtectedAdminRoute><AdminManageKyc 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/requests-list' element={<ProtectedAdminRoute><AdminListRequests 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/beneficiaries-list' element={<ProtectedAdminRoute><AdminListBeneficiaries 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/sponsors-list' element={<ProtectedAdminRoute><AdminListSponsors 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/donations-list' element={<ProtectedAdminRoute><AdminListDonations 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/specific-kyc/:id' element={<ProtectedAdminRoute><AdminSpecificKyc 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/specific-request/:id' element={<ProtectedAdminRoute><AdminSpecificRequest 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+             
+<Route path='/admin-add-sponsor' element={<ProtectedAdminRoute><AdminAddSponsorPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+             
+
+
+
+
+
+<Route path='/user-dashboard' element={<ProtectedRoute><UserDashboardPage 
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedRoute>}/>
+
             
             </Routes>
             

@@ -23,13 +23,41 @@ export const setCookie = (name, value, days) => {
 };
 
 export const deleteCookie = (name) => {
-  document.cookie = name + '=; Max-Age=-99999999;';
+  switch(name) {
+    case ("user"):
+      document.cookie = "ask-user-token" + '=; Max-Age=-99999999;';
+      document.cookie = "ask-user-details" + '=; Max-Age=-99999999;';
+      break;
+    case ("admin"):
+      document.cookie = "ask-admin-token" + '=; Max-Age=-99999999;';
+      document.cookie = "ask-admin-details" + '=; Max-Age=-99999999;';
+    break;
+  }
+
 };
 
 // Updated function to check if the user is authenticated
 export const isAuthenticated = () => {
-  const token = getCookie('valorhijab-user-token');
-  const userDetails = getCookie('valorhijab-userDetails');
+  const token = getCookie('ask-user-token');
+  const userDetails = getCookie('ask-user-details');
+
+  if (token && userDetails) {
+    try {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp * 1000 > Date.now()) {
+        return true;
+      }
+    } catch (error) {
+      console.error("Failed to decode token:", error);
+    }
+  }
+  return false;
+};
+
+// Updated function to check if the admin is authenticated
+export const isAdminAuthenticated = () => {
+  const token = getCookie('ask-admin-token');
+  const userDetails = getCookie('ask-admin-details');
 
   if (token && userDetails) {
     try {

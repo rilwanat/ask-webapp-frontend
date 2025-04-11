@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { Zoom } from '@mui/material';
 
 const customModalStyles = {
   content: {
@@ -12,6 +13,7 @@ const customModalStyles = {
     flexDirection: 'column',
     alignItems: 'center',
     borderRadius: '30px',
+    zIndex: 5000,
   },
 };
 
@@ -23,7 +25,7 @@ const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificat
       contentLabel="Notification"
       style={customModalStyles}
     >
-      <div className="flex flex-col w-full px-4 pt-4">
+      <div className="flex flex-col w-full px-4 pt-4 z-5000">
         <div className='flex justify-center mt-4'>
           {notificationType === true ? 
             <CheckCircleIcon className='text-theme' style={{ width: '64px', height: '64px' }}/> : 

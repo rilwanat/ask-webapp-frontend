@@ -20,6 +20,7 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
     showStatus: false,
     showThumbs: false,
     infiniteLoop: true,
+    autoPlay: true,
     interval: 5000,
     selectedItem: currentRequestSlide,
     onChange: (index) => setCurrentRequestSlide(index),
@@ -86,11 +87,11 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
     {item.description}
   </p>
 </div>
-
+{/* {import.meta.env.VITE_API_SERVER_URL + "../../../" + item.request_image} */}
                     <div className="flex-1 overflow-hidden">
                       <img 
                         className="rounded-lg w-full h-full object-cover"
-                        src={item.image}
+                        src={import.meta.env.VITE_API_SERVER_URL + "../../../" + item.request_image}
                         alt={item.title}
                         style={{
                           width: '200px',
@@ -103,7 +104,7 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
 
                     <div className="flex flex-col items-center p-4 mt-auto">
                       <h3 className="text-2xl font-bold text-theme">
-                        {item.score >= 1000 ? (item.score / 1000).toFixed(1) + 'K' : item.score}
+                        {item.nomination_count >= 1000 ? (item.nomination_count / 1000).toFixed(1) + 'K' : item.nomination_count}
                       </h3>
                     </div>
 

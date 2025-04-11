@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
@@ -14,11 +14,24 @@ import ShareIcon from '@mui/icons-material/Share';
 
 import NotificationModal from '../modals/NotificationModal';
 
+
+//
+import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
+import { setCookie, getCookie, deleteCookie } from '../../auth/authUtils'; // Ensure the correct relative path
+import { jwtDecode } from 'jwt-decode';
+//
+
+import Loading from './Loading';
+import MiniLoading from './MiniLoading';
+
 const DonateWidget = ({  }) => {
   const navigate = useNavigate();
   // const [currentRequestSlide, setCurrentRequestSlide] = useState(0);
   // const [zoomedItemId, setZoomedItemId] = useState(null);
 
+  const [isDataloading, setIsDataLoading] = useState(true);
+  const [donationsData, setDonationsData] = useState([]);
+  const currentPageName = "Donations";
 
   const [donateType, setDonateType] = useState("naira");
 
@@ -45,17 +58,76 @@ const DonateWidget = ({  }) => {
     navigate(route, { state: data });
   };
 
-  // Sample carousel data
-  const numbers = [
-    1_000, 5_000, 10_000, 20_000, 50_000, 
-    100_000, 250_000, 500_000, 1_000_000,
-    10_000_000
-  ];
-
   const showSelectedPriceToPay = (price, symbol) => {
     openNotificationModal(true, "Donate Now", `You are about to donate ${symbol + price}`);
         setIsNotificationModalOpen(true);
   };
+
+
+  
+      useEffect(() => {
+        handleDonationsData();
+      }, []);
+      const handleDonationsData = async () => {
+    
+        setIsDataLoading(true);
+    
+    
+        try {
+          const donationsRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_DONATIONS;
+          // alert(beneficiariesRequestsEndpoint);
+          const donationsRequestsResponse = await axiosInstance.get(donationsRequestsEndpoint, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          setDonationsData(donationsRequestsResponse.data.data);  // Update state with doctors count
+      
+      
+          // openNotificationModal(true, currentPageName, "");
+          // alert(JSON.stringify(donationsRequestsResponse.data.data), null, 2);  // Update state with appointments count
+        //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+    
+    
+    
+    
+    
+          // Once all data is fetched, set loading to false
+          setIsDataLoading(false);
+      
+        } catch (error) {
+          setIsDataLoading(false);
+          
+          alert(error);
+          // Handle errors
+          if (error.response && error.response.data) {
+            const errorMessage = error.response.data.message;
+            openNotificationModal(false, currentPageName + " Error", errorMessage);
+          } else {
+            openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+          }
+        }
+      };
+
+
+// Initialize as empty array if data is not yet loaded
+const filteredDonations = Array.isArray(donationsData) 
+? donationsData.filter(item => item.type === donateType)
+: [];
+
+
+        // Get currency symbol based on type
+  const getCurrencySymbol = (type) => {
+    switch(type) {
+      case 'naira': return '₦';
+      case 'dollar': return '$';
+      case 'crypto': return 'Ξ'; // Ethereum symbol, or use '#' if you prefer
+      default: return '₦';
+    }
+  };
+
+
+
 
   return (
     <div className="w-full mt-4">
@@ -64,6 +136,9 @@ const DonateWidget = ({  }) => {
           <div className="flex flex-col  items-center justify-between">
 
 
+{
+                    isDataloading ? <Loading />
+                    : 
           <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -107,53 +182,47 @@ const DonateWidget = ({  }) => {
                   </div>
 
                   {/* Right Div */}
-{donateType === "naira" ?
-                  <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
-                    {/* <h2 className="text-lg font-semibold mb-2 text-softTheme">Right Section</h2> */}
-                    
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
-                    {numbers.map((num, index) => (
-                    <div key={index} 
-                    onClick={() => { showSelectedPriceToPay(num.toLocaleString(), '₦');}}
-                    className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
-                    {'₦' + num.toLocaleString()}
-                    </div>
-                    ))}
-                    </div>
-                  </div> : <></>
-}
+                  {donateType === "naira" && (
+    <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+        {filteredDonations.map((item) => (
+          <div key={item.id} 
+            onClick={() => showSelectedPriceToPay(item.price, getCurrencySymbol(item.type))}
+            className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
+            {getCurrencySymbol(item.type)}{parseInt(item.price).toLocaleString()}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
 
-{donateType === "dollar" ?
-                  <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
-                    {/* <h2 className="text-lg font-semibold mb-2 text-softTheme">Right Section</h2> */}
-                    
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
-                    {numbers.map((num, index) => (
-                    <div key={index} 
-                    onClick={() => { showSelectedPriceToPay(num.toLocaleString(), '$');}}
-                    className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
-                    {'$' + num.toLocaleString()}
-                    </div>
-                    ))}
-                    </div>
-                  </div>: <></>
-}
+{donateType === "dollar" && (
+    <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+        {filteredDonations.map((item) => (
+          <div key={item.id} 
+            onClick={() => showSelectedPriceToPay(item.price, getCurrencySymbol(item.type))}
+            className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
+            {getCurrencySymbol(item.type)}{parseInt(item.price).toLocaleString()}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
 
-{donateType === "crypto" ?
-                  <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
-                    {/* <h2 className="text-lg font-semibold mb-2 text-softTheme">Right Section</h2> */}
-                    
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
-                    {numbers.map((num, index) => (
-                    <div key={index} 
-                    onClick={() => { showSelectedPriceToPay(num.toLocaleString(), '#');}}
-                    className="cursor-pointer px-2 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
-                    {'#' + num.toLocaleString()}
-                    </div>
-                    ))}
-                    </div>
-                  </div>: <></>
-}
+{donateType === "crypto" && (
+    <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+        {filteredDonations.map((item) => (
+          <div key={item.id} 
+            onClick={() => showSelectedPriceToPay(item.price, getCurrencySymbol(item.type))}
+            className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
+            {getCurrencySymbol(item.type)}{parseInt(item.price).toLocaleString()}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
                 </div>
 
 
@@ -161,7 +230,7 @@ const DonateWidget = ({  }) => {
               
               </div>
               </motion.div>
-
+}
 
 
 

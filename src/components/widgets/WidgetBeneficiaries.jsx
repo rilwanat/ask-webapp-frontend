@@ -6,6 +6,11 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share';
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+
+
+
 const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide }) => {
   const navigate = useNavigate();
 
@@ -29,6 +34,13 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
     preventMovementUntilSwipeScrollTolerance: true,
     verticalSwipe: 'natural', // Allows natural vertical scrolling
     stopOnHover: false // Prevents hover behavior from interfering with scroll
+  };
+
+  const formatAmount = (amount) => {
+    return Number(amount).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
   };
 
   return (
@@ -72,9 +84,10 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
                     }}
                   >
                     <div className="flex-1 overflow-hidden">
+                    {/* {import.meta.env.VITE_API_SERVER_URL + "../../../../" + item.user.profile_picture} */}
                       <img 
                         className="rounded-lg w-full h-full object-cover"
-                        src={item.image}
+                        src={import.meta.env.VITE_API_SERVER_URL + "../../../../" + item.user.profile_picture}
                         alt={item.title}
                         style={{
                           width: '200px',
@@ -87,16 +100,22 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
 
                     <div className="pt-4 mt-auto">
                       <h3 className="text-2xl font-bold text-theme">{item.name}</h3>
-                      <p className="text-theme font-bold mt-1">{item.price}</p>
+                      <p className="text-theme font-bold mt-1">{'₦' + formatAmount(item.amount)}</p>
                       <p className="text-theme mt-1">{item.date}</p>
                     </div>
 
                     <div className="flex flex-col items-center mt-auto">
-                      <div className='flex p-1 rounded-lg items-center justify-center w-70 bg-softTheme mt-2'>
+                      <div className='flex p-2 rounded-lg items-center justify-center w-50 bg-softTheme mt-2'>
                         <p className="text-theme">{'remark: ' + item.remark}</p>
                       </div>
-                      <div className='flex p-1 rounded-lg items-center justify-center w-70 bg-softTheme mt-2'>
-                        <p className="text-theme">{'status: ' + item.status}</p>
+                      <div className={`flex p-2 rounded-lg items-center justify-center w-50 ${item.status === 'approved' ? 'bg-green' : 'bg-softTheme'} mt-2`}>
+                        <p className="text-theme mr-2">{'status: ' + item.status}</p>
+                        {
+                          item.status === 'approved' ? 
+                          <CheckCircleIcon style={{ color: '#ffffff' }}/> 
+                          : 
+                          <PendingActionsIcon />
+                        }
                       </div>
                     </div>
                   </div>

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { useNavigate, useLocation  } from 'react-router-dom';
 
-import AskHeader from './navbar/AskHeader';
-import AskFooter from './navbar/AskFooter';
+import GuestHeader from './navbar/guest-navbar/GuestHeader';
+import GuestFooter from './navbar/guest-navbar/GuestFooter';
 
 import askLogo from '../assets/images/ask-logo.png';
 
@@ -42,7 +42,7 @@ export default function DonatePage({
 
     return (
         <div className="">
-            <AskHeader 
+            <GuestHeader 
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 
@@ -65,7 +65,7 @@ export default function DonatePage({
             <WidgetVideo link={"https://www.youtube.com/watch?v=TA_T5S-5ssY"}/>
 
 
-            <AskFooter gotoPage={gotoPage} />
+            <GuestFooter gotoPage={gotoPage} />
         </div>
     );
 }

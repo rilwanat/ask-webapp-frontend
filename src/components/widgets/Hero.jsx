@@ -154,7 +154,7 @@ const swipePower = (offset, velocity) => {
           <div key={index} className="h-64 md:h-96">
             <img 
               src={img} 
-              alt={`Slide ${index}`}
+              // alt={`Slide ${index}`}
               className="w-full h-full object-cover"
               draggable="false" // Prevent image dragging
             />
