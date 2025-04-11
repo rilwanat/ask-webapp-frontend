@@ -308,9 +308,9 @@ const navigate = useNavigate();
     
       // const [registrationFirstname, setRegistrationFirstname] = useState('');
       // const [registrationLastname, setRegistrationLastname] = useState('');
-      const [registrationEmailAddress, setRegistrationEmailAddress] = useState('rilwan.at@gmail.com');
-      const [registrationPassword, setRegistrationPassword] = useState('rilwan12345');
-      const [registrationConfirmPassword, setRegistrationConfirmPassword] = useState('rilwan12345');
+      const [registrationEmailAddress, setRegistrationEmailAddress] = useState('');
+      const [registrationPassword, setRegistrationPassword] = useState('');
+      const [registrationConfirmPassword, setRegistrationConfirmPassword] = useState('');
     
       const registerUser = async (e) => {
         

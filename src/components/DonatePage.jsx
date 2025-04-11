@@ -23,6 +23,14 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 
+//
+import axiosInstance from '../auth/axiosConfig'; // Ensure the correct relative path
+import { setCookie, isAuthenticated } from '../auth/authUtils'; // Ensure the correct relative path
+import { jwtDecode } from 'jwt-decode';
+import { getCookie, deleteCookie } from '../auth/authUtils'; // Import getCookie function
+//
+
+
 export default function DonatePage({ 
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -38,6 +46,32 @@ export default function DonatePage({
         navigate("/" + pageName)
     }
 
+    //
+    const [userDetails, setUserDetails] = useState(null);
+        const refreshUserDetails = async () => {
+            // setIsLoading(true);
+            // setError(null);
+            
+            try {
+                // Option 1: If you only need to refresh from cookies
+                const storedUserDetails = getCookie('ask-user-details');
+                const parsedDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
+                setUserDetails(parsedDetails);
+            } catch (err) {
+                // setError('Failed to refresh user details');
+                alert('Refresh error:', err);
+            } finally {
+                // setIsLoading(false);
+            }
+        };
+    
+        // Initial load
+        useEffect(() => {
+            refreshUserDetails();
+        }, []);
+    //
+
+    
 
 
     return (
@@ -58,7 +92,7 @@ export default function DonatePage({
 
             {/* <Contact/> */}
             
-            <DonateWidget />
+            <DonateWidget userDetails={userDetails}/>
 
 
             {/* <LatestNews/> */}

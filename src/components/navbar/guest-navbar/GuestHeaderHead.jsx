@@ -31,7 +31,7 @@ import AccountOptions from '../../widgets/AccountOptions';
 
 
 
-export default function AskHeaderHead({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems }) {
+export default function GuestHeaderHead({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems }) {
     const navigate = useNavigate();
     
 

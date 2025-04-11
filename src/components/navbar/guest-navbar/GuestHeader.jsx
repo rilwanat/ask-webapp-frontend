@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import AskHeaderHead from './GuestHeaderHead';
-import MobileNavbar from './GuestMobileNavbar';
+import GuestHeaderHead from './GuestHeaderHead';
+import GuestMobileNavbar from './GuestMobileNavbar';
 
 import MarqueeTextContainer from "../MarqueeTextContainer";
 
-export default function AskHeader({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage, showMarqees}) {
+export default function GuestHeader({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage, showMarqees}) {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function AskHeader({ carouselRequestItems, carouselBeneficiaryIte
         <div>
             { showMarqees ? <MarqueeTextContainer /> : <div></div> }
             <div>
-                {isMobile ? <MobileNavbar 
+                {isMobile ? <GuestMobileNavbar 
                 carouselRequestItems={carouselRequestItems} 
                 carouselBeneficiaryItems={carouselBeneficiaryItems}
                 carouselSponsorItems={carouselSponsorItems}
@@ -35,7 +35,7 @@ export default function AskHeader({ carouselRequestItems, carouselBeneficiaryIte
             </div>
             <div className="flex w-full">
                 <div className="w-full">
-                    {isMobile ? <div></div> : <AskHeaderHead 
+                    {isMobile ? <div></div> : <GuestHeaderHead 
                     carouselRequestItems={carouselRequestItems} 
                     carouselBeneficiaryItems={carouselBeneficiaryItems}
                     carouselSponsorItems={carouselSponsorItems}

@@ -24,7 +24,11 @@ import { jwtDecode } from 'jwt-decode';
 import Loading from './Loading';
 import MiniLoading from './MiniLoading';
 
-const DonateWidget = ({  }) => {
+
+import { usePaystackPayment } from 'react-paystack';
+
+
+const DonateWidget = ({ userDetails }) => {
   const navigate = useNavigate();
   // const [currentRequestSlide, setCurrentRequestSlide] = useState(0);
   // const [zoomedItemId, setZoomedItemId] = useState(null);
@@ -33,6 +37,7 @@ const DonateWidget = ({  }) => {
   const [donationsData, setDonationsData] = useState([]);
   const currentPageName = "Donations";
 
+  // const [donatePrice, setDonatePrice] = useState(0);
   const [donateType, setDonateType] = useState("naira");
 
   //notification modal
@@ -58,10 +63,6 @@ const DonateWidget = ({  }) => {
     navigate(route, { state: data });
   };
 
-  const showSelectedPriceToPay = (price, symbol) => {
-    openNotificationModal(true, "Donate Now", `You are about to donate ${symbol + price}`);
-        setIsNotificationModalOpen(true);
-  };
 
 
   
@@ -128,6 +129,47 @@ const filteredDonations = Array.isArray(donationsData)
 
 
 
+  // PAYSTACK
+  // const [inputValue, setInputValue] = useState('');
+  const [statusResponse, setStatusResponse] = useState('');
+    
+    const onSuccess = (reference) => {
+      // Implementation for whatever you want to do with reference and after success call.
+      // setInputValue('');
+      // setDonatePrice(0);
+      console.log(reference);
+    };
+    const onClose = () => {
+      // implementation for  whatever you want to do when the Paystack dialog closed.
+      console.log('closed');
+    }
+    
+    // PAYSTACK
+
+
+    const showSelectedPriceToPay = (payDonateType, price, symbol) => {
+      //openNotificationModal(true, "Donate Now", `You are about to donate ${symbol + price}`);
+      //setIsNotificationModalOpen(true);
+
+      if (payDonateType == "naira") {
+        const config = {
+          reference: (new Date()).getTime().toString(),
+          email: userDetails?.email_address ?? "anon@askfoundations.org",
+          amount: price * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
+        };
+        const initializePayment = usePaystackPayment(config);
+        initializePayment(onSuccess, onClose);
+      } else if (payDonateType == "dollar") {
+
+      } else if (payDonateType == "crypto") {
+
+      }
+
+  
+      
+    };
+
 
   return (
     <div className="w-full mt-4">
@@ -187,7 +229,10 @@ const filteredDonations = Array.isArray(donationsData)
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
         {filteredDonations.map((item) => (
           <div key={item.id} 
-            onClick={() => showSelectedPriceToPay(item.price, getCurrencySymbol(item.type))}
+            onClick={() => 
+            {
+              showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
+            }}
             className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
             {getCurrencySymbol(item.type)}{parseInt(item.price).toLocaleString()}
           </div>
@@ -201,7 +246,9 @@ const filteredDonations = Array.isArray(donationsData)
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
         {filteredDonations.map((item) => (
           <div key={item.id} 
-            onClick={() => showSelectedPriceToPay(item.price, getCurrencySymbol(item.type))}
+            onClick={() => {
+              showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
+            }}
             className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
             {getCurrencySymbol(item.type)}{parseInt(item.price).toLocaleString()}
           </div>
@@ -215,7 +262,10 @@ const filteredDonations = Array.isArray(donationsData)
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
         {filteredDonations.map((item) => (
           <div key={item.id} 
-            onClick={() => showSelectedPriceToPay(item.price, getCurrencySymbol(item.type))}
+            onClick={() => 
+            {
+              showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
+            }}
             className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
             {getCurrencySymbol(item.type)}{parseInt(item.price).toLocaleString()}
           </div>

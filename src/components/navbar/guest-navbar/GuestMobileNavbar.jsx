@@ -81,7 +81,7 @@ const menuItemVariants = {
 
 
 
-export default function MobileNavbar({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage }) {
+export default function GuestMobileNavbar({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage }) {
 
   const navigate = useNavigate();
   
@@ -184,7 +184,7 @@ export default function MobileNavbar({ carouselRequestItems, carouselBeneficiary
     className="bg-theme border-1 border-softTheme flex items-center justify-center z-200 cursor-pointer"
     style={{ height: '40px', width: '40px', borderRadius: '4px' }}
     onClick={() => { 
-      // toggleAccount(); 
+      toggleAccount(); 
     }}
   >
     <PersonIcon className="text-white " />

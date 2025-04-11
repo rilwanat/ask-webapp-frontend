@@ -114,9 +114,9 @@ export default function UserDashboardPage({
 
 
           <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC is pending approval</p>
+            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC is pending approval</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-            <p>Please wait for the approval process to complete.</p>
+            <p className='text-center'>Please wait for the approval process to complete.</p>
         </div> 
 
 
@@ -130,9 +130,9 @@ export default function UserDashboardPage({
           <div className="w-full p-4">
 
           <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC has been approved</p>
+            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC has been approved</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-            <p>You can now access all features.</p>
+            <p className='text-center'>You can now access all features.</p>
         </div> 
 
         </div>
@@ -145,9 +145,9 @@ export default function UserDashboardPage({
           <div className="w-full p-4">
 
           <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC has been rejected</p>
+            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC has been rejected</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-            <p>Please contact support for more information.</p>
+            <p className='text-center'>Please contact support for more information.</p>
         </div> 
 
         </div>
