@@ -22,6 +22,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 
 import WidgetForAsk from './user/WidgetForAsk';
+import WidgetForEditAsk from './user/WidgetForEditAsk';
 
 //
 import axiosInstance from '../auth/axiosConfig'; // Ensure the correct relative path
@@ -50,7 +51,7 @@ export default function AskPage({
 
     
       const [isLoading, setIsLoading] = useState(false);
-      const [myActiveRequestsData, setMyActiveRequestsData] = useState([]);
+      const [myActiveRequestsData, setMyActiveRequestsData] = useState(null);
       
     
            useEffect(() => {
@@ -67,7 +68,7 @@ export default function AskPage({
                };
 
             //    alert(JSON.stringify(userDetails), null, 2);
-            alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST);
+            // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST);
             try {
               // API request to get doctors count
               const myActiveHelpRequestEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST;
@@ -77,8 +78,11 @@ export default function AskPage({
                   "Content-Type": "application/json",
                 },
               });
-              alert(JSON.stringify(myActiveHelpRequestResponse.data.data), null, 2);
-              setMyActiveRequestsData(myActiveHelpRequestResponse.data.data);  // Update state with doctors count
+              setIsLoading(false);
+
+              
+              // alert(JSON.stringify(myActiveHelpRequestResponse.data.requestData), null, 2);
+              setMyActiveRequestsData(myActiveHelpRequestResponse.data.requestData);  // Update state with doctors count
           
               // openNotificationModal(true, currentPageName, "");
                // Update state with beneficiaries count
@@ -89,7 +93,7 @@ export default function AskPage({
         
         
               // Once all data is fetched, set loading to false
-              setIsLoading(false);
+              
           
             } catch (error) {
               setIsLoading(false);
@@ -124,12 +128,26 @@ export default function AskPage({
             />
 
             
+            {/* {myActiveRequestsData.id} */}
 
-            <WidgetForAsk 
+{
+  myActiveRequestsData === null ? (
+    <WidgetForAsk 
+    userDetails={userDetails} 
+    refreshUserDetails={refreshUserDetails} 
+    getActiveHelpRequests={getActiveHelpRequests}
+    />
+  )
+ 
+            : <WidgetForEditAsk 
             userDetails={userDetails} 
             refreshUserDetails={refreshUserDetails} 
             getActiveHelpRequests={getActiveHelpRequests}
+            myActiveRequestsData={myActiveRequestsData}
             />
+  
+}
+            
 
 
 
