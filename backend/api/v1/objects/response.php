@@ -916,15 +916,143 @@ public function getEmailVerificationCode($email)
     return $result ? $result['email_token'] : null;
 }
 
+public function CreateHelpRequest($email, $description, $requestImage, $helpToken)
+    {
+        $query = "";
+        {
+            $query = "INSERT INTO " . $this->help_requests_table . " SET 
+            
+            email_address=:email,
+            description=:description,
+            request_image=:request_image,
+            help_token=:help_token
+            ";
+        }
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":email", $email);
+
+        $stmt->bindParam(":description", $description);
+        $stmt->bindParam(":request_image", $requestImage);
+        $stmt->bindParam(":help_token", $helpToken);
+        
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
 
 
 
+    public function checkIfUserCanPostHelpRequest($email) 
+    {
+        // Step 1: Check user details
+        $query_check = "SELECT * FROM " . $this->users_test_table . " WHERE email_address = :email";
+        $stmt_check = $this->conn->prepare($query_check);
+        $stmt_check->bindParam(":email", $email);
+        $stmt_check->execute();
+    
+        if ($stmt_check->rowCount() > 0) {
+            $user = $stmt_check->fetch(PDO::FETCH_ASSOC);
+    
+            // Step 2: Validate user credentials
+            if ($user['is_cheat'] !== 'No') {
+                return ["status" => false, "message" => "User is flagged for cheating."];
+            }
+    
+            if ($user['email_verified'] !== 'Yes') {
+                return ["status" => false, "message" => "Email address is not verified."];
+            }
+    
+            if ($user['eligibility'] !== 'Yes') {
+                return ["status" => false, "message" => "User is not eligible to proceed."];
+            }
+    
+            if (strtoupper($user['kyc_status']) !== 'APPROVED') {
+                return ["status" => false, "message" => "KYC is not approved."];
+            }
+    
+            if (empty($user['bank_name']) || empty($user['account_name']) || empty($user['account_number'])) {
+                return ["status" => false, "message" => "Bank details are incomplete."];
+            }
+    
+            // Step 3: Check if a recent beneficiary record exists (within 12 months)
+            $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE email_address = :email ORDER BY date DESC LIMIT 1";
+            $stmt_beneficiary = $this->conn->prepare($query_beneficiary);
+            $stmt_beneficiary->bindParam(":email", $email);
+            $stmt_beneficiary->execute();
+    
+            if ($stmt_beneficiary->rowCount() > 0) {
+                $beneficiary = $stmt_beneficiary->fetch(PDO::FETCH_ASSOC);
+                $lastDate = new DateTime($beneficiary['date']);
+                $now = new DateTime();
+                $interval = $now->diff($lastDate);
+    
+                if ($interval->y < 1) {
+                    return ["status" => false, "message" => "You can only request help again after 12 months."];
+                }
+            }
+    
+            // Step 4: Ensure user hasn't already submitted a help request
+            $query_help_requests = "SELECT id FROM " . $this->help_requests_table . " WHERE email_address = :email LIMIT 1";
+            $stmt_help_requests = $this->conn->prepare($query_help_requests);
+            $stmt_help_requests->bindParam(":email", $email);
+            $stmt_help_requests->execute();
+    
+            if ($stmt_help_requests->rowCount() > 0) {
+                return ["status" => false, "message" => "Hmm, it seems you have already submitted a previous help request this week."];
+            }
+    
+            // All checks passed
+            return ["status" => true, "message" => "All user checks passed.", "user_id" => $user['id']];
+        } else {
+            return ["status" => false, "message" => "User does not exist."];
+        }
+    }
+    
 
+    public function ReadMyHelpRequest($email)
+    {
+        try {
+            // Prepare the SQL query using a prepared statement
+            $query = "SELECT 
+                    p.id,
+                    p.date,
+                    p.nomination_count,
+                    p.description,
+                    p.remark,
+                    p.email_address,
+                    p.request_image,
+                    p.help_token 
+                FROM " . $this->help_requests_table . " p  WHERE p.email_address = :email";
+            
+            // Prepare the statement
+            $stmt = $this->conn->prepare($query);
+    
+            // Bind the email parameter to the prepared statement
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    
+            // Execute the statement
+            $stmt->execute();
+    
+            // Fetch the result
+            $request = $stmt->fetch(PDO::FETCH_ASSOC);
+    
 
+        return $request; // User not found
+    
+        } catch (Exception $e) {
+            // Log the error message and return null for security
+            // error_log("Error reading user: " . $e->getMessage());
+            return null;
+        }
 
-
-
-
+    }
+    
 
 
 

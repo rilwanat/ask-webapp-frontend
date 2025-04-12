@@ -47,34 +47,12 @@ export default function AdminLoginPage({
         navigate("/" + pageName)
     }
 
-    //const storedUserDetails = getCookie('ask-user-details');
-    //const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-    const [userDetails, setUserDetails] = useState(null);
-    const refreshAdminDetails = async () => {
-        // setIsLoading(true);
-        // setError(null);
-        
-        try {
-            // Option 1: If you only need to refresh from cookies
-            const storedUserDetails = getCookie('ask-admin-details');
-            const parsedDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-            setUserDetails(parsedDetails);
-        } catch (err) {
-            // setError('Failed to refresh user details');
-            alert('Refresh error:', err);
-        } finally {
-            // setIsLoading(false);
-        }
-    };
-
-    // Initial load
-    useEffect(() => {
-      refreshAdminDetails();
-    }, []);
+    
+    
 
 
 
-    const currentPageName = "Add Sponsor";//requestData.userFullname;
+    const currentPageName = "Admin Login";//requestData.userFullname;
 
 
 
@@ -145,7 +123,7 @@ export default function AdminLoginPage({
 
 
       <WidgetForAdminLogin 
-        // userDetails={userDetails} 
+        // adminDetails={adminDetails} 
         // refreshUserDetails={refreshUserDetails} 
       />
 
@@ -218,19 +196,19 @@ export default function AdminLoginPage({
                 </div>
             } */}
             <>
-            {/* {userDetails && userDetails.kyc_status} */}
+            {/* {adminDetails && adminDetails.kyc_status} */}
 
 
             {/* {
-  userDetails && (
-    userDetails.email_verified === "No" ? (
+  adminDetails && (
+    adminDetails.email_verified === "No" ? (
       <WidgetForEmailVerification 
-        userDetails={userDetails} 
+        adminDetails={adminDetails} 
         refreshUserDetails={refreshUserDetails} 
       />
-    ) : userDetails.kyc_status === null ? (
+    ) : adminDetails.kyc_status === null ? (
       <WidgetForKyc 
-        userDetails={userDetails} 
+        adminDetails={adminDetails} 
         refreshUserDetails={refreshUserDetails} 
       />
     ) : null

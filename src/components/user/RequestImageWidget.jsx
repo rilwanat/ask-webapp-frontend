@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Webcam from 'react-webcam';
 
-const SelfieWidget = ({ uploadEndpoint, onUploadSuccess, onUploadError, isLoading, setIsLoading, imageSrc, setImageSrc }) => {
+const RequestImageWidget = ({ uploadEndpoint, onUploadSuccess, onUploadError, isLoading, setIsLoading, imageSrc, setImageSrc }) => {
 //   const [imageSrc, setImageSrc] = useState(null);
 //   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -36,7 +36,7 @@ const SelfieWidget = ({ uploadEndpoint, onUploadSuccess, onUploadError, isLoadin
 
   return (
     <div className="selfie-widget max-w-[500px] mx-auto mt-4 flex flex-col  justify-center">
-      <label className='bg-red-200 text-xs w-full text-center mb-1 py-1 rounded-lg'>Selfie is mandatory and must clearly capture your face</label>
+      <label className='bg-red-200 text-xs w-full text-center mb-1 py-1 rounded-lg'>Attach any image of your choice to your request</label>
       {error && (
         <div className="text-red-500 mb-2.5">
           {error}
@@ -125,4 +125,4 @@ const SelfieWidget = ({ uploadEndpoint, onUploadSuccess, onUploadError, isLoadin
   );
 };
 
-export default SelfieWidget;
+export default RequestImageWidget;

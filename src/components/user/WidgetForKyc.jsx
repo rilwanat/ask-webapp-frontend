@@ -194,38 +194,6 @@ const dataURLtoBlob = (dataURL) => {
   return new Blob([u8arr], { type: mime });
 };
 
-    // // Upload image to server
-    //   const uploadImage = async () => {
-    //     if (!imageSrc) return;
-    
-    //     setIsLoading(true);
-    
-    //     try {
-    //       // Convert data URL to blob
-    //       const blob = await fetch(imageSrc).then(res => res.blob());
-          
-    //       // Create FormData and append the file
-    //       const formData = new FormData();
-    //       formData.append('selfie', blob, 'selfie.jpg');
-    
-    //       // Upload to endpoint
-    //       const response = await fetch(uploadEndpoint, {
-    //         method: 'POST',
-    //         body: formData
-    //       });
-    
-    //       if (!response.ok) throw new Error('Upload failed');
-    
-    //       const result = await response.json();
-    //       if (onUploadSuccess) onUploadSuccess(result);
-    //     } catch (error) {
-    //       console.error('Upload error:', error);
-    //       setError('Failed to upload image');
-    //       if (onUploadError) onUploadError(error);
-    //     } finally {
-    //       setIsLoading(false);
-    //     }
-    //   };
 
       const updateSelfieImage = async () => {
         // alert("1");
@@ -576,8 +544,10 @@ A community-based charity initiative
     >
               
         <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Complete Your Account Details</p>
+            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Complete Level 2 Verification (KYC)</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
+            <label className='bg-red-200 text-xs w-full text-center mb-1 py-1 rounded-lg'>Strictly for adults above 18 years</label>
+      
         </div> 
        
 
@@ -594,7 +564,7 @@ A community-based charity initiative
                                 type='text'  name='email' inputMode="text" autoComplete='email'
                                 // placeholder='Enter your Fullname' 
                                 className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
-                                value={userDetails.email_address} readOnly={true}
+                                value={userDetails && userDetails.email_address} readOnly={true}
                                 style={{  }} 
                                 />
                              </div>
@@ -788,7 +758,7 @@ A community-based charity initiative
   </select>
                              </div>
 
-
+                             
 <SelfieWidget 
 // uploadEndpoint={uploadEndpoint} onUploadSuccess={onUploadSuccess} onUploadError={onUploadError} 
 isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSrc={setImageSrc}

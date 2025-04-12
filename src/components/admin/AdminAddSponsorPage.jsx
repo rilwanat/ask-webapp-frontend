@@ -46,31 +46,6 @@ export default function AdminAddSponsorPage({
         navigate("/" + pageName)
     }
 
-    //const storedUserDetails = getCookie('ask-user-details');
-    //const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-    const [userDetails, setUserDetails] = useState(null);
-    const refreshAdminDetails = async () => {
-        // setIsLoading(true);
-        // setError(null);
-        
-        try {
-            // Option 1: If you only need to refresh from cookies
-            const storedUserDetails = getCookie('ask-admin-details');
-            const parsedDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-            setUserDetails(parsedDetails);
-        } catch (err) {
-            // setError('Failed to refresh user details');
-            alert('Refresh error:', err);
-        } finally {
-            // setIsLoading(false);
-        }
-    };
-
-    // Initial load
-    useEffect(() => {
-      refreshAdminDetails();
-    }, []);
-
 
 
     const currentPageName = "Add Sponsor";//requestData.userFullname;

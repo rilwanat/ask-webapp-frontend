@@ -14,7 +14,7 @@ $db = $database->getConnection();
 $response = new Response($db);
 
 // Directory to store uploaded images
-$uploadDir = "../../../../images/selfies/";
+$uploadDir = "../../../../images/user-selfies-images/";
 
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {

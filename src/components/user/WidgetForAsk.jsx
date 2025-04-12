@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+
 import background from '../../assets/images/ask-logo.png';
 
 import RecyclingIcon from '@mui/icons-material/Recycling';
@@ -32,12 +33,20 @@ import { jwtDecode } from 'jwt-decode';
 import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
 //
 
-const WidgetForEmailVerification = ({ userDetails, refreshUserDetails }) => {
+import ReactCountryFlag from 'react-country-flag';
+import countries from 'world-countries';
+
+import RequestImageWidget from './RequestImageWidget';
+
+const WidgetForAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests }) => {
   const navigate = useNavigate();
 
   const navigateTo = (route) => {
     navigate(route);
   };
+
+  
+
 
 
   //notification modal
@@ -60,182 +69,97 @@ const WidgetForEmailVerification = ({ userDetails, refreshUserDetails }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-      const [verificationCode, setVerificationCode] = useState('');
-      
 
-      // Function to validate Fullname as two words separated by space with no numbers or special characters
-const isValidFullname = (fullname) => {
-    const fullnamePattern = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/;
-    return fullnamePattern.test(fullname);
-  };
-  
-  // Function to validate email format
-  const isValidEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  };
-  
-  // Function to validate Nigerian phone number format with +234
-  const isValidateNigerianNumber = (ngPhoneNumber) => {
-    const nigerianPhonePattern = /^\+234(70|80|81|90|91)\d{8}$/;
-    return nigerianPhonePattern.test(ngPhoneNumber);
-  };
-  // Function to validate if input contains exactly 11 digits
-const is11DigitNumber = (input) => {
-    return /^\d{11}$/.test(input);
-  };
-  
-  // Function to validate if input contains between 10-15 digits
-  const isNumericWithLength = (input, min = 10, max = 15) => {
-    const pattern = new RegExp(`^\\d{${min},${max}}$`);
-    return pattern.test(input);
-  };
+  const [helpDescription, setHelpDescription] = useState('');
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [helpImagePreview, setHelpImagePreview] = useState(null);
 
-
-  const resendVerificationCode = async (e) => {
-
-    e.preventDefault();
-    setErrorMessage({ message: '' });
-  
-    setIsLoading(true);
-    
-    try {
-
-      const requestData = {   
-       email: userDetails.email_address
-      };
-
-     //  alert("resendVerificationCode: " + JSON.stringify(requestData, null, 2));
-
-     // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_RESEND_VERFICATION_CODE);
-      const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_RESEND_VERFICATION_CODE, requestData, {
-        headers: {
-              // 'Content-Type': 'multipart/form-data',
-              'Content-Type': 'application/json',
-          },
-      });
-
-      setIsLoading(false);
-     //  alert("resendVerificationCode: " + JSON.stringify(response.data, null, 2));
-// return;
-
-      if (response.data.status) {
-       
-       
-
-
-        // If login is successful
-        setErrorMessage({ message: '' });
-        
-
-        setVerificationCode('');
-
-
-       //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-        openNotificationModal(true, "ASK: Resend Email Verification", response.data.message);
-         setIsNotificationModalOpen(true);
-
-
-         
-
-        
-      } else {
-        const errors = response.data.errors.map(error => error.msg);
-        setErrorMessage({ message: response.data.message, errors });
-        //alert("Failed1");
-      }
-    } catch (error) {
-      setIsLoading(false);
-
-     //  alert(error);
-    
-      if (error.response && error.response.data && error.response.data.message) {
-      const errorMessage = error.response.data.message;
-      setErrorMessage({ message: errorMessage });
-
-      openNotificationModal(false, "ASK: Resend Email Verification", errorMessage);
-         setIsNotificationModalOpen(true);
-    } else if (error.response && error.response.data && error.response.data.errors) {
-      const { errors } = error.response.data;
-      const errorMessages = errors.map(error => error.msg);
-      const errorMessage = errorMessages.join(', '); // Join all error messages
-      setErrorMessage({ message: errorMessage });
-
-      openNotificationModal(false, "ASK: Resend Email Verification", errorMessage);
-         setIsNotificationModalOpen(true);
-    } else {
-      setErrorMessage({ message: 'ASK: Resend Email Verification. Please check your data and try again.' });
-
-      openNotificationModal(false, "ASK: Resend Email Verification", 'Please check your data and try again.');
-         setIsNotificationModalOpen(true);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setHelpImagePreview(URL.createObjectURL(file));
+      setErrorMessage({ message: '' });
     }
-  }
-  }
+  };
 
-    const CheckUserVerification  = async (e) => {
+    const CreateHelpRequest  = async (e) => {
  
-    
- 
- 
+      
+      // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
+      if (userDetails === null) {
+        openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send with your help request.`); 
+        setIsNotificationModalOpen(true);
+        return;
+      }
+
+
+    //    alert("here");
+
+    if (helpDescription === "") {
+      openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
+      setIsNotificationModalOpen(true);
+      return;
+    }
+
+
          e.preventDefault();
          setErrorMessage({ message: '' });
-
-  //        // Basic input validation
-  //   if (!verificationCode || verificationCode.length < 4) {
-  //     setErrorMessage({ message: 'Please enter a valid verification code' });
-  //     setIsLoading(false);
-  //     return;
-  // }
        
-         setIsLoading(true);
+         
        
 
-         
-         
          try {
      
-           const requestData = {   
-            email: userDetails.email_address,  
-            verificationCode: verificationCode.trim()
-           };
+           const formData = new FormData();
+           formData.append('email', userDetails.email_address);
+           formData.append('description', helpDescription);
+        
+           if (selectedFile !== null) {
+            formData.append('image', selectedFile);
+          } else {
+            // alert("Please select an image to upload");
+            openNotificationModal(false, "ASK Help Request", "Select an image to upload");
+            setIsNotificationModalOpen(true);
+            return;
+          }
+
+          setIsLoading(true);
 
           //  alert("requestData: " + JSON.stringify(requestData, null, 2));
      
-          // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_VERIFY_EMAIL_CODE);
-           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_VERIFY_EMAIL_CODE, requestData, {
+           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CREATE_HELP_REQUEST, formData, {
              headers: {
-                   // 'Content-Type': 'multipart/form-data',
-                   'Content-Type': 'application/json',
+                   'Content-Type': 'multipart/form-data',
+                  //  'Content-Type': 'application/json',
                },
            });
      
            setIsLoading(false);
-          //  alert("verify: " + JSON.stringify(response.data, null, 2));
+          //  alert("kyc: " + JSON.stringify(response.data, null, 2));
      // return;
      
            if (response.data.status) {
             
-            
-
-
              // If login is successful
              setErrorMessage({ message: '' });
              
 
-             setVerificationCode('');
+            //  setFullname('');
+            setHelpDescription('');            
+            setSelectedFile(null);
+            setHelpImagePreview(null);
 
-             setCookie('ask-user-details', JSON.stringify(response.data.userData));
-             refreshUserDetails();
+   
+            
+            getActiveHelpRequests();
 
-     
-            //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-             openNotificationModal(true, "ASK Email Verification", response.data.message);
+
+             openNotificationModal(true, "ASK Help Request", response.data.message);
               setIsNotificationModalOpen(true);
+
      
-
-              
-
              
            } else {
              const errors = response.data.errors.map(error => error.msg);
@@ -251,24 +175,38 @@ const is11DigitNumber = (input) => {
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Email Verification", errorMessage);
+           openNotificationModal(false, "ASK Help Request", errorMessage);
               setIsNotificationModalOpen(true);
+
          } else if (error.response && error.response.data && error.response.data.errors) {
            const { errors } = error.response.data;
            const errorMessages = errors.map(error => error.msg);
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Email Verification", errorMessage);
+           openNotificationModal(false, "ASK Help Request", errorMessage);
               setIsNotificationModalOpen(true);
          } else {
-           setErrorMessage({ message: 'ASK Email Verification. Please check your data and try again.' });
+           setErrorMessage({ message: 'ASK Help Request failed. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK Email Verification", 'ASK Email Verification. Please check your data and try again.');
+           openNotificationModal(false, "ASK Help Request", 'Please check your data and try again.');
               setIsNotificationModalOpen(true);
          }
        }
        };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="w-full mt-24 sm:mt-20 ">
@@ -346,12 +284,14 @@ A community-based charity initiative
     >
               
         <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2 text-center ' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Complete Level 1 Verification (Email)</p>
+            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>New Help Request</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
+            {/* <label className='bg-red-200 text-xs w-full text-center mb-1 py-1 rounded-lg'>Strictly for adults above 18 years</label> */}
+      
         </div> 
        
 
-        <div className="m-2 w-full mb-10 bg-green-200 shadow-lg" style={{  }}>
+        <div className="m-2 w-full mb-10 bg-softTheme shadow-lg" style={{  }}>
                     <div className="mb-8">
                       <div className=" "/>
                       <div className=" mx-4 mt-4" >
@@ -369,48 +309,73 @@ A community-based charity initiative
                                 />
                              </div>
 
-                        <div className='flex flex-col my-2 '>
-                             <label className='text-xs mb-1'>Verification Code:</label>
-                             <div className="relative w-full">
-                             <input 
-                                type='text'  name='verification-code' inputMode="text" autoComplete='verification-code'
-                                maxLength={10}
-                                placeholder='Enter Verification Code' 
-                                className='border border-gray-300 rounded-sm py-2 pl-2 pr-16 w-full bg-white'
-                                value={verificationCode}
-                                onChange={(e) => setVerificationCode(e.target.value)}
+                        {/* <div className='flex flex-col my-2 '>
+                             <label className='text-xs mb-1'>Fullname:</label>
+                                <input 
+                                type='text'  name='fullname' inputMode="text" autoComplete='full-name'
+                                placeholder='Enter your Fullname' 
+                                className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
+                                value={fullname}
+                                onChange={(e) => setFullname(e.target.value)}
                                 style={{  }} 
                                 />
-                                {(
-                                  <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    resendVerificationCode(e);
-                                    }}
-                                    className="absolute top-1/2 -translate-y-1/2 right-3 text-sm 
-                                    text-green-500 hover:text-theme cursor-pointer bg-stone-200 px-2 py-1 rounded-sm"
-                                    >
-                                      resend
-                                      </button>
-                                  )}
-                             </div>
-                                
-                             </div>
+                             </div> */}
+
+                          <div className='flex flex-col my-2 '>
+                                        <label className="text-sm mb-1">Description:</label>
+                                        <textarea id="helpDescription" name="description"
+                                        className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
+                                        block w-full p-2.5" placeholder="Describe your Help Request here..."   style={{ height: '180px' }}
+                                        value={helpDescription} 
+                                        onChange={(e) => setHelpDescription(e.target.value)}
+                                        ></textarea>
+                                    </div>
 
 
+                                    <div className='flex flex-col justify-center my-2'>
 
-                             
+<div className='flex flex-col  mb-2'>
+<label className="text-sm mb-1">Select an Image:</label>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className='cursor-pointer border-1 p-2 rounded-lg'
+      />
+</div>
 
-                          <div className='my-2 text-sm' style={{ color: '#c2572b' }}>{errorMessage.message}</div>
+{helpImagePreview && (
+        <img
+          src={helpImagePreview}
+          alt={`Slide Help Image Preview`}
+          className="w-full h-40 object-cover rounded-md mt-1"
+        />
+      )}
+
+      <div className='mt-4'>
+  {/* {errorMessage.message && <p className="text-sm text-red-600">{errorMessage.message}</p>} */}
+</div>
+
+
+</div>
+
+          
+{/* <RequestImageWidget 
+// uploadEndpoint={uploadEndpoint} onUploadSuccess={onUploadSuccess} onUploadError={onUploadError} 
+isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSrc={setImageSrc}
+/> */}
+
+                          <div className='my-2 text-sm text-center' style={{ color: '#c2572b' }}>{errorMessage.message}</div>
 
                           
                           <div className='flex justify-between items-center flex-col md:flex-row '>
                             
                           <div  
-                          onClick={(e) => {if (!isLoading) CheckUserVerification(e)}} 
+                          // onClick={(e) => {if (!isLoading) updateSelfieImage(e)}} 
+                          onClick={(e) => {if (!isLoading) CreateHelpRequest(e)}}
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
-                            {isLoading ? 'Please wait..' : 'Update'}
+                            {isLoading ? 'Please wait..' : 'Create Request'}
                             </div>
                           </div>
 
@@ -456,4 +421,4 @@ A community-based charity initiative
   );
 };
 
-export default WidgetForEmailVerification;
+export default WidgetForAsk;

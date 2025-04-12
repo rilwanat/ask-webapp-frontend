@@ -21,10 +21,21 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 
+import WidgetForAsk from './user/WidgetForAsk';
+
+//
+import axiosInstance from '../auth/axiosConfig'; // Ensure the correct relative path
+import { setCookie, isAuthenticated } from '../auth/authUtils'; // Ensure the correct relative path
+import { jwtDecode } from 'jwt-decode';
+import { getCookie, deleteCookie } from '../auth/authUtils'; // Import getCookie function
+//
+
+
 export default function AskPage({ 
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+    userDetails, refreshUserDetails
  }) {
     const navigate = useNavigate();
 
@@ -36,6 +47,64 @@ export default function AskPage({
         navigate("/" + pageName)
     }
 
+
+    
+      const [isLoading, setIsLoading] = useState(false);
+      const [myActiveRequestsData, setMyActiveRequestsData] = useState([]);
+      
+    
+           useEffect(() => {
+            getActiveHelpRequests();
+          }, [userDetails]);
+          const getActiveHelpRequests = async () => {
+        if (userDetails === null) { return; }
+    
+            setIsLoading(true);
+        
+        
+            const requestData = {   
+                email: userDetails.email_address, 
+               };
+
+            //    alert(JSON.stringify(userDetails), null, 2);
+            alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST);
+            try {
+              // API request to get doctors count
+              const myActiveHelpRequestEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST;
+              // alert(adminBankCodesEndpoint);
+              const myActiveHelpRequestResponse = await axiosInstance.post(myActiveHelpRequestEndpoint, requestData, {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              alert(JSON.stringify(myActiveHelpRequestResponse.data.data), null, 2);
+              setMyActiveRequestsData(myActiveHelpRequestResponse.data.data);  // Update state with doctors count
+          
+              // openNotificationModal(true, currentPageName, "");
+               // Update state with beneficiaries count
+            //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+        
+        
+        
+        
+        
+              // Once all data is fetched, set loading to false
+              setIsLoading(false);
+          
+            } catch (error) {
+              setIsLoading(false);
+              
+              alert(error);
+              // Handle errors
+              if (error.response && error.response.data) {
+                const errorMessage = error.response.data.message;
+                openNotificationModal(false, currentPageName + " Error", errorMessage);
+              } else {
+                openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+              }
+            }
+          };
+    
 
 
     return (
@@ -54,43 +123,13 @@ export default function AskPage({
                 subtitle={""}
             />
 
-            {/* <Contact/> */}
+            
 
-            {/* <div className="flex flex-col items-center p-4">
-                <h1 className="text-2xl font-bold text-gray-800">{selectedItem?.name || "No Name"}</h1>
-                <p className="text-gray-600 mt-2">{selectedItem?.description || "No Description Available"}</p>
-
-                <div className="w-full max-w-3xl mt-4">
-                    <Carousel 
-                        showIndicators={false}
-                        showArrows={true}
-                        showStatus={false}
-                        showThumbs={false}
-                        infiniteLoop={false}
-                        autoPlay={false} // 👈 Disabled auto-slide
-                        swipeable={true} // 👈 Enables manual swiping
-                        emulateTouch={true} // ✅ Fix swipe gestures on mobile
-                        // useKeyboardArrows={true} // ✅ Allow left/right keyboard navigation
-                        // dynamicHeight={true} // 👈 Adjusts height based on content
-                    >
-                        {allItems?.map((item) => (
-                            <div key={item.id} className="flex flex-col items-center">
-                                <img 
-                                    src={item.image} 
-                                    alt={item.title} 
-                                    className="rounded-lg w-full h-64 object-cover"
-                                />
-                                <h3 className="text-lg font-semibold text-gray-800 mt-2">{item.name}</h3>
-                                <p className="text-gray-600">{item.price}</p>
-                                <p className="text-theme font-bold my-1">{item.date}</p>
-                            </div>
-                        ))}
-                    </Carousel>
-                </div>
-            </div> */}
-
-
-            {/* <LatestNews/> */}
+            <WidgetForAsk 
+            userDetails={userDetails} 
+            refreshUserDetails={refreshUserDetails} 
+            getActiveHelpRequests={getActiveHelpRequests}
+            />
 
 
 

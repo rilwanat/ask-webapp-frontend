@@ -46,30 +46,7 @@ export default function DonatePage({
         navigate("/" + pageName)
     }
 
-    //
-    const [userDetails, setUserDetails] = useState(null);
-        const refreshUserDetails = async () => {
-            // setIsLoading(true);
-            // setError(null);
-            
-            try {
-                // Option 1: If you only need to refresh from cookies
-                const storedUserDetails = getCookie('ask-user-details');
-                const parsedDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-                setUserDetails(parsedDetails);
-            } catch (err) {
-                // setError('Failed to refresh user details');
-                alert('Refresh error:', err);
-            } finally {
-                // setIsLoading(false);
-            }
-        };
     
-        // Initial load
-        useEffect(() => {
-            refreshUserDetails();
-        }, []);
-    //
 
     
 

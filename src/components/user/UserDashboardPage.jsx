@@ -36,6 +36,7 @@ export default function UserDashboardPage({
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+    userDetails, refreshUserDetails
 
 }) {
     const navigate = useNavigate();
@@ -47,30 +48,8 @@ export default function UserDashboardPage({
         navigate("/" + pageName)
     }
 
-    //const storedUserDetails = getCookie('ask-user-details');
-    //const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-    const [userDetails, setUserDetails] = useState(null);
-    const refreshUserDetails = async () => {
-        // setIsLoading(true);
-        // setError(null);
-        
-        try {
-            // Option 1: If you only need to refresh from cookies
-            const storedUserDetails = getCookie('ask-user-details');
-            const parsedDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-            setUserDetails(parsedDetails);
-        } catch (err) {
-            // setError('Failed to refresh user details');
-            alert('Refresh error:', err);
-        } finally {
-            // setIsLoading(false);
-        }
-    };
-
-    // Initial load
-    useEffect(() => {
-        refreshUserDetails();
-    }, []);
+    
+    
 
 
 
@@ -168,7 +147,14 @@ export default function UserDashboardPage({
                                 }}
                                 style={{ cursor: 'pointer' }}
                             />
+                            {/* <p className='mt-2'>Name</p> */}
                             <p className='mt-2'>{userDetails && userDetails.fullname}</p>
+                            
+                            {/* <p className='mt-2'>Phone Number</p> */}
+                            <p className='mt-2'>{userDetails && userDetails.phone_number}</p>
+                            
+                            {/* <p className='mt-2'>Email</p> */}
+                            <p className='mt-2'>{userDetails && userDetails.email_address}</p>
                         </div>
     )}
     </>

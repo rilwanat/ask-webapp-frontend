@@ -78,7 +78,55 @@ function App() {
       //notification modal
 
 
+
       
+      //USER DETAILS
+      const [userDetails, setUserDetails] = useState(null);
+          const refreshUserDetails = async () => {
+              // setIsLoading(true);
+              // setError(null);              
+              try {
+                  // Option 1: If you only need to refresh from cookies
+                  const storedUserDetails = getCookie('ask-user-details');
+                  const parsedUserDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
+                  setUserDetails(parsedUserDetails);
+              } catch (err) {
+                  // setError('Failed to refresh user details');
+                  alert('Refresh User error:', err);
+              } finally {
+                  // setIsLoading(false);
+              }
+          };
+          // Initial load
+          useEffect(() => {
+              refreshUserDetails();
+          }, []);
+      //USER DETAILS
+
+      //ADMIN DETAILS
+      const [adminDetails, setAdminDetails] = useState(null);
+      const refreshAdminDetails = async () => {
+        // setIsLoading(true);
+        // setError(null);        
+        try {
+            // Option 1: If you only need to refresh from cookies
+            const storedAdminDetails = getCookie('ask-admin-details');
+            const parsedAdminDetails = storedAdminDetails ? JSON.parse(storedAdminDetails) : null;
+            setAdminDetails(parsedAdminDetails);
+        } catch (err) {
+            // setError('Failed to refresh user details');
+            alert('Refresh Adminn error:', err);
+        } finally {
+            // setIsLoading(false);
+        }
+      };
+      // Initial load
+      useEffect(() => {
+        refreshAdminDetails();
+      }, []);
+      //ADMIN DETAILS
+
+
 
 
 
@@ -96,115 +144,6 @@ function App() {
 
 
 
-        // Sample carouseRequestlItems
-        const carouselRequestItems = [
-            {
-              id: 1,
-              image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-              name: "Emeka Eze",
-              title: "Community Support",
-              description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-              score: "81897",
-              remark: "Financial Support",
-              status: "Processing"
-            },
-            {
-              id: 2,
-              image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-              name: "Chinwe Musa",
-              title: "Environmental Care",
-              description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-              score: "96783",
-              remark: "Financial Support",
-              status: "Processing"
-            },
-            {
-              id: 3,
-              image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-              name: "Audu Mallam",
-              title: "Youth Empowerment",
-              description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-              score: "45674",
-              remark: "Financial Support",
-              status: "Processing"
-            }
-          ];
-    
-      // Sample carouselBeneficiaryItems
-      const carouselBeneficiaryItems = [
-        {
-          id: 1,
-          image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-          title: "Community Support",
-          description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-          score: "8451",
-          name: "Mr Audu Eze",
-          date: "2025-02-24 03:47:17",
-          price: "N30,000.00",
-          remark: "Financial Support",
-          status: "Processed"
-        },
-        {
-          id: 2,
-          image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-          title: "Environmental Care",
-          description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-          score: "9343",
-          name: "Mrs Chiamaka James",
-          date: "2025-02-24 03:47:17",
-          price: "N40,000.00",
-          remark: "Financial Support",
-          status: "Processed"
-        },
-        {
-          id: 3,
-          image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-          title: "Youth Empowerment",
-          description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-          score: "5344",
-          name: "Ms Jane Paul",
-          date: "2025-02-24 03:47:17",
-          price: "N50,000.00",
-          remark: "Financial Support",
-          status: "Processed"
-        },
-        {
-          id: 4,
-          image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-          title: "Youth Empowerment",
-          description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-          score: "4744",
-          name: "Ms Musa Mansa",
-          date: "2025-02-24 03:47:17",
-          price: "N10,000.00",
-          remark: "Financial Support",
-          status: "Processed"
-        },
-        {
-          id: 5,
-          image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-          title: "Youth Empowerment",
-          description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-          score: "4844",
-          name: "Ms Pauline Aba",
-          date: "2025-02-24 03:47:17",
-          price: "N80,000.00",
-          remark: "Financial Support",
-          status: "Processed"
-        },
-        {
-          id: 6,
-          image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-          title: "Youth Empowerment",
-          description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-          score: "4234",
-          name: "Mr Emma Agada",
-          date: "2025-02-24 03:47:17",
-          price: "N70,000.00",
-          remark: "Financial Support",
-          status: "Processed"
-        }
-      ];
       
       // Sample carouselSponsorItems
         const carouselSponsorItems = [
@@ -387,16 +326,19 @@ function App() {
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
             />}/>
             <Route path='/about-us' element={<AboutUsPage 
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
             <Route path='/contact-us' element={<ContactUsPage 
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
 
@@ -404,27 +346,32 @@ function App() {
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
             <Route path='/privacy-policy' element={<PrivacyPolicyPage 
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
             <Route path='/single-request' element={<SingleRequestsPage 
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
             <Route path='/single-sponsor' element={<SingleSponsorPage 
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
             <Route path='/single-beneficiary' element={<SingleBeneficiaryPage 
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
 
@@ -432,11 +379,13 @@ function App() {
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
              <Route path='/i-ask' element={<AskPage 
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
 
@@ -505,7 +454,7 @@ function App() {
 <Route path='/admin-add-sponsor' element={<ProtectedAdminRoute><AdminAddSponsorPage 
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide} 
              /></ProtectedAdminRoute>}/>
              
 
@@ -517,6 +466,7 @@ function App() {
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              /></ProtectedRoute>}/>
 
             
