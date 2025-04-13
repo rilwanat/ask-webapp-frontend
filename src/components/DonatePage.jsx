@@ -32,9 +32,11 @@ import { getCookie, deleteCookie } from '../auth/authUtils'; // Import getCookie
 
 
 export default function DonatePage({ 
+    isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+    userDetails, refreshUserDetails
  }) {
     const navigate = useNavigate();
 
@@ -53,7 +55,7 @@ export default function DonatePage({
 
     return (
         <div className="">
-            <GuestHeader 
+            <GuestHeader isMobile={isMobile}
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 

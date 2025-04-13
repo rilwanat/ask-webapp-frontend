@@ -31,6 +31,7 @@ import { jwtDecode } from 'jwt-decode';
 
 
 export default function ManageWebsiteImagesPage({ 
+  isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
@@ -97,7 +98,7 @@ export default function ManageWebsiteImagesPage({
     return (
         <div className="bg-theme h-full">
 
-            <AdminHeader 
+            <AdminHeader isMobile={isMobile}
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 

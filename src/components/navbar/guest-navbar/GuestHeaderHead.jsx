@@ -51,9 +51,7 @@ export default function GuestHeaderHead({ carouselRequestItems, carouselBenefici
         navigate(route, { state: data });
       };
 
-    useEffect(() => {
-        // Initial useEffect logic if needed
-    }, []);
+    
 
     const gotoUserProfile = () => {
         navigate('/user-dashboard');
@@ -80,6 +78,7 @@ export default function GuestHeaderHead({ carouselRequestItems, carouselBenefici
 
                 <div className='text-center w-full text-white'>
                     <div className="flex items-center z-50" style={{ height: "40px" }}>
+                    
                         <div
                             className="cursor-pointer ml-24 px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
@@ -93,6 +92,22 @@ export default function GuestHeaderHead({ carouselRequestItems, carouselBenefici
                                 Home
                             </p>
                         </div>
+
+                        {isAuthenticated() ?
+         <div
+         className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+         onClick={() => {
+             navigate('/user-dashboard');
+         }}
+     >
+         <p
+             className="text-sm cursor-pointer"
+             style={{ fontWeight: '600' }}
+         >
+             My Dashboard
+         </p>
+     </div>
+ : <></>} 
 
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
@@ -165,6 +180,25 @@ export default function GuestHeaderHead({ carouselRequestItems, carouselBenefici
                                 Contact
                             </p>
                         </div>
+
+
+                        {isAuthenticated() ?
+         <div
+                                     className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme text-red-500"
+                                     onClick={() => {
+                                         deleteCookie("user");
+                                         navigate('/');
+                                     }}
+                                 >
+                                     <p
+                                         className="text-sm cursor-pointer"
+                                         style={{ fontWeight: '600' }}
+                                     >
+                                         Logout
+                                     </p>
+                                 </div>
+ : <></>} 
+ 
 
                         
 

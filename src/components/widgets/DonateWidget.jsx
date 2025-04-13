@@ -27,6 +27,14 @@ import MiniLoading from './MiniLoading';
 
 import { usePaystackPayment } from 'react-paystack';
 
+import bitcoin from '../../assets/crypto/Bitcoin_bc1qkmp6z2vsx3uu8jhhf9kp8asr0wctakc3ktuwty.png';
+import ethereum from '../../assets/crypto/Ethereum_0x5736412760a26665Bfeb0679015b7bbD316dA3be.png';
+import bnb from '../../assets/crypto/BNB_0x5736412760a26665Bfeb0679015b7bbD316dA3be.png';
+import polygon from '../../assets/crypto/Polygon_0x5736412760a26665Bfeb0679015b7bbD316dA3be.png';
+import solana from '../../assets/crypto/Solana_FG8gcgGJr55vtkznDB6UWi1fMjEhhGMaZnrjDcU1ULPa.png';
+import ton from '../../assets/crypto/TON_UQDmODmw1zap0Dp51Vm_57nc6h_RiTXUER6r84vL9LrJpc_v.png';
+import trc20 from '../../assets/crypto/TRC20_TUJqGSxtNaHyv7V2uHRGiGGy7xaiS5pxmA.png';
+
 
 const DonateWidget = ({ userDetails }) => {
   const navigate = useNavigate();
@@ -171,6 +179,20 @@ const filteredDonations = Array.isArray(donationsData)
     };
 
 
+    
+    const [selectedAsset, setSelectedAsset] = useState(null);
+const cryptoAssets = [
+  { id: 1, name: "Bitcoin", address: "bc1qkmp6z2vsx3uu8jhhf9kp8asr0wctakc3ktuwty", image: bitcoin },
+  { id: 2, name: "Ethereum", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: ethereum },
+  { id: 3, name: "BNB", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: bnb },
+  { id: 4, name: "Polygon", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: polygon },
+  { id: 5, name: "Solana", address: "FG8gcgGJr55vtkznDB6UWi1fMjEhhGMaZnrjDcU1ULPa", image: solana },
+  { id: 6, name: "TON", address: "UQDmODmw1zap0Dp51Vm_57nc6h_RiTXUER6r84vL9LrJpc_v", image: ton },
+  { id: 7, name: "TRC20", address: "TUJqGSxtNaHyv7V2uHRGiGGy7xaiS5pxmA", image: trc20 },
+];
+
+
+
   return (
     <div className="w-full mt-4">
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
@@ -259,17 +281,36 @@ const filteredDonations = Array.isArray(donationsData)
 
 {donateType === "crypto" && (
     <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
-        {filteredDonations.map((item) => (
-          <div key={item.id} 
-            onClick={() => 
-            {
-              showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
-            }}
-            className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
-            {getCurrencySymbol(item.type)}{parseInt(item.price).toLocaleString()}
-          </div>
+      <div className="flex flex-col p-2">
+        <div className=''>
+      {/* <label className='text-xs mb-1 text-white mr-2'>Network:</label> */}
+      <select
+        value={selectedAsset}
+        onChange={(e) =>
+          setSelectedAsset(cryptoAssets.find(asset => asset.name === e.target.value))
+        }
+        className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-theme bg-white"
+      >
+        <option value="">Select Crypto Network</option>
+        {cryptoAssets.map((asset) => (
+          <option key={asset.id} value={asset.name}>
+            {asset.name}
+          </option>
         ))}
+      </select>
+      </div>
+
+      {/* Preview image */}
+      {selectedAsset && (
+        <div className='flex flex-col items-center justify-center'>
+          <label className=' sm:text-lg text-xs my-2 text-white'>{selectedAsset.address}</label> 
+        <img
+          src={selectedAsset.image}
+          alt={selectedAsset.name}
+          className="my-2 p-2 w-full h-64 object-contain rounded-md shadow-lg bg-white"
+        />
+        </div>
+      )}
       </div>
     </div>
   )}

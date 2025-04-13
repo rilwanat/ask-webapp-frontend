@@ -13,6 +13,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function SingleRequestsPage({ 
+    isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
@@ -63,7 +64,7 @@ export default function SingleRequestsPage({
 
     return (
         <div className="touch-pan-y"> {/* Main container with touch action */}
-            <GuestHeader 
+            <GuestHeader isMobile={isMobile}
                 carouselRequestItems={carouselRequestItems} 
                 carouselBeneficiaryItems={carouselBeneficiaryItems}
                 carouselSponsorItems={carouselSponsorItems} 

@@ -191,7 +191,8 @@ export default function ProfileMobileNavbar({ carouselRequestItems, carouselBene
     style={{ height: '40px', width: '40px', borderRadius: '4px' }}
     onClick={() => { 
       alert("logged in: user res");
-      gotoUserProfile(); }}
+      // gotoUserProfile(); 
+    }}
   >
     <PersonIcon className="text-white " />
   </div>
@@ -240,6 +241,19 @@ export default function ProfileMobileNavbar({ carouselRequestItems, carouselBene
         {/* <hr /> */}
         {/* Apply variants to each menu item */}
         <div className='pb-2'>
+          <motion.span
+                    variants={menuItemVariants}
+                    initial="hidden"
+                    animate={isMenuOpen ? "visible" : "hidden"}
+                    className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+                    style={{ fontWeight: '600' }}
+                    onClick={() => {
+                      navigate('/');
+                  }}
+                  >
+                    Home
+                  </motion.span>
+                  
         <motion.span
           variants={menuItemVariants}
           initial="hidden"
@@ -252,6 +266,66 @@ export default function ProfileMobileNavbar({ carouselRequestItems, carouselBene
         >
           My Dashboard
         </motion.span>
+
+                <motion.span
+                  variants={menuItemVariants}
+                  initial="hidden"
+                  animate={isMenuOpen ? "visible" : "hidden"}
+                  className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+                  style={{ fontWeight: '600' }}
+                  onClick={() => {gotoPage('about-us');}}
+                >
+                  About
+                </motion.span>
+        
+                <motion.span
+                  variants={menuItemVariants}
+                  initial="hidden"
+                  animate={isMenuOpen ? "visible" : "hidden"}
+                  className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+                  style={{ fontWeight: '600' }}
+                  onClick={() => {navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });}}
+                >
+                  Requests
+                </motion.span>
+        
+                <motion.span
+                  variants={menuItemVariants}
+                  initial="hidden"
+                  animate={isMenuOpen ? "visible" : "hidden"}
+                  className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+                  style={{ fontWeight: '600' }}
+                  onClick={() => {navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });}}
+                >
+                  Beneficiary
+                </motion.span>
+        
+                <motion.span
+                  variants={menuItemVariants}
+                  initial="hidden"
+                  animate={isMenuOpen ? "visible" : "hidden"}
+                  className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+                  style={{ fontWeight: '600' }}
+                  onClick={() => {navigateTo('/single-sponsor', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });}}
+                >
+                  Sponsor
+                </motion.span>
+        
+        
+        
+                <motion.span
+                  variants={menuItemVariants}
+                  initial="hidden"
+                  animate={isMenuOpen ? "visible" : "hidden"}
+                  className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+                  style={{ fontWeight: '600' }}
+                  onClick={() => {gotoPage('contact-us');}}
+                >
+                  Contact
+                </motion.span>
+
+
+        </div>
 
         <motion.span
           variants={menuItemVariants}
@@ -266,9 +340,6 @@ export default function ProfileMobileNavbar({ carouselRequestItems, carouselBene
         >
           Logout
         </motion.span>
-
-
-        </div>
         
 
       </div>

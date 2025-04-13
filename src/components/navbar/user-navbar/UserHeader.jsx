@@ -5,23 +5,12 @@ import UserMobileNavbar from './UserMobileNavbar';
 
 import MarqueeTextContainer from "../MarqueeTextContainer";
 
-export default function AskProfileHeader({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage, showMarqees}) {
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
+export default function UserHeader({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems, gotoPage, showMarqees, isMobile}) {
+    
     useEffect(() => {
         // Initial useEffect logic can be added here if needed
     }, []);
 
-    useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    const handleResize = () => {
-        setIsMobile(window.innerWidth <= 768);
-    };
 
     return (
         <div>

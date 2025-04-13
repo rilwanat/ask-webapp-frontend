@@ -10,6 +10,7 @@ import GuestFooter from './navbar/guest-navbar/GuestFooter';
 import HeaderParallax from './widgets/HeaderParallax';
 
 export default function SingleBeneficiaryPage({ 
+    isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
@@ -51,7 +52,7 @@ export default function SingleBeneficiaryPage({
 
     return (
         <div className="touch-pan-y">
-            <GuestHeader 
+            <GuestHeader isMobile={isMobile}
                 carouselRequestItems={carouselRequestItems} 
                 carouselBeneficiaryItems={carouselBeneficiaryItems}
                 carouselSponsorItems={carouselSponsorItems} 

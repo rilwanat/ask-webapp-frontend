@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-// import AskAdminHeader from '../navbar/AskAdminHeader';
-// import AskHeader from '../navbar/AskHeader';
-// import AskFooter from '../navbar/AskFooter';
+import AdminHeader from '../navbar/admin-navbar/AdminHeader';
+import AdminFooter from '../navbar/admin-navbar/AdminFooter';
 
-import askLogo from '../../assets/images/ask-logo.png';
+// import askLogo from '../../assets/images/ask-logo.png';
 // import contactUs from '../../assets/images/contact-us.jpg';
 // import hero3 from '../../assets/images/hero/hero3.jpg';
 
@@ -23,7 +22,7 @@ import { motion } from 'framer-motion';
 
 // // import Services from './widgets/Services';
 // import WidgetForKyc from './WidgetForKyc';
-import WidgetForAdminLogin from './WidgetForAdminLogin';
+import WidgetForManageCrypto from './WidgetForManageCrypto';
 
 //
 import axiosAdminInstance from '../../auth/axiosAdminConfig'; // Ensure the correct relative path
@@ -32,7 +31,7 @@ import { jwtDecode } from 'jwt-decode';
 import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
 //
 
-export default function AdminLoginPage({ 
+export default function AdminManageCrypto({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -48,23 +47,20 @@ export default function AdminLoginPage({
         navigate("/" + pageName)
     }
 
-    
-    
 
 
-
-    const currentPageName = "Admin Login";//requestData.userFullname;
+    const currentPageName = "Add Sponsor";//requestData.userFullname;
 
 
 
 
     return (
         <div className="bg-theme h-full">
-            {/* <AskAdminHeader 
+            <AdminHeader isMobile={isMobile}
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 
-            gotoPage={gotoPage} showMarqees={false} /> */}
+            gotoPage={gotoPage} showMarqees={false} />
 
             
 <div className='flex flex-col items-center px-0 sm:px-16 md:px-24 h-full'>
@@ -108,23 +104,8 @@ export default function AdminLoginPage({
 
 
 
-<div className="flex justify-center items-center">
-                    <img
-                        // className="block h-24 w-auto max-w-none"
-                        className="absolute top-8 block h-24 w-auto max-w-none"
-                        src={askLogo}
-                        alt="Logo"
-                        onClick={() => {
-                        }}
-                        style={{ cursor: 'pointer' }}
-                    />
-                </div>
-
-
-
-
-      <WidgetForAdminLogin 
-        // adminDetails={adminDetails} 
+      <WidgetForManageCrypto 
+        // userDetails={userDetails} 
         // refreshUserDetails={refreshUserDetails} 
       />
 
@@ -197,19 +178,19 @@ export default function AdminLoginPage({
                 </div>
             } */}
             <>
-            {/* {adminDetails && adminDetails.kyc_status} */}
+            {/* {userDetails && userDetails.kyc_status} */}
 
 
             {/* {
-  adminDetails && (
-    adminDetails.email_verified === "No" ? (
+  userDetails && (
+    userDetails.email_verified === "No" ? (
       <WidgetForEmailVerification 
-        adminDetails={adminDetails} 
+        userDetails={userDetails} 
         refreshUserDetails={refreshUserDetails} 
       />
-    ) : adminDetails.kyc_status === null ? (
+    ) : userDetails.kyc_status === null ? (
       <WidgetForKyc 
-        adminDetails={adminDetails} 
+        userDetails={userDetails} 
         refreshUserDetails={refreshUserDetails} 
       />
     ) : null
@@ -222,9 +203,9 @@ export default function AdminLoginPage({
             
 
 
-            {/* <AdminFooter 
+<AdminFooter 
             // gotoPage={gotoPage} 
-            /> */}
+            />
         </div>
     );
 }

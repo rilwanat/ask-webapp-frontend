@@ -295,7 +295,7 @@ exit={{ opacity: 0 }}
 transition={{ duration: 0.5 }}
 className=" flex items-center justify-center "
 >
-<div className="mx-auto">
+<div className="mx-auto w-full md:w-1/3">
 
 <motion.h1
 initial={{ y: -50, opacity: 0 }}
@@ -303,10 +303,10 @@ animate={{ y: 0, opacity: 1 }}
 transition={{ delay: 0.2, duration: 0.5 }}
 className="text-2xl font-bold text-theme mb-2"
 >
-{/* <div className='flex flex-col items-center justify-center mt-0 mb-2'>
-<p className=' mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>About A.S.K Foundation</p>
-<div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-</div> */}
+<div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
+            <p className='mb-2 text-center ' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Complete Level 1 Verification (Email)</p>
+            <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
+        </div> 
 
 </motion.h1>
 
@@ -345,10 +345,7 @@ A community-based charity initiative
         className="flex flex-col w-full h-full items-center justify-center mt-4"
     >
               
-        <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2 text-center ' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Complete Level 1 Verification (Email)</p>
-            <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-        </div> 
+        
        
 
         <div className="m-2 w-full mb-10 bg-green-200 shadow-lg" style={{  }}>

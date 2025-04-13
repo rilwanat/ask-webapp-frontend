@@ -67,6 +67,7 @@ import NotificationModal from '../modals/NotificationModal';
 
 
 export default function AdminListRequests({ 
+  isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
@@ -246,7 +247,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
     return (
         <div className="bg-theme h-full">
 
-            <AdminHeader 
+            <AdminHeader isMobile={isMobile}
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 

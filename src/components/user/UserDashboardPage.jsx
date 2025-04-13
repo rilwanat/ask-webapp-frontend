@@ -33,6 +33,7 @@ import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCoo
 //
 
 export default function UserDashboardPage({ 
+  isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
@@ -49,13 +50,15 @@ export default function UserDashboardPage({
     }
 
     
-    
+    useEffect(() => {
+      refreshUserDetails();
+    }, []);
 
 
 
     return (
         <div className="">
-            <UserHeader 
+            <UserHeader isMobile={isMobile}
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 
@@ -86,7 +89,7 @@ export default function UserDashboardPage({
         refreshUserDetails={refreshUserDetails} 
       />
     ) : <>
-        {userDetails && userDetails.kyc_status === 'PENDING' && (
+        {userDetails.kyc_status === 'PENDING' && (
         <div className="w-full mt-24 sm:mt-20 ">
         <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">
@@ -103,7 +106,7 @@ export default function UserDashboardPage({
         </div>
         </div>
     )}
-    {userDetails && userDetails.kyc_status === 'APPROVED' && (
+    {userDetails.kyc_status === 'APPROVED' && (
         <div className="w-full mt-24 sm:mt-20 ">
         <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">
@@ -118,7 +121,7 @@ export default function UserDashboardPage({
         </div>
         </div>
     )}
-    {userDetails && userDetails.kyc_status === 'REJECTED' && (
+    {userDetails.kyc_status === 'REJECTED' && (
         <div className="w-full mt-24 sm:mt-20 ">
         <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">

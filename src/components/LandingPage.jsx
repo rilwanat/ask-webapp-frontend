@@ -25,6 +25,7 @@ import WidgetVideo from './widgets/WidgetVideo';
 
 
 export default function LandingPage({ 
+    isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
@@ -45,7 +46,7 @@ export default function LandingPage({
 
     return (
         <div className="">
-            <GuestHeader 
+            <GuestHeader isMobile={isMobile}
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 

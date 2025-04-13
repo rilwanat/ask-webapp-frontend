@@ -51,9 +51,7 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
         navigate(route, { state: data });
       };
 
-    useEffect(() => {
-        // Initial useEffect logic if needed
-    }, []);
+    
 
     
 
@@ -76,12 +74,28 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
                     />
                 </div>
 
+                
+
                 <div className='text-center w-full text-white'>
                     <div className="flex items-center z-50" style={{ height: "40px" }}>
-                        <div
+                    <div
                             className="cursor-pointer ml-24 px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
-                                // navigate('/');
+                                navigate('/');
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Home
+                            </p>
+                        </div>
+                        
+                        <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                navigate('/user-dashboard');
                             }}
                         >
                             <p
@@ -91,6 +105,82 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
                                 My Dashboard
                             </p>
                         </div>
+
+
+                        <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                navigate('/about-us');
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                About
+                            </p>
+                        </div>
+
+                        <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Requests
+                            </p>
+                        </div>
+
+                        <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Beneficiary
+                            </p>
+                        </div>
+
+                        <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                navigateTo('/single-sponsor', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Sponsor
+                            </p>
+                        </div>
+
+
+
+                        <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                navigate('/contact-us');
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Contact
+                            </p>
+                        </div>
+
+
+
 
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme text-red-500"
@@ -187,7 +277,7 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
  : <IconButton aria-label="shopping cart" sx={{ color: '#ffffff' }}
  onClick={() => {
     alert("logged in: user des");
-  gotoUserProfile();
+//   gotoUserProfile();
  }}
  >
    <AccountCircleOutlinedIcon />

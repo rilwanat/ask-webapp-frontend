@@ -32,6 +32,7 @@ import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCoo
 //
 
 export default function AdminAddSponsorPage({ 
+  isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
@@ -55,7 +56,7 @@ export default function AdminAddSponsorPage({
 
     return (
         <div className="bg-theme h-full">
-            <AdminHeader 
+            <AdminHeader isMobile={isMobile}
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 

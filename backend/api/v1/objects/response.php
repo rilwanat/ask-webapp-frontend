@@ -946,6 +946,35 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
         return false;
     }
 
+    public function UpdateHelpRequest($email, $description, $helpToken)
+    {
+        $query = "";
+        {
+            $query = "UPDATE " . $this->help_requests_table . " SET 
+            
+            description=:description
+            WHERE email_address = :email AND help_token = :help_token
+            ";
+        }
+        
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":help_token", $helpToken);
+
+        $stmt->bindParam(":description", $description);
+        
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 
 
     public function checkIfUserCanPostHelpRequest($email) 
@@ -1053,6 +1082,46 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
 
     }
     
+    public function checkIfUserCanUpdateHelpRequest($email) 
+    {
+        // Step 1: Check user details
+        $query_check = "SELECT * FROM " . $this->users_test_table . " WHERE email_address = :email";
+        $stmt_check = $this->conn->prepare($query_check);
+        $stmt_check->bindParam(":email", $email);
+        $stmt_check->execute();
+    
+        if ($stmt_check->rowCount() > 0) {
+            $user = $stmt_check->fetch(PDO::FETCH_ASSOC);
+    
+            // Step 2: Validate user credentials
+            if ($user['is_cheat'] !== 'No') {
+                return ["status" => false, "message" => "User is flagged for cheating."];
+            }
+    
+            if ($user['email_verified'] !== 'Yes') {
+                return ["status" => false, "message" => "Email address is not verified."];
+            }
+    
+            if ($user['eligibility'] !== 'Yes') {
+                return ["status" => false, "message" => "User is not eligible to proceed."];
+            }
+    
+            if (strtoupper($user['kyc_status']) !== 'APPROVED') {
+                return ["status" => false, "message" => "KYC is not approved."];
+            }
+    
+            if (empty($user['bank_name']) || empty($user['account_name']) || empty($user['account_number'])) {
+                return ["status" => false, "message" => "Bank details are incomplete."];
+            }
+    
+            
+    
+            // All checks passed
+            return ["status" => true, "message" => "All user checks passed.", "user_id" => $user['id']];
+        } else {
+            return ["status" => false, "message" => "User does not exist."];
+        }
+    }
 
 
 

@@ -38,32 +38,14 @@ import countries from 'world-countries';
 
 import RequestImageWidget from './RequestImageWidget';
 
-const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests, myActiveRequestsData }) => {
+const WidgetForCreateAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests }) => {
   const navigate = useNavigate();
 
   const navigateTo = (route) => {
     navigate(route);
   };
 
-  // {"id":"",
-  //   "date":"2025-04-12 12:01:04",
-  //   "nomination_count":"0",
-  //   "description":"",
-  //   "remark":"",
-  //   "email_address":"",
-  //   "request_image":"",
-  //   "help_token":""}
-  const [myCurrentActiveRequestsData, setMyCurrentActiveRequestsData] = useState({
-          id: myActiveRequestsData.id,
-          date: myActiveRequestsData.date,
-          nominationCount: myActiveRequestsData.nomination_count,
-          description: myActiveRequestsData.description,
-          remark: myActiveRequestsData.remark,
-          emailAddress: myActiveRequestsData.email_address,
-          requestmage: myActiveRequestsData.request_image,
-          helpToken: myActiveRequestsData.help_token
   
-      });
 
 
 
@@ -102,12 +84,12 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
     }
   };
 
-    const UpdateHelpRequest  = async (e) => {
+    const CreateHelpRequest  = async (e) => {
  
       
       // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
       if (userDetails === null) {
-        openNotificationModal(false, "ASK Edit Help Request", `You are not logged in. Please register or login to update with your help request.`); 
+        openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send your help request.`); 
         setIsNotificationModalOpen(true);
         return;
       }
@@ -115,8 +97,8 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
 
     //    alert("here");
 
-    if (myCurrentActiveRequestsData.description === "" || myCurrentActiveRequestsData.description === myActiveRequestsData.description) {
-      openNotificationModal(false, "ASK Edit Request", `Enter or edit your Help Request description`);
+    if (helpDescription === "") {
+      openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
       setIsNotificationModalOpen(true);
       return;
     }
@@ -126,30 +108,28 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
          setErrorMessage({ message: '' });
        
          
-        //  alert("here");
+       
 
          try {
      
            const formData = new FormData();
            formData.append('email', userDetails.email_address);
-           formData.append('description', myCurrentActiveRequestsData.description);
-           formData.append('help_token', myCurrentActiveRequestsData.helpToken);
+           formData.append('description', helpDescription);
         
-          //  if (selectedFile !== null) {
-          //   formData.append('image', selectedFile);
-          // } else {
-          //   // alert("Please select an image to upload");
-          //   openNotificationModal(false, "ASK Help Request", "Select an image to upload");
-          //   setIsNotificationModalOpen(true);
-          //   return;
-          // }
+           if (selectedFile !== null) {
+            formData.append('image', selectedFile);
+          } else {
+            // alert("Please select an image to upload");
+            openNotificationModal(false, "ASK Help Request", "Select an image to upload");
+            setIsNotificationModalOpen(true);
+            return;
+          }
 
           setIsLoading(true);
 
           //  alert("requestData: " + JSON.stringify(requestData, null, 2));
-          //  return;
      
-           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_UPDATE_MY_HELP_REQUEST, formData, {
+           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CREATE_HELP_REQUEST, formData, {
              headers: {
                    'Content-Type': 'multipart/form-data',
                   //  'Content-Type': 'application/json',
@@ -168,15 +148,15 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
 
             //  setFullname('');
             setHelpDescription('');            
-            // setSelectedFile(null);
-            // setHelpImagePreview(null);
+            setSelectedFile(null);
+            setHelpImagePreview(null);
 
    
             
             getActiveHelpRequests();
 
 
-             openNotificationModal(true, "ASK Edit Help Request", response.data.message);
+             openNotificationModal(true, "ASK Help Request", response.data.message);
               setIsNotificationModalOpen(true);
 
      
@@ -218,119 +198,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
 
 
 
-       const DeleteHelpRequest  = async (e) => {
- 
-        alert("nothing happened here");
-        return;
-      
-        // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
-        if (userDetails === null) {
-          openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send with your help request.`); 
-          setIsNotificationModalOpen(true);
-          return;
-        }
-  
-  
-      //    alert("here");
-  
-      if (myCurrentActiveRequestsData.description === "") {
-        openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
-        setIsNotificationModalOpen(true);
-        return;
-      }
-  
-  
-           e.preventDefault();
-           setErrorMessage({ message: '' });
-         
-           
-         
-  
-           try {
-       
-             const formData = new FormData();
-             formData.append('email', userDetails.email_address);
-             formData.append('description', myCurrentActiveRequestsData.description);
-          
-             if (selectedFile !== null) {
-              formData.append('image', selectedFile);
-            } else {
-              // alert("Please select an image to upload");
-              openNotificationModal(false, "ASK Help Request", "Select an image to upload");
-              setIsNotificationModalOpen(true);
-              return;
-            }
-  
-            setIsLoading(true);
-  
-             alert("requestData: " + JSON.stringify(requestData, null, 2));
-             return;
-       
-             const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_DELETE_MY_HELP_REQUEST, formData, {
-               headers: {
-                     'Content-Type': 'multipart/form-data',
-                    //  'Content-Type': 'application/json',
-                 },
-             });
-       
-             setIsLoading(false);
-            //  alert("kyc: " + JSON.stringify(response.data, null, 2));
-       // return;
-       
-             if (response.data.status) {
-              
-               // If login is successful
-               setErrorMessage({ message: '' });
-               
-  
-              //  setFullname('');
-              setHelpDescription('');            
-              setSelectedFile(null);
-              setHelpImagePreview(null);
-  
-     
-              
-              getActiveHelpRequests();
-  
-  
-               openNotificationModal(true, "ASK Help Request", response.data.message);
-                setIsNotificationModalOpen(true);
-  
-       
-               
-             } else {
-               const errors = response.data.errors.map(error => error.msg);
-               setErrorMessage({ message: response.data.message, errors });
-               //alert("Failed1");
-             }
-           } catch (error) {
-             setIsLoading(false);
-   
-            //  alert(error);
-           
-             if (error.response && error.response.data && error.response.data.message) {
-             const errorMessage = error.response.data.message;
-             setErrorMessage({ message: errorMessage });
-  
-             openNotificationModal(false, "ASK Help Request", errorMessage);
-                setIsNotificationModalOpen(true);
-  
-           } else if (error.response && error.response.data && error.response.data.errors) {
-             const { errors } = error.response.data;
-             const errorMessages = errors.map(error => error.msg);
-             const errorMessage = errorMessages.join(', '); // Join all error messages
-             setErrorMessage({ message: errorMessage });
-  
-             openNotificationModal(false, "ASK Help Request", errorMessage);
-                setIsNotificationModalOpen(true);
-           } else {
-             setErrorMessage({ message: 'ASK Help Request failed. Please check your data and try again.' });
-  
-             openNotificationModal(false, "ASK Help Request", 'Please check your data and try again.');
-                setIsNotificationModalOpen(true);
-           }
-         }
-         };
+
 
 
 
@@ -341,8 +209,8 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
 
 
   return (
-    <div className="w-full ">
-      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
+    <div className="w-full  ">
+      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
         <div className="w-full p-4">
 
 
@@ -363,7 +231,7 @@ initial={{ opacity: 0 }}
 animate={{ opacity: 1 }}
 exit={{ opacity: 0 }}
 transition={{ duration: 0.5 }}
-className=" flex items-center justify-center  "
+className=" flex items-center justify-center "
 >
 <div className="mx-auto w-full md:w-1/3">
 
@@ -374,11 +242,11 @@ transition={{ delay: 0.2, duration: 0.5 }}
 className="text-2xl font-bold text-theme mb-2"
 >
 <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Edit Help Request</p>
+            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>New Help Request</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-            <label className='bg-theme text-white text-xs w-full text-center mb-1 py-1 rounded-lg cursor-pointer'>Help token: {myActiveRequestsData.help_token}</label>
+            {/* <label className='bg-red-200 text-xs w-full text-center mb-1 py-1 rounded-lg'>Strictly for adults above 18 years</label> */}
       
-        </div> 
+        </div>
 
 </motion.h1>
 
@@ -414,10 +282,10 @@ A community-based charity initiative
         initial={{ opacity: 0, y: 50 }} // Start faded and below
         animate={{ opacity: 1, y: 0 }} // Fade in and move up
         transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 }} // Smooth animation
-        className="flex flex-col w-full h-full items-center justify-center mt-4 "
+        className="flex flex-col w-full h-full items-center justify-center mt-4"
     >
               
-        
+         
        
 
         <div className="m-2 w-full mb-10 bg-softTheme shadow-lg" style={{  }}>
@@ -428,14 +296,14 @@ A community-based charity initiative
                         
 
                         <div className='flex flex-col my-2 '>
-                             <label className='text-xs mb-1'>Email: <strong>{userDetails.email_address}</strong></label>
-                                {/* <input 
+                             <label className='text-xs mb-1'>Email:</label>
+                                <input 
                                 type='text'  name='email' inputMode="text" autoComplete='email'
                                 // placeholder='Enter your Fullname' 
                                 className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
-                                value={userDetails.email_address} readOnly={true}
+                                value={userDetails && userDetails.email_address} readOnly={true}
                                 style={{  }} 
-                                /> */}
+                                />
                              </div>
 
 
@@ -444,15 +312,14 @@ A community-based charity initiative
                                         <textarea id="helpDescription" name="description"
                                         className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                         block w-full p-2.5" placeholder="Describe your Help Request here..."   style={{ height: '180px' }}
-                                        value={myCurrentActiveRequestsData.description} 
-                                        onChange={(e) => setMyCurrentActiveRequestsData({ ...myCurrentActiveRequestsData, description: e.target.value })}
+                                        value={helpDescription} 
+                                        onChange={(e) => setHelpDescription(e.target.value)}
                                         ></textarea>
                                     </div>
 
 
                                     <div className='flex flex-col justify-center my-2'>
 
-{/*
 <div className='flex flex-col  mb-2'>
 <label className="text-sm mb-1">Select an Image:</label>
       <input
@@ -462,11 +329,10 @@ A community-based charity initiative
         className='cursor-pointer border-1 p-2 rounded-lg'
       />
 </div>
-*/}
 
-{myCurrentActiveRequestsData.requestmage && (
+{helpImagePreview && (
         <img
-          src={helpImagePreview ?? import.meta.env.VITE_API_SERVER_URL + myCurrentActiveRequestsData.requestmage}
+          src={helpImagePreview}
           alt={`Slide Help Image Preview`}
           className="w-full h-40 object-cover rounded-md mt-1"
         />
@@ -491,17 +357,11 @@ isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSr
                           <div className='flex justify-between items-center flex-col md:flex-row '>
                             
                           <div  
-                          onClick={(e) => {if (!isLoading) UpdateHelpRequest(e)}}
+                          // onClick={(e) => {if (!isLoading) updateSelfieImage(e)}} 
+                          onClick={(e) => {if (!isLoading) CreateHelpRequest(e)}}
                           style={{ borderWidth: '0px', width: '100%' }} 
-                          className='mt-4 sm:mr-1 w:1/2 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
-                            {isLoading ? 'Please wait..' : 'Update Request'}
-                            </div>
-
-                            <div  
-                          onClick={(e) => {if (!isLoading) DeleteHelpRequest(e)}}
-                          style={{ borderWidth: '0px', width: '100%' }} 
-                          className='mt-4 sm:ml-1  w:1/2 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-red-800 text-white  hover:text-softTheme'>
-                            {isLoading ? 'Please wait..' : 'Delete Request'}
+                          className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
+                            {isLoading ? 'Please wait..' : 'Create Request'}
                             </div>
                           </div>
 
@@ -547,4 +407,4 @@ isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSr
   );
 };
 
-export default WidgetForEditAsk;
+export default WidgetForCreateAsk;

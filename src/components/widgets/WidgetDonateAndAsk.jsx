@@ -41,8 +41,8 @@ const WidgetDonateAndAsk = ({ }) => {
 <div
                             className="flex items-center cursor-pointer px-3 py-1 rounded-md mr-1 text-white bg-theme  hover:bg-white hover:text-theme border-2 border-white"
                             onClick={() => {
-                                // navigate('/donate');
-                                navigateTo('/donate', { selectedItem: null, allItems: null  });
+                                navigate('/donate');
+                                // navigateTo('/donate', { selectedItem: null, allItems: null  });
                             }}
                         >
                             <MonetizationOnIcon className='mr-1'/>
@@ -57,8 +57,8 @@ const WidgetDonateAndAsk = ({ }) => {
                         <div
                             className="flex items-center cursor-pointer px-3 py-1 rounded-md ml-1 text-white  bg-orange hover:bg-white hover:text-theme border-2 border-white"
                             onClick={() => {
-                                // navigate('/i-ask');
-                                navigateTo('/i-ask', { selectedItem: null, allItems: null  });
+                                navigate('/i-ask');
+                                // navigateTo('/i-ask', { selectedItem: null, allItems: null  });
                             }}
                         >
                             <LiveHelpIcon className='mr-1'/>

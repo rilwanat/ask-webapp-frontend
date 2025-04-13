@@ -19,33 +19,25 @@ import WidgetAboutForAbout from './widgets/WidgetAboutForAbout';
 
 
 export default function AboutUsPage({ 
+    isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
 }) {
     const navigate = useNavigate();
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    
     useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []); 
     const gotoPage = (pageName) => {
         navigate("/" + pageName)
     }
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+    
 
 
     return (
         <div className="">
-            <GuestHeader 
+            <GuestHeader isMobile={isMobile}
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 

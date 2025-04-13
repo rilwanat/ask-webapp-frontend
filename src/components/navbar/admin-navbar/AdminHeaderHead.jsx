@@ -51,9 +51,7 @@ export default function AskHeaderAdminHead({ carouselRequestItems, carouselBenef
         navigate(route, { state: data });
       };
 
-    useEffect(() => {
-        // Initial useEffect logic if needed
-    }, []);
+    
 
     
 
@@ -189,6 +187,20 @@ export default function AskHeaderAdminHead({ carouselRequestItems, carouselBenef
                                 Manage Donations
                             </p>
                         </div>
+
+                        {/* <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                navigateTo('/manage-crypto');
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Manage Crypto
+                            </p>
+                        </div> */}
 
 
 

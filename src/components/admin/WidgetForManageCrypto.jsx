@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-
 import background from '../../assets/images/ask-logo.png';
 
 import RecyclingIcon from '@mui/icons-material/Recycling';
@@ -27,26 +26,18 @@ import ElderlyIcon from '@mui/icons-material/Elderly';
 import NotificationModal from '../modals/NotificationModal';
 
 //
-import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
+import axiosAdminInstance from '../../auth/axiosAdminConfig'; // Ensure the correct relative path
 import { setCookie, isAuthenticated } from '../../auth/authUtils'; // Ensure the correct relative path
 import { jwtDecode } from 'jwt-decode';
 import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
 //
 
-import ReactCountryFlag from 'react-country-flag';
-import countries from 'world-countries';
-
-import RequestImageWidget from './RequestImageWidget';
-
-const WidgetForAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests }) => {
+const WidgetForManageCrypto = ({ userDetails, refreshUserDetails }) => {
   const navigate = useNavigate();
 
   const navigateTo = (route) => {
     navigate(route);
   };
-
-  
-
 
 
   //notification modal
@@ -69,70 +60,111 @@ const WidgetForAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests }
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  
+      const [sponsorName, setSponsorName] = useState('');      
+      const [sponsorType, setSponsorType] = useState('');    
 
-  const [helpDescription, setHelpDescription] = useState('');
+      const [selectedFile, setSelectedFile] = useState(null);
+      const [preview, setPreview] = useState(null);
+    
+      const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setSelectedFile(file);
+    
+        if (file) {
+          const objectUrl = URL.createObjectURL(file);
+          setPreview(objectUrl);
+        }
+      };
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [helpImagePreview, setHelpImagePreview] = useState(null);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      setHelpImagePreview(URL.createObjectURL(file));
-      setErrorMessage({ message: '' });
-    }
+
+
+
+
+
+
+      // Function to validate Fullname as two words separated by space with no numbers or special characters
+const isValidFullname = (fullname) => {
+    const fullnamePattern = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/;
+    return fullnamePattern.test(fullname);
+  };
+  
+  // Function to validate email format
+  const isValidEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+  
+  // Function to validate Nigerian phone number format with +234
+  const isValidateNigerianNumber = (ngPhoneNumber) => {
+    const nigerianPhonePattern = /^\+234(70|80|81|90|91)\d{8}$/;
+    return nigerianPhonePattern.test(ngPhoneNumber);
+  };
+  // Function to validate if input contains exactly 11 digits
+const is11DigitNumber = (input) => {
+    return /^\d{11}$/.test(input);
+  };
+  
+  // Function to validate if input contains between 10-15 digits
+  const isNumericWithLength = (input, min = 10, max = 15) => {
+    const pattern = new RegExp(`^\\d{${min},${max}}$`);
+    return pattern.test(input);
   };
 
-    const CreateHelpRequest  = async (e) => {
+
+
+
+    const AddSponsor  = async (e) => {
  
-      
-      // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
-      if (userDetails === null) {
-        openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send with your help request.`); 
-        setIsNotificationModalOpen(true);
-        return;
-      }
+      //  alert("here");
 
 
-    //    alert("here");
+       // Validate Fullname before proceeding
+  if (!isValidFullname(sponsorName)) {
+    // alert('Invalid Fullname');
+    openNotificationModal(false, "ASK KYC", `Invalid Sponsor Name`);
+    setIsNotificationModalOpen(true);
+    return;
+}
 
-    if (helpDescription === "") {
-      openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
-      setIsNotificationModalOpen(true);
-      return;
-    }
 
 
+if ((sponsorType === "Select") || (sponsorType === "")) {
+  openNotificationModal(false, "ASK Add Sponsor", `Select Sponsor Type`);
+  setIsNotificationModalOpen(true);
+  return;
+}
+
+ 
+
+alert("Sponsor");
+           return;
+
+
+ 
          e.preventDefault();
          setErrorMessage({ message: '' });
        
-         
+         setIsLoading(true);
        
 
+         
+         
          try {
      
-           const formData = new FormData();
-           formData.append('email', userDetails.email_address);
-           formData.append('description', helpDescription);
-        
-           if (selectedFile !== null) {
-            formData.append('image', selectedFile);
-          } else {
-            // alert("Please select an image to upload");
-            openNotificationModal(false, "ASK Help Request", "Select an image to upload");
-            setIsNotificationModalOpen(true);
-            return;
-          }
+           const requestData = {   
+            email: userDetails.email_address,  
+            fullname: fullname,  
+            phoneNumber: phoneNumber,
+           };
 
-          setIsLoading(true);
 
-          //  alert("requestData: " + JSON.stringify(requestData, null, 2));
      
-           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CREATE_HELP_REQUEST, formData, {
+           const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_UPDATE_KYC, requestData, {
              headers: {
-                   'Content-Type': 'multipart/form-data',
-                  //  'Content-Type': 'application/json',
+                   // 'Content-Type': 'multipart/form-data',
+                   'Content-Type': 'application/json',
                },
            });
      
@@ -142,24 +174,35 @@ const WidgetForAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests }
      
            if (response.data.status) {
             
+            
+
+
              // If login is successful
              setErrorMessage({ message: '' });
              
 
             //  setFullname('');
-            setHelpDescription('');            
-            setSelectedFile(null);
-            setHelpImagePreview(null);
+            //  setPhoneNumber('');
+            //  setAccountNumber('');      
+            //  setType('');      
+            //  setGender('');      
+            //  setResidence(''); 
 
-   
-            
-            getActiveHelpRequests();
+             
+            //  setCookie('ask-user-details', JSON.stringify(response.data.userData));
+            //  refreshUserDetails();
 
-
-             openNotificationModal(true, "ASK Help Request", response.data.message);
-              setIsNotificationModalOpen(true);
+            //  deleteCookie("user");
+            //  navigate('/');
 
      
+            //  alert("Your kyc is pending approval. You will be notified once it is approved.");
+             openNotificationModal(true, "ASK Add Sponsor", '');
+              setIsNotificationModalOpen(true);
+     
+
+              
+
              
            } else {
              const errors = response.data.errors.map(error => error.msg);
@@ -175,7 +218,7 @@ const WidgetForAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests }
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Help Request", errorMessage);
+           openNotificationModal(false, "ASK KYC", errorMessage);
               setIsNotificationModalOpen(true);
 
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -184,34 +227,21 @@ const WidgetForAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests }
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Help Request", errorMessage);
+           openNotificationModal(false, "ASK KYC", errorMessage);
               setIsNotificationModalOpen(true);
          } else {
-           setErrorMessage({ message: 'ASK Help Request failed. Please check your data and try again.' });
+           setErrorMessage({ message: 'Kyc failed. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK Help Request", 'Please check your data and try again.');
+           openNotificationModal(false, "ASK KYC", 'Kyc failed. Please check your data and try again.');
               setIsNotificationModalOpen(true);
          }
        }
        };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
-    <div className="w-full mt-24 sm:mt-20 ">
+    <div className="w-full">
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
-        <div className="w-full p-4">
+        <div className="w-full ">
 
 
 
@@ -280,14 +310,12 @@ A community-based charity initiative
         initial={{ opacity: 0, y: 50 }} // Start faded and below
         animate={{ opacity: 1, y: 0 }} // Fade in and move up
         transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 }} // Smooth animation
-        className="flex flex-col w-full h-full items-center justify-center mt-4"
+        className="flex flex-col w-full h-full items-center justify-center "
     >
               
-        <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>New Help Request</p>
-            <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-            {/* <label className='bg-red-200 text-xs w-full text-center mb-1 py-1 rounded-lg'>Strictly for adults above 18 years</label> */}
-      
+        <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full text-softTheme'>
+            <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Manage Crypto</p>
+            <div className='bg-softTheme mb-2' style={{ width: '80px', height: '2px' }}></div>
         </div> 
        
 
@@ -298,84 +326,87 @@ A community-based charity initiative
                         <div className="justify-center">
                         
 
-                        <div className='flex flex-col my-2 '>
+                        {/* <div className='flex flex-col my-2 '>
                              <label className='text-xs mb-1'>Email:</label>
                                 <input 
                                 type='text'  name='email' inputMode="text" autoComplete='email'
                                 // placeholder='Enter your Fullname' 
                                 className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
-                                value={userDetails && userDetails.email_address} readOnly={true}
-                                style={{  }} 
-                                />
-                             </div>
-
-                        {/* <div className='flex flex-col my-2 '>
-                             <label className='text-xs mb-1'>Fullname:</label>
-                                <input 
-                                type='text'  name='fullname' inputMode="text" autoComplete='full-name'
-                                placeholder='Enter your Fullname' 
-                                className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
-                                value={fullname}
-                                onChange={(e) => setFullname(e.target.value)}
+                                value={sponsorName} 
+                                onChange={(e) => setSponsorName(e.target.value)}
                                 style={{  }} 
                                 />
                              </div> */}
 
-                          <div className='flex flex-col my-2 '>
-                                        <label className="text-sm mb-1">Description:</label>
-                                        <textarea id="helpDescription" name="description"
-                                        className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                        block w-full p-2.5" placeholder="Describe your Help Request here..."   style={{ height: '180px' }}
-                                        value={helpDescription} 
-                                        onChange={(e) => setHelpDescription(e.target.value)}
-                                        ></textarea>
-                                    </div>
+                        <div className='flex flex-col my-2 '>
+                             <label className='text-xs mb-1'>Sponsor Name:</label>
+                                <input 
+                                type='text'  name='sponsor-name' inputMode="text" autoComplete='sponsor-name'
+                                placeholder='Enter Sponsor name' 
+                                className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
+                                value={sponsorName}
+                                onChange={(e) => setSponsorName(e.target.value)}
+                                style={{  }} 
+                                />
+                             </div>
 
 
-                                    <div className='flex flex-col justify-center my-2'>
 
-<div className='flex flex-col  mb-2'>
-<label className="text-sm mb-1">Select an Image:</label>
+                             <div className='flex flex-col my-2 '>
+                             <label className='text-xs mb-1'>Sponsor Type:</label>
+                             <select
+        id="select_bankname"
+        name="select_bankname"
+        value={sponsorType}
+        className="bg-white border border-gray-300 text-sm rounded-lg focus:ring-theme focus:border-theme block w-full p-2 pl-4 pr-8 appearance-none"
+        onChange={(e) => setType(e.target.value )}
+      >
+<option value="Select">Select Type</option>
+  <option value="bank1">Sponsor</option>
+  <option value="bank2">Donor</option>
+  </select>
+                             </div>
+
+
+
+                             <div className='flex flex-col my-2 '>
+                             <label className='text-xs mb-1'>Sponsor Image:</label>
+                             <div className='flex flex-col gap-6  p-4 w-full bg-white items-center justify-center border rounded-lg shadow-lg'>
+  
+                             <div className="flex flex-col gap-2 items-center w-full">
+      {/* <label className="font-semibold">Sponsor 1</label> */}
       <input
         type="file"
         accept="image/*"
         onChange={handleFileChange}
-        className='cursor-pointer border-1 p-2 rounded-lg'
+        className="cursor-pointer"
       />
-</div>
-
-{helpImagePreview && (
+      {preview && (
         <img
-          src={helpImagePreview}
-          alt={`Slide Help Image Preview`}
-          className="w-full h-40 object-cover rounded-md mt-1"
+          src={preview}
+          alt="Preview"
+          style={{ width: '150px', height: '150px', objectFit: 'cover' }}
         />
       )}
-
-      <div className='mt-4'>
-  {/* {errorMessage.message && <p className="text-sm text-red-600">{errorMessage.message}</p>} */}
+    </div>
+    
+  
+</div>
 </div>
 
 
-</div>
+                             
 
-          
-{/* <RequestImageWidget 
-// uploadEndpoint={uploadEndpoint} onUploadSuccess={onUploadSuccess} onUploadError={onUploadError} 
-isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSrc={setImageSrc}
-/> */}
-
-                          <div className='my-2 text-sm text-center' style={{ color: '#c2572b' }}>{errorMessage.message}</div>
+                          <div className='my-2 text-sm' style={{ color: '#c2572b' }}>{errorMessage.message}</div>
 
                           
                           <div className='flex justify-between items-center flex-col md:flex-row '>
                             
                           <div  
-                          // onClick={(e) => {if (!isLoading) updateSelfieImage(e)}} 
-                          onClick={(e) => {if (!isLoading) CreateHelpRequest(e)}}
+                          onClick={(e) => {if (!isLoading) AddSponsor(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
-                            {isLoading ? 'Please wait..' : 'Create Request'}
+                            {isLoading ? 'Please wait..' : 'Add Sponsor'}
                             </div>
                           </div>
 
@@ -421,4 +452,4 @@ isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSr
   );
 };
 
-export default WidgetForAsk;
+export default WidgetForManageCrypto;

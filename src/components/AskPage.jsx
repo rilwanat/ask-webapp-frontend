@@ -21,8 +21,9 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 
-import WidgetForAsk from './user/WidgetForAsk';
+import WidgetForCreateAsk from './user/WidgetForCreateAsk';
 import WidgetForEditAsk from './user/WidgetForEditAsk';
+import WidgetForLoginAsk from './user/WidgetForLoginAsk';
 
 //
 import axiosInstance from '../auth/axiosConfig'; // Ensure the correct relative path
@@ -33,6 +34,7 @@ import { getCookie, deleteCookie } from '../auth/authUtils'; // Import getCookie
 
 
 export default function AskPage({ 
+  isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
@@ -58,7 +60,7 @@ export default function AskPage({
             getActiveHelpRequests();
           }, [userDetails]);
           const getActiveHelpRequests = async () => {
-        if (userDetails === null) { return; }
+        // if (userDetails === null) { return; }
     
             setIsLoading(true);
         
@@ -113,7 +115,7 @@ export default function AskPage({
 
     return (
         <div className="">
-            <GuestHeader 
+            <GuestHeader isMobile={isMobile}
             carouselRequestItems={carouselRequestItems} 
             carouselBeneficiaryItems={carouselBeneficiaryItems}
             carouselSponsorItems={carouselSponsorItems} 
@@ -131,23 +133,31 @@ export default function AskPage({
             {/* {myActiveRequestsData.id} */}
 
 {
+  isAuthenticated() ? 
+  (
   myActiveRequestsData === null ? (
-    <WidgetForAsk 
+    <WidgetForCreateAsk  
     userDetails={userDetails} 
     refreshUserDetails={refreshUserDetails} 
     getActiveHelpRequests={getActiveHelpRequests}
     />
   )
  
-            : <WidgetForEditAsk 
+            : <WidgetForEditAsk  
             userDetails={userDetails} 
             refreshUserDetails={refreshUserDetails} 
             getActiveHelpRequests={getActiveHelpRequests}
             myActiveRequestsData={myActiveRequestsData}
             />
+) : <WidgetForLoginAsk  
+userDetails={userDetails} 
+refreshUserDetails={refreshUserDetails} 
+getActiveHelpRequests={getActiveHelpRequests}
+myActiveRequestsData={myActiveRequestsData}
+/>
   
 }
-            
+
 
 
 

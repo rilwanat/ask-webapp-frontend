@@ -256,6 +256,18 @@ export default function GuestMobileNavbar({ carouselRequestItems, carouselBenefi
         >
           Home
         </motion.span>
+        {isAuthenticated() ?
+                 <motion.span
+                 variants={menuItemVariants}
+                 initial="hidden"
+                 animate={isMenuOpen ? "visible" : "hidden"}
+                 className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+                 style={{ fontWeight: '600' }}
+                 onClick={() => {gotoPage('user-dashboard');}}
+               >
+                 My Dashboard
+               </motion.span>
+         : <></>} 
 
         <motion.span
           variants={menuItemVariants}
@@ -314,6 +326,21 @@ export default function GuestMobileNavbar({ carouselRequestItems, carouselBenefi
           Contact
         </motion.span>
         </div>
+
+        {isAuthenticated() ?
+                 <motion.span
+                 variants={menuItemVariants}
+                 initial="hidden"
+                 animate={isMenuOpen ? "visible" : "hidden"}
+                 className="text-sm  text-red-500 cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+                 style={{ fontWeight: '600' }}
+                 onClick={() => {
+                  deleteCookie("user");
+                                                 navigate('/');}}
+               >
+                 Logout
+               </motion.span>
+         : <></>} 
         
 
       </div>
