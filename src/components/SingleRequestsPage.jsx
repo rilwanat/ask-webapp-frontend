@@ -12,6 +12,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share'; 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
+import WidgetShare from './widgets/WidgetShare';
+
 export default function SingleRequestsPage({ 
     isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
@@ -136,11 +138,11 @@ export default function SingleRequestsPage({
                                         Nominate <CheckIcon className='ml-2' />
                                     </motion.button>
                                     <motion.button
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'
+                                        // whileHover={{ scale: 1.05 }}
+                                        // whileTap={{ scale: 0.95 }}
+                                        // className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'
                                     >
-                                        Share <ShareIcon className='ml-2' />
+                                        <WidgetShare helpToken={item.help_token}/>
                                     </motion.button>
                                 </div>
                             </motion.div>

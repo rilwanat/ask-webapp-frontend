@@ -11,9 +11,13 @@ import TermsAndConditionsPage from './components/TermsAndConditionsPage.jsx';
 import PrivacyPolicyPage from './components/PrivacyPolicyPage.jsx';
 
 
+
+import SingleNominatePage from './components/SingleNominatePage.jsx';
+
 import SingleRequestsPage from './components/SingleRequestsPage.jsx';
 import SingleSponsorPage from './components/SingleSponsorPage.jsx';
 import SingleBeneficiaryPage from './components/SingleBeneficiaryPage.jsx';
+
 
 import DonatePage from './components/DonatePage.jsx';
 import AskPage from './components/AskPage.jsx';
@@ -380,6 +384,14 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
+
+<Route path='/help-request/:helpToken' element={<SingleNominatePage isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
+             />}/>
+
 
 
             <Route path='/donate' element={<DonatePage isMobile={isMobile}

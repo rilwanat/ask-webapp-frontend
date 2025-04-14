@@ -13,7 +13,7 @@ function Loading({  }) {
     return (
       <>
         <div className="flex py-2 z-50">
-          <ClipLoader size={29} color={"#254EDB"} loading={true} /> 
+          <ClipLoader size={29} color={"#161c34"} loading={true} /> 
         </div>
       </>    
     );

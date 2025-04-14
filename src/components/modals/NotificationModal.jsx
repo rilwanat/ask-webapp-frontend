@@ -29,7 +29,7 @@ const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificat
         <div className='flex justify-center mt-4'>
           {notificationType === true ? 
             <CheckCircleIcon className='text-theme' style={{ width: '64px', height: '64px' }}/> : 
-            <CancelIcon className='text-theme' style={{ width: '64px', height: '64px' }}/>
+            <CancelIcon className='text-red-500' style={{ width: '64px', height: '64px' }}/>
           }
         </div>
 

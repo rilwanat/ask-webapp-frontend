@@ -987,6 +987,9 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
     
         if ($stmt_check->rowCount() > 0) {
             $user = $stmt_check->fetch(PDO::FETCH_ASSOC);
+
+            // Store fullname in variable
+            $fullname = $user['fullname'];
     
             // Step 2: Validate user credentials
             if ($user['is_cheat'] !== 'No') {
@@ -998,11 +1001,11 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
             }
     
             if ($user['eligibility'] !== 'Yes') {
-                return ["status" => false, "message" => "User is not eligible to proceed."];
+                return ["status" => false, "message" => $fullname . " you are not eligible to proceed."];
             }
     
             if (strtoupper($user['kyc_status']) !== 'APPROVED') {
-                return ["status" => false, "message" => "KYC is not approved."];
+                return ["status" => false, "message" => $fullname . " your KYC is not approved."];
             }
     
             if (empty($user['bank_name']) || empty($user['account_name']) || empty($user['account_number'])) {
@@ -1010,9 +1013,9 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
             }
     
             // Step 3: Check if a recent beneficiary record exists (within 12 months)
-            $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE email_address = :email ORDER BY date DESC LIMIT 1";
+            $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE fullname_for_comparison = :fullname_for_comparison ORDER BY date DESC LIMIT 1";
             $stmt_beneficiary = $this->conn->prepare($query_beneficiary);
-            $stmt_beneficiary->bindParam(":email", $email);
+            $stmt_beneficiary->bindParam(":fullname_for_comparison", $fullname);
             $stmt_beneficiary->execute();
     
             if ($stmt_beneficiary->rowCount() > 0) {
@@ -1021,15 +1024,32 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
                 $now = new DateTime();
                 $interval = $now->diff($lastDate);
     
-                if ($interval->y < 1) {
-                    return ["status" => false, "message" => "You can only request help again after 12 months."];
-                }
+                // if ($interval->y < 1) {
+                //     return ["status" => false, "message" => "You can only request help again after 12 months."];
+                // }
+
+                // Calculate total months difference
+                $totalMonths = ($interval->y * 12) + $interval->m;
+    
+                if ($totalMonths < 12) {
+                    $elapsedMonths = $totalMonths;
+                    $remainingMonths = 12 - $elapsedMonths;
+        
+                    return [
+                        "status" => false, 
+                        "message" => sprintf(
+                            "Your request was granted %d month(s) ago. You can request again in %d month(s).",
+                            $elapsedMonths,
+                            $remainingMonths
+                        )
+                    ];
+            }
             }
     
             // Step 4: Ensure user hasn't already submitted a help request
-            $query_help_requests = "SELECT id FROM " . $this->help_requests_table . " WHERE email_address = :email LIMIT 1";
+            $query_help_requests = "SELECT id FROM " . $this->help_requests_table . " WHERE fullname_for_comparison = :fullname_for_comparison LIMIT 1";
             $stmt_help_requests = $this->conn->prepare($query_help_requests);
-            $stmt_help_requests->bindParam(":email", $email);
+            $stmt_help_requests->bindParam(":fullname_for_comparison", $fullname);
             $stmt_help_requests->execute();
     
             if ($stmt_help_requests->rowCount() > 0) {
@@ -1124,6 +1144,48 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
         } else {
             return ["status" => false, "message" => "User does not exist."];
         }
+    }
+
+    public function ReadSingleHelpRequest($helpToken)
+    {
+        try {
+            // Prepare the SQL query using a prepared statement
+            $query = "SELECT 
+                    p.id,
+                    p.date,
+                    p.nomination_count,
+                    p.description,
+                    p.remark,
+                    p.fullname_for_comparison,
+                    p.email_address,
+                    p.request_image,
+                    p.help_token 
+                FROM " . $this->help_requests_table . " p  WHERE p.help_token = :help_token";
+            
+            // Prepare the statement
+            $stmt = $this->conn->prepare($query);
+    
+            // Bind the email parameter to the prepared statement
+            $stmt->bindParam(':help_token', $helpToken, PDO::PARAM_STR);
+    
+            // Execute the statement
+            $stmt->execute();
+    
+            // Fetch the result
+            $request = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if ($request === false) {
+                return null; // No record found
+            }
+
+        return $request; // User not found
+    
+        } catch (Exception $e) {
+            // Log the error message and return null for security
+            // error_log("Error reading user: " . $e->getMessage());
+            return null;
+        }
+
     }
 
 

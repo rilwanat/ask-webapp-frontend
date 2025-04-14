@@ -38,6 +38,11 @@ import countries from 'world-countries';
 
 import RequestImageWidget from './RequestImageWidget';
 
+import CheckIcon from '@mui/icons-material/Check';
+import ShareIcon from '@mui/icons-material/Share';
+
+import WidgetShare from '../widgets/WidgetShare';
+
 const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests, myActiveRequestsData }) => {
   const navigate = useNavigate();
 
@@ -371,13 +376,23 @@ className=" flex items-center justify-center  "
 initial={{ y: -50, opacity: 0 }}
 animate={{ y: 0, opacity: 1 }}
 transition={{ delay: 0.2, duration: 0.5 }}
-className="text-2xl font-bold text-theme mb-2"
+className=" font-bold text-theme mb-2"
 >
 <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
             <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Edit Help Request</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-            <label className='bg-theme text-white text-xs w-full text-center mb-1 py-1 rounded-lg cursor-pointer'>Help token: {myActiveRequestsData.help_token}</label>
+            <label className='bg-theme text-white text-xs w-full text-center mb-2 py-2 rounded-lg cursor-pointer'>Help Token: {myActiveRequestsData.help_token}</label>
       
+
+      <div className='flex flex-col items-center'>
+                            {/* <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-orange text-white p-2 my-1'>
+                              Nominate <CheckIcon className='ml-2' />
+                            </div> */}
+                            <WidgetShare helpToken={myActiveRequestsData.help_token}/>
+                            
+                          </div>
+
+
         </div> 
 
 </motion.h1>

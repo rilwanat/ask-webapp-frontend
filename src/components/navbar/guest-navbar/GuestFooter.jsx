@@ -11,14 +11,6 @@ import YouTubeIcon from '../../../assets/images/socials/youtube.png';
 import TelegramIcon from '../../../assets/images/socials/telegram.png';
 import WhatsAppIcon from '../../../assets/images/socials/whatsapp.png';
 import TikTokIcon from '../../../assets/images/socials/tiktok.png';
-
-
-// import XIcon from '@mui/icons-material/X';
-// import FacebookIcon from '@mui/icons-material/Facebook';
-// import InstagramIcon from '@mui/icons-material/Instagram';
-// import YouTubeIcon from '@mui/icons-material/YouTube';
-// import TelegramIcon from '@mui/icons-material/Telegram';
-// import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTiktok } from '@fortawesome/free-brands-svg-icons';
 
@@ -317,7 +309,7 @@ function GuestFooter({ gotoPage }) {
                 </li>
                 <li className='mr-4'>
                   <a href="https://www.tiktok.com/@askfoundations" target='_blank'>
-                    <img src={TikTokIcon} icon={faTiktok} style={{cursor: "pointer", color: "#ffffff", width:'24px', height:'24px' }}/>
+                    <FontAwesomeIcon icon={faTiktok} className='' style={{cursor: "pointer", color: "#ffffff", width:'20px', height:'20px', marginTop: '4px' }}/>
                   </a>
                 </li>
                 <li className='mr-4'>

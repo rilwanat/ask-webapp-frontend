@@ -32,6 +32,9 @@ import { jwtDecode } from 'jwt-decode';
 import { getCookie, deleteCookie } from '../auth/authUtils'; // Import getCookie function
 //
 
+import Loading from './widgets/Loading';
+import MiniLoading from './widgets/MiniLoading';
+
 
 export default function AskPage({ 
   isMobile,
@@ -135,21 +138,25 @@ export default function AskPage({
 {
   isAuthenticated() ? 
   (
-  myActiveRequestsData === null ? (
-    <WidgetForCreateAsk  
-    userDetails={userDetails} 
-    refreshUserDetails={refreshUserDetails} 
-    getActiveHelpRequests={getActiveHelpRequests}
-    />
+
+    !isLoading ?  (
+      myActiveRequestsData === null ? (
+        <WidgetForCreateAsk  
+        userDetails={userDetails} 
+        refreshUserDetails={refreshUserDetails} 
+        getActiveHelpRequests={getActiveHelpRequests}
+        />
+        
+      )
+     
+                : <WidgetForEditAsk  
+                userDetails={userDetails} 
+                refreshUserDetails={refreshUserDetails} 
+                getActiveHelpRequests={getActiveHelpRequests}
+                myActiveRequestsData={myActiveRequestsData}
+                />
+    ) : <Loading />
     
-  )
- 
-            : <WidgetForEditAsk  
-            userDetails={userDetails} 
-            refreshUserDetails={refreshUserDetails} 
-            getActiveHelpRequests={getActiveHelpRequests}
-            myActiveRequestsData={myActiveRequestsData}
-            />
 ) : <WidgetForLoginAsk  
 userDetails={userDetails} 
 refreshUserDetails={refreshUserDetails} 

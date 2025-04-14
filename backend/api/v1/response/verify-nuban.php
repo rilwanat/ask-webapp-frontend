@@ -24,7 +24,7 @@ function verifyNuban($accountNumber, $bankCode, $bankNameFromClient) {
     $firstItem = $data[0];
     
     // Extract account name and bank name
-    $accountName = $firstItem['account_name'] ?? null;
+    $accountName = strtoupper($firstItem['account_name']) ?? null;
     // $bankName = $firstItem['bank_name'] ?? strtoupper($bankNameFromClient);
     $bankName = !empty($firstItem['bank_name']) 
         ? $firstItem['bank_name'] 

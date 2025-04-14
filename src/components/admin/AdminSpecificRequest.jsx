@@ -254,50 +254,50 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 
-  useEffect(() => {
-    handleData();
-  }, []);
-  const handleData = async () => {
+  // useEffect(() => {
+  //   handleData();
+  // }, []);
+  // const handleData = async () => {
 
-    setIsDataLoading(true);
+  //   setIsDataLoading(true);
 
 
-    try {
-      // API user to get doctors count
-      const adminUsersEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_READ_USERS;
-      // alert(adminUsersEndpoint);
-      const adminUsersResponse = await axiosAdminInstance.get(adminUsersEndpoint, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      setUsersData(adminUsersResponse.data.data);  // Update state with doctors count
+  //   try {
+  //     // API user to get doctors count
+  //     const adminUsersEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_READ_USERS;
+  //     // alert(adminUsersEndpoint);
+  //     const adminUsersResponse = await axiosAdminInstance.get(adminUsersEndpoint, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     setUsersData(adminUsersResponse.data.data);  // Update state with doctors count
   
   
-      // openNotificationModal(true, currentPageName, "");
-      // alert(JSON.stringify(adminRequestsResponse.data.data), null, 2);  // Update state with users count
-    //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+  //     // openNotificationModal(true, currentPageName, "");
+  //     // alert(JSON.stringify(adminRequestsResponse.data.data), null, 2);  // Update state with users count
+  //   //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
 
 
 
 
 
-      // Once all data is fetched, set loading to false
-      setIsDataLoading(false);
+  //     // Once all data is fetched, set loading to false
+  //     setIsDataLoading(false);
   
-    } catch (error) {
-      setIsDataLoading(false);
+  //   } catch (error) {
+  //     setIsDataLoading(false);
       
-      alert(error);
-      // Handle errors
-      if (error.response && error.response.data) {
-        const errorMessage = error.response.data.message;
-        openNotificationModal(false, currentPageName + " Error", errorMessage);
-      } else {
-        openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
-      }
-    }
-  };
+  //     alert(error);
+  //     // Handle errors
+  //     if (error.response && error.response.data) {
+  //       const errorMessage = error.response.data.message;
+  //       openNotificationModal(false, currentPageName + " Error", errorMessage);
+  //     } else {
+  //       openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+  //     }
+  //   }
+  // };
 
 
 

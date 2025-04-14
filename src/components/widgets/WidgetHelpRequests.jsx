@@ -6,6 +6,8 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share';
 
+import WidgetShare from '../widgets/WidgetShare';
+
 const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurrentRequestSlide }) => {
   const navigate = useNavigate();
 
@@ -112,9 +114,7 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
                       <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-orange text-white p-2 my-1'>
                         Nominate <CheckIcon className='ml-2' />
                       </div>
-                      <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'>
-                        Share <ShareIcon className='ml-2' />
-                      </div>
+                      <WidgetShare helpToken={item.help_token}/>
                     </div>
                   </div>
                 ))}
