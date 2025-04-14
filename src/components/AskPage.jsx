@@ -130,7 +130,7 @@ export default function AskPage({
             />
 
             
-            {/* {myActiveRequestsData.id} */}
+            
 
 {
   isAuthenticated() ? 
@@ -141,6 +141,7 @@ export default function AskPage({
     refreshUserDetails={refreshUserDetails} 
     getActiveHelpRequests={getActiveHelpRequests}
     />
+    
   )
  
             : <WidgetForEditAsk  
@@ -158,7 +159,7 @@ myActiveRequestsData={myActiveRequestsData}
   
 }
 
-
+{/* {myActiveRequestsData === null ? "1": "2"} */}
 
 
             <GuestFooter gotoPage={gotoPage} />

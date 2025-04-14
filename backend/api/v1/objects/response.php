@@ -1071,6 +1071,9 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
             // Fetch the result
             $request = $stmt->fetch(PDO::FETCH_ASSOC);
     
+            if ($request === false) {
+                return null; // No record found
+            }
 
         return $request; // User not found
     

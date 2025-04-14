@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         !empty($data->residence)
     ) {
          // ✅ Step 1: Verify NUBAN before DB update
-         list($accountNameFromNuban, $bankNameFromNuban) = verifyNuban($data->accountNumber, $data->bankCode); // Custom function
+         list($accountNameFromNuban, $bankNameFromNuban) = verifyNuban($data->accountNumber, $data->bankCode, $data->bankName); // Custom function
          
 
          if (!$accountNameFromNuban || !$bankNameFromNuban) {

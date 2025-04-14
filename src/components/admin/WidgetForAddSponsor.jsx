@@ -364,6 +364,7 @@ A community-based charity initiative
 <option value="Select">Select Type</option>
   <option value="bank1">Sponsor</option>
   <option value="bank2">Donor</option>
+  <option value="bank2">Partner</option>
   </select>
                              </div>
 

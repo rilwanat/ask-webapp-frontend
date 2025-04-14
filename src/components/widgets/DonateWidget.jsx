@@ -303,7 +303,15 @@ const cryptoAssets = [
       {/* Preview image */}
       {selectedAsset && (
         <div className='flex flex-col items-center justify-center'>
-          <label className=' sm:text-lg text-xs my-2 text-white'>{selectedAsset.address}</label> 
+          <div className='flex justify-between items-center mt-1'> 
+            <label className=' sm:text-lg text-xs my-2 text-white'>{selectedAsset.address}</label>
+            <div className={`mx-2 px-4 py-1 rounded-lg  cursor-pointer border-2 border-theme bg-white text-theme text-sm
+                     
+                      `} onClick={() => {
+                        navigator.clipboard.writeText(selectedAsset.address)
+                        alert("Wallet address: \n\n'" + selectedAsset.address + "'\n\ncopied to clipboard");
+                      }}>Copy</div>
+          </div> 
         <img
           src={selectedAsset.image}
           alt={selectedAsset.name}

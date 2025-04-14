@@ -328,7 +328,7 @@ useEffect(() => {
 
           <Routes>
 
-            <Route path="/*" element={<div>NOT FOUND</div>} />            
+                        
             <Route path='/' element={<LandingPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
@@ -481,6 +481,9 @@ useEffect(() => {
              /></ProtectedRoute>}/>
 
             
+
+
+<Route path="/*" element={<div>NOT FOUND</div>} />
             </Routes>
             
         </div>
