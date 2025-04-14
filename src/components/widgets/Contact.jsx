@@ -103,7 +103,7 @@ const isValidEmail = (email) => {
     // ) {
     //   // alert("Please, enter a valid inputs");
     //   // openNotificationModal(false, "ASK Foundation", "Please, enter a valid inputs");
-    //   // setIsNotificationModalOpen(true);
+    //   
     //     return;
     // }
   
@@ -112,7 +112,7 @@ const isValidEmail = (email) => {
       // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
       // alert("Please, enter a valid phone number, numbers only.");
       openNotificationModal(false, "ASK Foundation", "Please, enter a valid phone number, numbers only.");
-      setIsNotificationModalOpen(true);
+      
       return;
   }
   
@@ -120,7 +120,7 @@ const isValidEmail = (email) => {
       // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
       // alert("Please, enter a valid email.");
       openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
-      setIsNotificationModalOpen(true);
+      
       return;
   }
   
@@ -157,12 +157,12 @@ const isValidEmail = (email) => {
   
             // alert("Message was sent successfully");
             openNotificationModal(true, "ASK Foundation", "Message was sent successfully");
-            setIsNotificationModalOpen(true);
+            
             
         } else {
             // alert("Failed to send message");
             openNotificationModal(false, "ASK Foundation", "Failed to send message");
-            setIsNotificationModalOpen(true);
+            
         }
   
         setIsMessageSending(false);
@@ -172,7 +172,7 @@ const isValidEmail = (email) => {
         console.error("Error sending message:", error);
         // alert("An error occurred while sending the message");
         openNotificationModal(false, "ASK Foundation", "An error occurred while sending the message");
-            setIsNotificationModalOpen(true);
+            
     }
   };
 

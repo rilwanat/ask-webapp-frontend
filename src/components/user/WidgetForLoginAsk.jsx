@@ -90,7 +90,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
       // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
       if (userDetails === null) {
         openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send your help request.`); 
-        setIsNotificationModalOpen(true);
+        
         return;
       }
 
@@ -99,7 +99,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
 
     if (helpDescription === "") {
       openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
-      setIsNotificationModalOpen(true);
+      
       return;
     }
 
@@ -121,7 +121,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
           } else {
             // alert("Please select an image to upload");
             openNotificationModal(false, "ASK Help Request", "Select an image to upload");
-            setIsNotificationModalOpen(true);
+            
             return;
           }
 
@@ -157,7 +157,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
 
 
              openNotificationModal(true, "ASK Help Request", response.data.message);
-              setIsNotificationModalOpen(true);
+              
 
      
              
@@ -176,7 +176,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
            setErrorMessage({ message: errorMessage });
 
            openNotificationModal(false, "ASK Help Request", errorMessage);
-              setIsNotificationModalOpen(true);
+              
 
          } else if (error.response && error.response.data && error.response.data.errors) {
            const { errors } = error.response.data;
@@ -185,12 +185,12 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
            setErrorMessage({ message: errorMessage });
 
            openNotificationModal(false, "ASK Help Request", errorMessage);
-              setIsNotificationModalOpen(true);
+              
          } else {
            setErrorMessage({ message: 'ASK Help Request failed. Please check your data and try again.' });
 
            openNotificationModal(false, "ASK Help Request", 'Please check your data and try again.');
-              setIsNotificationModalOpen(true);
+              
          }
        }
        };

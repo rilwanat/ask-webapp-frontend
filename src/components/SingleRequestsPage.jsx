@@ -13,17 +13,39 @@ import ShareIcon from '@mui/icons-material/Share';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import WidgetShare from './widgets/WidgetShare';
+import WidgetNominate from './widgets/WidgetNominate';
+
+import NotificationModal from './modals/NotificationModal';
 
 export default function SingleRequestsPage({ 
     isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+    userDetails, refreshUserDetails
 }) {
     const navigate = useNavigate();
     const location = useLocation();
     const { selectedItem, allItems } = location.state || {};
     const [selectedIndex, setSelectedIndex] = useState(0);
+
+    //notification modal
+    const [notificationType, setNotificationType] = useState(false);
+    const [notificationTitle, setNotificationTitle] = useState("");
+    const [notificationMessage, setNotificationMessage] = useState("");
+    const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+    const openNotificationModal = (type, title, message) => {
+      setNotificationType(type);
+      setNotificationTitle(title);
+      setNotificationMessage(message);
+  
+      setIsNotificationModalOpen(true);
+    };
+    const closeNotificationModal = () => {
+      setIsNotificationModalOpen(false);
+    };
+    //notification modal
+
 
     useEffect(() => { 
         window.scrollTo({ top: 0, behavior: 'smooth' }); 
@@ -51,7 +73,7 @@ export default function SingleRequestsPage({
         showArrows: true,
         showStatus: false,
         showThumbs: false,
-        infiniteLoop: false,
+        infiniteLoop: true,
         autoPlay: false,
         swipeable: true,
         emulateTouch: true,
@@ -61,7 +83,7 @@ export default function SingleRequestsPage({
         stopOnHover: false,
         className: "touch-pan-y", // Added to prevent scroll interference
         selectedItem: selectedIndex, // Start with the selected item
-        onChange: handleChange, // Update selected index when carousel changes
+        onChange: handleChange // Update selected index when carousel changes
     };
 
     return (
@@ -85,7 +107,7 @@ export default function SingleRequestsPage({
                         {allItems?.map((item) => (
                             <motion.div 
                                 key={item.id} 
-                                className="flex flex-col items-center justify-center w-full touch-pan-y"
+                                className="flex flex-col items-center justify-center w-full touch-pan-y select-none cursor-pointer"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
@@ -130,26 +152,38 @@ export default function SingleRequestsPage({
                                 </div>
 
                                 <div className='flex flex-col items-center touch-pan-y'>
-                                    <motion.button
+                                    <motion.div
                                         // whileHover={{ scale: 1.05 }}
                                         // whileTap={{ scale: 0.95 }}
-                                        className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-orange text-white p-2 my-1'
                                     >
-                                        Nominate <CheckIcon className='ml-2' />
-                                    </motion.button>
-                                    <motion.button
+                                        <WidgetNominate 
+                                        helpToken={item.helpToken} userDetails={userDetails} 
+                                        refreshUserDetails={refreshUserDetails} 
+                                        //itemName={item.user.fullname}                                        
+                                        openNotificationModal={openNotificationModal}
+                                        />
+                                    </motion.div>
+                                    <motion.div
                                         // whileHover={{ scale: 1.05 }}
                                         // whileTap={{ scale: 0.95 }}
                                         // className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-theme text-white p-2 my-1'
                                     >
                                         <WidgetShare helpToken={item.help_token}/>
-                                    </motion.button>
+                                    </motion.div>
                                 </div>
                             </motion.div>
                         ))}
                     </Carousel>
                 </div>
             </div>
+
+            <NotificationModal
+              isOpen={isNotificationModalOpen}
+              onRequestClose={closeNotificationModal}
+              notificationType={notificationType}
+              notificationTitle={notificationTitle}
+              notificationMessage={notificationMessage}
+            />
 
             <GuestFooter gotoPage={gotoPage} />
         </div>

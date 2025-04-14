@@ -317,7 +317,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
             if (response.data.status) {
                 // alert("update-product " + JSON.stringify(response.data, null, 2));
                 openNotificationModal(true, "Update User", response.data.userData.fullname + "'s " + response.data.message);
-                setIsNotificationModalOpen(true);
+                
 
 
                 // navigateActiveTab(1);
@@ -326,13 +326,13 @@ let countFiltered = indexOfFirstFilteredItem + 1;
             } else {
                 // alert("error: " + response.data.message);
                 openNotificationModal(false, "Update User", response.data.message);
-                setIsNotificationModalOpen(true);
+                
             }
     } catch (error) {
         setIsUpdateDataLoading(false);
         // alert("error: " + error);
         openNotificationModal(false, "Update User", error);
-        setIsNotificationModalOpen(true);
+        
     }
 };
     

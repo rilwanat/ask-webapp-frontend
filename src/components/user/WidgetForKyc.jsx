@@ -200,7 +200,7 @@ const dataURLtoBlob = (dataURL) => {
 
         if (!imageSrc) {
           openNotificationModal(false, "Update Selfie Image", "Take a selfie to upload");
-          setIsNotificationModalOpen(true);
+          
           return;
         }
         // alert("2");
@@ -208,7 +208,7 @@ const dataURLtoBlob = (dataURL) => {
         if (isLoading) {
             // alert("please wait..");
             openNotificationModal(false, "Update Selfie Image", "Please wait...");
-            setIsNotificationModalOpen(true);
+            
             return;
         }
         // alert("3");
@@ -241,20 +241,20 @@ const dataURLtoBlob = (dataURL) => {
                   setErrorMessage({ message: '' });
                   
                   openNotificationModal(true, "Update Selfie Image", response.data.message);
-                  setIsNotificationModalOpen(true);
+                  
                     
 
                 } else {
                     // alert("error: " + response.data.message);
                     openNotificationModal(false, "Update Selfie Image", response.data.message);
-                    setIsNotificationModalOpen(true);
+                    
                 }
         } catch (error) {
           setIsLoading(false);
             // alert("error: " + error);
             const errorMessage = error.response?.data?.message || error.message || "An error occurred";
             openNotificationModal(false, "Update Selfie", errorMessage);
-            setIsNotificationModalOpen(true);
+            
         }
     };
 
@@ -266,7 +266,7 @@ const dataURLtoBlob = (dataURL) => {
 if (!(isValidWorldNumber(phoneNumber))) {
     // alert('Enter a valid phone number');
     openNotificationModal(false, "ASK KYC", `Enter a valid phone number`);
-    setIsNotificationModalOpen(true);
+    
     return;
 }
 
@@ -274,7 +274,7 @@ if (!(isValidWorldNumber(phoneNumber))) {
 if (!isNumericWithLength(accountNumber)) {
     // alert('Invalid Account number');
     openNotificationModal(false, "ASK KYC", `Invalid Account number`);
-            setIsNotificationModalOpen(true);
+            
     return;
 }
 
@@ -283,24 +283,24 @@ if (!isNumericWithLength(accountNumber)) {
 
 if ((bankName === "Select") || (bankName === "")) {
   openNotificationModal(false, "ASK KYC", `Select your Bank`);
-  setIsNotificationModalOpen(true);
+  
   return;
 }
 if ((gender === "Select") || (gender === "")) {
   openNotificationModal(false, "ASK KYC", `Select your Gender`);
-  setIsNotificationModalOpen(true);
+  
   return;
 }
 if ((residence === "Select") || (residence === "")) {
   openNotificationModal(false, "ASK KYC", `Select your Residence`);
-  setIsNotificationModalOpen(true);
+  
   return;
 }
 
  
 if (!imageSrc) {
   openNotificationModal(false, "Update Selfie Image", "Take a selfie to upload");
-  setIsNotificationModalOpen(true);
+  
   return;
 }
  
@@ -389,7 +389,7 @@ if (!imageSrc) {
            setErrorMessage({ message: errorMessage });
 
            openNotificationModal(false, "ASK KYC", errorMessage);
-              setIsNotificationModalOpen(true);
+              
 
          } else if (error.response && error.response.data && error.response.data.errors) {
            const { errors } = error.response.data;
@@ -398,12 +398,12 @@ if (!imageSrc) {
            setErrorMessage({ message: errorMessage });
 
            openNotificationModal(false, "ASK KYC", errorMessage);
-              setIsNotificationModalOpen(true);
+              
          } else {
            setErrorMessage({ message: 'Kyc failed. Please check your data and try again.' });
 
            openNotificationModal(false, "ASK KYC", 'Kyc failed. Please check your data and try again.');
-              setIsNotificationModalOpen(true);
+              
          }
        }
        };

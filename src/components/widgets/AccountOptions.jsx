@@ -211,7 +211,7 @@ const navigate = useNavigate();
           // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
           // alert("Please, enter a valid email.");
           // openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
-          // setIsNotificationModalOpen(true);
+          
 
           setErrorMessage({ message: 'Please, enter a valid email.' });
           return;
@@ -279,7 +279,7 @@ const navigate = useNavigate();
     
             // alert("Login Successful: " + response.data.message);
             openNotificationModal(true, "Login", response.data.message);
-            setIsNotificationModalOpen(true);
+            
             
             gotoUserProfile();
           } else {
@@ -397,7 +397,7 @@ const navigate = useNavigate();
             // alert(response.data.message + "\n\n Please check your mail for a link to reset your password");
             
             openNotificationModal(true, "Registration", response.data.message + "\n\n Please check your mail for a verification code.");
-            setIsNotificationModalOpen(true);
+            
 
             // toggleAccountForSignIn();
           } else {
@@ -444,7 +444,7 @@ const navigate = useNavigate();
             // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
             // alert("Please, enter a valid email.");
             // openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
-            // setIsNotificationModalOpen(true);
+            
   
             setErrorMessage({ message: 'Please, enter a valid email.' });
             return;
@@ -499,7 +499,7 @@ const navigate = useNavigate();
       
               // alert("Login Successful: " + response.data.message);
               openNotificationModal(true, "ASK Password Reset", response.data.message);
-              setIsNotificationModalOpen(true);
+              
               
             } else {
               const errors = response.data.errors.map(error => error.msg);

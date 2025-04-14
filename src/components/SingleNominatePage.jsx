@@ -26,6 +26,10 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import WidgetShare from './widgets/WidgetShare';
+import WidgetNominate from './widgets/WidgetNominate';
+
+
+import NotificationModal from './modals/NotificationModal';
 
 export default function SingleNominatePage({ 
     isMobile,
@@ -39,6 +43,26 @@ export default function SingleNominatePage({
     const [item, setItem] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+
+    
+        //notification modal
+        const [notificationType, setNotificationType] = useState(false);
+        const [notificationTitle, setNotificationTitle] = useState("");
+        const [notificationMessage, setNotificationMessage] = useState("");
+        const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+        const openNotificationModal = (type, title, message) => {
+          setNotificationType(type);
+          setNotificationTitle(title);
+          setNotificationMessage(message);
+      
+          setIsNotificationModalOpen(true);
+        };
+        const closeNotificationModal = () => {
+          setIsNotificationModalOpen(false);
+        };
+        //notification modal
+
+
 
     useEffect(() => { 
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -201,10 +225,13 @@ export default function SingleNominatePage({
                         </div>
 
                         <div className='flex flex-col items-center touch-pan-y'>
-                            <motion.button
-                                className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-orange text-white p-2 my-1'
-                            >
-                                Nominate <CheckIcon className='ml-2' />
+                            <motion.button>
+                                <WidgetNominate 
+                                helpToken={helpToken} userDetails={userDetails} 
+                                refreshUserDetails={refreshUserDetails} 
+                                //itemName={item.fullname_for_comparison} 
+                                openNotificationModal={openNotificationModal}
+                                />
                             </motion.button>
                             <motion.button>
                                 <WidgetShare helpToken={helpToken}/>
@@ -220,7 +247,13 @@ export default function SingleNominatePage({
 
 
         
-            
+<NotificationModal
+              isOpen={isNotificationModalOpen}
+              onRequestClose={closeNotificationModal}
+              notificationType={notificationType}
+              notificationTitle={notificationTitle}
+              notificationMessage={notificationMessage}
+            /> 
 
             <GuestFooter gotoPage={gotoPage} />
         </div>

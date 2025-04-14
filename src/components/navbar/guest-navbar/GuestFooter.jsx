@@ -60,7 +60,7 @@ function GuestFooter({ gotoPage }) {
       if (isSubsLoading) {
         // alert('Please wait');
         openNotificationModal(false, "ASK Subscribe To Newsletter", "Please wait..");
-        setIsNotificationModalOpen(true);
+        
         return;
       }
 
@@ -68,7 +68,7 @@ function GuestFooter({ gotoPage }) {
       if (!isValidEmail(email)) {
         // alert('Please enter a valid email address');
         openNotificationModal(false, "ASK Subscribe To Newsletter", "Please enter a valid email address");
-        setIsNotificationModalOpen(true);
+        
         return;
       }
 
@@ -102,7 +102,7 @@ function GuestFooter({ gotoPage }) {
           // alert("dashboard-products " + JSON.stringify(response.data.itemsData, null, 2));
           // alert("" + response.data.message);
           openNotificationModal(true, "ASK Subscribe To Newsletter", "" + response.data.message);
-          setIsNotificationModalOpen(true);
+          
 
           // Store the retrieved data in state variables
   
@@ -110,7 +110,7 @@ function GuestFooter({ gotoPage }) {
         } else {
           // alert("error1: " + response.data.message);
           openNotificationModal(false, "ASK Subscribe To Newsletter", "error1: " + response.data.message);
-          setIsNotificationModalOpen(true);
+          
         }
   
       } catch (error) {
@@ -123,7 +123,7 @@ function GuestFooter({ gotoPage }) {
         // setErrorMessage({ message: errorMessage });
 
         openNotificationModal(false, "ASK Subscribe To Newsletter", errorMessage);
-           setIsNotificationModalOpen(true);
+          //  setIsNotificationModalOpen(true);
 
       } else if (error.response && error.response.data && error.response.data.errors) {
         const { errors } = error.response.data;
@@ -132,12 +132,12 @@ function GuestFooter({ gotoPage }) {
         // setErrorMessage({ message: errorMessage });
 
         openNotificationModal(false, "ASK Subscribe To Newsletter", errorMessage);
-           setIsNotificationModalOpen(true);
+          //  setIsNotificationModalOpen(true);
       } else {
         // setErrorMessage({ message: 'ASK Subscribe To Newsletter failed. Please check your data and try again.' });
 
         openNotificationModal(false, "ASK Subscribe To Newsletter", 'Please check your data and try again.');
-           setIsNotificationModalOpen(true);
+          //  setIsNotificationModalOpen(true);
       }
     }
     };

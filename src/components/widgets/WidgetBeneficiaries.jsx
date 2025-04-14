@@ -21,19 +21,21 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
   // Custom carousel configuration to prevent scroll interference
   const carouselConfig = {
     showIndicators: false,
-    showArrows: false,
+    showArrows: true,
     showStatus: false,
     showThumbs: false,
     infiniteLoop: true,
     autoPlay: true,
-    interval: 5000,
-    selectedItem: currentBeneficiarySlide,
-    onChange: (index) => setCurrentBeneficiarySlide(index),
-    className: "rounded-lg overflow-hidden w-full",
+    swipeable: true,
+    emulateTouch: true,
     swipeScrollTolerance: 5, // Makes vertical scrolling easier
     preventMovementUntilSwipeScrollTolerance: true,
     verticalSwipe: 'natural', // Allows natural vertical scrolling
-    stopOnHover: false // Prevents hover behavior from interfering with scroll
+    stopOnHover: false, // Prevents hover behavior from interfering with scroll
+    interval: 5000,
+    selectedItem: currentBeneficiarySlide,
+    onChange: (index) => setCurrentBeneficiarySlide(index),
+    className: "rounded-lg overflow-hidden w-full"
   };
 
   const formatAmount = (amount) => {
@@ -75,7 +77,7 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
                 {carouselBeneficiaryItems.map((item) => (
                   <div 
                     key={item.id} 
-                    className="flex flex-col h-full cursor-pointer"
+                    className="flex flex-col h-full select-none cursor-pointer"
                     onClick={() => {
                       navigateTo('/single-beneficiary', { 
                         selectedItem: item, 

@@ -29,6 +29,7 @@ export default function LandingPage({
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+    userDetails, refreshUserDetails
 
 }) {
     const navigate = useNavigate();
@@ -61,18 +62,21 @@ export default function LandingPage({
             currentRequestSlide={currentRequestSlide} 
             carouselRequestItems={carouselRequestItems} 
             setCurrentRequestSlide={setCurrentRequestSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
             />
 
             <WidgetBeneficiaries 
             currentBeneficiarySlide={currentBeneficiarySlide} 
             carouselBeneficiaryItems={carouselBeneficiaryItems} 
-            setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            setCurrentBeneficiarySlide={setCurrentBeneficiarySlide} 
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
             />
 
             <WidgetSponsors 
             currentSponsorSlide={currentSponsorSlide} 
             carouselSponsorItems={carouselSponsorItems} 
-            setCurrentSponsorSlide={setCurrentSponsorSlide}
+            setCurrentSponsorSlide={setCurrentSponsorSlide} 
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
             />
 
 

@@ -124,7 +124,7 @@ const is11DigitNumber = (input) => {
   if (!isValidFullname(sponsorName)) {
     // alert('Invalid Fullname');
     openNotificationModal(false, "ASK KYC", `Invalid Sponsor Name`);
-    setIsNotificationModalOpen(true);
+    
     return;
 }
 
@@ -132,7 +132,7 @@ const is11DigitNumber = (input) => {
 
 if ((sponsorType === "Select") || (sponsorType === "")) {
   openNotificationModal(false, "ASK Add Sponsor", `Select Sponsor Type`);
-  setIsNotificationModalOpen(true);
+  
   return;
 }
 
@@ -198,7 +198,7 @@ alert("Sponsor");
      
             //  alert("Your kyc is pending approval. You will be notified once it is approved.");
              openNotificationModal(true, "ASK Add Sponsor", '');
-              setIsNotificationModalOpen(true);
+              
      
 
               
@@ -219,7 +219,7 @@ alert("Sponsor");
            setErrorMessage({ message: errorMessage });
 
            openNotificationModal(false, "ASK KYC", errorMessage);
-              setIsNotificationModalOpen(true);
+              
 
          } else if (error.response && error.response.data && error.response.data.errors) {
            const { errors } = error.response.data;
@@ -228,12 +228,12 @@ alert("Sponsor");
            setErrorMessage({ message: errorMessage });
 
            openNotificationModal(false, "ASK KYC", errorMessage);
-              setIsNotificationModalOpen(true);
+              
          } else {
            setErrorMessage({ message: 'Kyc failed. Please check your data and try again.' });
 
            openNotificationModal(false, "ASK KYC", 'Kyc failed. Please check your data and try again.');
-              setIsNotificationModalOpen(true);
+              
          }
        }
        };

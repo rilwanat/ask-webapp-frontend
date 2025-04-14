@@ -48,7 +48,7 @@ export const isAuthenticated = () => {
         return true;
       }
     } catch (error) {
-      console.error("Failed to decode token:", error);
+      console.error("Failed to decode user token:", error);
     }
   }
   return false;
@@ -66,7 +66,7 @@ export const isAdminAuthenticated = () => {
         return true;
       }
     } catch (error) {
-      console.error("Failed to decode token:", error);
+      console.error("Failed to decode admin token:", error);
     }
   }
   return false;

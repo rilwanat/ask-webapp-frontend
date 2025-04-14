@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
@@ -7,9 +7,29 @@ import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share';
 
 import WidgetShare from '../widgets/WidgetShare';
+import WidgetNominate from '../widgets/WidgetNominate';
 
-const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurrentRequestSlide }) => {
+import NotificationModal from '../modals/NotificationModal';
+
+const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurrentRequestSlide, userDetails, refreshUserDetails }) => {
   const navigate = useNavigate();
+
+  //notification modal
+  const [notificationType, setNotificationType] = useState(false);
+  const [notificationTitle, setNotificationTitle] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+  const openNotificationModal = (type, title, message) => {
+    setNotificationType(type);
+    setNotificationTitle(title);
+    setNotificationMessage(message);
+
+    setIsNotificationModalOpen(true);
+  };
+  const closeNotificationModal = () => {
+    setIsNotificationModalOpen(false);
+  };
+  //notification modal
 
   const navigateTo = (route, data) => {
     navigate(route, { state: data });
@@ -18,19 +38,21 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
   // Custom carousel configuration to prevent scroll interference
   const carouselConfig = {
     showIndicators: false,
-    showArrows: false,
+    showArrows: true,
     showStatus: false,
     showThumbs: false,
     infiniteLoop: true,
     autoPlay: true,
-    interval: 5000,
-    selectedItem: currentRequestSlide,
-    onChange: (index) => setCurrentRequestSlide(index),
-    className: "rounded-lg overflow-hidden w-full",
+    swipeable: true,
+    emulateTouch: true,
     swipeScrollTolerance: 5, // Makes vertical scrolling easier
     preventMovementUntilSwipeScrollTolerance: true,
     verticalSwipe: 'natural', // Allows natural vertical scrolling
-    stopOnHover: false // Prevents hover behavior from interfering with scroll
+    stopOnHover: false, // Prevents hover behavior from interfering with scroll
+    interval: 5000,
+    selectedItem: currentRequestSlide,
+    onChange: (index) => setCurrentRequestSlide(index),
+    className: "rounded-lg overflow-hidden w-full"
   };
 
   return (
@@ -63,10 +85,13 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
             <div className="w-full touch-pan-y" style={{ touchAction: 'pan-y' }}> {/* Wrapper with touch action */}
               <Carousel {...carouselConfig}>
                 {carouselRequestItems.map((item) => (
-                  <div 
+                  <div className='flex flex-col select-none'>
+<div 
                     key={item.id} 
                     className="flex flex-col items-center h-full cursor-pointer"
+                    
                     onClick={() => {
+                      // e.stopPropagation();
                       navigateTo('/single-request', { 
                         selectedItem: item, 
                         allItems: carouselRequestItems  
@@ -103,26 +128,42 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
                         }}
                       />
                     </div>
-
+                    
+                    
                     <div className="flex flex-col items-center p-4 mt-auto">
                       <h3 className="text-2xl font-bold text-theme">
                         {item.nomination_count >= 1000 ? (item.nomination_count / 1000).toFixed(1) + 'K' : item.nomination_count}
                       </h3>
                     </div>
 
+                    </div>
+
                     <div className='flex flex-col items-center'>
-                      <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-orange text-white p-2 my-1'>
-                        Nominate <CheckIcon className='ml-2' />
-                      </div>
+                      <WidgetNominate 
+                      helpToken={item.helpToken} userDetails={userDetails} 
+                      refreshUserDetails={refreshUserDetails} 
+                      //itemName={item.fullname_for_comparison}                       
+                      openNotificationModal={openNotificationModal}
+                      />
                       <WidgetShare helpToken={item.help_token}/>
                     </div>
+                  
                   </div>
+                  
                 ))}
               </Carousel>
             </div>
           </div>
         </div>
       </div>
+
+      <NotificationModal
+              isOpen={isNotificationModalOpen}
+              onRequestClose={closeNotificationModal}
+              notificationType={notificationType}
+              notificationTitle={notificationTitle}
+              notificationMessage={notificationMessage}
+            />
     </div>
   );
 };

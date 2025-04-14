@@ -354,6 +354,20 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
         >
           Manage Crypto
         </motion.span> */}
+        
+        <motion.span
+          variants={menuItemVariants}
+          initial="hidden"
+          animate={isMenuOpen ? "visible" : "hidden"}
+          className="text-sm  text-red-500 cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+          style={{ fontWeight: '600' }}
+          onClick={() => {
+            deleteCookie("admin");
+            navigate('/');
+          }}
+        >
+          Logout
+        </motion.span>
 
         </div>
         

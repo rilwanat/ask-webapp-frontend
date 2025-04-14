@@ -113,7 +113,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
       // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
       if (userDetails === null) {
         openNotificationModal(false, "ASK Edit Help Request", `You are not logged in. Please register or login to update with your help request.`); 
-        setIsNotificationModalOpen(true);
+        
         return;
       }
 
@@ -122,7 +122,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
 
     if (myCurrentActiveRequestsData.description === "" || myCurrentActiveRequestsData.description === myActiveRequestsData.description) {
       openNotificationModal(false, "ASK Edit Request", `Enter or edit your Help Request description`);
-      setIsNotificationModalOpen(true);
+      
       return;
     }
 
@@ -182,7 +182,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
 
 
              openNotificationModal(true, "ASK Edit Help Request", response.data.message);
-              setIsNotificationModalOpen(true);
+              
 
      
              
@@ -201,7 +201,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
            setErrorMessage({ message: errorMessage });
 
            openNotificationModal(false, "ASK Help Request", errorMessage);
-              setIsNotificationModalOpen(true);
+              
 
          } else if (error.response && error.response.data && error.response.data.errors) {
            const { errors } = error.response.data;
@@ -210,12 +210,12 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
            setErrorMessage({ message: errorMessage });
 
            openNotificationModal(false, "ASK Help Request", errorMessage);
-              setIsNotificationModalOpen(true);
+              
          } else {
            setErrorMessage({ message: 'ASK Help Request failed. Please check your data and try again.' });
 
            openNotificationModal(false, "ASK Help Request", 'Please check your data and try again.');
-              setIsNotificationModalOpen(true);
+              
          }
        }
        };
@@ -231,7 +231,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
         // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
         if (userDetails === null) {
           openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send with your help request.`); 
-          setIsNotificationModalOpen(true);
+          
           return;
         }
   
@@ -240,7 +240,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
   
       if (myCurrentActiveRequestsData.description === "") {
         openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
-        setIsNotificationModalOpen(true);
+        
         return;
       }
   
@@ -262,7 +262,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
             } else {
               // alert("Please select an image to upload");
               openNotificationModal(false, "ASK Help Request", "Select an image to upload");
-              setIsNotificationModalOpen(true);
+              
               return;
             }
   
@@ -299,7 +299,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
   
   
                openNotificationModal(true, "ASK Help Request", response.data.message);
-                setIsNotificationModalOpen(true);
+                
   
        
                
@@ -318,7 +318,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
              setErrorMessage({ message: errorMessage });
   
              openNotificationModal(false, "ASK Help Request", errorMessage);
-                setIsNotificationModalOpen(true);
+                
   
            } else if (error.response && error.response.data && error.response.data.errors) {
              const { errors } = error.response.data;
@@ -327,12 +327,12 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
              setErrorMessage({ message: errorMessage });
   
              openNotificationModal(false, "ASK Help Request", errorMessage);
-                setIsNotificationModalOpen(true);
+                
            } else {
              setErrorMessage({ message: 'ASK Help Request failed. Please check your data and try again.' });
   
              openNotificationModal(false, "ASK Help Request", 'Please check your data and try again.');
-                setIsNotificationModalOpen(true);
+                
            }
          }
          };
@@ -385,9 +385,7 @@ className=" font-bold text-theme mb-2"
       
 
       <div className='flex flex-col items-center'>
-                            {/* <div className='cursor-pointer flex rounded-lg w-50 justify-center items-center bg-orange text-white p-2 my-1'>
-                              Nominate <CheckIcon className='ml-2' />
-                            </div> */}
+                            
                             <WidgetShare helpToken={myActiveRequestsData.help_token}/>
                             
                           </div>
