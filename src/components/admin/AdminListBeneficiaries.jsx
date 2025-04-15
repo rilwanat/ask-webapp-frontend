@@ -139,7 +139,7 @@ useEffect(() => {
         setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
-    const filteredBeneficiaries = beneficiaries.filter((request) =>
+    const filteredBeneficiaries = (beneficiaries || []).filter((request) =>
     request.date.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.nomination_count.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 

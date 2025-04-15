@@ -140,7 +140,26 @@ useEffect(() => {
 
 
 
-
+    const handleSponsorRowClick = (sponsor, e) => {
+      {                
+          // alert(JSON.stringify(request, null, 2));
+  
+          // const encryptedData = AES.encrypt(JSON.stringify(product), 'encryptionKey').toString();
+          navigate(`/specific-sponsor/${sponsor.id}`, {
+              state: {
+                selectedSponsor: sponsor, // Pass any data you want as props here
+              }
+            });
+  
+          // setCurrentProduct(product);
+          // navigateActiveTab(8);
+  
+          //
+          
+      }
+      
+  
+    };
 
 
 
@@ -168,7 +187,7 @@ useEffect(() => {
         setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
-    const filteredSponsors = sponsors.filter((request) =>
+    const filteredSponsors = (sponsors || []).filter((request) =>
     request.date.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.name.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.type.toLowerCase().includes(searchQuery.toLowerCase()) 
@@ -382,37 +401,37 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                       // isDataloading ? <Loading />
                       // : 
                     <tbody className='text-xs '>
-                      {currentFilteredSponsors.map((request, index) => (
-                          <tr key={request.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
-                        // onClick={(e) => handlerequestRowClick(request, e)} 
+                      {currentFilteredSponsors.map((sponsor, index) => (
+                          <tr key={sponsor.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
+                        onClick={(e) => handleSponsorRowClick(sponsor, e)} 
                           style={{ cursor: "pointer" }}
                           >
                           <td className='px-2 py-4 whitespace-no-wrap border-b border-gray-200'>
                           {countFiltered++}
                           </td>
                           {/* <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> */}
-                            {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + request.productImages[0]} */}
-                            {/* <img src={process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + request.productImages[0]}  className="h-10 w-10 object-cover" /> */}
+                            {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + sponsor.productImages[0]} */}
+                            {/* <img src={process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + sponsor.productImages[0]}  className="h-10 w-10 object-cover" /> */}
                           {/* </td> */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 cursor-pointer" onClick={(e) => {
                             //setShowDialog(false); 
-                            // handleProductClick(request, e);
+                            // handleProductClick(sponsor, e);
                           }}>
-                            {request.date}
+                            {sponsor.date}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {request.name}
+                            {sponsor.name}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                           <span
                                     style={{
-                                      backgroundColor: request.type === 'Sponsor' ? '#1cc939' : request.type === 'Donor' ? '#161c34' : '#FFE2E5', 
-                                      color: request.type === 'Sponsor' ? '#000000' : request.type === 'Donor' ? '#ffffff' : '#F64E60', 
+                                      backgroundColor: sponsor.type === 'Sponsor' ? '#1cc939' : sponsor.type === 'Donor' ? '#161c34' : '#d85a27', 
+                                      color: sponsor.type === 'Sponsor' ? '#000000' : sponsor.type === 'Donor' ? '#ffffff' : '#000000', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
-                                    }>{request.type}</span>
+                                    }>{sponsor.type}</span>
                           </td>	
                           
                           
@@ -421,7 +440,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           className="text-theme cursor-pointer "
                           onClick={(e) => {
                             //setShowDialog(false); 
-                            // handleProductClick(request, e);
+                            // handleProductClick(sponsor, e);
                           }}
                           >
                             See Details

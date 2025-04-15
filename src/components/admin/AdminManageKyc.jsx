@@ -366,7 +366,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Phone Number
                         </th>
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           KYC Status
                         </th>
                         {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
@@ -442,8 +442,17 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                             {/* {user.tags.join(', ')} */}
                             {user.phone_number	}
                           </td>
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
-                            {user.kyc_status}
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                            {/* {user.kyc_status} */}
+                            <span
+                                    style={{
+                                      backgroundColor: user.kyc_status === 'APPROVED' ? '#1cc939' : '#FFE2E5', 
+                                      color: user.kyc_status === 'APPROVED' ? '#000000' : '#F64E60', 
+                                      borderRadius: '6px'
+                                    
+                                  }} 
+                                    className={'text-white px-2 py-2 '
+                                    }>{user.kyc_status}</span>
                           </td>
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {user.account_number}

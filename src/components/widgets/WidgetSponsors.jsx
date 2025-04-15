@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import sponsor from '../../assets/images/sponsors/sponsor.jpg';
-import sponsor2 from '../../assets/images/sponsors/sponsor2.jpg';
+// import sponsor from '../../assets/images/sponsors/sponsor.jpg';
+// import sponsor2 from '../../assets/images/sponsors/sponsor2.jpg';
 
 const WidgetSponsors = ({ carouselSponsorItems }) => {
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                           }}
                           >
                             <img 
-                            src={item.type == 'Donor' ? sponsor2 : sponsor}
+                            src={import.meta.env.VITE_API_SERVER_URL + "../../../" + item.image}
                             style={{
                               height: '150px',
                               width: '300px',

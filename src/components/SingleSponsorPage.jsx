@@ -15,8 +15,8 @@ import Contact from './widgets/Contact';
 // import Services from './widgets/Services';
 // import LatestNews from './widgets/LatestNews';
 
-import sponsor from '../assets/images/sponsors/sponsor.jpg';
-import sponsor2 from '../assets/images/sponsors/sponsor2.jpg';
+// import sponsor from '../assets/images/sponsors/sponsor.jpg';
+// import sponsor2 from '../assets/images/sponsors/sponsor2.jpg';
 
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';

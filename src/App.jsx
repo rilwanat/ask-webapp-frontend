@@ -35,6 +35,8 @@ import AdminListDonations from './components/admin/AdminListDonations.jsx';
 
 import AdminSpecificKyc from './components/admin/AdminSpecificKyc.jsx';
 import AdminSpecificRequest from './components/admin/AdminSpecificRequest.jsx';
+import AdminSpecificSponsor from './components/admin/AdminSpecificSponsor.jsx';
+
 import AdminAddSponsorPage from './components/admin/AdminAddSponsorPage.jsx';
 import AdminManageCrypto from './components/admin/AdminManageCrypto.jsx';
 
@@ -43,8 +45,8 @@ import AdminManageCrypto from './components/admin/AdminManageCrypto.jsx';
 import UserDashboardPage from './components/user/UserDashboardPage.jsx';
 
 
-import sponsor from './assets/images/sponsors/sponsor.jpg';
-import sponsor2 from './assets/images/sponsors/sponsor2.jpg';
+// import sponsor from './assets/images/sponsors/sponsor.jpg';
+// import sponsor2 from './assets/images/sponsors/sponsor2.jpg';
 
 
 //
@@ -537,6 +539,13 @@ useEffect(() => {
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
              /></ProtectedAdminRoute>}/>
+
+<Route path='/specific-sponsor/:id' element={<ProtectedAdminRoute><AdminSpecificSponsor isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
              
 {/* <Route path='/manage-crypto' element={<ProtectedAdminRoute><AdminManageCrypto isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 

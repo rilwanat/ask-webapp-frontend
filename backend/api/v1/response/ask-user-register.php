@@ -82,7 +82,7 @@ opportunities, kindly subscribe to our social media handles:<br>
 <ul>
     <li><a href='https://whatsapp.com/channel/0029VapJPNX05MUYgWDwWR0m' target='_blank'>WhatsApp</a></li>
     <li><a href='https://t.me/askfoundations' target='_blank'>Telegram</a></li>
-    <li><a href='https://www.facebook.com/askfoundationintl' target='_blank'>Facebook</a></li>
+    <li><a href='https://www.facebook.com/askfoundationpage' target='_blank'>Facebook</a></li>
     <li><a href='https://x.com/@askfoundations' target='_blank'>Twitter</a></li>
     <li><a href='https://www.instagram.com/askfoundations' target='_blank'>Instagram</a></li>
     <li><a href='https://www.tiktok.com/@askfoundations' target='_blank'>TikTok</a></li>

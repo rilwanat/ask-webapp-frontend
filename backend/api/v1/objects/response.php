@@ -358,7 +358,7 @@ class Response
     }
 
     public function getTotalNominations() {
-        $query = "SELECT COUNT(*) AS count FROM " . $this->nominations_table;
+        $query = "SELECT COUNT(*) AS count FROM " . $this->nominations_history_table;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -1290,6 +1290,75 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
 
         return false;
     }
+
+
+
+    public function CreateSponsor($sponsorName, $sponsorType, $requestImage)
+    {
+        $query = "";
+        {
+            $query = "INSERT INTO " . $this->sponsors_table . " SET 
+            
+            name=:name,
+            type=:type,
+            image=:image
+            ";
+        }
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":name", $sponsorName);
+
+        $stmt->bindParam(":type", $sponsorType);
+        $stmt->bindParam(":image", $requestImage);
+        
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public function updateSponsor(
+        $sponsorId, 
+        $sponsorName,
+        $sponsorType
+        ) {
+    
+    
+            
+    
+        $query = "UPDATE " . $this->sponsors_table . " 
+                  SET 
+                  
+                    name =:name, 
+                    type =:type
+    
+                  WHERE id = :id";
+    
+        // Prepare the SQL statement
+        $stmt = $this->conn->prepare($query);
+    
+        // Bind parameters
+        $stmt->bindParam(":id", $sponsorId);
+    
+        $stmt->bindParam(":name", $sponsorName);
+        $stmt->bindParam(":type", $sponsorType);
+    
+        // Execute query and return the result
+        if ($stmt->execute()) {
+            return true;
+        }
+    
+        // Optionally, log the error or handle it appropriately
+        // error_log("Failed to update customer details: " . implode(":", $stmt->errorInfo()));
+    
+        return false;
+    }
+    
 
 
  // // // password reset // //

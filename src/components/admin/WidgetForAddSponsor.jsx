@@ -85,10 +85,11 @@ const WidgetForAddSponsor = ({ userDetails, refreshUserDetails }) => {
 
 
       // Function to validate Fullname as two words separated by space with no numbers or special characters
-const isValidFullname = (fullname) => {
-    const fullnamePattern = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/;
-    return fullnamePattern.test(fullname);
-  };
+      const isValidSponsorName = (name) => {
+        const namePattern = /^[a-zA-Z.]+(?:\s[a-zA-Z.]+)*$/;
+        return namePattern.test(name.trim());
+      };
+      
   
   // Function to validate email format
   const isValidEmail = (email) => {
@@ -117,13 +118,13 @@ const is11DigitNumber = (input) => {
 
     const AddSponsor  = async (e) => {
  
-      //  alert("here");
+      //  alert(sponsorName);
 
 
        // Validate Fullname before proceeding
-  if (!isValidFullname(sponsorName)) {
+  if (!isValidSponsorName(sponsorName)) {
     // alert('Invalid Fullname');
-    openNotificationModal(false, "ASK KYC", `Invalid Sponsor Name`);
+    openNotificationModal(false, "ASK Add Sponsor", "Invalid Sponsor Name. Only alphabetic characters and single spaces between words are allowed.");
     
     return;
 }
@@ -138,38 +139,49 @@ if ((sponsorType === "Select") || (sponsorType === "")) {
 
  
 
-alert("Sponsor");
-           return;
+// alert("Sponsor");
+//            return;
 
 
  
          e.preventDefault();
          setErrorMessage({ message: '' });
        
-         setIsLoading(true);
+         
        
 
          
          
          try {
      
-           const requestData = {   
-            email: userDetails.email_address,  
-            fullname: fullname,  
-            phoneNumber: phoneNumber,
-           };
 
+           const formData = new FormData();
+           formData.append('sponsorName', sponsorName);
+           formData.append('sponsorType', sponsorType);
+        
+           if (selectedFile !== null) {
+            formData.append('image', selectedFile);
+          } else {
+            // alert("Please select an image to upload");
+            openNotificationModal(false, "ASK Add Sponsor", "Select a sponsor image to upload");
+            
+            return;
+          }
+
+
+          setIsLoading(true);
+          //  alert("AddSponsor: " + JSON.stringify(requestData, null, 2));
 
      
-           const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_UPDATE_KYC, requestData, {
+           const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_ADD_SPONSOR, formData, {
              headers: {
-                   // 'Content-Type': 'multipart/form-data',
-                   'Content-Type': 'application/json',
+                   'Content-Type': 'multipart/form-data',
+                  //  'Content-Type': 'application/json',
                },
            });
      
            setIsLoading(false);
-          //  alert("kyc: " + JSON.stringify(response.data, null, 2));
+          //  alert("AddSponsor: " + JSON.stringify(response.data, null, 2));
      // return;
      
            if (response.data.status) {
@@ -180,24 +192,13 @@ alert("Sponsor");
              // If login is successful
              setErrorMessage({ message: '' });
              
-
-            //  setFullname('');
-            //  setPhoneNumber('');
-            //  setAccountNumber('');      
-            //  setType('');      
-            //  setGender('');      
-            //  setResidence(''); 
-
-             
-            //  setCookie('ask-user-details', JSON.stringify(response.data.userData));
-            //  refreshUserDetails();
-
-            //  deleteCookie("user");
-            //  navigate('/');
+             setSponsorName('');            
+             setSponsorType('');
+             setPreview(null);
 
      
             //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-             openNotificationModal(true, "ASK Add Sponsor", '');
+             openNotificationModal(true, "ASK Add Sponsor", response.data.message);
               
      
 
@@ -212,13 +213,13 @@ alert("Sponsor");
          } catch (error) {
            setIsLoading(false);
  
-          //  alert(error);
+           alert(error);
          
            if (error.response && error.response.data && error.response.data.message) {
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK KYC", errorMessage);
+           openNotificationModal(false, "ASK Add Sponsor", errorMessage);
               
 
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -227,12 +228,12 @@ alert("Sponsor");
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK KYC", errorMessage);
+           openNotificationModal(false, "ASK Add Sponsor", errorMessage);
               
          } else {
-           setErrorMessage({ message: 'Kyc failed. Please check your data and try again.' });
+           setErrorMessage({ message: 'ASK Add Sponsor failed. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK KYC", 'Kyc failed. Please check your data and try again.');
+           openNotificationModal(false, "ASK Add Sponsor", 'ASK Add Sponsor failed. Please check your data and try again.');
               
          }
        }
@@ -359,12 +360,12 @@ A community-based charity initiative
         name="select_bankname"
         value={sponsorType}
         className="bg-white border border-gray-300 text-sm rounded-lg focus:ring-theme focus:border-theme block w-full p-2 pl-4 pr-8 appearance-none"
-        onChange={(e) => setType(e.target.value )}
+        onChange={(e) => setSponsorType(e.target.value)}
       >
 <option value="Select">Select Type</option>
-  <option value="bank1">Sponsor</option>
-  <option value="bank2">Donor</option>
-  <option value="bank2">Partner</option>
+  <option value="Sponsor">Sponsor</option>
+  <option value="Donor">Donor</option>
+  <option value="Partner">Partner</option>
   </select>
                              </div>
 

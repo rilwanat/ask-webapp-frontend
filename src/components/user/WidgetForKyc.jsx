@@ -364,8 +364,10 @@ if (!imageSrc) {
              setCookie('ask-user-details', JSON.stringify(response.data.userData));
              refreshUserDetails();
 
+             navigateTo('/');
 
-             return;     
+
+            //  return;     
             // //  alert("Your kyc is pending approval. You will be notified once it is approved.");
             //  openNotificationModal(true, "ASK KYC", `Your kyc is pending approval. You will be notified once it is approved.`);
             //   setIsNotificationModalOpen(true);

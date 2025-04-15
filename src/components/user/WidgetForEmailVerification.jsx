@@ -231,6 +231,8 @@ const is11DigitNumber = (input) => {
      
             //  alert("Your kyc is pending approval. You will be notified once it is approved.");
              openNotificationModal(true, "ASK Email Verification", response.data.message);
+
+             navigateTo('/');
               
      
 
@@ -385,7 +387,7 @@ A community-based charity initiative
                                     resendVerificationCode(e);
                                     }}
                                     className="absolute top-1/2 -translate-y-1/2 right-3 text-sm 
-                                    text-green-500 hover:text-theme cursor-pointer bg-stone-200 px-2 py-1 rounded-sm"
+                                    text-black hover:text-theme cursor-pointer bg-stone-200 px-2 py-1 rounded-sm"
                                     >
                                       resend
                                       </button>

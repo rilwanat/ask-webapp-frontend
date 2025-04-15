@@ -57,6 +57,7 @@ import { setCookie, getCookie, deleteCookie } from '../../auth/authUtils'; // En
 import { jwtDecode } from 'jwt-decode';
 //
 
+import PaymentsIcon from '@mui/icons-material/Payments';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 
@@ -249,18 +250,18 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 const sample1 = [
-  { name: 'Jan', sales: 6000, orders: 5470},
-  { name: 'Feb', sales: 5600, orders: 1618},
-  { name: 'Mar', sales: 2500, orders: 9890},
-  { name: 'Apr', sales: 7780, orders: 1928},
-  { name: 'May', sales: 4890, orders: 3470},
-  { name: 'Jun', sales: 6390, orders: 1870},
-  { name: 'Jul', sales: 5490, orders: 8300},
-  { name: 'Aug', sales: 7310, orders: 4410},
-  { name: 'Sep', sales: 3250, orders: 1358},
-  { name: 'Oct', sales: 1200, orders: 6800},
-  { name: 'Nov', sales: 3780, orders: 2948},
-  { name: 'Dec', sales: 4890, orders: 9800}
+  { name: 'Jan', sales: 6000, nominations: 5470},
+  { name: 'Feb', sales: 5600, nominations: 1618},
+  { name: 'Mar', sales: 2500, nominations: 9890},
+  { name: 'Apr', sales: 7780, nominations: 1928},
+  { name: 'May', sales: 4890, nominations: 3470},
+  { name: 'Jun', sales: 6390, nominations: 1870},
+  { name: 'Jul', sales: 5490, nominations: 8300},
+  { name: 'Aug', sales: 7310, nominations: 4410},
+  { name: 'Sep', sales: 3250, nominations: 1358},
+  { name: 'Oct', sales: 1200, nominations: 6800},
+  { name: 'Nov', sales: 3780, nominations: 2948},
+  { name: 'Dec', sales: 4890, nominations: 9800}
 ];
   // Function to generate a random number within a range
   const getRandomNumberInRange = (min, max) => {
@@ -313,6 +314,7 @@ const sample1 = [
 
     try {
       // API request to get  count
+      // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_DASHBOARD_STATISTICS);
       const adminDashboardStatisticsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_DASHBOARD_STATISTICS;
       // alert(adminDashboardStatisticsEndpoint);
       const adminDashboardStatisticsResponse = await axiosAdminInstance.get(adminDashboardStatisticsEndpoint, {
@@ -320,6 +322,7 @@ const sample1 = [
           "Content-Type": "application/json",
         },
       });
+      
       setDashboardData(adminDashboardStatisticsResponse.data);  // Update state with  count
   
   
@@ -386,14 +389,15 @@ const sample1 = [
                                       >
                                         <div className="flex flex-row items-center">
                                           <div className="py-2 mr-2">
-                                            <div className=' rounded-3xl' style={{height: "48px", width: "48px", background: "#F4F7FE" }} >
-                                              <img className="w-12 h-12 object-scale-down p-1" 
+                                            <div className='flex items-center justify-center p-1 rounded-3xl' style={{height: "48px", width: "48px", background: "#F4F7FE" }} >
+                                              {/* <img className="w-12 h-12 object-scale-down p-1" 
                                             //   src={bars} 
-                                              alt=""  />
+                                              alt=""  /> */}
+                                              <PaymentsIcon/>
                                             </div>
                                           </div>
-                                          <div className="flex flex-col py-2 ml-2">
-                                            <p className='' style={{ fontSize: '14px', fontweight: '500', color: '#A3AED0'  }}>Total</p>
+                                          <div className="flex flex-col py-2 ml-2 text-theme">
+                                            <p className='' style={{ fontSize: '14px', fontweight: '500'   }}>Total</p>
                                             {
                                               isDataloading ? <div className='my-2'><MiniLoading /></div>
                                               :
@@ -415,15 +419,15 @@ const sample1 = [
                                       >
                                         <div className="flex flex-row items-center">
                                           <div className="py-2 mr-2">
-                                            <div className='flex items-center justify-center bg-gray-200 rounded-3xl' style={{height: "48px", width: "48px" }} >
+                                            <div className='flex items-center justify-center bg-green-200 rounded-3xl' style={{height: "48px", width: "48px" }} >
                                               {/* <img className="w-12 h-12 object-scale-down p-1" 
                                             //   src={naira} 
                                               alt=""  /> */}
                                               <TrendingDownIcon />
                                             </div>
                                           </div>
-                                          <div className="flex flex-col py-2 ml-2">
-                                            <p className='' style={{ fontSize: '14px', fontweight: '500', color: '#A3AED0'  }}>Incoming</p>
+                                          <div className="flex flex-col py-2 ml-2 text-theme">
+                                            <p className='' style={{ fontSize: '14px', fontweight: '500'  }}>Incoming</p>
                                             {
                                               isDataloading ? <div className='my-2'><MiniLoading /></div>
                                               :
@@ -444,15 +448,15 @@ const sample1 = [
                                       >
                                         <div className="flex flex-row items-center">
                                           <div className="py-2 mr-2">
-                                            <div className='flex items-center justify-center bg-gray-200 rounded-3xl' style={{height: "48px", width: "48px" }} >
+                                            <div className='flex items-center justify-center bg-red-200 rounded-3xl' style={{height: "48px", width: "48px" }} >
                                               {/* <img className="w-12 h-12 object-scale-down " 
                                               // src={profile2user} 
                                               alt=""  /> */}
                                               <TrendingUpIcon />
                                             </div>
                                           </div>
-                                          <div className="flex flex-col py-2 ml-2">
-                                            <p className='' style={{ fontSize: '14px', fontweight: '500', color: '#A3AED0' }}>Outgoing</p>
+                                          <div className="flex flex-col py-2 ml-2 text-theme">
+                                            <p className='' style={{ fontSize: '14px', fontweight: '500' }}>Outgoing</p>
                                             {
                                               isDataloading ? <div className='my-2'><MiniLoading /></div>
                                               :
@@ -489,7 +493,7 @@ const sample1 = [
                                           <div className="py-2 mr-2">
                                             <div className='' style={{height: "40px" }} >
                                               <GroupIcon style={{fontSize: '40px' }} 
-                                              className="p-1 mb-2 text-white cursor-pointer rounded-3xl bg-theme"/>
+                                              className="p-2 mb-2 text-white cursor-pointer rounded-3xl bg-theme"/>
                                               {/* <img className="w-12 h-12 object-scale-down " 
                                             //   src={profile2user} 
                                               alt=""  /> */}
@@ -515,7 +519,7 @@ const sample1 = [
                                           <div className="py-2 mr-2">
                                             <div className='' style={{height: "40px" }} >
                                               <ElderlyIcon style={{fontSize: '40px' }} 
-                                              className="p-1 mb-2 text-white cursor-pointer rounded-3xl bg-theme"/>
+                                              className="p-2 mb-2 text-white cursor-pointer rounded-3xl bg-theme"/>
                                               {/* <img className="w-12 h-12 object-scale-down " 
                                             //   src={users} 
                                               alt=""  /> */}
@@ -544,7 +548,7 @@ const sample1 = [
                                           <div className="py-2 mr-2">
                                             <div className='' style={{height: "40px" }} >
                                               <VolunteerActivismIcon style={{fontSize: '40px' }} 
-                                              className="p-1 mb-2 text-white cursor-pointer rounded-3xl bg-theme"/>
+                                              className="p-2 mb-2 text-white cursor-pointer rounded-3xl bg-theme"/>
                                               {/* <img className="w-12 h-12 object-scale-down " 
                                             //   src={Icon} 
                                               alt=""  /> */}
@@ -604,7 +608,7 @@ const sample1 = [
                       // handleChange for 
                     }}
                   >
-                    <option value="">Beneficiaries</option>
+                    <option value="">Nominations</option>
                     {/* Map categories here */}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -640,7 +644,7 @@ const sample1 = [
                                   <XAxis dataKey="name" />
                                   <YAxis />
                                   <Tooltip />
-                                  <Line type="monotone" dataKey="orders" stroke="#82ca9d" strokeWidth={3}/>
+                                  <Line type="monotone" dataKey="nominations" stroke="#82ca9d" strokeWidth={3}/>
                                   
                                 </LineChart>
                               </ResponsiveContainer>
@@ -665,7 +669,7 @@ const sample1 = [
                             <div className='rounded-lg shadow-lg px-4 mx-0 border-black-200 border-2 bg-white'>
                             <div className="flex justify-between my-2 pb-2 " style={{ }}>
                                 <div className="flex w-full items-center justify-between  bg-">
-                                    <div className="text-s font-bold pr-2">Nominations</div>
+                                    <div className="text-s font-bold pr-2">Top Nominations</div>
                                     <div className="text-s px-2 mr-0 rounded bg-orange" style={{  color: '#ffffff' }}>{
                                       isDataloading ? <MiniLoading />
                                       : 
