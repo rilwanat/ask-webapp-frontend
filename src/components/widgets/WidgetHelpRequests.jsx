@@ -140,7 +140,7 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
 
                     <div className='flex flex-col items-center'>
                       <WidgetNominate 
-                      helpToken={item.helpToken} userDetails={userDetails} 
+                      helpToken={item.help_token} userDetails={userDetails} 
                       refreshUserDetails={refreshUserDetails} 
                       //itemName={item.fullname_for_comparison}                       
                       openNotificationModal={openNotificationModal}

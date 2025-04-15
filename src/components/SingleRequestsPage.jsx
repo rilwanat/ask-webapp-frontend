@@ -157,7 +157,7 @@ export default function SingleRequestsPage({
                                         // whileTap={{ scale: 0.95 }}
                                     >
                                         <WidgetNominate 
-                                        helpToken={item.helpToken} userDetails={userDetails} 
+                                        helpToken={item.help_token} userDetails={userDetails} 
                                         refreshUserDetails={refreshUserDetails} 
                                         //itemName={item.user.fullname}                                        
                                         openNotificationModal={openNotificationModal}

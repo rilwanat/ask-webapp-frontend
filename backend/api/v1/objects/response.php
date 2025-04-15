@@ -16,7 +16,7 @@ class Response
     private $help_requests_table = "help_requests_table";
     private $beneficiaries_table = "beneficiaries_table";
     private $sponsors_table = "sponsors_table";
-    private $nominations_table = "nominations_table";
+    private $nominations_history_table = "nominations_history_table";
     private $donations_table = "donations_table";
     private $tokens_table = "tokens_table";
     private $bank_codes_table = "bank_codes_table";
@@ -1188,7 +1188,106 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
 
     }
 
+    public function checkIfUserCanNominate($email, $help_token) 
+{
+    // Step 1: Check user details
+    $query_check = "SELECT * FROM " . $this->users_test_table . " WHERE email_address = :email";
+    $stmt_check = $this->conn->prepare($query_check);
+    $stmt_check->bindParam(":email", $email);
+    $stmt_check->execute();
 
+    if ($stmt_check->rowCount() > 0) {
+        $user = $stmt_check->fetch(PDO::FETCH_ASSOC);
+        $fullname = $user['fullname'];
+
+        // Step 2: Validate user credentials
+        if ($user['is_cheat'] !== 'No') {
+            return ["status" => false, "message" => "User is flagged for cheating."];
+        }
+
+        if ($user['email_verified'] !== 'Yes') {
+            return ["status" => false, "message" => "Email address is not verified."];
+        }
+
+        // Step 3: Get nominee data from help_requests_table using help_token
+        $query_nominee = "SELECT * FROM " . $this->help_requests_table . " WHERE help_token = :help_token LIMIT 1";
+        $stmt_nominee = $this->conn->prepare($query_nominee);
+        $stmt_nominee->bindParam(":help_token", $help_token);
+        $stmt_nominee->execute();
+
+        if ($stmt_nominee->rowCount() > 0) {
+            $nominee = $stmt_nominee->fetch(PDO::FETCH_ASSOC);
+
+            // // Step 4: Check for existing nomination (same voter+help_token+today)
+            // $today = date('Y-m-d');
+            // $query_existing = "SELECT COUNT(*) as existing_count 
+            //                  FROM " . $this->nominations_history_table . " 
+            //                  WHERE voter_fullname = :voter_fullname ";
+            //                 //  AND help_token = :help_token";
+            //                 //  AND DATE(voting_date) = :today";
+            // $stmt_existing = $this->conn->prepare($query_existing);
+            // $stmt_existing->bindParam(":voter_fullname", $fullname);
+            // // $stmt_existing->bindParam(":help_token", $help_token);
+            // // $stmt_existing->bindParam(":today", $today);
+            // $stmt_existing->execute();
+            // $existing = $stmt_existing->fetch(PDO::FETCH_ASSOC);
+
+            // if ($existing['existing_count'] > 0) {
+            //     return ["status" => false, "message" => "You have already nominated this request today."];
+            // }
+            
+            
+            // All checks passed
+            return [
+                "status" => true, 
+                "message" => "All user checks passed.", 
+                "userData" => $user, 
+                "nomineeData" => $nominee
+            ];
+        } else {
+            return ["status" => false, "message" => "Nominee request not found."];
+        }
+    } else {
+        return ["status" => false, "message" => "User does not exist."];
+    }
+}
+
+    public function CreateNomination($email, $voterFullname, $voterDeviceId, $votingWeight, $nomineeEmail, $nomineeFullname, $helpToken)
+    {
+        $query = "";
+        {
+            $query = "INSERT INTO " . $this->nominations_history_table . " SET 
+            
+            voter_email=:voter_email,
+            voter_fullname=:voter_fullname,
+            voter_device_id=:voter_device_id,
+
+            voting_weight=:voting_weight,
+            nominee_email=:nominee_email,
+            nominee_fullname=:nominee_fullname,
+            help_token=:help_token
+            ";
+        }
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":voter_email", $email);
+        $stmt->bindParam(":voter_fullname", $voterFullname);
+        $stmt->bindParam(":voter_device_id", $voterDeviceId);
+
+        $stmt->bindParam(":voting_weight", $votingWeight);
+        $stmt->bindParam(":nominee_email", $nomineeEmail);
+        $stmt->bindParam(":nominee_fullname", $nomineeFullname);
+        $stmt->bindParam(":help_token", $helpToken);
+        
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
 
 
  // // // password reset // //
