@@ -426,7 +426,7 @@ if (!imageSrc) {
     
         // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_READ_BANK_CODES);
         try {
-          // API request to get doctors count
+          // API request to get  count
           const adminBankCodesEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_READ_BANK_CODES;
           // alert(adminBankCodesEndpoint);
           const adminBankCodesResponse = await axiosInstance.get(adminBankCodesEndpoint, {
@@ -434,7 +434,7 @@ if (!imageSrc) {
               "Content-Type": "application/json",
             },
           });
-          setBankCodesData(adminBankCodesResponse.data.data);  // Update state with doctors count
+          setBankCodesData(adminBankCodesResponse.data.data);  // Update state with  count
       
           // openNotificationModal(true, currentPageName, "");
           // alert(JSON.stringify(adminBankCodesResponse.data.data), null, 2);  // Update state with beneficiaries count

@@ -389,8 +389,9 @@ const navigate = useNavigate();
     
             // setRegistrationFirstname('');
             // setRegistrationLastname('');
-            // setRegistrationEmailAddress('');
-    
+            setRegistrationEmailAddress('');
+            setRegistrationPassword(''); 
+            setRegistrationConfirmPassword('');
             
     
             toggleAccount();

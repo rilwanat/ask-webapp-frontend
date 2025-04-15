@@ -312,7 +312,7 @@ const sample1 = [
 
 
     try {
-      // API request to get doctors count
+      // API request to get  count
       const adminDashboardStatisticsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_DASHBOARD_STATISTICS;
       // alert(adminDashboardStatisticsEndpoint);
       const adminDashboardStatisticsResponse = await axiosAdminInstance.get(adminDashboardStatisticsEndpoint, {
@@ -320,7 +320,7 @@ const sample1 = [
           "Content-Type": "application/json",
         },
       });
-      setDashboardData(adminDashboardStatisticsResponse.data);  // Update state with doctors count
+      setDashboardData(adminDashboardStatisticsResponse.data);  // Update state with  count
   
   
       // openNotificationModal(true, currentPageName, "");
@@ -601,7 +601,7 @@ const sample1 = [
                     name="patientsSelect"
                     className="bg-white border border-gray-300 text-eDoctorBlue text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2 pl-4 pr-8 appearance-none"
                     onChange={(e) => {
-                      // handleChange for patients
+                      // handleChange for 
                     }}
                   >
                     <option value="">Beneficiaries</option>

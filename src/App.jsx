@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-
+import askLogo from './assets/images/ask-logo.png';
 
 import LandingPage from './components/LandingPage.jsx';
 import AboutUsPage from './components/AboutUsPage.jsx';
@@ -143,82 +143,102 @@ function App() {
 
 
       const [isDataloading, setIsDataLoading] = useState(true);
+
       const [helpRequestsData, setHelpRequestsData] = useState([]);
       const [beneficiariesData, setBeneficiariesData] = useState([]);
+      const [sponsorsData, setSponsorsData] = useState([]);
+
       // const [donationsData, setDonationsData] = useState([]);
 
 
-
+      const defaultRequestItems = [
+        {
+          id: 1,
+          date: "2025-02-24 03:47:17",
+          nomination_count: 0,
+          description: "ASK request description.",
+          remark: "ASK remark.",
+          email_address: "ask@askfoundations.org",
+          request_image: "../../../../images/help-requests-images/ask-logox.png",
+          help_token: "ASK123456",
       
-      // Sample carouselSponsorItems
-        const carouselSponsorItems = [
-          {
+          user: {
             id: 1,
-            image: {sponsor},//"https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-            title: "Community Support",
-            description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-            score: "43281",
-            name: "Koksons Seasons",
-            date: "2025-02-24 03:47:17",
-            price: "N30,000.00",
-            type: "Sponsor"
-          },
-          {
-            id: 2,
-            image: {sponsor2},//"https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-            title: "Environmental Care",
-            description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-            score: "5293",
-            name: "Adeyinka K. Kokumo",
-            date: "2025-02-24 03:47:17",
-            price: "N40,000.00",
-            type: "Donor"
-          },
-          {
-            id: 3,
-            image: {sponsor},//"https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-            title: "Youth Empowerment",
-            description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-            score: "6244",
-            name: "Koksons Seasons",
-            date: "2025-02-24 03:47:17",
-            price: "N50,000.00",
-            type: "Sponsor"
-          },
-          {
-            id: 4,
-            image: {sponsor2},//"https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-            title: "Youth Empowerment",
-            description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-            score: "4534",
-            name: "Adeyinka K. Kokumo",
-            date: "2025-02-24 03:47:17",
-            price: "N50,000.00",
-            type: "Donor"
-          },
-          {
-            id: 5,
-            image: {sponsor},//"https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-            title: "Youth Empowerment",
-            description: "rbapps is a fullstack web and mobile application development company located in abuja and specializing in frontend and backend technologies.",
-            score: "4734",
-            name: "Koksons Seasons",
-            date: "2025-02-24 03:47:17",
-            price: "N50,000.00",
-            type: "Sponsor"
+            fullname: "Ashabi Shobande Kokumo",
+            email_address: "ask@askfoundations.org",
+            phone: "08000000000",
+            kyc_status: "pending",
+            account_number: "1234567890",
+            account_name: "Ashabi Shobande Kokumo",
+            bank_name: "ASK Bank",
+            gender: "Female",
+            state: "Abuja",
+            profile_picture: "../../../../images/help-requests-images/ask-logox.png",
+            email_verified: true,
+            registration_date: "2025-01-01 12:00:00",
+            user_type: "user",
+            eligibility: true,
+            is_cheat: false,
+            opened_welcome_msg: true
           }
-        ];
+        }
+      ];
+
+      const defaultBeneficiariesItems = [
+        {
+          id: 1,
+          email_address: "ask@askfoundations.org",
+          date: "2025-04-15 12:32:00",
+          amount: 50000,
+          status: "approved",
+          date_resolved: "2025-04-15 12:32:00",
+          nomination_count: 0,
+          remark: "",
+      
+          user: {
+            id: 1,
+            fullname: "Ashabi Shobande Kokumo",
+            email_address: "janedoe@example.com",
+            phone: "08000000001",
+            kyc_status: "verified",
+            account_number: "0987654321",
+            account_name: "Ask Doe",
+            bank_name: "ASK Bank",
+            gender: "Female",
+            state: "Lagos",
+            profile_picture: "../../../../images/help-requests-images/ask-logox.png",
+            email_verified: true,
+            registration_date: "2025-04-15 12:32:00",
+            user_type: "user",
+            eligibility: true,
+            is_cheat: false,
+            opened_welcome_msg: false
+          }
+        }
+      ]; 
+
+      const defaultSponsorItems = [
+        {
+          id: 1,
+          image: askLogo,
+          title: "ASK Title",
+          description: "ASK description for sponsor/donor.",
+          score: 0,
+          name: "ASK Name",
+          date: "2025-04-15 12:32:00",
+          price: 0,
+          type: "Sponsor"
+        }
+      ];
 
 
-
-
-  
 
 
 
     useEffect(() => {
       handleHelpRequestsData();
       handleBeneficiariesData();
+      handleSponsorsData();
     }, []);
     const handleHelpRequestsData = async () => {
   
@@ -233,7 +253,7 @@ function App() {
             "Content-Type": "application/json",
           },
         });
-        setHelpRequestsData(helpRequestsResponse.data.data);  // Update state with doctors count
+        setHelpRequestsData(helpRequestsResponse.data?.data ?? defaultRequestItems);  
     
     
         // openNotificationModal(true, currentPageName, "");
@@ -274,7 +294,7 @@ function App() {
             "Content-Type": "application/json",
           },
         });
-        setBeneficiariesData(beneficiariesRequestsResponse.data.data);  // Update state with doctors count
+        setBeneficiariesData(beneficiariesRequestsResponse.data?.data ?? defaultBeneficiariesItems);  // Update state with  count
     
     
         // openNotificationModal(true, currentPageName, "");
@@ -301,6 +321,48 @@ function App() {
         }
       }
     };
+
+    const handleSponsorsData = async () => {
+  
+      setIsDataLoading(true);
+  
+  
+      try {
+        const sponsorsRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_SPONSORS;
+        // alert(beneficiariesRequestsEndpoint);
+        const sponsorsRequestsResponse = await axiosInstance.get(sponsorsRequestsEndpoint, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setSponsorsData(sponsorsRequestsResponse.data?.data ?? defaultSponsorItems);  // Update state with  count
+    
+    
+        // openNotificationModal(true, currentPageName, "");
+        // alert(JSON.stringify(helpRequestsResponse.data.data), null, 2);  // Update state with appointments count
+      //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+  
+  
+  
+  
+  
+        // Once all data is fetched, set loading to false
+        setIsDataLoading(false);
+    
+      } catch (error) {
+        setIsDataLoading(false);
+        
+        alert(error);
+        // Handle errors
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
+          openNotificationModal(false, currentPageName + " Error", errorMessage);
+        } else {
+          openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+        }
+      }
+    };
+
 
 
 
@@ -336,19 +398,19 @@ useEffect(() => {
             <Route path='/' element={<LandingPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
             />}/>
             <Route path='/about-us' element={<AboutUsPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
             <Route path='/contact-us' element={<ContactUsPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
@@ -356,39 +418,39 @@ useEffect(() => {
             <Route path='/terms-and-conditions' element={<TermsAndConditionsPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
             <Route path='/privacy-policy' element={<PrivacyPolicyPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
             <Route path='/single-request' element={<SingleRequestsPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
             <Route path='/single-sponsor' element={<SingleSponsorPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
             <Route path='/single-beneficiary' element={<SingleBeneficiaryPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
 <Route path='/help-request/:helpToken' element={<SingleNominatePage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
@@ -397,13 +459,13 @@ useEffect(() => {
             <Route path='/donate' element={<DonatePage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
              <Route path='/i-ask' element={<AskPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
@@ -413,73 +475,73 @@ useEffect(() => {
 <Route path='/ask-admin-login' element={<AdminLoginPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
 
 <Route path='/admin-home' element={<ProtectedAdminRoute><AdminLandingPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
 <Route path='/manage-hero-images' element={<ProtectedAdminRoute><ManageWebsiteImagesPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
 <Route path='/manage-kyc' element={<ProtectedAdminRoute><AdminManageKyc isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
 <Route path='/requests-list' element={<ProtectedAdminRoute><AdminListRequests isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
 <Route path='/beneficiaries-list' element={<ProtectedAdminRoute><AdminListBeneficiaries isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
 <Route path='/sponsors-list' element={<ProtectedAdminRoute><AdminListSponsors isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
 <Route path='/donations-list' element={<ProtectedAdminRoute><AdminListDonations isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
 <Route path='/specific-kyc/:id' element={<ProtectedAdminRoute><AdminSpecificKyc isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
 <Route path='/specific-request/:id' element={<ProtectedAdminRoute><AdminSpecificRequest isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
              
 <Route path='/admin-add-sponsor' element={<ProtectedAdminRoute><AdminAddSponsorPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide} 
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
              /></ProtectedAdminRoute>}/>
              
 {/* <Route path='/manage-crypto' element={<ProtectedAdminRoute><AdminManageCrypto isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide} 
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
              /></ProtectedAdminRoute>}/> */}
 
 
@@ -488,7 +550,7 @@ useEffect(() => {
 <Route path='/user-dashboard' element={<ProtectedRoute><UserDashboardPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={carouselSponsorItems} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              /></ProtectedRoute>}/>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import background from '../../assets/images/ask-logo.png';
@@ -23,6 +23,7 @@ import { setCookie, isAuthenticated } from '../../auth/authUtils'; // Ensure the
 import { jwtDecode } from 'jwt-decode';
 import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
 //
+import { getFingerprint } from '../../auth/fingerPrint';
 
 const WidgetNominate = ({ 
   helpToken, userDetails, 
@@ -36,8 +37,20 @@ const WidgetNominate = ({
     const [isLoading, setIsLoading] = useState(false);
  const [errorMessage, setErrorMessage] = useState('');
 
+
+ const [fingerPrint, setFingerPrint] = useState('');
+   useEffect(() => {
+    const loadFingerprint = async () => {
+      const result = await getFingerprint();
+      setFingerPrint(result); // this is the unique fingerprint
+    };
+    loadFingerprint();
+  }, []); // run only once on mount
+ 
+
+
 // alert(helpToken);
-  const handleNominate = (e) => {
+  const handleNominate = async (e) => {
 
     // alert("Nominate: " + "isAuthenticated: " + isAuthenticated());
     // alert("Nominate: " + JSON.stringify(userDetails, null, 2));
@@ -56,6 +69,10 @@ const WidgetNominate = ({
           // openNotificationModal(true, "Nominate: authenticated emailVerified isNOTCheat", "user is Authenticated, email is Verified, user is NOT Cheat");
 
           //hit endpoint to nominate
+
+          
+          // alert(fingerprint);
+          // return;
 
           // make further checks
           // log nominations
@@ -101,10 +118,12 @@ const WidgetNominate = ({
           try {
             const requestData = {   
               email: userDetails.email_address,  
-              helpToken: helpToken
+              helpToken: helpToken,
+              fingerPrint: fingerPrint
             };
       
             // alert(JSON.stringify(requestData, null, 2));
+            // return;
           
             const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CREATE_NOMINATION, requestData, {
               headers: {
@@ -140,17 +159,21 @@ const WidgetNominate = ({
             }
           } catch (error) {
             setIsLoading(false);
+            // alert(error);
           
             if (error.response && error.response.data && error.response.data.message) {
               const errorMessage = error.response.data.message;
               setErrorMessage({ message: errorMessage });
+              openNotificationModal(false, "Nomination Error", errorMessage);
             } else if (error.response && error.response.data && error.response.data.errors) {
               const { errors } = error.response.data;
               const errorMessages = errors.map(error => error.msg);
               const errorMessage = errorMessages.join(', '); // Join all error messages
               setErrorMessage({ message: errorMessage });
+              openNotificationModal(false, "Nomination Error", errorMessage);
             } else {
               setErrorMessage({ message: 'Nomination failed. Please check your credentials and try again.' });
+              openNotificationModal(false, "Nomination Error", 'Nomination failed. Please check your credentials and try again.');
             }
           }
         };

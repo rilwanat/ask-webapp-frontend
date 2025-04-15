@@ -181,7 +181,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
     try {
-      // API request to get doctors count
+      // API request to get  count
       const adminRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_REQUESTS_LIST;
       // alert(adminRequestsEndpoint);
       const adminRequestsResponse = await axiosAdminInstance.get(adminRequestsEndpoint, {
@@ -189,7 +189,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
           "Content-Type": "application/json",
         },
       });
-      setRequestsData(adminRequestsResponse.data.data);  // Update state with doctors count
+      setRequestsData(adminRequestsResponse.data.data);  // Update state with  count
   
   
       // openNotificationModal(true, currentPageName, "");

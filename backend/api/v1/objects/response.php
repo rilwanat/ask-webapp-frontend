@@ -7,8 +7,6 @@ use Firebase\JWT\JWT;
 class Response
 {
     private $conn;
-
-    private $users_test_table = "users_test_table";
     
 
     private $admins_table = "admins_table";
@@ -110,7 +108,7 @@ class Response
     public function checkIfUserCredentialsIsValid($email, $rawPassword) 
     {
         // Check if the user exists
-        $query_check = "SELECT id, access_key FROM " . $this->users_test_table . " WHERE email_address = :email";
+        $query_check = "SELECT id, access_key FROM " . $this->users_table . " WHERE email_address = :email";
         $stmt_check = $this->conn->prepare($query_check);
         $stmt_check->bindParam(":email", $email);
         $stmt_check->execute();
@@ -188,7 +186,7 @@ class Response
                     p.eligibility,
                     p.is_cheat,
                     p.opened_welcome_msg
-                FROM " . $this->users_test_table . " p  WHERE p.email_address = :email";
+                FROM " . $this->users_table . " p  WHERE p.email_address = :email";
             
             // Prepare the statement
             $stmt = $this->conn->prepare($query);
@@ -540,7 +538,7 @@ public function updateUserKyc(
 
         
 
-    $query = "UPDATE " . $this->users_test_table . " 
+    $query = "UPDATE " . $this->users_table . " 
               SET 
                 
                 fullname =:fullname,
@@ -626,7 +624,7 @@ public function updateSelfiImagePath(
 
         
 
-    $query = "UPDATE " . $this->users_test_table . " 
+    $query = "UPDATE " . $this->users_table . " 
               SET 
               
                 profile_picture =:profile_picture 
@@ -751,7 +749,7 @@ public function ReadAllUsers()
 public function checkIfUserExists($email) 
     {
         // Check if the user already exists
-        $query_check = "SELECT id FROM " . $this->users_test_table . " WHERE email_address = :email";
+        $query_check = "SELECT id FROM " . $this->users_table . " WHERE email_address = :email";
         $stmt_check = $this->conn->prepare($query_check);
         $stmt_check->bindParam(":email", $email);
         $stmt_check->execute();
@@ -770,7 +768,7 @@ public function checkIfUserExists($email)
         // $customer_id = strval(time());
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $query = "INSERT INTO " . $this->users_test_table . " SET             
+        $query = "INSERT INTO " . $this->users_table . " SET             
             
             email_address=:email,
             access_key=:access_key
@@ -845,7 +843,7 @@ public function checkIfEmailCodeIsValid($email, $verificationCode)
 
             $yes = "Yes";
             // Token is valid - update verification status
-            $query = "UPDATE " . $this->users_test_table . " 
+            $query = "UPDATE " . $this->users_table . " 
                       SET email_verified = :email_verified
                       WHERE email_address = :email";
 
@@ -980,7 +978,7 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
     public function checkIfUserCanPostHelpRequest($email) 
     {
         // Step 1: Check user details
-        $query_check = "SELECT * FROM " . $this->users_test_table . " WHERE email_address = :email";
+        $query_check = "SELECT * FROM " . $this->users_table . " WHERE email_address = :email";
         $stmt_check = $this->conn->prepare($query_check);
         $stmt_check->bindParam(":email", $email);
         $stmt_check->execute();
@@ -1108,7 +1106,7 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
     public function checkIfUserCanUpdateHelpRequest($email) 
     {
         // Step 1: Check user details
-        $query_check = "SELECT * FROM " . $this->users_test_table . " WHERE email_address = :email";
+        $query_check = "SELECT * FROM " . $this->users_table . " WHERE email_address = :email";
         $stmt_check = $this->conn->prepare($query_check);
         $stmt_check->bindParam(":email", $email);
         $stmt_check->execute();
@@ -1188,10 +1186,10 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
 
     }
 
-    public function checkIfUserCanNominate($email, $help_token) 
+    public function checkIfUserCanNominate($email, $help_token, $fingerPrint) 
 {
     // Step 1: Check user details
-    $query_check = "SELECT * FROM " . $this->users_test_table . " WHERE email_address = :email";
+    $query_check = "SELECT * FROM " . $this->users_table . " WHERE email_address = :email";
     $stmt_check = $this->conn->prepare($query_check);
     $stmt_check->bindParam(":email", $email);
     $stmt_check->execute();
@@ -1218,23 +1216,27 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
         if ($stmt_nominee->rowCount() > 0) {
             $nominee = $stmt_nominee->fetch(PDO::FETCH_ASSOC);
 
-            // // Step 4: Check for existing nomination (same voter+help_token+today)
-            // $today = date('Y-m-d');
-            // $query_existing = "SELECT COUNT(*) as existing_count 
-            //                  FROM " . $this->nominations_history_table . " 
-            //                  WHERE voter_fullname = :voter_fullname ";
-            //                 //  AND help_token = :help_token";
-            //                 //  AND DATE(voting_date) = :today";
-            // $stmt_existing = $this->conn->prepare($query_existing);
-            // $stmt_existing->bindParam(":voter_fullname", $fullname);
-            // // $stmt_existing->bindParam(":help_token", $help_token);
-            // // $stmt_existing->bindParam(":today", $today);
-            // $stmt_existing->execute();
-            // $existing = $stmt_existing->fetch(PDO::FETCH_ASSOC);
-
-            // if ($existing['existing_count'] > 0) {
-            //     return ["status" => false, "message" => "You have already nominated this request today."];
-            // }
+            // Step 4: Check for existing nomination (same voter+help_token+today)
+            $today = date('Y-m-d');
+            $query_existing = "SELECT COUNT(*) as existing_count 
+                             FROM " . $this->nominations_history_table . " 
+                             WHERE voter_fullname = :voter_fullname 
+                              AND help_token = :help_token 
+                              AND voter_device_id = :voter_device_id 
+                              AND DATE(voting_date) = :today";
+            $stmt_existing = $this->conn->prepare($query_existing);
+            $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
+            $stmt_existing->bindValue(":help_token", $help_token, PDO::PARAM_STR);
+            $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR);
+            $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
+            if (!$stmt_existing->execute()) {
+                return ["status" => false, "message" => "System error checking nominations"];
+            }
+            $result = $stmt_existing->fetch(PDO::FETCH_ASSOC);
+            if ($result && $result['existing_count'] > 0) {
+                $response = ["status" => false, "message" => "You have already nominated this request today."];
+                return $response;
+            }
             
             
             // All checks passed
@@ -1317,7 +1319,7 @@ public function DeletePasswordResetEmailToken($email) {
 
 public function UpdatePasswordResetUserPassword($email, $newPassword) {
     $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
-    $query = "UPDATE " . $this->users_test_table . " SET access_key = :access_key WHERE email_address = :email_address";
+    $query = "UPDATE " . $this->users_table . " SET access_key = :access_key WHERE email_address = :email_address";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(":email_address", $email);
     $stmt->bindParam(":access_key", $hashed);

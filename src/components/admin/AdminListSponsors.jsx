@@ -204,7 +204,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
     try {
-      // API request to get doctors count
+      // API request to get  count
       const adminSponsorsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_SPONSORS_LIST;
       // alert(adminSponsorsEndpoint);
       const adminSponsorsResponse = await axiosAdminInstance.get(adminSponsorsEndpoint, {
@@ -212,7 +212,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
           "Content-Type": "application/json",
         },
       });
-      setSponsorsData(adminSponsorsResponse.data.data);  // Update state with doctors count
+      setSponsorsData(adminSponsorsResponse.data.data);  // Update state with  count
   
   
       // openNotificationModal(true, currentPageName, "");

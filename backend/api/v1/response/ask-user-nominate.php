@@ -22,11 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    if (!empty($data->email) && !empty($data->helpToken)) {
+    
+    if (!empty($data->email) && !empty($data->helpToken) && !empty($data->fingerPrint)) {
 
     // Validate user credentials and additional checks
-    $nominateResult = $response->checkIfUserCanNominate($data->email, $data->helpToken);
+    $nominateResult = $response->checkIfUserCanNominate($data->email, $data->helpToken, $data->fingerPrint);
     if (!$nominateResult['status']) {
         http_response_code(403); // Forbidden
         echo json_encode(["status" => false, "message" => $nominateResult['message']]);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $voterFullname = $nominateResult['userData']['fullname'];
-    $voterDeviceId = "##";
+    $voterDeviceId = $data->fingerPrint;
     $votingWeight = $nominateResult['userData']['vote_weight'];
 
     $nomineeEmail = $nominateResult['nomineeData']['email_address'];

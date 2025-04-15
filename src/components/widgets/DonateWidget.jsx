@@ -90,7 +90,7 @@ const DonateWidget = ({ userDetails }) => {
               "Content-Type": "application/json",
             },
           });
-          setDonationsData(donationsRequestsResponse.data.data);  // Update state with doctors count
+          setDonationsData(donationsRequestsResponse.data.data);  // Update state with  count
       
       
           // openNotificationModal(true, currentPageName, "");

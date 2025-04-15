@@ -75,7 +75,7 @@ export default function AskPage({
             //    alert(JSON.stringify(userDetails), null, 2);
             // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST);
             try {
-              // API request to get doctors count
+              // API request to get  count
               const myActiveHelpRequestEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST;
               // alert(adminBankCodesEndpoint);
               const myActiveHelpRequestResponse = await axiosInstance.post(myActiveHelpRequestEndpoint, requestData, {
@@ -87,7 +87,7 @@ export default function AskPage({
 
               
               // alert(JSON.stringify(myActiveHelpRequestResponse.data.requestData), null, 2);
-              setMyActiveRequestsData(myActiveHelpRequestResponse.data.requestData);  // Update state with doctors count
+              setMyActiveRequestsData(myActiveHelpRequestResponse.data.requestData);  // Update state with  count
           
               // openNotificationModal(true, currentPageName, "");
                // Update state with beneficiaries count
