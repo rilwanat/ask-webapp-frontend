@@ -206,6 +206,15 @@ let countFiltered = indexOfFirstFilteredItem + 1;
  
 
 
+const isValidName = (name) => {
+  const namePattern = /^[a-zA-Z0-9.]+(?:\s[a-zA-Z0-9.]+)*$/;
+  return namePattern.test(name.trim());
+};
+
+const isValidCryptoAddress = (name) => {
+  const namePattern = /^[a-zA-Z0-9._]+(?:\s[a-zA-Z0-9._]+)*$/;
+  return namePattern.test(name.trim());
+};
 
 
   const updateCrypto = async (crypto) => {
@@ -215,6 +224,26 @@ let countFiltered = indexOfFirstFilteredItem + 1;
         openNotificationModal(false, "Update Crypto", "Please wait...");
         return;
     }
+
+    // Validate Fullname before proceeding
+  if (!isValidName(crypto.network)) {
+    // alert('Invalid Fullname');
+    openNotificationModal(false, "Update Crypto", `Invalid Crypto Network`);
+    
+    return;
+}
+
+
+
+       // Validate Fullname before proceeding
+       if (!isValidCryptoAddress(crypto.address)) {
+        // alert('Invalid Fullname');
+        openNotificationModal(false, "Update Crypto", `Invalid Crypto Address`);
+        
+        return;
+    }
+
+
 
     setIsUpdateDataLoading(true);
 

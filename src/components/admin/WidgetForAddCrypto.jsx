@@ -88,9 +88,16 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
 
       // Function to validate Fullname as two words separated by space with no numbers or special characters
       const isValidName = (name) => {
-        const namePattern = /^[a-zA-Z.]+(?:\s[a-zA-Z.]+)*$/;
+        const namePattern = /^[a-zA-Z0-9.]+(?:\s[a-zA-Z0-9.]+)*$/;
         return namePattern.test(name.trim());
       };
+
+      const isValidCryptoAddress = (name) => {
+        const namePattern = /^[a-zA-Z0-9._]+(?:\s[a-zA-Z0-9._]+)*$/;
+        return namePattern.test(name.trim());
+      };
+      
+      
   
 
 
@@ -110,7 +117,7 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
 
 
        // Validate Fullname before proceeding
-       if (!isValidName(cryptoAddress)) {
+       if (!isValidCryptoAddress(cryptoAddress)) {
         // alert('Invalid Fullname');
         openNotificationModal(false, "ASK Crypto", `Invalid Crypto Address`);
         

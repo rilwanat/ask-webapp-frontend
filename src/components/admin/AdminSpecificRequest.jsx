@@ -530,9 +530,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                   }}
             >
                 <option value="">Select Remark</option>
-                <option value="FINANCIAL SUPPORT">FINANCIAL SUPPORT</option>
-                <option value="FOOD SUPPORT">FOOD SUPPORT</option>
-                <option value="SPONSORED">SPONSORED</option>
+                <option value="FINANCIAL SUPPORT">Financial Support</option>
+                <option value="FOOD SUPPORT">Food Support</option>
+                <option value="SPONSORED">Sponsored</option>
             </select>
                                         </div>
                                     </div>

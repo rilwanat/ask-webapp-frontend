@@ -13,6 +13,7 @@ import PrivacyPolicyPage from './components/PrivacyPolicyPage.jsx';
 
 
 import SingleNominatePage from './components/SingleNominatePage.jsx';
+import PasswordResetPage from './components/PasswordResetPage.jsx';
 
 import SingleRequestsPage from './components/SingleRequestsPage.jsx';
 import SingleSponsorPage from './components/SingleSponsorPage.jsx';
@@ -198,7 +199,7 @@ function App() {
           status: "approved",
           date_resolved: "2025-04-15 12:32:00",
           nomination_count: 0,
-          remark: "",
+          remark: "Financial Support",
       
           user: {
             id: 1,
@@ -459,7 +460,12 @@ useEffect(() => {
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
-
+<Route path='/reset-password/:passwordResetToken' element={<PasswordResetPage isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
+             />}/>
 
             <Route path='/donate' element={<DonatePage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 

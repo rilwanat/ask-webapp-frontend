@@ -125,7 +125,9 @@ export default function SingleNominatePage({
     const gotoPage = (pageName) => {
         navigate("/" + pageName);
     }
-
+    const navigateTo = (route, data) => {
+        navigate(route, { state: data });
+      };
     
 
     
@@ -178,6 +180,15 @@ export default function SingleNominatePage({
             <h1 className="text-2xl font-bold text-gray-800">                
             Help request not found
                             </h1>
+
+                            <div 
+              onClick={() => { 
+                navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });
+            }}
+              style={{ borderWidth: '0px', width: '200px' }}
+              className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
+              Okay
+            </div>
             </div>
     ) : (
         <div className="flex flex-col items-center p-4 touch-pan-y">

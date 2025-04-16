@@ -28,19 +28,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($data->email)) {
         // Generate reset code/token
         $resetToken = "";
         $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        for ($i = 0; $i < 8; $i++) {
+        for ($i = 0; $i < 32; $i++) {
             $resetToken .= $codeAlphabet[random_int(0, strlen($codeAlphabet) - 1)];
         }
 
         // Store token in database (overwrite if exists)
         $response->InsertPasswordResetTokenForUser($data->email, $resetToken);
 
+        // $data->baseName
+        // $passwordResetUrl = 'https://playground.askfoundations.org/reset-password/' . $resetToken;
+        $passwordResetUrl = $data->baseName . 'reset-password/' . $resetToken;
+
         // Send email
         $subject = "Reset Password - A.S.K Foundation";
         $message = "
             <p>You requested a password reset.</p>
             <p>Use the verification code below to reset your password:</p>
-            <div style='padding: 10px; background: #f4f4f4; border: 1px dashed #ccc; display: inline-block; font-family: monospace; font-size: 16px; font-weight: bold'>$resetToken</div>
+            <a href=". $passwordResetUrl .">" . $passwordResetUrl . "</a>
             <br><br>If you didn't request this, you can ignore this email.
         ";
 

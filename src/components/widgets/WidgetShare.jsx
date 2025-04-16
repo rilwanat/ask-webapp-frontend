@@ -42,7 +42,7 @@ const WidgetShare = ({ helpToken }) => {
         <div className='text-white' style={{ fontWeight: '600', marginTop: '-1px' }}>Share:</div>
         <ul className="flex ml-4">
           <li className='mr-4'>
-            <button onClick={handleCopy} style={{ background: 'none', border: 'none', padding: 0 }}>
+            <button onClick={handleCopy} style={{ background: 'none', border: 'none', padding: 0 }} className='object-cover'>
               <ContentCopyIcon style={{ 
                 cursor: "pointer", 
                 color: copied ? "#4CAF50" : "#ffffff", 
@@ -53,22 +53,22 @@ const WidgetShare = ({ helpToken }) => {
           </li>
           <li className='mr-4'>
             <a href={shareLinks.whatsapp} target='_blank' rel="noopener noreferrer">
-              <img src={WhatsAppIcon} alt="WhatsApp" style={{cursor: "pointer", width:'28px', height:'28px' }}/>
+              <img src={WhatsAppIcon} alt="WhatsApp" style={{cursor: "pointer", width:'28px', height:'28px' }} className='object-cover'/>
             </a>
           </li>
           <li className='mr-4'>
             <a href={shareLinks.telegram} target='_blank' rel="noopener noreferrer">
-              <img src={TelegramIcon} alt="Telegram" style={{cursor: "pointer", width:'28px', height:'28px' }}/>
+              <img src={TelegramIcon} alt="Telegram" style={{cursor: "pointer", width:'28px', height:'28px' }} className='object-cover'/>
             </a>
           </li>
           <li className='mr-4'>
             <a href={shareLinks.facebook} target='_blank' rel="noopener noreferrer">
-              <img src={FacebookIcon} alt="Facebook" style={{cursor: "pointer", width:'28px', height:'28px' }}/>
+              <img src={FacebookIcon} alt="Facebook" style={{cursor: "pointer", width:'28px', height:'28px' }} className='object-cover'/>
             </a>
           </li>
           <li className='mr-4'>
             <a href={shareLinks.twitter} target='_blank' rel="noopener noreferrer">
-              <img src={XIcon} alt="Twitter" style={{cursor: "pointer", width:'28px', height:'28px' }}/>
+              <img src={XIcon} alt="Twitter" style={{cursor: "pointer", width:'28px', height:'28px' }} className='object-cover'/>
             </a>
           </li>
           {/* <li className='mr-4'>

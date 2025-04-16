@@ -4,6 +4,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Zoom } from '@mui/material';
 
+// import { useNavigate, useLocation, useParams } from 'react-router-dom';
+
 const customModalStyles = {
   content: {
     maxHeight: '280px',
@@ -18,6 +20,9 @@ const customModalStyles = {
 };
 
 const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage }) => {
+
+      // const navigate = useNavigate();
+
   return (
     <Modal
       isOpen={isOpen}
@@ -44,6 +49,15 @@ const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificat
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
             Okay
           </div>
+{/* {
+goto &&
+          <div 
+            onClick={() => navigate(goto) }
+            style={{ width: '128px', borderWidth: '1px' }}
+            className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
+            Okay
+          </div>
+} */}
         </div>
       </div>
     </Modal>

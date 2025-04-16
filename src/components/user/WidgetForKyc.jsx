@@ -632,13 +632,14 @@ A community-based charity initiative
 
 
                              <div className='flex flex-col my-2 '>
-                             <label className='text-xs mb-1'>Account Number: (10 - 15 digits)</label>
+                             <label className='text-xs mb-1'>Account Number: (10 digits)</label>
                                 <input 
                                 type='text'  name='account_number' inputMode="text" autoComplete='account-number'
                                 placeholder='Enter your Account Number' 
                                 className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
                                 value={accountNumber}
                                 onChange={(e) => setAccountNumber(e.target.value)}
+                                maxLength={10}
                                 style={{  }} 
                                 />
                              </div>

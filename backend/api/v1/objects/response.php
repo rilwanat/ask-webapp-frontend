@@ -1444,6 +1444,46 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
     }
     
 
+    public function ReadPasswordReset($passwordResetToken)
+    {
+        try {
+            // Prepare the SQL query using a prepared statement
+            $query = "SELECT 
+                    p.id,
+                    p.email_address,
+                    p.token,
+                    p.created_at 
+                FROM " . $this->password_reset_tokens_table . " p  WHERE p.token = :token";
+            
+            // Prepare the statement
+            $stmt = $this->conn->prepare($query);
+    
+            // Bind the email parameter to the prepared statement
+            $stmt->bindParam(':token', $passwordResetToken, PDO::PARAM_STR);
+    
+            // Execute the statement
+            $stmt->execute();
+    
+            // Fetch the result
+            $request = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if ($request === false) {
+                return null; // No record found
+            }
+
+        return $request; // User not found
+    
+        } catch (Exception $e) {
+            // Log the error message and return null for security
+            // error_log("Error reading user: " . $e->getMessage());
+            return null;
+        }
+
+    }
+
+
+
+
 
  // // // password reset // //
 public function InsertPasswordResetTokenForUser($email, $token) {
@@ -1463,6 +1503,22 @@ public function VerifyPasswordResetEmailToken($email, $token) {
     return $row && $row['token'] === $token;
 }
 
+public function UpdatePasswordResetUserPassword($email, $newPassword) {
+    $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
+    $query = "UPDATE " . $this->users_table . " 
+              SET access_key = :access_key 
+              WHERE email_address = :email_address";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email_address", $email);
+    $stmt->bindParam(":access_key", $hashed);
+    if ($stmt->execute()) {
+        // Check if any row was actually updated
+        return $stmt->rowCount() > 0;
+    }
+    return false;
+}
+
+
 public function DeletePasswordResetEmailToken($email) {
     $query = "DELETE FROM " . $this->password_reset_tokens_table . " WHERE email_address = :email_address";
     $stmt = $this->conn->prepare($query);
@@ -1470,14 +1526,6 @@ public function DeletePasswordResetEmailToken($email) {
     return $stmt->execute();
 }
 
-public function UpdatePasswordResetUserPassword($email, $newPassword) {
-    $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
-    $query = "UPDATE " . $this->users_table . " SET access_key = :access_key WHERE email_address = :email_address";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(":email_address", $email);
-    $stmt->bindParam(":access_key", $hashed);
-    return $stmt->execute();
-}
  // // // password reset // //
 
 //

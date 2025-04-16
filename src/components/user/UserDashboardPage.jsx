@@ -108,7 +108,7 @@ export default function UserDashboardPage({
                                   className="block h-24 w-24 max-w-none rounded-full object-cover p-0.5 border-2 border-theme"
                                   // className="absolute top-4 block h-24 w-auto max-w-none"
                                   src={userDetails && import.meta.env.VITE_API_SERVER_URL + userDetails.profile_picture}
-                                  alt="Logo"
+                                  alt="Profile Image"
                                   onClick={() => {
                                       // navigate('/');
                                   }}
@@ -123,7 +123,7 @@ export default function UserDashboardPage({
                               {/* <p className='mt-2'>Email</p> */}
                               <p className='mt-2'>{userDetails && userDetails.email_address}</p>
 
-{userDetails.kyc_status === 'APPROVED' && (
+{userDetails && userDetails.kyc_status === 'APPROVED' && (
         <div className="w-full  ">
         <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">
@@ -139,7 +139,7 @@ export default function UserDashboardPage({
         </div>
 )}
 
-{userDetails.kyc_status === 'PENDING' && (
+{userDetails && userDetails.kyc_status === 'PENDING' && (
         <div className="w-full ">
         <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">
@@ -157,7 +157,7 @@ export default function UserDashboardPage({
         </div>
 )}
 
-{userDetails.kyc_status === 'REJECTED' && (
+{userDetails && userDetails.kyc_status === 'REJECTED' && (
         <div className="w-full  ">
         <div className="flex flex-col items-center h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">
@@ -175,9 +175,9 @@ export default function UserDashboardPage({
     
     <div 
     onClick={() => { setShowLevel2KYC(true) }}
-    style={{ borderWidth: '0px', width: '200px' }}
+    style={{ borderWidth: '0px', width: '300px' }}
     className='mt-4 text-white text-center rounded-sm px-4 py-2  text-sm cursor-pointer mb-20 bg-theme hover:text-softTheme'>
-    {'Complete Level 2 KYC'} 
+    {'Complete Level 2 Verification (KYC)'} 
     </div>
     </div>
         </div>
@@ -194,25 +194,25 @@ export default function UserDashboardPage({
   
   <div 
   onClick={() => { setShowLevel1KYC(true) }}
-  style={{ borderWidth: '0px', width: '200px' }}
+  style={{ borderWidth: '0px', width: '300px' }}
   className='mt-4 text-white text-center rounded-sm px-4 py-2  text-sm cursor-pointer mb-20 bg-theme hover:text-softTheme'>
-  {'Complete Level 1 KYC'} 
+  {'Complete Level 1 Verification KYC'} 
   </div>
   </div>
   </> 
   : <>
   {
     
-  userDetails.kyc_status === null ? (
+    userDetails && userDetails.kyc_status === null ? (
   
     <>
     <div className='flex flex-col sm:flex-row relative'>
     
     <div 
     onClick={() => { setShowLevel2KYC(true) }}
-    style={{ borderWidth: '0px', width: '200px' }}
+    style={{ borderWidth: '0px', width: '300px' }}
     className='mt-4 text-white text-center rounded-sm px-4 py-2  text-sm cursor-pointer mb-20 bg-theme hover:text-softTheme'>
-    {'Complete Level 2 KYC'} 
+    {'Complete Level 2 Verification KYC'} 
     </div>
     </div>
     </> 

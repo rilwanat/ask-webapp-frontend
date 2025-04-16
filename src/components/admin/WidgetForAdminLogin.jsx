@@ -190,7 +190,7 @@ const is11DigitNumber = (input) => {
           openNotificationModal(true, "Admin Login", response.data.message);
           setIsNotificationModalOpen(true);
           
-          gotoAdminProfile();
+          
         } else {
           const errors = response.data.errors.map(error => error.msg);
           setErrorMessage({ message: response.data.message, errors });
@@ -392,7 +392,10 @@ A community-based charity initiative
 
       <NotificationModal
               isOpen={isNotificationModalOpen}
-              onRequestClose={closeNotificationModal}
+              onRequestClose={() => {
+                closeNotificationModal
+                gotoAdminProfile();
+              }}
               notificationType={notificationType}
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}

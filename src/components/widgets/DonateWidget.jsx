@@ -182,15 +182,9 @@ const filteredDonations = Array.isArray(donationsData)
     
     const [selectedAsset, setSelectedAsset] = useState(null);
     const [cryptoAssets, setCryptoAssets] = useState([]);
-// const cryptoAssets = [
-//   { id: 1, network: "Bitcoin", address: "bc1qkmp6z2vsx3uu8jhhf9kp8asr0wctakc3ktuwty", image: bitcoin },
-//   { id: 2, network: "Ethereum", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: ethereum },
-//   { id: 3, network: "BNB", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: bnb },
-//   { id: 4, network: "Polygon", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: polygon },
-//   { id: 5, network: "Solana", address: "FG8gcgGJr55vtkznDB6UWi1fMjEhhGMaZnrjDcU1ULPa", image: solana },
-//   { id: 6, network: "TON", address: "UQDmODmw1zap0Dp51Vm_57nc6h_RiTXUER6r84vL9LrJpc_v", image: ton },
-//   { id: 7, network: "TRC20", address: "TUJqGSxtNaHyv7V2uHRGiGGy7xaiS5pxmA", image: trc20 },
-// ];
+const defaultCrypto = 
+  { id: 0, network: "Select", address: "_", image: "../../../../images/ask-cryptos/ask-logox.png" }
+;
 
   useEffect(() => {
     handleData();
@@ -211,8 +205,10 @@ const filteredDonations = Array.isArray(donationsData)
       });
       // alert(JSON.stringify(userCryptosResponse.data.data), null, 2);
       setCryptoAssets(userCryptosResponse.data.data);  // Update state with  count
-      setSelectedAsset(userCryptosResponse.data.data[0]);
-  
+      // setSelectedAsset(userCryptosResponse.data.data[0]);
+      setSelectedAsset(defaultCrypto);
+      // Select">Select Crypto Network
+      
       // openNotificationModal(true, currentPageName, "");
       // alert(JSON.stringify(userCryptosResponse.data.data), null, 2);  // Update state with cryptos count
     //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
@@ -333,12 +329,16 @@ const filteredDonations = Array.isArray(donationsData)
       {/* <label className='text-xs mb-1 text-white mr-2'>Network:</label> */}
       {selectedAsset && <select
         value={selectedAsset.network}
-        onChange={(e) =>
-          setSelectedAsset(cryptoAssets.find(asset => asset.network === e.target.value))
-        }
+        onChange={(e) => {
+          const found = cryptoAssets.find(asset => asset.network === e.target.value);
+          setSelectedAsset(
+            found || defaultCrypto
+          );
+        }}
+        
         className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-theme bg-white"
       >
-        <option value="">Select Crypto Network</option>
+        <option value="Select">Select Crypto Network</option>
         {cryptoAssets.map((asset) => (
           <option key={asset.id} value={asset.network}>
             {asset.network}

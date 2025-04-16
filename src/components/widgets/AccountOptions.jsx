@@ -276,12 +276,12 @@ const navigate = useNavigate();
             setCookie('ask-user-token', token, expirationDays);
             setCookie('ask-user-details', JSON.stringify(response.data.userData));
     
-    
+    toggleAccount();
             // alert("Login Successful: " + response.data.message);
             openNotificationModal(true, "Login", response.data.message);
             
-            
-            gotoUserProfile();
+            navigate('/');
+            // gotoUserProfile();
           } else {
             const errors = response.data.errors.map(error => error.msg);
             setErrorMessage({ message: response.data.message, errors });
@@ -474,7 +474,8 @@ const navigate = useNavigate();
           try {
       
             const requestData = {   
-              email: loginEmailAddress
+              email: loginEmailAddress,
+              baseName: `${window.location.origin}/`
             };
       
             const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_FORGOT_PASSWORD, requestData, {
@@ -498,6 +499,8 @@ const navigate = useNavigate();
       
       
       
+              toggleAccount();
+
               // alert("Login Successful: " + response.data.message);
               openNotificationModal(true, "ASK Password Reset", response.data.message);
               
@@ -636,7 +639,7 @@ const navigate = useNavigate();
                               <div className='flex flex-col sm:flex-row relative sm:w-1/2 w-full '>
                                 <input 
                                 type={passwordVisible ? 'text' : 'password'}  name='user_confitm_password' inputMode="text" autoComplete='given-name'
-                                placeholder='Enter Confirm Passowrd' 
+                                placeholder='Enter Confirm Password' 
                                 className='border border-gray-300 rounded-sm py-2 px-2 w-full md:ml-2 mt-2 md:mt-0 bg-white'
                                 value={registrationConfirmPassword}
                                 onChange={(e) => setRegistrationConfirmPassword(e.target.value)}

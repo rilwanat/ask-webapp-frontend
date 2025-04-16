@@ -23,6 +23,7 @@ export const setCookie = (name, value, days) => {
 };
 
 export const deleteCookie = (name) => {
+  // alert(name);
   switch(name) {
     case ("user"):
       document.cookie = "ask-user-token" + '=; Max-Age=-99999999;';
