@@ -487,7 +487,7 @@ const sample1 = [
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                                       
                                       <div className="rounded-lg p-4 flex my-2 mx-1 text-black  cursor-pointer" style={{ backgroundColor: '#EDFCF2'}}
-                                    //   onClick={() => navigateToPatients()}
+                                    onClick={() =>  navigateTo('/manage-kyc')}
                                       >
                                         <div className="flex flex-row items-center" >
                                           <div className="py-2 mr-2">
@@ -539,10 +539,8 @@ const sample1 = [
                                         </div>
                                       </div>
             
-                                      <div className="rounded-lg p-4 flex my-2 mx-1 text-black  cursor-pointer"   style={{ 
-                                        backgroundColor: '#FEF7E6'
-                                      }}
-                                      
+                                      <div className="rounded-lg p-4 flex my-2 mx-1 text-black  cursor-pointer"   style={{ backgroundColor: '#FEF7E6'}}
+                                      onClick={() =>  navigateTo('/beneficiaries-list')}
                                       >
                                         <div className="flex flex-row items-center">
                                           <div className="py-2 mr-2">

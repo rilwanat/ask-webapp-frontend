@@ -309,6 +309,14 @@ let countFiltered = indexOfFirstFilteredItem + 1;
         return;
     }
 
+    if (request.remark === "" || request.remark === "Select") {
+        openNotificationModal(false, "Update Remark", `Select a Remark`);
+        
+        return;
+      }
+
+
+
     setIsUpdateDataLoading(true);
 
     
@@ -446,7 +454,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                  {/* <label htmlFor="fullname" className="block text-sm font-medium text-white mb-2">Profile Picture:</label> */}
                                  <div className="flex justify-center">
                                                 <img 
-                                                src={requestData.userProfilePicture}
+                                                src={import.meta.env.VITE_API_SERVER_URL + "../../../" + requestData.userProfilePicture}
                                                 style={{
                                                   height: '200px',
                                                   width: '200px',
@@ -529,10 +537,10 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                       setRequestData({ ...requestData, remark: e.target.value })                     
                   }}
             >
-                <option value="">Select Remark</option>
-                <option value="FINANCIAL SUPPORT">Financial Support</option>
-                <option value="FOOD SUPPORT">Food Support</option>
-                <option value="SPONSORED">Sponsored</option>
+                <option value="Select">Select Remark</option>
+                <option value="Financial Support">Financial Support</option>
+                <option value="Food Support">Food Support</option>
+                <option value="Sponsored">Sponsored</option>
             </select>
                                         </div>
                                     </div>

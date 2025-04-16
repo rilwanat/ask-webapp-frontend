@@ -32,6 +32,9 @@ import { jwtDecode } from 'jwt-decode';
 import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
 //
 
+// import BoostNotificationModal from '../modals/BoostNotificationModal';
+import InfoIcon from '@mui/icons-material/Info';
+
 export default function UserDashboardPage({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
@@ -44,6 +47,26 @@ export default function UserDashboardPage({
     
     const [showLevel1KYC, setShowLevel1KYC] = useState(false);
     const [showLevel2KYC, setShowLevel2KYC] = useState(false);
+    // const [showBoostInfo, setShowBoostInfo] = useState(false);
+      //notification modal
+          const [notificationType, setNotificationType] = useState(false);
+          const [notificationTitle, setNotificationTitle] = useState("");
+          const [notificationMessage, setNotificationMessage] = useState("");
+          const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+          const openNotificationModal = (type, title, message) => {
+            setNotificationType(type);
+            setNotificationTitle(title);
+            setNotificationMessage(message);
+        
+            setIsNotificationModalOpen(true);
+          };
+          const closeNotificationModal = () => {
+            setIsNotificationModalOpen(false);
+          };
+          //notification modal
+
+
+
     
     useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []); 
     const gotoPage = (pageName) => {
@@ -92,7 +115,12 @@ export default function UserDashboardPage({
               <div className='flex flex-col items-center mt-24 sm:mt-24'>
               {
                   <div className="flex flex-col items-center bg-white p-4 rounded-lg  ">
-                      <h1 className="text-2xl font-bold text-center mt-0 mb-2">Welcome</h1>
+                      <h1 className="text-2xl font-bold text-center mt-0 mb-2">
+                        Welcome {
+                        userDetails && 
+                        userDetails.fullname?.split(" ")[0]?.charAt(0).toUpperCase() + 
+                        userDetails.fullname?.split(" ")[0]?.slice(1).toLowerCase()} !
+                      </h1>
                       <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
                       {/* <p className="mt-2 text-center">Here you can manage your profile and view your KYC status.</p> */}
                   </div>
@@ -115,7 +143,7 @@ export default function UserDashboardPage({
                                   style={{ cursor: 'pointer' }}
                               />
                               {/* <p className='mt-2'>Name</p> */}
-                              <p className='mt-2'>{userDetails && userDetails.fullname}</p>
+                              {/* <p className='mt-2'>{userDetails && userDetails.fullname}</p> */}
                               
                               {/* <p className='mt-2'>Phone Number</p> */}
                               <p className='mt-2'>{userDetails && userDetails.phone_number}</p>
@@ -128,14 +156,41 @@ export default function UserDashboardPage({
         <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">
 
-          <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
+          <div className='flex flex-col items-center justify-center mt-0 mb-0  w-full'>
             <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC has been approved</p>
-            <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
+            {/* <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div> */}
             <p className='text-center'>You can now access all features.</p>
         </div> 
 
         </div>
         </div>
+
+        <div className="flex flex-col items-center  w-full px-4  z-5000">
+                <div className='flex justify-center mt-0'>
+                    <InfoIcon className='text-theme' style={{ width: '64px', height: '64px' }}/> 
+                </div>
+        
+                <div className='flex justify-center w-full sm:w-1/2 mt-2 mb-4 text-center'>
+                You can increase your influence in deciding beneficiary by boosting your daily nomination quota through becoming a donor.                
+                </div>  
+        
+                <div className='flex justify-center'>
+                  
+                  <div 
+                    onClick={() => {
+                      // onRequestClose();
+                      gotoPage('donate');
+                    }}
+                    style={{ width: '128px', borderWidth: '1px' }}
+                    className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
+                    Boost
+                  </div>
+                </div>
+              </div>
+
+
+
+
         </div>
 )}
 
@@ -317,6 +372,20 @@ export default function UserDashboardPage({
 
 
             {/* <AskFooter gotoPage={gotoPage} /> */}
+
+
+                  {/* <BoostNotificationModal
+                          isOpen={isNotificationModalOpen}
+                          onRequestClose={
+                            () => {
+                              closeNotificationModal();
+                              // gotoPage("donate");
+                            }}
+                          notificationType={notificationType}
+                          notificationTitle={notificationTitle}
+                          notificationMessage={notificationMessage}
+                          gotoPage={gotoPage}
+                        /> */}
         </div>
     );
 }

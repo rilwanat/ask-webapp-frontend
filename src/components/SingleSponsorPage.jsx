@@ -70,7 +70,7 @@ export default function SingleSponsorPage({
            p-2 rounded-lg cursor-pointer ">
             <div className="flex justify-center">
             <img 
-            src={item.type == 'Donor' ? sponsor2 : sponsor}
+            src={import.meta.env.VITE_API_SERVER_URL + "../../../" + item.image}
             style={{
               height: '200px',
               width: '200px',

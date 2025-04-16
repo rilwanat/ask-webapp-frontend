@@ -217,6 +217,13 @@ let countFiltered = indexOfFirstFilteredItem + 1;
         return;
     }
 
+    if (sponsor.name === "" || sponsor.type === "Select") {
+      openNotificationModal(false, "Update Sponsor", `Enter a Name and Select a Sponsor Type`);
+      
+      return;
+    }
+
+
     setIsUpdateDataLoading(true);
 
     

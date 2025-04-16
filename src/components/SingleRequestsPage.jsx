@@ -101,7 +101,7 @@ export default function SingleRequestsPage({
                 subtitle={""}
             />
 
-            <div className="flex flex-col items-center p-4 touch-pan-y">
+            <div className="flex flex-col items-center p-4 touch-pan-y mb-8">
                 <div className="w-full max-w-3xl mt-4">
                     <Carousel {...carouselConfig}>
                         {allItems?.map((item) => (

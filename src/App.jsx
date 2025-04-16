@@ -259,9 +259,10 @@ function App() {
             "Content-Type": "application/json",
           },
         });
-        setHelpRequestsData(helpRequestsResponse.data?.data ?? defaultRequestItems);  
+        const data = helpRequestsResponse.data?.data ?? defaultRequestItems;
+        setHelpRequestsData(data);  
     
-    
+    // alert(helpRequestsData.length.toString());
         // openNotificationModal(true, currentPageName, "");
         // alert(JSON.stringify(helpRequestsResponse.data.data), null, 2);  // Update state with appointments count
       //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
@@ -272,6 +273,7 @@ function App() {
   
         // Once all data is fetched, set loading to false
         setIsDataLoading(false);
+        return data; // 🔥 return the fetched data
     
       } catch (error) {
         setIsDataLoading(false);
@@ -284,6 +286,7 @@ function App() {
         } else {
           openNotificationModal(false, "Help Requests" + " Error", "An unexpected error occurred.");
         }
+        return []; // return empty array on error
       }
     };
 
@@ -477,7 +480,8 @@ useEffect(() => {
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
-            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
+            handleHelpRequestsData={handleHelpRequestsData}
              />}/>
 
 

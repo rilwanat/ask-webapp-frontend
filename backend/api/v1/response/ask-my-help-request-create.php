@@ -87,13 +87,23 @@ if ($_FILES['image']['size'] > 2 * 1024 * 1024) { // 2MB max
             if ($email && $description && $uniqueTargetFilePath && $helpToken) {
 
                 // Add help request with image path
-                if ($response->CreateHelpRequest($email, $description, $uniqueTargetFilePath, $helpToken)) {
+                $createResult = $response->CreateHelpRequest($email, $description, $uniqueTargetFilePath, $helpToken);
+
+                if ($createResult && isset($createResult['success']) && $createResult['success'] === true) {
                     http_response_code(200);
-                    echo json_encode(["status" => true, "message" => "Help Request created successfully."]);
+                    echo json_encode([
+                        "status" => true,
+                        "message" => "Help Request created successfully.",
+                        "id" => $createResult['id']
+                    ]);
                 } else {
                     http_response_code(500);
-                    echo json_encode(["status" => false, "message" => "Unable to create your Help Request."]);
+                    echo json_encode([
+                        "status" => false,
+                        "message" => "Unable to create your Help Request."
+                    ]);
                 }
+
             } else {
                 http_response_code(400);
                 echo json_encode(["status" => false, "message" => "Incomplete data."]);

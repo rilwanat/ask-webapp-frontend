@@ -916,34 +916,37 @@ public function getEmailVerificationCode($email)
 }
 
 public function CreateHelpRequest($email, $description, $requestImage, $helpToken)
-    {
-        $query = "";
-        {
-            $query = "INSERT INTO " . $this->help_requests_table . " SET 
-            
-            email_address=:email,
-            description=:description,
-            request_image=:request_image,
-            help_token=:help_token
-            ";
-        }
+{
+    $query = "INSERT INTO " . $this->help_requests_table . " SET 
+        email_address = :email,
+        description = :description,
+        request_image = :request_image,
+        help_token = :help_token";
 
-        // prepare query
-        $stmt = $this->conn->prepare($query);
+    // prepare query
+    $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":description", $description);
+    $stmt->bindParam(":request_image", $requestImage);
+    $stmt->bindParam(":help_token", $helpToken);
 
-        $stmt->bindParam(":description", $description);
-        $stmt->bindParam(":request_image", $requestImage);
-        $stmt->bindParam(":help_token", $helpToken);
-        
-        // execute query
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+    // execute query
+    if ($stmt->execute()) {
+        // return newly inserted ID
+        $insertedId = $this->conn->lastInsertId();
+        return [
+            "success" => true,
+            "id" => $insertedId
+        ];
     }
+
+    return [
+        "success" => false,
+        "message" => "Unable to create help request."
+    ];
+}
+
 
     public function UpdateHelpRequest($email, $description, $helpToken)
     {
@@ -1217,25 +1220,55 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
         if ($stmt_nominee->rowCount() > 0) {
             $nominee = $stmt_nominee->fetch(PDO::FETCH_ASSOC);
 
+            // // Step 4: Check for existing nomination (same voter+help_token+today)
+            // $today = date('Y-m-d');
+            // $query_existing = "SELECT COUNT(*) as existing_count 
+            //                  FROM " . $this->nominations_history_table . " 
+            //                  WHERE voter_fullname = :voter_fullname 
+            //                   AND help_token = :help_token 
+            //                   AND voter_device_id = :voter_device_id 
+            //                   AND DATE(voting_date) = :today";
+            // $stmt_existing = $this->conn->prepare($query_existing);
+            // $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
+            // $stmt_existing->bindValue(":help_token", $help_token, PDO::PARAM_STR);
+            // $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR);
+            // $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
+            // if (!$stmt_existing->execute()) {
+            //     return ["status" => false, "message" => "System error checking nominations"];
+            // }
+            // $result = $stmt_existing->fetch(PDO::FETCH_ASSOC);
+            // if ($result && $result['existing_count'] > 0) {
+            //     $response = ["status" => false, "message" => "You have already nominated this request today."];
+            //     return $response;
+            // }
+
             // Step 4: Check for existing nomination (same voter+help_token+today)
             $today = date('Y-m-d');
             $query_existing = "SELECT COUNT(*) as existing_count 
                              FROM " . $this->nominations_history_table . " 
                              WHERE voter_fullname = :voter_fullname 
-                              AND help_token = :help_token 
-                              AND voter_device_id = :voter_device_id 
+                               
+                                
                               AND DATE(voting_date) = :today";
             $stmt_existing = $this->conn->prepare($query_existing);
             $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
-            $stmt_existing->bindValue(":help_token", $help_token, PDO::PARAM_STR);
-            $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR);
+             
+             
             $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
             if (!$stmt_existing->execute()) {
                 return ["status" => false, "message" => "System error checking nominations"];
             }
             $result = $stmt_existing->fetch(PDO::FETCH_ASSOC);
             if ($result && $result['existing_count'] > 0) {
-                $response = ["status" => false, "message" => "You have already nominated this request today."];
+                // Calculate time remaining until midnight
+                $now = new DateTime();
+                $midnight = new DateTime('tomorrow');
+                $interval = $now->diff($midnight);
+                $timeLeft = $interval->format('%h hour(s) %i minute(s)');
+
+
+
+                $response = ["status" => false, "message" => "You have already nominated today. Try again in $timeLeft."];
                 return $response;
             }
             
@@ -1255,7 +1288,7 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
     }
 }
 
-    public function CreateNomination($email, $voterFullname, $voterDeviceId, $votingWeight, $nomineeEmail, $nomineeFullname, $helpToken)
+    public function CreateNomination($email, $voterFullname, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $nomineeFullname, $helpToken)
     {
         $query = "";
         {
@@ -1286,6 +1319,16 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
         
         // execute query
         if ($stmt->execute()) {
+            // Now update nomination_count in help_requests_table
+            $updateQuery = "UPDATE " . $this->help_requests_table . " 
+            SET nomination_count = nomination_count + :voting_weight 
+            WHERE help_token = :help_token";
+
+            $updateStmt = $this->conn->prepare($updateQuery);
+            $updateStmt->bindParam(":voting_weight", $votingWeight);
+            $updateStmt->bindParam(":help_token", $helpToken);
+
+
             return true;
         }
 

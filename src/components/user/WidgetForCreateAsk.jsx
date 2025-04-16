@@ -24,7 +24,7 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import ElderlyIcon from '@mui/icons-material/Elderly';
 
-import NotificationModal from '../modals/NotificationModal';
+import ShareRequestNotificationModal from '../modals/ShareRequestNotificationModal';
 
 //
 import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
@@ -38,12 +38,10 @@ import countries from 'world-countries';
 
 import RequestImageWidget from './RequestImageWidget';
 
-const WidgetForCreateAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests }) => {
+const WidgetForCreateAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests, navigateTo, carouselRequestItems, handleHelpRequestsData }) => {
   const navigate = useNavigate();
 
-  const navigateTo = (route) => {
-    navigate(route);
-  };
+
 
   
 
@@ -66,6 +64,8 @@ const WidgetForCreateAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequ
       };
       //notification modal
 
+      const [matchingRequestItem, setMatchingRequestItem] = useState(null);
+      const [allRequestItems, setAllRequestItems] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -152,11 +152,24 @@ const WidgetForCreateAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequ
             setHelpImagePreview(null);
 
    
+            const data = await handleHelpRequestsData();
+            // alert(data.length.toString())
+
+
+            // getActiveHelpRequests();
+
             
-            getActiveHelpRequests();
+            // //get id of request then find in carouselRequestsItems
+            // alert("carouselRequestItems: " + JSON.stringify(carouselRequestItems, null, 2));
+            const requestItem = data.find(item => item.id === response.data.id);
+            setMatchingRequestItem(requestItem);
+            setAllRequestItems(data);
+            // alert("requestItem "  + " ->" + response.data.id + ": " + JSON.stringify(requestItem, null, 2));
 
 
              openNotificationModal(true, "ASK Help Request", response.data.message);
+             
+             
               
 
      
@@ -200,8 +213,12 @@ const WidgetForCreateAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequ
 
 
 
-
-
+       const gotoPageShareNow = () => {
+        // alert("here1");
+        // navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });
+        navigateTo('/single-request', { selectedItem: matchingRequestItem, allItems: allRequestItems  });
+        // alert("here2");
+    }
 
 
 
@@ -296,14 +313,14 @@ A community-based charity initiative
                         
 
                         <div className='flex flex-col my-2 '>
-                             <label className='text-xs mb-1'>Email:</label>
-                                <input 
+                             <label className='text-xs mb-1'>Email: <strong>{userDetails && userDetails.email_address}</strong></label>
+                                {/* <input 
                                 type='text'  name='email' inputMode="text" autoComplete='email'
                                 // placeholder='Enter your Fullname' 
                                 className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
                                 value={userDetails && userDetails.email_address} readOnly={true}
                                 style={{  }} 
-                                />
+                                /> */}
                              </div>
 
 
@@ -396,12 +413,20 @@ isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSr
         </div>
       </div>
 
-      <NotificationModal
+      <ShareRequestNotificationModal
               isOpen={isNotificationModalOpen}
-              onRequestClose={closeNotificationModal}
+              onRequestClose={
+                () => {
+                  closeNotificationModal();
+                  getActiveHelpRequests();
+                }
+                
+              }
               notificationType={notificationType}
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}
+              
+              gotoPageShareNow={gotoPageShareNow}
             />
     </div>
   );

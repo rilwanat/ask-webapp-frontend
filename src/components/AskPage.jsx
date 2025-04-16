@@ -43,7 +43,8 @@ export default function AskPage({
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
-    userDetails, refreshUserDetails
+    userDetails, refreshUserDetails,
+    handleHelpRequestsData
  }) {
     const navigate = useNavigate();
 
@@ -55,6 +56,9 @@ export default function AskPage({
         navigate("/" + pageName)
     }
 
+    const navigateTo = (route, data) => {
+      navigate(route, { state: data });
+    };
 
     
       const [isLoading, setIsLoading] = useState(false);
@@ -158,6 +162,10 @@ export default function AskPage({
         userDetails={userDetails} 
         refreshUserDetails={refreshUserDetails} 
         getActiveHelpRequests={getActiveHelpRequests}
+
+        navigateTo={navigateTo}
+        carouselRequestItems={carouselRequestItems}
+        handleHelpRequestsData={handleHelpRequestsData}
         />
         
       )
