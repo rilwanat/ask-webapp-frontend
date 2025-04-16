@@ -30,12 +30,15 @@ import ManageWebsiteImagesPage from './components/admin/ManageWebsiteImagesPage.
 import AdminListRequests from './components/admin/AdminListRequests.jsx';
 import AdminListBeneficiaries from './components/admin/AdminListBeneficiaries.jsx';
 import AdminListSponsors from './components/admin/AdminListSponsors.jsx';
+import AdminListCrypto from './components/admin/AdminListCrypto.jsx';
 import AdminManageKyc from './components/admin/AdminManageKyc.jsx';
 import AdminListDonations from './components/admin/AdminListDonations.jsx';
 
 import AdminSpecificKyc from './components/admin/AdminSpecificKyc.jsx';
 import AdminSpecificRequest from './components/admin/AdminSpecificRequest.jsx';
 import AdminSpecificSponsor from './components/admin/AdminSpecificSponsor.jsx';
+import AdminSpecificCrypto from './components/admin/AdminSpecificCrypto.jsx';
+
 
 import AdminAddSponsorPage from './components/admin/AdminAddSponsorPage.jsx';
 import AdminManageCrypto from './components/admin/AdminManageCrypto.jsx';
@@ -276,9 +279,9 @@ function App() {
         // Handle errors
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;
-          openNotificationModal(false, currentPageName + " Error", errorMessage);
+          openNotificationModal(false, "Help Requests" + " Error", errorMessage);
         } else {
-          openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+          openNotificationModal(false, "Help Requests" + " Error", "An unexpected error occurred.");
         }
       }
     };
@@ -317,9 +320,9 @@ function App() {
         // Handle errors
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;
-          openNotificationModal(false, currentPageName + " Error", errorMessage);
+          openNotificationModal(false, "Beneficiaries" + " Error", errorMessage);
         } else {
-          openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+          openNotificationModal(false, "Beneficiaries" + " Error", "An unexpected error occurred.");
         }
       }
     };
@@ -358,9 +361,9 @@ function App() {
         // Handle errors
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;
-          openNotificationModal(false, currentPageName + " Error", errorMessage);
+          openNotificationModal(false, "Sponsors" + " Error", errorMessage);
         } else {
-          openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+          openNotificationModal(false, "Sponsors" + " Error", "An unexpected error occurred.");
         }
       }
     };
@@ -516,6 +519,12 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
+<Route path='/crypto-list' element={<ProtectedAdminRoute><AdminListCrypto isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
 <Route path='/donations-list' element={<ProtectedAdminRoute><AdminListDonations isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
@@ -546,12 +555,17 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
+<Route path='/specific-crypto/:id' element={<ProtectedAdminRoute><AdminSpecificCrypto isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
              
-{/* <Route path='/manage-crypto' element={<ProtectedAdminRoute><AdminManageCrypto isMobile={isMobile}
+<Route path='/admin-add-crypto' element={<ProtectedAdminRoute><AdminManageCrypto isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
-             /></ProtectedAdminRoute>}/> */}
+             /></ProtectedAdminRoute>}/>
 
 
 

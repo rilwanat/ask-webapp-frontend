@@ -181,15 +181,62 @@ const filteredDonations = Array.isArray(donationsData)
 
     
     const [selectedAsset, setSelectedAsset] = useState(null);
-const cryptoAssets = [
-  { id: 1, name: "Bitcoin", address: "bc1qkmp6z2vsx3uu8jhhf9kp8asr0wctakc3ktuwty", image: bitcoin },
-  { id: 2, name: "Ethereum", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: ethereum },
-  { id: 3, name: "BNB", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: bnb },
-  { id: 4, name: "Polygon", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: polygon },
-  { id: 5, name: "Solana", address: "FG8gcgGJr55vtkznDB6UWi1fMjEhhGMaZnrjDcU1ULPa", image: solana },
-  { id: 6, name: "TON", address: "UQDmODmw1zap0Dp51Vm_57nc6h_RiTXUER6r84vL9LrJpc_v", image: ton },
-  { id: 7, name: "TRC20", address: "TUJqGSxtNaHyv7V2uHRGiGGy7xaiS5pxmA", image: trc20 },
-];
+    const [cryptoAssets, setCryptoAssets] = useState([]);
+// const cryptoAssets = [
+//   { id: 1, network: "Bitcoin", address: "bc1qkmp6z2vsx3uu8jhhf9kp8asr0wctakc3ktuwty", image: bitcoin },
+//   { id: 2, network: "Ethereum", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: ethereum },
+//   { id: 3, network: "BNB", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: bnb },
+//   { id: 4, network: "Polygon", address: "0x5736412760a26665Bfeb0679015b7bbD316dA3be", image: polygon },
+//   { id: 5, network: "Solana", address: "FG8gcgGJr55vtkznDB6UWi1fMjEhhGMaZnrjDcU1ULPa", image: solana },
+//   { id: 6, network: "TON", address: "UQDmODmw1zap0Dp51Vm_57nc6h_RiTXUER6r84vL9LrJpc_v", image: ton },
+//   { id: 7, network: "TRC20", address: "TUJqGSxtNaHyv7V2uHRGiGGy7xaiS5pxmA", image: trc20 },
+// ];
+
+  useEffect(() => {
+    handleData();
+  }, []);
+  const handleData = async () => {
+
+    setIsDataLoading(true);
+
+
+    try {
+      // API crypto to get  count
+      const userCryptosEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CRYPTOS_LIST;
+      // alert(userCryptosEndpoint);
+      const userCryptosResponse = await axiosInstance.get(userCryptosEndpoint, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // alert(JSON.stringify(userCryptosResponse.data.data), null, 2);
+      setCryptoAssets(userCryptosResponse.data.data);  // Update state with  count
+      setSelectedAsset(userCryptosResponse.data.data[0]);
+  
+      // openNotificationModal(true, currentPageName, "");
+      // alert(JSON.stringify(userCryptosResponse.data.data), null, 2);  // Update state with cryptos count
+    //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+
+
+
+
+
+      // Once all data is fetched, set loading to false
+      setIsDataLoading(false);
+  
+    } catch (error) {
+      setIsDataLoading(false);
+      
+      // alert(error);
+      // Handle errors
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message;
+        openNotificationModal(false, currentPageName + " Error", errorMessage);
+      } else {
+        openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+      }
+    }
+  };
 
 
 
@@ -284,20 +331,20 @@ const cryptoAssets = [
       <div className="flex flex-col p-2">
         <div className=''>
       {/* <label className='text-xs mb-1 text-white mr-2'>Network:</label> */}
-      <select
-        value={selectedAsset}
+      {selectedAsset && <select
+        value={selectedAsset.network}
         onChange={(e) =>
-          setSelectedAsset(cryptoAssets.find(asset => asset.name === e.target.value))
+          setSelectedAsset(cryptoAssets.find(asset => asset.network === e.target.value))
         }
         className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-theme bg-white"
       >
         <option value="">Select Crypto Network</option>
         {cryptoAssets.map((asset) => (
-          <option key={asset.id} value={asset.name}>
-            {asset.name}
+          <option key={asset.id} value={asset.network}>
+            {asset.network}
           </option>
         ))}
-      </select>
+      </select>}
       </div>
 
       {/* Preview image */}
@@ -313,7 +360,7 @@ const cryptoAssets = [
                       }}>Copy</div>
           </div> 
         <img
-          src={selectedAsset.image}
+          src={import.meta.env.VITE_API_SERVER_URL + "../../../" + selectedAsset.image}
           alt={selectedAsset.name}
           className="my-2 p-2 w-full h-64 object-contain rounded-md shadow-lg bg-white"
         />

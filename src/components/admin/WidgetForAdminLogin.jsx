@@ -199,19 +199,19 @@ const is11DigitNumber = (input) => {
       } catch (error) {
         setIsLoading(false);
 
-        alert(error);
+        // alert(error);
       
-      //   if (error.response && error.response.data && error.response.data.message) {
-      //   const errorMessage = error.response.data.message;
-      //   setErrorMessage({ message: errorMessage });
-      // } else if (error.response && error.response.data && error.response.data.errors) {
-      //   const { errors } = error.response.data;
-      //   const errorMessages = errors.map(error => error.msg);
-      //   const errorMessage = errorMessages.join(', '); // Join all error messages
-      //   setErrorMessage({ message: errorMessage });
-      // } else {
-      //   setErrorMessage({ message: 'Login failed. Please check your credentials and try again.' });
-      // }
+        if (error.response && error.response.data && error.response.data.message) {
+        const errorMessage = error.response.data.message;
+        setErrorMessage({ message: errorMessage });
+      } else if (error.response && error.response.data && error.response.data.errors) {
+        const { errors } = error.response.data;
+        const errorMessages = errors.map(error => error.msg);
+        const errorMessage = errorMessages.join(', '); // Join all error messages
+        setErrorMessage({ message: errorMessage });
+      } else {
+        setErrorMessage({ message: 'Login failed. Please check your credentials and try again.' });
+      }
     }
     };
 

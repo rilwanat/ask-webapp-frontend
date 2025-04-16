@@ -22,7 +22,7 @@ import { motion } from 'framer-motion';
 
 // // import Services from './widgets/Services';
 // import WidgetForKyc from './WidgetForKyc';
-import WidgetForManageCrypto from './WidgetForManageCrypto';
+import WidgetForAddCrypto from './WidgetForAddCrypto';
 
 //
 import axiosAdminInstance from '../../auth/axiosAdminConfig'; // Ensure the correct relative path
@@ -104,7 +104,7 @@ export default function AdminManageCrypto({
 
 
 
-      <WidgetForManageCrypto 
+      <WidgetForAddCrypto 
         // userDetails={userDetails} 
         // refreshUserDetails={refreshUserDetails} 
       />

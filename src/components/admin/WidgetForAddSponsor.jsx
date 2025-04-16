@@ -194,9 +194,10 @@ if ((sponsorType === "Select") || (sponsorType === "")) {
              
              setSponsorName('');            
              setSponsorType('');
-             setPreview(null);
 
-     
+             setSelectedFile(null);
+             setPreview(null);
+             
             //  alert("Your kyc is pending approval. You will be notified once it is approved.");
              openNotificationModal(true, "ASK Add Sponsor", response.data.message);
               

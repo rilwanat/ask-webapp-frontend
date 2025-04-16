@@ -18,6 +18,7 @@ class Response
     private $donations_table = "donations_table";
     private $tokens_table = "tokens_table";
     private $bank_codes_table = "bank_codes_table";
+    private $crypto_info_table = "crypto_info_table";
 
     private $subscribe_table_name = "subscribe_table";
     private $password_reset_tokens_table = "password_reset_tokens";
@@ -1347,6 +1348,89 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
     
         $stmt->bindParam(":name", $sponsorName);
         $stmt->bindParam(":type", $sponsorType);
+    
+        // Execute query and return the result
+        if ($stmt->execute()) {
+            return true;
+        }
+    
+        // Optionally, log the error or handle it appropriately
+        // error_log("Failed to update customer details: " . implode(":", $stmt->errorInfo()));
+    
+        return false;
+    }
+
+    public function ReadAllCryptos()
+{
+    $query = "SELECT
+        p.id,
+        p.network,
+        p.address,
+        p.image
+        FROM
+        " . $this->crypto_info_table . " p 
+        
+        ORDER BY id DESC";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
+public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
+    {
+        $query = "";
+        {
+            $query = "INSERT INTO " . $this->crypto_info_table . " SET 
+            
+            network=:network,
+            address=:address,
+            image=:image
+            ";
+        }
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":network", $cryptoNetwork);
+
+        $stmt->bindParam(":address", $cryptoAddress);
+        $stmt->bindParam(":image", $requestImage);
+        
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public function updateCrypto(
+        $cryptoId, 
+        $cryptoNetwork,
+        $cryptoAddress
+        ) {
+    
+    
+            
+    
+        $query = "UPDATE " . $this->crypto_info_table . " 
+                  SET 
+                  
+                    network =:network, 
+                    address =:address
+    
+                  WHERE id = :id";
+    
+        // Prepare the SQL statement
+        $stmt = $this->conn->prepare($query);
+    
+        // Bind parameters
+        $stmt->bindParam(":id", $cryptoId);
+    
+        $stmt->bindParam(":network", $cryptoNetwork);
+        $stmt->bindParam(":address", $cryptoAddress);
     
         // Execute query and return the result
         if ($stmt->execute()) {

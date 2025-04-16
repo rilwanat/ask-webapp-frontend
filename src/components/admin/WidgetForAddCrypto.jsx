@@ -32,7 +32,7 @@ import { jwtDecode } from 'jwt-decode';
 import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
 //
 
-const WidgetForManageCrypto = ({ userDetails, refreshUserDetails }) => {
+const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
   const navigate = useNavigate();
 
   const navigateTo = (route) => {
@@ -61,8 +61,10 @@ const WidgetForManageCrypto = ({ userDetails, refreshUserDetails }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   
-      const [sponsorName, setSponsorName] = useState('');      
-      const [sponsorType, setSponsorType] = useState('');    
+      
+      const [cryptoNetwork, setCryptoNetwork] = useState('');      
+      const [cryptoAddress, setCryptoAddress] = useState('');    
+
 
       const [selectedFile, setSelectedFile] = useState(null);
       const [preview, setPreview] = useState(null);
@@ -85,86 +87,70 @@ const WidgetForManageCrypto = ({ userDetails, refreshUserDetails }) => {
 
 
       // Function to validate Fullname as two words separated by space with no numbers or special characters
-const isValidFullname = (fullname) => {
-    const fullnamePattern = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/;
-    return fullnamePattern.test(fullname);
-  };
+      const isValidName = (name) => {
+        const namePattern = /^[a-zA-Z.]+(?:\s[a-zA-Z.]+)*$/;
+        return namePattern.test(name.trim());
+      };
   
-  // Function to validate email format
-  const isValidEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  };
-  
-  // Function to validate Nigerian phone number format with +234
-  const isValidateNigerianNumber = (ngPhoneNumber) => {
-    const nigerianPhonePattern = /^\+234(70|80|81|90|91)\d{8}$/;
-    return nigerianPhonePattern.test(ngPhoneNumber);
-  };
-  // Function to validate if input contains exactly 11 digits
-const is11DigitNumber = (input) => {
-    return /^\d{11}$/.test(input);
-  };
-  
-  // Function to validate if input contains between 10-15 digits
-  const isNumericWithLength = (input, min = 10, max = 15) => {
-    const pattern = new RegExp(`^\\d{${min},${max}}$`);
-    return pattern.test(input);
-  };
 
 
-
-
-    const AddSponsor  = async (e) => {
+    const AddCrypto  = async (e) => {
  
-      //  alert("here");
+      //  alert(cryptoNetwork);
 
 
        // Validate Fullname before proceeding
-  if (!isValidFullname(sponsorName)) {
+  if (!isValidName(cryptoNetwork)) {
     // alert('Invalid Fullname');
-    openNotificationModal(false, "ASK KYC", `Invalid Sponsor Name`);
+    openNotificationModal(false, "ASK Crypto", `Invalid Crypto Network`);
     
     return;
 }
 
 
 
-if ((sponsorType === "Select") || (sponsorType === "")) {
-  openNotificationModal(false, "ASK Add Sponsor", `Select Sponsor Type`);
-  
-  return;
-}
+       // Validate Fullname before proceeding
+       if (!isValidName(cryptoAddress)) {
+        // alert('Invalid Fullname');
+        openNotificationModal(false, "ASK Crypto", `Invalid Crypto Address`);
+        
+        return;
+    }
 
  
-
-alert("Sponsor");
-           return;
 
 
  
          e.preventDefault();
          setErrorMessage({ message: '' });
        
-         setIsLoading(true);
        
 
          
          
          try {
      
-           const requestData = {   
-            email: userDetails.email_address,  
-            fullname: fullname,  
-            phoneNumber: phoneNumber,
-           };
+          const formData = new FormData();
+          formData.append('cryptoNetwork', cryptoNetwork);
+          formData.append('cryptoAddress', cryptoAddress);
+       
+          if (selectedFile !== null) {
+           formData.append('image', selectedFile);
+         } else {
+           // alert("Please select an image to upload");
+           openNotificationModal(false, "ASK Add Crypto", "Select a crypto image to upload");
+           
+           return;
+         }
 
 
+         
+         setIsLoading(true);
      
-           const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_UPDATE_KYC, requestData, {
+           const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_ADD_CRYPTO, formData, {
              headers: {
-                   // 'Content-Type': 'multipart/form-data',
-                   'Content-Type': 'application/json',
+                   'Content-Type': 'multipart/form-data',
+                  //  'Content-Type': 'application/json',
                },
            });
      
@@ -181,23 +167,15 @@ alert("Sponsor");
              setErrorMessage({ message: '' });
              
 
-            //  setFullname('');
-            //  setPhoneNumber('');
-            //  setAccountNumber('');      
-            //  setType('');      
-            //  setGender('');      
-            //  setResidence(''); 
+  
+             setCryptoNetwork('');
+             setCryptoAddress('');
 
+             setSelectedFile(null);
+             setPreview(null);
              
-            //  setCookie('ask-user-details', JSON.stringify(response.data.userData));
-            //  refreshUserDetails();
-
-            //  deleteCookie("user");
-            //  navigate('/');
-
-     
             //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-             openNotificationModal(true, "ASK Add Sponsor", '');
+             openNotificationModal(true, "ASK Add Crypto", response.data.message);
               
      
 
@@ -218,7 +196,7 @@ alert("Sponsor");
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK KYC", errorMessage);
+           openNotificationModal(false, "ASK Add Crypto", errorMessage);
               
 
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -227,12 +205,12 @@ alert("Sponsor");
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK KYC", errorMessage);
+           openNotificationModal(false, "ASK Add Crypto", errorMessage);
               
          } else {
-           setErrorMessage({ message: 'Kyc failed. Please check your data and try again.' });
+           setErrorMessage({ message: 'ASK Add Crypto failed. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK KYC", 'Kyc failed. Please check your data and try again.');
+           openNotificationModal(false, "ASK Add Crypto failed", 'ASK Add Crypto failed. Please check your data and try again.');
               
          }
        }
@@ -339,13 +317,25 @@ A community-based charity initiative
                              </div> */}
 
                         <div className='flex flex-col my-2 '>
-                             <label className='text-xs mb-1'>Sponsor Name:</label>
+                             <label className='text-xs mb-1'>Network:</label>
                                 <input 
-                                type='text'  name='sponsor-name' inputMode="text" autoComplete='sponsor-name'
-                                placeholder='Enter Sponsor name' 
+                                type='text'  name='crypto-network' inputMode="text" autoComplete='crypto-network'
+                                placeholder='Enter crypto network' 
                                 className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
-                                value={sponsorName}
-                                onChange={(e) => setSponsorName(e.target.value)}
+                                value={cryptoNetwork}
+                                onChange={(e) => setCryptoNetwork(e.target.value)}
+                                style={{  }} 
+                                />
+                             </div>
+
+                             <div className='flex flex-col my-2 '>
+                             <label className='text-xs mb-1'>Address:</label>
+                                <input 
+                                type='text'  name='crypto-address' inputMode="text" autoComplete='crypto-address'
+                                placeholder='Enter crypto address' 
+                                className='border border-gray-300 rounded-sm py-2 px-2 w-full bg-white'
+                                value={cryptoAddress}
+                                onChange={(e) => setCryptoAddress(e.target.value)}
                                 style={{  }} 
                                 />
                              </div>
@@ -353,24 +343,7 @@ A community-based charity initiative
 
 
                              <div className='flex flex-col my-2 '>
-                             <label className='text-xs mb-1'>Sponsor Type:</label>
-                             <select
-        id="select_bankname"
-        name="select_bankname"
-        value={sponsorType}
-        className="bg-white border border-gray-300 text-sm rounded-lg focus:ring-theme focus:border-theme block w-full p-2 pl-4 pr-8 appearance-none"
-        onChange={(e) => setType(e.target.value )}
-      >
-<option value="Select">Select Type</option>
-  <option value="bank1">Sponsor</option>
-  <option value="bank2">Donor</option>
-  </select>
-                             </div>
-
-
-
-                             <div className='flex flex-col my-2 '>
-                             <label className='text-xs mb-1'>Sponsor Image:</label>
+                             <label className='text-xs mb-1'>QR Image:</label>
                              <div className='flex flex-col gap-6  p-4 w-full bg-white items-center justify-center border rounded-lg shadow-lg'>
   
                              <div className="flex flex-col gap-2 items-center w-full">
@@ -403,10 +376,10 @@ A community-based charity initiative
                           <div className='flex justify-between items-center flex-col md:flex-row '>
                             
                           <div  
-                          onClick={(e) => {if (!isLoading) AddSponsor(e)}} 
+                          onClick={(e) => {if (!isLoading) AddCrypto(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
-                            {isLoading ? 'Please wait..' : 'Add Sponsor'}
+                            {isLoading ? 'Please wait..' : 'Add Crypto'}
                             </div>
                           </div>
 
@@ -452,4 +425,4 @@ A community-based charity initiative
   );
 };
 
-export default WidgetForManageCrypto;
+export default WidgetForAddCrypto;

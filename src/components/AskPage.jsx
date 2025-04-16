@@ -20,6 +20,8 @@ import Contact from './widgets/Contact';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+import WidgetForKyc from './user/WidgetForKyc';
+
 
 import WidgetForCreateAsk from './user/WidgetForCreateAsk';
 import WidgetForEditAsk from './user/WidgetForEditAsk';
@@ -139,6 +141,17 @@ export default function AskPage({
   isAuthenticated() ? 
   (
 
+    userDetails && (userDetails.kyc_status === null || userDetails.kyc_status === 'PENDING' || userDetails.kyc_status === 'REJECTED') ? 
+    <div className="-mt-16">
+    <WidgetForKyc  
+        userDetails={userDetails} 
+        refreshUserDetails={refreshUserDetails} 
+      />
+    </div> :
+
+
+    <>
+    {
     !isLoading ?  (
       myActiveRequestsData === null ? (
         <WidgetForCreateAsk  
@@ -156,7 +169,11 @@ export default function AskPage({
                 myActiveRequestsData={myActiveRequestsData}
                 />
     ) : <Loading />
-    
+  }
+    </>
+
+
+
 ) : <WidgetForLoginAsk  
 userDetails={userDetails} 
 refreshUserDetails={refreshUserDetails} 
