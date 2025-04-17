@@ -9,7 +9,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import WidgetShare from '../widgets/WidgetShare';
 import WidgetNominate from '../widgets/WidgetNominate';
 
-import NotificationModal from '../modals/NotificationModal';
+import NominateNotificationModal from '../modals/NominateNotificationModal';
 
 const WidgetHelpRequests = ({ 
   currentRequestSlide, carouselRequestItems, setCurrentRequestSlide, 
@@ -164,7 +164,7 @@ const WidgetHelpRequests = ({
         </div>
       </div>
 
-      <NotificationModal
+      <NominateNotificationModal
               isOpen={isNotificationModalOpen}
               onRequestClose={closeNotificationModal}
               notificationType={notificationType}

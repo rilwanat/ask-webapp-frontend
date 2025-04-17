@@ -66,7 +66,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import NotificationModal from '../modals/NotificationModal';
 
 
-export default function AdminManageKyc({ 
+export default function AdminManageAdmins({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -121,14 +121,14 @@ useEffect(() => {
 
 
 
-    const handleUserRowClick = (user, e) => {
+    const handleAdminRowClick = (admin, e) => {
       {                
           // alert(JSON.stringify(product, null, 2));
-  
+  return;
           // const encryptedData = AES.encrypt(JSON.stringify(product), 'encryptionKey').toString();
-          navigate(`/specific-kyc/${user.id}`, {
+          navigate(`/specific-admin/${admin.id}`, {
               state: {
-                selectedUser: user, // Pass any data you want as props here
+                selectedAdmin: admin, // Pass any data you want as props here
               }
             });
   
@@ -148,7 +148,7 @@ useEffect(() => {
 
     
     
-      const currentPageName = "Manage Kyc";
+      const currentPageName = "Manage Admins";
    
 
 
@@ -162,33 +162,33 @@ useEffect(() => {
         setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
-    const filteredUsers = users.filter((user) =>
-    user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.email_address && user.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.phone_number && user.phone_number.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.kyc_status && user.kyc_status.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.account_number && user.account_number.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.account_name && user.account_name.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.bank_name && user.bank_name.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.gender && user.gender.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.state_of_residence && user.state_of_residence.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.email_verified && user.email_verified.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.registration_date && user.registration_date.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.user_type && user.user_type.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.eligibility && user.eligibility.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.is_cheat && user.is_cheat.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.opened_welcome_message && user.opened_welcome_message.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || user.vote_weight && user.vote_weight.toLowerCase().includes(searchQuery.toLowerCase()) 
-    // || user.tags && user.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
-    // || user.categories && user.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
-    // || user.price.includes(searchQuery)
+    const filteredAdmins = users.filter((admin) =>
+    admin.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.email_address && admin.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.phone_number && admin.phone_number.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.kyc_status && admin.kyc_status.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.account_number && admin.account_number.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.account_name && admin.account_name.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.bank_name && admin.bank_name.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.gender && admin.gender.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.state_of_residence && admin.state_of_residence.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.email_verified && admin.email_verified.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.registration_date && admin.registration_date.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.user_type && admin.user_type.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.eligibility && admin.eligibility.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.is_cheat && admin.is_cheat.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || admin.opened_welcome_message && admin.opened_welcome_message.toLowerCase().includes(searchQuery.toLowerCase()) 
+    // || admin.vote_weight && admin.vote_weight.toLowerCase().includes(searchQuery.toLowerCase()) 
+    // || admin.tags && admin.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
+    // || admin.categories && admin.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
+    // || admin.price.includes(searchQuery)
 );
 
-const totalFilteredItems = filteredUsers.length;
+const totalFilteredItems = filteredAdmins.length;
 const totalFilteredPages = Math.ceil(totalFilteredItems / itemsPerPage);
 const indexOfLastFilteredItem = currentPage * itemsPerPage;
 const indexOfFirstFilteredItem = indexOfLastFilteredItem - itemsPerPage;
-const currentFilteredUsers = filteredUsers.slice(
+const currentFilteredAdmins = filteredAdmins.slice(
   indexOfFirstFilteredItem,
   indexOfLastFilteredItem
 );
@@ -213,19 +213,19 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
     try {
-      // API user to get  count
-      const adminUsersEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_READ_USERS;
-      // alert(adminUsersEndpoint);
-      const adminUsersResponse = await axiosAdminInstance.get(adminUsersEndpoint, {
+      // API admin to get  count
+      const adminAdminsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_READ_ADMINS;
+      // alert(adminAdminsEndpoint);
+      const adminAdminsResponse = await axiosAdminInstance.get(adminAdminsEndpoint, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      setUsersData(adminUsersResponse.data.data);  // Update state with  count
+      setUsersData(adminAdminsResponse.data.data);  // Update state with  count
   
   
       // openNotificationModal(true, currentPageName, "");
-      // alert(JSON.stringify(adminUsersResponse.data.status), null, 2);  // Update state with users count
+      // alert(JSON.stringify(adminAdminsResponse.data.status), null, 2);  // Update state with users count
     //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
 
 
@@ -367,18 +367,18 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Phone Number
                         </th>
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           KYC Status
-                        </th>
+                        </th> */}
                         {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Account Number
                         </th> */}
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Account Name
-                        </th>
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                        </th> */}
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Bank Name
-                        </th>
+                        </th> */}
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Gender
                         </th>
@@ -388,27 +388,27 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                         {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Profile Picture
                         </th> */}
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Email Verified
-                        </th>
+                        </th> */}
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Registration Date
                         </th>
                         {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           User Type
                         </th> */}
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Eligibility
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Is Cheat
-                        </th>
+                        </th> */}
                         {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Opened Welcome Message
                         </th> */}
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Vote Weight
-                        </th>
+                        </th> */}
 
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Action
@@ -421,142 +421,142 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                       // isDataloading ? <Loading />
                       // : 
                     <tbody className='text-xs '>
-                      {currentFilteredUsers.map((user, index) => (
-                          <tr key={user.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
-                        onClick={(e) => handleUserRowClick(user, e)} 
+                      {currentFilteredAdmins.map((admin, index) => (
+                          <tr key={admin.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
+                        onClick={(e) => handleAdminRowClick(admin, e)} 
                           style={{ cursor: "pointer" }}
                           >
                           <td className='px-2 py-4 whitespace-no-wrap border-b border-gray-200'>
                           {countFiltered++}
                           </td>
                           {/* <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> */}
-                            {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + user.productImages[0]} */}
-                            {/* <img src={process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + user.productImages[0]}  className="h-10 w-10 object-cover" /> */}
+                            {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + admin.productImages[0]} */}
+                            {/* <img src={process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + admin.productImages[0]}  className="h-10 w-10 object-cover" /> */}
                           {/* </td> */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 cursor-pointer" onClick={(e) => {
                             //setShowDialog(false); 
-                            // handleProductClick(user, e);
+                            // handleProductClick(admin, e);
                           }}>
-                            {user.fullname}
+                            {admin.fullname}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {user.email_address	}
+                            {admin.email_address	}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {/* {user.tags.join(', ')} */}
-                            {user.phone_number	}
+                            {/* {admin.tags.join(', ')} */}
+                            {admin.phone_number	}
                           </td>
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                            {/* {user.kyc_status} */}
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                            {admin.kyc_status}
                             <span
                                     style={{
-                                      backgroundColor: user.kyc_status === 'APPROVED' ? '#1cc939' : '#FFE2E5', 
-                                      color: user.kyc_status === 'APPROVED' ? '#000000' : '#F64E60', 
+                                      backgroundColor: admin.kyc_status === 'APPROVED' ? '#1cc939' : '#FFE2E5', 
+                                      color: admin.kyc_status === 'APPROVED' ? '#000000' : '#F64E60', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
-                                    }>{user.kyc_status}</span>
-                          </td>
+                                    }>{admin.kyc_status}</span>
+                          </td> */}
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.account_number}
+                            {admin.account_number}
+                          </td> */}
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {admin.account_name}
+                          </td> */}
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {admin.bank_name}
                           </td> */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.account_name}
+                            {admin.gender_name}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.bank_name}
-                          </td>
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.gender_name}
-                          </td>
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.state_of_residence}
+                            {admin.state_of_residence}
                           </td>
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.profile_picture}
+                            {admin.profile_picture}
                           </td> */}
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                           <span
                                     style={{
-                                      backgroundColor: user.email_verified === 'Yes' ? '#1cc939' : '#FFE2E5', 
-                                      color: user.email_verified === 'Yes' ? '#000000' : '#F64E60', 
+                                      backgroundColor: admin.email_verified === 'Yes' ? '#1cc939' : '#FFE2E5', 
+                                      color: admin.email_verified === 'Yes' ? '#000000' : '#F64E60', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
-                                    }>{user.email_verified}</span>
-                          </td>	
+                                    }>{admin.email_verified}</span>
+                          </td>	 */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.registration_date}
+                            {admin.registration_date}
                           </td>
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.user_type}
+                            {admin.user_type}
                           </td> */}
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                           <span
                                     style={{
-                                      backgroundColor: user.eligibility === 'Yes' ? '#1cc939' : '#FFE2E5', 
-                                      color: user.eligibility === 'Yes' ? '#000000' : '#F64E60', 
+                                      backgroundColor: admin.eligibility === 'Yes' ? '#1cc939' : '#FFE2E5', 
+                                      color: admin.eligibility === 'Yes' ? '#000000' : '#F64E60', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
-                                    }>{user.eligibility}</span>
-                          </td>
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                                    }>{admin.eligibility}</span>
+                          </td> */}
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                           <span
                                     style={{
-                                      backgroundColor: user.is_cheat === 'Yes' ? '#F64E60' : '#161c34', 
-                                      color: user.is_cheat === 'Yes' ? '#000000' : '#FFFFFF', 
+                                      backgroundColor: admin.is_cheat === 'Yes' ? '#F64E60' : '#161c34', 
+                                      color: admin.is_cheat === 'Yes' ? '#000000' : '#FFFFFF', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
-                                    }>{user.is_cheat}</span>
-                          </td>
+                                    }>{admin.is_cheat}</span>
+                          </td> */}
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.opened_welcome_message}
+                            {admin.opened_welcome_message}
                           </td> */}
 
 
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
-                            {user.help_token	}
+                            {admin.help_token	}
                           </td> */}
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                       <span
                                     style={{
-                                      backgroundColor: user.request_confirmation_status === 'confirmed' ? '#EDFCF2' : user.request_confirmation_status === 'confirmed' ? '#F0F3FF' : '#FFE2E5', 
-                                      color: user.request_confirmation_status === 'confirmed' ? '#4BC573' : user.request_confirmation_status === 'confirmed' ? '#254EDB' : '#F64E60', 
+                                      backgroundColor: admin.request_confirmation_status === 'confirmed' ? '#EDFCF2' : admin.request_confirmation_status === 'confirmed' ? '#F0F3FF' : '#FFE2E5', 
+                                      color: admin.request_confirmation_status === 'confirmed' ? '#4BC573' : admin.request_confirmation_status === 'confirmed' ? '#254EDB' : '#F64E60', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
-                                    }>{user.request_confirmation_status}</span>
+                                    }>{admin.request_confirmation_status}</span>
                                     </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                       <span
                                     style={{
-                                      backgroundColor: user.request_completion_status === 'completed' ? '#EDFCF2' : user.request_completion_status === 'upcoming' ? '#F0F3FF' : '#FFE2E5', 
-                                      color: user.request_completion_status === 'completed' ? '#4BC573' : user.request_completion_status === 'upcoming' ? '#254EDB' : '#F64E60', 
+                                      backgroundColor: admin.request_completion_status === 'completed' ? '#EDFCF2' : admin.request_completion_status === 'upcoming' ? '#F0F3FF' : '#FFE2E5', 
+                                      color: admin.request_completion_status === 'completed' ? '#4BC573' : admin.request_completion_status === 'upcoming' ? '#254EDB' : '#F64E60', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
                                     }>
-                                      {user.request_completion_status}
+                                      {admin.request_completion_status}
                                       </span>
                                     </td> */}
                           
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {user.vote_weight}
-                          </td>
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {admin.vote_weight}
+                          </td> */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
                           <span
                           className="text-theme cursor-pointer "
                           onClick={(e) => {
                             //setShowDialog(false); 
-                            // handleProductClick(user, e);
+                            // handleProductClick(admin, e);
                           }}
                           >
                             See Details

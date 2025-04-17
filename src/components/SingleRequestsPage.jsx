@@ -15,7 +15,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import WidgetShare from './widgets/WidgetShare';
 import WidgetNominate from './widgets/WidgetNominate';
 
-import NotificationModal from './modals/NotificationModal';
+import NominateNotificationModal from './modals/NominateNotificationModal';
 
 export default function SingleRequestsPage({ 
     isMobile,
@@ -190,7 +190,7 @@ export default function SingleRequestsPage({
                 </div>
             </div>
 
-            <NotificationModal
+            <NominateNotificationModal
               isOpen={isNotificationModalOpen}
               onRequestClose={closeNotificationModal}
               notificationType={notificationType}

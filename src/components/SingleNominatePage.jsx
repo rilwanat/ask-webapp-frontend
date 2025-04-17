@@ -29,7 +29,7 @@ import WidgetShare from './widgets/WidgetShare';
 import WidgetNominate from './widgets/WidgetNominate';
 
 
-import NotificationModal from './modals/NotificationModal';
+import NominateNotificationModal from './modals/NominateNotificationModal';
 
 export default function SingleNominatePage({ 
     isMobile,
@@ -273,7 +273,7 @@ export default function SingleNominatePage({
 
 
         
-<NotificationModal
+<NominateNotificationModal
               isOpen={isNotificationModalOpen}
               onRequestClose={closeNotificationModal}
               notificationType={notificationType}

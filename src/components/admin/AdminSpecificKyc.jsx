@@ -459,7 +459,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             <label htmlFor="phone_number" className="block text-sm font-medium text-white mb-2">Phone Number:</label>
                                             <input type="text" id="phone_number" name="phone_number"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                            block w-full p-2.5" placeholder='Email Address'   
+                                            block w-full p-2.5" placeholder='Phone Number'   
                                             value={selectedUser.phone_number}
                                             // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
                                             />
@@ -529,7 +529,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             <label htmlFor="bank_name" className="block text-sm font-medium text-white mb-2">Bank name:</label>
                                             <input type="text" id="bank_name" name="bank_name"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                            block w-full p-2.5" placeholder='Registration Date' 
+                                            block w-full p-2.5" placeholder='Bank name' 
                                             value={selectedUser.bank_name} 
                                             // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                                             />
@@ -549,7 +549,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             <label htmlFor="account_number" className="block text-sm font-medium text-white mb-2">Account Number:</label>
                                             <input type="text" id="account_number" name="account_number"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                            block w-full p-2.5" placeholder='Email Address'   
+                                            block w-full p-2.5" placeholder='Account Number'   
                                             value={selectedUser.account_number}
                                             // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
                                             />
@@ -604,8 +604,18 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             <label htmlFor="opened_welcome_msg" className="block text-sm font-medium text-white mb-2">Opened Welcome Message:</label>
                                             <input type="text" id="opened_welcome_msg" name="opened_welcome_msg"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                            block w-full p-2.5" placeholder='KYC Status'   
+                                            block w-full p-2.5" placeholder='Opened Welcome Message'   
                                             value={selectedUser.opened_welcome_msg}
+                                            // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
+                                            />
+                                        </div>
+
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
+                                            <label htmlFor="vote_weight" className="block text-sm font-medium text-white mb-2">Vote Weight:</label>
+                                            <input type="text" id="vote_weight" name="opened_welvote_weightcome_msg"
+                                            className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
+                                            block w-full p-2.5" placeholder='Vote Weight'   
+                                            value={selectedUser.vote_weight}
                                             // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
                                             />
                                         </div>

@@ -187,7 +187,8 @@ class Response
                     p.user_type,
                     p.eligibility,
                     p.is_cheat,
-                    p.opened_welcome_msg
+                    p.opened_welcome_msg,
+                    p.vote_weight 
                 FROM " . $this->users_table . " p  WHERE p.email_address = :email";
             
             // Prepare the statement
@@ -415,7 +416,8 @@ public function ReadAllHelpRequests()
         u.user_type as user_type,
         u.eligibility as user_eligibility,
         u.is_cheat as user_is_cheat,
-        u.opened_welcome_msg as user_opened_welcome_msg 
+        u.opened_welcome_msg as user_opened_welcome_msg, 
+        u.vote_weight as user_vote_weight 
         FROM
         " . $this->help_requests_table . " p 
         LEFT JOIN 
@@ -457,7 +459,8 @@ public function ReadAllBeneficiaries()
         u.user_type as user_type,
         u.eligibility as user_eligibility,
         u.is_cheat as user_is_cheat,
-        u.opened_welcome_msg as user_opened_welcome_msg
+        u.opened_welcome_msg as user_opened_welcome_msg,
+        u.vote_weight as user_vote_weight 
     FROM
         " . $this->beneficiaries_table . " p 
     LEFT JOIN 
@@ -724,7 +727,8 @@ public function ReadAllUsers()
                 p.user_type,
                 p.eligibility,
                 p.is_cheat,
-                p.opened_welcome_msg
+                p.opened_welcome_msg,
+                p.vote_weight 
             FROM " . $this->users_table . " p  ";
         
         // Prepare the statement
@@ -1262,7 +1266,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                 // $timeLeft = $interval->format('%h hour(s) %i minute(s)');
 
                 // $response = ["status" => false, "message" => "You have already nominated today. Try again in $timeLeft."];
-                $response = ["status" => false, "message" => "Self-nominations aren't allowed, or you have already nominated today. Try again tomorrow to nominate, or Complete Level 2 Verification (KYC) to share this device."];
+                $response = ["status" => false, "message" => "Oops! Try again tomorrow to nominate.#You have either nomited today.#Complete your KYC if you are sharing this device to proceed.#Self-nominations not allowed."];
                 return $response;
             }
             
@@ -1522,7 +1526,51 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
 
     }
 
-
+    public function ReadAllAdmins()
+    {
+        try {
+            // Prepare the SQL query using a prepared statement
+            $query = "SELECT
+                    p.id,
+                    p.fullname,
+                    p.email_address,
+                    -- p.access_key,
+                    p.phone_number,
+                    p.kyc_status,
+                    p.account_number,
+                    p.account_name,
+                    p.bank_name,
+                    p.gender,
+                    p.state_of_residence,
+                    p.profile_picture,
+                    p.email_verified,
+                    p.registration_date,
+                    p.user_type,
+                    p.eligibility,
+                    p.is_cheat,
+                    p.opened_welcome_msg 
+                FROM " . $this->admins_table . " p  ";
+            
+            // Prepare the statement
+            $stmt = $this->conn->prepare($query);
+    
+            // Bind the email parameter to the prepared statement
+            // $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    
+            // Execute the statement
+            $stmt->execute();
+    
+            return $stmt;
+    
+    
+        return $user; // User not found
+    
+        } catch (Exception $e) {
+            // Log the error message and return null for security
+            // error_log("Error reading user: " . $e->getMessage());
+            return null;
+        }
+    }
 
 
 

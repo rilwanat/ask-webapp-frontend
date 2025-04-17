@@ -53,7 +53,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             "user_type" => $row['user_type'],
             "eligibility" => $row['user_eligibility'],
             "is_cheat" => $row['user_is_cheat'],
-            "opened_welcome_msg" => $row['user_opened_welcome_msg']
+            "opened_welcome_msg" => $row['user_opened_welcome_msg'],
+            "vote_weight" => $row['user_vote_weight']
         )
 
     );

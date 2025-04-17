@@ -164,7 +164,8 @@ const WidgetNominate = ({
 
 
 
-              
+            
+
               openNotificationModal(true, "Nomination", response.data.message);
               
   

@@ -34,6 +34,7 @@ import AdminListSponsors from './components/admin/AdminListSponsors.jsx';
 import AdminListCrypto from './components/admin/AdminListCrypto.jsx';
 import AdminManageKyc from './components/admin/AdminManageKyc.jsx';
 import AdminListDonations from './components/admin/AdminListDonations.jsx';
+import AdminManageAdmins from './components/admin/AdminManageAdmins.jsx';
 
 import AdminSpecificKyc from './components/admin/AdminSpecificKyc.jsx';
 import AdminSpecificRequest from './components/admin/AdminSpecificRequest.jsx';
@@ -586,7 +587,17 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
              /></ProtectedAdminRoute>}/>
 
+<Route path='/manage-admins' element={<ProtectedAdminRoute><AdminManageAdmins isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
 
+{/* <Route path='/specific-admin/:id' element={<ProtectedAdminRoute><AdminSpecificCrypto isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/> */}
 
 
 <Route path='/user-dashboard' element={<ProtectedRoute><UserDashboardPage isMobile={isMobile}

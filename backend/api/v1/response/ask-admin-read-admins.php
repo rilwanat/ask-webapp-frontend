@@ -14,10 +14,10 @@ $db = $database->getConnection();
 $response = new Response($db);
 
 // Fetch all users
-$stmt = $response->ReadAllUsers();
+$stmt = $response->ReadAllAdmins();
 
 // Initialize array to store user data
-$users_data["users_data"] = array();
+$admins_data["admins_data"] = array();
 
 
 ini_set('memory_limit', '-1');
@@ -44,18 +44,18 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         "user_type" => $row['user_type'],
         "eligibility" => $row['eligibility'],
         "is_cheat" => $row['is_cheat'],
-        "opened_welcome_msg" => $row['opened_welcome_msg'],
-        "vote_weight" => $row['vote_weight']
+        "opened_welcome_msg" => $row['opened_welcome_msg']
+        // "vote_weight" => $row['vote_weight']
     );
 
-    array_push($users_data["users_data"], $product_item);
+    array_push($admins_data["admins_data"], $product_item);
 
 }
 
 
 // Check if successfully fetched
-if ($users_data["users_data"]) {
-    $response_data = array("status" => true, "data" => $users_data["users_data"]);
+if ($admins_data["admins_data"]) {
+    $response_data = array("status" => true, "data" => $admins_data["admins_data"]);
 } else {
     $response_data = array("status" => false);
 }

@@ -74,8 +74,23 @@ function AdminFooter({
 
     return (
         <div className="flex flex-col bg-theme">
-            <div className="flex flex-col h-auto px-8 sm:px-16 md:px-32 py-4 pb-2 items-center">
-                
+            <div className="flex justify-center h-auto px-8 sm:px-16 md:px-32 py-4 pb-2 items-center">
+            <div
+                className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme text-white"
+                onClick={() => {
+                  
+                  
+                  navigate('/manage-admins');
+                }}
+                >
+                  <p 
+                  className="text-sm" 
+                  style={{ fontWeight: '600' }} 
+                  >
+                    Manage Admins
+                  </p>
+              </div>
+
               <div
                 className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme text-red-500"
                 onClick={() => {

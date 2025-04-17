@@ -155,6 +155,8 @@ useEffect(() => {
       userEligibility: selectedRequest.user.eligibility,
       userIsCheat: selectedRequest.user.is_cheat,
       userOpenedWelcomeMsg: selectedRequest.user.opened_welcome_msg,
+      userVoteWeight: selectedRequest.user.vote_weight,
+      
   });
   
 
@@ -229,6 +231,7 @@ useEffect(() => {
     || user.eligibility && user.eligibility.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.is_cheat && user.is_cheat.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.opened_welcome_message && user.opened_welcome_message.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.vote_weight && user.vote_weight.toLowerCase().includes(searchQuery.toLowerCase()) 
     // || user.tags && user.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
     // || user.categories && user.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
     // || user.price.includes(searchQuery)
@@ -551,15 +554,15 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             <label htmlFor="userFullname" className="block text-sm font-medium text-white mb-2">Fullname:</label>
                                             <input type="text" id="userFullname" name="userFullname"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                            block w-full p-2.5" placeholder='userFullname' 
+                                            block w-full p-2.5" placeholder='Fullname' 
                                             value={requestData.userFullname} 
                                             // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                                             />
                                         </div>
 
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="email_address" className="block text-sm font-medium text-white mb-2">Email Address:</label>
-                                            <input type="text" id="fullname" name="email_address"
+                                            <label htmlFor="userEmail" className="block text-sm font-medium text-white mb-2">Email Address:</label>
+                                            <input type="text" id="userEmail" name="userEmail"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Email Address' 
                                             value={requestData.userEmail} 
@@ -568,10 +571,10 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                         </div>
 
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="phone_number" className="block text-sm font-medium text-white mb-2">Phone Number:</label>
-                                            <input type="text" id="phone_number" name="phone_number"
+                                            <label htmlFor="userPhone" className="block text-sm font-medium text-white mb-2">Phone Number:</label>
+                                            <input type="text" id="userPhone" name="userPhone"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                            block w-full p-2.5" placeholder='Email Address'   
+                                            block w-full p-2.5" placeholder='Phone Number'   
                                             value={requestData.userPhone}
                                             // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
                                             />
@@ -580,8 +583,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
                                     <div className="flex flex-wrap ">
                                       <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="gender" className="block text-sm font-medium text-white mb-2">Gender:</label>
-                                            <input type="text" id="email_address" name="email_address"
+                                            <label htmlFor="userGender" className="block text-sm font-medium text-white mb-2">Gender:</label>
+                                            <input type="text" id="userGender" name="userGender"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Gender'   
                                             value={requestData.userGender}
@@ -590,8 +593,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                         </div>
 
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="email_verified" className="block text-sm font-medium text-white mb-2">Email Verified:</label>
-                                            <input type="text" id="email_verified" name="email_verified"
+                                            <label htmlFor="userEmailVerified" className="block text-sm font-medium text-white mb-2">Email Verified:</label>
+                                            <input type="text" id="userEmailVerified" name="userEmailVerified"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Email Verified' 
                                             value={requestData.userEmailVerified} 
@@ -600,8 +603,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                         </div>
 
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="eligibility" className="block text-sm font-medium text-white mb-2">Eligibility:</label>
-                                            <input type="text" id="eligibility" name="eligibility"
+                                            <label htmlFor="userEligibility" className="block text-sm font-medium text-white mb-2">Eligibility:</label>
+                                            <input type="text" id="userEligibility" name="userEligibility"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Eligibility'   
                                             value={requestData.userEligibility}
@@ -638,18 +641,18 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
                                     <div className="flex flex-wrap ">
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="bank_name" className="block text-sm font-medium text-white mb-2">Bank name:</label>
-                                            <input type="text" id="bank_name" name="bank_name"
+                                            <label htmlFor="userBankName" className="block text-sm font-medium text-white mb-2">Bank name:</label>
+                                            <input type="text" id="userBankName" name="userBankName"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                            block w-full p-2.5" placeholder='Registration Date' 
+                                            block w-full p-2.5" placeholder='Bank name' 
                                             value={requestData.userBankName} 
                                             // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                                             />
                                         </div>
 
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="account_name" className="block text-sm font-medium text-white mb-2">Account Name:</label>
-                                            <input type="text" id="account_name" name="account_name"
+                                            <label htmlFor="userAccountName" className="block text-sm font-medium text-white mb-2">Account Name:</label>
+                                            <input type="text" id="userAccountName" name="userAccountName"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Account Name'   
                                             value={requestData.userAccountName}
@@ -658,10 +661,10 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                         </div>
 
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="account_number" className="block text-sm font-medium text-white mb-2">Account Number:</label>
-                                            <input type="text" id="account_number" name="account_number"
+                                            <label htmlFor="userAccountNumber" className="block text-sm font-medium text-white mb-2">Account Number:</label>
+                                            <input type="text" id="userAccountNumber" name="userAccountNumber"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                            block w-full p-2.5" placeholder='Email Address'   
+                                            block w-full p-2.5" placeholder='Account Number'   
                                             value={requestData.userAccountNumber}
                                             // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
                                             />
@@ -670,8 +673,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
                                     <div className="flex flex-wrap ">
                                         <div className="w-full md:w-1/2 px-2 mb-4">
-                                            <label htmlFor="state_of_residence" className="block text-sm font-medium text-white mb-2">State of Residence:</label>
-                                            <input type="text" id="state_of_residence" name="state_of_residence"
+                                            <label htmlFor="userState" className="block text-sm font-medium text-white mb-2">State of Residence:</label>
+                                            <input type="text" id="userState" name="userState"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='State of Residence' 
                                             value={requestData.userState} 
@@ -704,8 +707,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
                                     <div className="flex flex-wrap ">
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="is_cheat" className="block text-sm font-medium text-white mb-2">Is Cheat:</label>
-                                            <input type="text" id="is_cheat" name="is_cheat"
+                                            <label htmlFor="userIsCheat" className="block text-sm font-medium text-white mb-2">Is Cheat:</label>
+                                            <input type="text" id="userIsCheat" name="userIsCheat"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Is Cheat' 
                                             value={requestData.userIsCheat} 
@@ -714,11 +717,21 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                         </div>
                                         
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="opened_welcome_msg" className="block text-sm font-medium text-white mb-2">Opened Welcome Message:</label>
-                                            <input type="text" id="opened_welcome_msg" name="opened_welcome_msg"
+                                            <label htmlFor="userOpenedWelcomeMsg" className="block text-sm font-medium text-white mb-2">Opened Welcome Message:</label>
+                                            <input type="text" id="userOpenedWelcomeMsg" name="userOpenedWelcomeMsg"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
-                                            block w-full p-2.5" placeholder='KYC Status'   
+                                            block w-full p-2.5" placeholder='Opened Welcome Message'   
                                             value={requestData.userOpenedWelcomeMsg}
+                                            // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
+                                            />
+                                        </div>
+
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
+                                            <label htmlFor="voteWeight" className="block text-sm font-medium text-white mb-2">Vote Weight:</label>
+                                            <input type="text" id="voteWeight" name="voteWeight"
+                                            className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
+                                            block w-full p-2.5" placeholder='Vote Weight'   
+                                            value={requestData.userVoteWeight}
                                             // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
                                             />
                                         </div>
