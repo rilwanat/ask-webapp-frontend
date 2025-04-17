@@ -114,7 +114,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
      
            const formData = new FormData();
            formData.append('email', userDetails.email_address);
-           formData.append('description', helpDescription);
+           formData.append('description', helpDescription.trim());
         
            if (selectedFile !== null) {
             formData.append('image', selectedFile);

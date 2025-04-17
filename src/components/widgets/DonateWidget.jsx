@@ -350,9 +350,9 @@ const defaultCrypto =
       {/* Preview image */}
       {selectedAsset && (
         <div className='flex flex-col items-center justify-center'>
-          <div className='flex justify-between items-center mt-1'> 
-            <label className=' sm:text-lg text-xs my-2 text-white'>{selectedAsset.address}</label>
-            <div className={`mx-2 px-4 py-1 rounded-lg  cursor-pointer border-2 border-theme bg-white text-theme text-sm
+          <div className='flex justify-between items-center mt-1 w-full'> 
+            <label className=' sm:text-lg text-xs my-2 text-white break-all whitespace-normal'>{selectedAsset.address}</label>
+            <div className={`ml-2 px-4 py-1 rounded-lg  cursor-pointer border-2 border-theme bg-white text-theme text-sm
                      
                       `} onClick={() => {
                         navigator.clipboard.writeText(selectedAsset.address)

@@ -50,7 +50,7 @@ export default function SingleSponsorPage({
             
             <HeaderParallax 
                 // imageUrl={askLogo}
-                title={"A.S.K Sponsors"}
+                title={"A.S.K Benefactors"}
                 subtitle={""}
             />
 
@@ -80,7 +80,7 @@ export default function SingleSponsorPage({
 
 <div className="flex flex-col items-center  mb-2 mt-auto">
                   {/* <h3 className="text-2xl font-bold text-theme">{item.score}</h3> */}
-                  <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-2'><p className="text-theme">{'' + item.name}</p> </div>
+                  <div className='flex text-sm font-bold rounded-lg items-center justify-center w-full  mt-2'><p className="text-theme">{'' + item.name}</p> </div>
                   <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-0'><p className="text-theme">{'' + item.type}</p></div>
                 </div>
 

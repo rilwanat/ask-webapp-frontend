@@ -25,8 +25,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import WidgetShare from './widgets/WidgetShare';
-import WidgetNominate from './widgets/WidgetNominate';
 
 
 import NotificationModal from './modals/NotificationModal';

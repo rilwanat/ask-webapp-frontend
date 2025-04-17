@@ -79,8 +79,10 @@ function AdminFooter({
               <div
                 className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme text-red-500"
                 onClick={() => {
+                  
                   deleteCookie("admin");
-                  navigate('/');
+                  window.location.href = '/';
+                  // navigate('/');
                 }}
                 >
                   <p 

@@ -251,8 +251,8 @@ const isValidCryptoAddress = (name) => {
     try {
       const updateCryptoData = {
         cryptoId: crypto.id,
-        cryptoNetwork: crypto.network,
-        cryptoAddress: crypto.address
+        cryptoNetwork: crypto.network.trim(),
+        cryptoAddress: crypto.address.trim()
     };
     // alert(JSON.stringify(updateCryptoData), null, 2);
     // setIsUpdateDataLoading(false);

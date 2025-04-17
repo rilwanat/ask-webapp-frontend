@@ -27,6 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate user credentials and additional checks
     $nominateResult = $response->checkIfUserCanNominate($data->email, $data->helpToken, $data->fingerPrint);
+    // file_put_contents('nom.txt', print_r($nominateResult, true));
+    // file_put_contents('nom.txt', print_r($nominateResult, JSON_PRETTY_PRINT));
     if (!$nominateResult['status']) {
         http_response_code(403); // Forbidden
         echo json_encode(["status" => false, "message" => $nominateResult['message']]);

@@ -124,7 +124,8 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
-                                navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });
+                                const randomIndex = Math.floor(Math.random() * carouselRequestItems.length);
+                                navigateTo('/single-request', { selectedItem: carouselRequestItems[randomIndex], allItems: carouselRequestItems  });
                             }}
                         >
                             <p
@@ -138,14 +139,15 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
-                                navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[0], allItems: carouselBeneficiaryItems  });
+                                const randomIndex = Math.floor(Math.random() * carouselBeneficiaryItems.length);
+                                navigateTo('/single-beneficiary', { selectedItem: carouselBeneficiaryItems[randomIndex], allItems: carouselBeneficiaryItems  });
                             }}
                         >
                             <p
                                 className="text-sm cursor-pointer"
                                 style={{ fontWeight: '600' }}
                             >
-                                Beneficiary
+                                Beneficiaries
                             </p>
                         </div>
 
@@ -159,7 +161,7 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
                                 className="text-sm cursor-pointer"
                                 style={{ fontWeight: '600' }}
                             >
-                                Sponsor
+                                Benefactors
                             </p>
                         </div>
 
@@ -185,8 +187,10 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme text-red-500"
                             onClick={() => {
+                                
                                 deleteCookie("user");
-                                navigate('/');
+                                window.location.href = '/';
+                                // navigate('/');
                             }}
                         >
                             <p

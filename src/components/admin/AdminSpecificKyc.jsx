@@ -290,8 +290,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
     try {
 
       const requestData = {
-        email: user.userEmailAddress,
-        kycStatus: user.userKycStatus,
+        email: user.userEmailAddress.trim(),
+        kycStatus: user.userKycStatus.trim(),
     };
     // alert(JSON.stringify(requestData), null, 2);
     // setIsUpdateDataLoading(false);

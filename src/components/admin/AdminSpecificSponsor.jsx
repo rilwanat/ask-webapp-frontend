@@ -230,8 +230,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
     try {
       const updateSponsorData = {
         sponsorId: sponsor.id,
-        sponsorName: sponsor.name,
-        sponsorType: sponsor.type
+        sponsorName: sponsor.name.trim(),
+        sponsorType: sponsor.type.trim()
     };
     // alert(JSON.stringify(updateSponsorData), null, 2);
     // setIsUpdateDataLoading(false);
@@ -366,7 +366,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Is Cheat' 
                                             value={sponsorData.name} 
-                                            // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
+                                            onChange={(e) => setSponsorData({ ...sponsorData, name: e.target.value })}
                                             />
                                         </div>
                                         

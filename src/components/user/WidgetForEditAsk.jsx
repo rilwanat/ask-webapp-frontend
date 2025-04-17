@@ -137,8 +137,8 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
      
            const formData = new FormData();
            formData.append('email', userDetails.email_address);
-           formData.append('description', myCurrentActiveRequestsData.description);
-           formData.append('help_token', myCurrentActiveRequestsData.helpToken);
+           formData.append('description', myCurrentActiveRequestsData.description.trim());
+           formData.append('help_token', myCurrentActiveRequestsData.helpToken.trim());
         
           //  if (selectedFile !== null) {
           //   formData.append('image', selectedFile);

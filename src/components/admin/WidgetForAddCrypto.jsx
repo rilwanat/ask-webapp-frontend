@@ -138,8 +138,8 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
          try {
      
           const formData = new FormData();
-          formData.append('cryptoNetwork', cryptoNetwork);
-          formData.append('cryptoAddress', cryptoAddress);
+          formData.append('cryptoNetwork', cryptoNetwork.trim());
+          formData.append('cryptoAddress', cryptoAddress.trim());
        
           if (selectedFile !== null) {
            formData.append('image', selectedFile);

@@ -24,6 +24,7 @@ import WidgetVideo from '../widgets/WidgetVideo';
 // import Services from './widgets/Services';
 import WidgetForKyc from './WidgetForKyc';
 import WidgetForEmailVerification from './WidgetForEmailVerification';
+import WidgetForDNQ from './WidgetForDNQ';
 
 //
 import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
@@ -32,7 +33,7 @@ import { jwtDecode } from 'jwt-decode';
 import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
 //
 
-// import BoostNotificationModal from '../modals/BoostNotificationModal';
+import BoostNotificationModal from '../modals/BoostNotificationModal';
 import InfoIcon from '@mui/icons-material/Info';
 
 export default function UserDashboardPage({ 
@@ -151,12 +152,21 @@ export default function UserDashboardPage({
                               {/* <p className='mt-2'>Email</p> */}
                               <p className='mt-2'>{userDetails && userDetails.email_address}</p>
 
+                              {userDetails && (userDetails.kyc_status === '' || userDetails.kyc_status === null) && (
+                              <WidgetForDNQ 
+        userDetails={userDetails} 
+        openNotificationModal={openNotificationModal} 
+        gotoPage={gotoPage}
+        />
+      )}
+
+
 {userDetails && userDetails.kyc_status === 'APPROVED' && (
         <div className="w-full  ">
         <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">
 
-          <div className='flex flex-col items-center justify-center mt-0 mb-0  w-full'>
+          <div className='flex flex-col items-center justify-center mt-0 mb-4  w-full'>
             <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC has been approved</p>
             {/* <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div> */}
             <p className='text-center'>You can now access all features.</p>
@@ -165,28 +175,11 @@ export default function UserDashboardPage({
         </div>
         </div>
 
-        <div className="flex flex-col items-center  w-full px-4  z-5000">
-                <div className='flex justify-center mt-0'>
-                    <InfoIcon className='text-theme' style={{ width: '64px', height: '64px' }}/> 
-                </div>
-        
-                <div className='flex justify-center w-full sm:w-1/2 mt-2 mb-4 text-center'>
-                You can increase your influence in deciding beneficiary by boosting your daily nomination quota through becoming a donor.                
-                </div>  
-        
-                <div className='flex justify-center'>
-                  
-                  <div 
-                    onClick={() => {
-                      // onRequestClose();
-                      gotoPage('donate');
-                    }}
-                    style={{ width: '128px', borderWidth: '1px' }}
-                    className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
-                    Boost
-                  </div>
-                </div>
-              </div>
+        <WidgetForDNQ 
+        userDetails={userDetails} 
+        openNotificationModal={openNotificationModal} 
+        gotoPage={gotoPage}
+        />
 
 
 
@@ -374,7 +367,7 @@ export default function UserDashboardPage({
             {/* <AskFooter gotoPage={gotoPage} /> */}
 
 
-                  {/* <BoostNotificationModal
+                  <BoostNotificationModal
                           isOpen={isNotificationModalOpen}
                           onRequestClose={
                             () => {
@@ -385,7 +378,7 @@ export default function UserDashboardPage({
                           notificationTitle={notificationTitle}
                           notificationMessage={notificationMessage}
                           gotoPage={gotoPage}
-                        /> */}
+                        />
         </div>
     );
 }

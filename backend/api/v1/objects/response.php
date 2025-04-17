@@ -172,6 +172,7 @@ class Response
                     p.id,
                     p.fullname,
                     p.email_address,
+                    p.voter_consistency,
                     -- p.access_key,
                     p.phone_number,
                     p.kyc_status,
@@ -915,10 +916,11 @@ public function getEmailVerificationCode($email)
     return $result ? $result['email_token'] : null;
 }
 
-public function CreateHelpRequest($email, $description, $requestImage, $helpToken)
+public function CreateHelpRequest($email, $fullname, $description, $requestImage, $helpToken)
 {
     $query = "INSERT INTO " . $this->help_requests_table . " SET 
         email_address = :email,
+        fullname_for_comparison = :fullname_for_comparison,
         description = :description,
         request_image = :request_image,
         help_token = :help_token";
@@ -927,6 +929,7 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
     $stmt = $this->conn->prepare($query);
 
     $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":fullname_for_comparison", $fullname);
     $stmt->bindParam(":description", $description);
     $stmt->bindParam(":request_image", $requestImage);
     $stmt->bindParam(":help_token", $helpToken);
@@ -1201,6 +1204,7 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
     if ($stmt_check->rowCount() > 0) {
         $user = $stmt_check->fetch(PDO::FETCH_ASSOC);
         $fullname = $user['fullname'];
+        $userKyc = $user['kyc_status'];
 
         // Step 2: Validate user credentials
         if ($user['is_cheat'] !== 'No') {
@@ -1220,55 +1224,45 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
         if ($stmt_nominee->rowCount() > 0) {
             $nominee = $stmt_nominee->fetch(PDO::FETCH_ASSOC);
 
-            // // Step 4: Check for existing nomination (same voter+help_token+today)
-            // $today = date('Y-m-d');
-            // $query_existing = "SELECT COUNT(*) as existing_count 
-            //                  FROM " . $this->nominations_history_table . " 
-            //                  WHERE voter_fullname = :voter_fullname 
-            //                   AND help_token = :help_token 
-            //                   AND voter_device_id = :voter_device_id 
-            //                   AND DATE(voting_date) = :today";
-            // $stmt_existing = $this->conn->prepare($query_existing);
-            // $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
-            // $stmt_existing->bindValue(":help_token", $help_token, PDO::PARAM_STR);
-            // $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR);
-            // $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
-            // if (!$stmt_existing->execute()) {
-            //     return ["status" => false, "message" => "System error checking nominations"];
-            // }
-            // $result = $stmt_existing->fetch(PDO::FETCH_ASSOC);
-            // if ($result && $result['existing_count'] > 0) {
-            //     $response = ["status" => false, "message" => "You have already nominated this request today."];
-            //     return $response;
-            // }
+            // // Step 4: Check if user KYC is approved
+            // if ($userKyc === 'APPROVED') {
+            //     return [
+            //         "status" => true, 
+            //         "message" => "KYC approved", 
+            //         "userData" => $user, 
+            //         "nomineeData" => $nominee
+            //     ];
+            // } 
+            
+            
 
-            // Step 4: Check for existing nomination (same voter+help_token+today)
+            // Step 5: Check for existing nomination (same voter+today)
             $today = date('Y-m-d');
             $query_existing = "SELECT COUNT(*) as existing_count 
                              FROM " . $this->nominations_history_table . " 
-                             WHERE voter_fullname = :voter_fullname 
-                               
-                                
-                              AND DATE(voting_date) = :today";
+                             WHERE (voter_fullname = :voter_fullname 
+                               OR voter_device_id = :voter_device_id)
+                               AND (voter_email != nominee_email OR voter_fullname != nominee_fullname)
+                              AND DATE(voting_date) = CURRENT_DATE()";
             $stmt_existing = $this->conn->prepare($query_existing);
             $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
+            $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR);
              
              
-            $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
+            // $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
             if (!$stmt_existing->execute()) {
                 return ["status" => false, "message" => "System error checking nominations"];
             }
             $result = $stmt_existing->fetch(PDO::FETCH_ASSOC);
             if ($result && $result['existing_count'] > 0) {
-                // Calculate time remaining until midnight
-                $now = new DateTime();
-                $midnight = new DateTime('tomorrow');
-                $interval = $now->diff($midnight);
-                $timeLeft = $interval->format('%h hour(s) %i minute(s)');
+                // // Calculate time remaining until midnight
+                // $now = new DateTime();
+                // $midnight = new DateTime('tomorrow');
+                // $interval = $now->diff($midnight);
+                // $timeLeft = $interval->format('%h hour(s) %i minute(s)');
 
-
-
-                $response = ["status" => false, "message" => "You have already nominated today. Try again in $timeLeft."];
+                // $response = ["status" => false, "message" => "You have already nominated today. Try again in $timeLeft."];
+                $response = ["status" => false, "message" => "Self-nominations aren't allowed, or you have already nominated today. Try again tomorrow to nominate, or Complete Level 2 Verification (KYC) to share this device."];
                 return $response;
             }
             
@@ -1328,8 +1322,12 @@ public function CreateHelpRequest($email, $description, $requestImage, $helpToke
             $updateStmt->bindParam(":voting_weight", $votingWeight);
             $updateStmt->bindParam(":help_token", $helpToken);
 
+            // ✅ Execute the update query
+            if ($updateStmt->execute()) {
+                return true;
+            }
 
-            return true;
+            return false; // fail if update fails
         }
 
         return false;

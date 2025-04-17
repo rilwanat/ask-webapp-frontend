@@ -317,13 +317,13 @@ if (!imageSrc) {
            const requestData = {   
             email: userDetails.email_address,  
             // fullname: fullname,  
-            phoneNumber: phoneNumber,
-            accountNumber: accountNumber,
+            phoneNumber: phoneNumber.trim(),
+            accountNumber: accountNumber.trim(),
             // accountName: fullname,
-            bankName: bankName,
-            bankCode: bankCode,
-            gender: gender,
-            residence: residence
+            bankName: bankName.trim(),
+            bankCode: bankCode.trim(),
+            gender: gender.trim(),
+            residence: residence.trim()
            };
           //  alert("requestData: " + JSON.stringify(requestData, null, 2));
      

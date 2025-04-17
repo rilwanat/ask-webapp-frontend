@@ -11,7 +11,12 @@ import WidgetNominate from '../widgets/WidgetNominate';
 
 import NotificationModal from '../modals/NotificationModal';
 
-const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurrentRequestSlide, userDetails, refreshUserDetails }) => {
+const WidgetHelpRequests = ({ 
+  currentRequestSlide, carouselRequestItems, setCurrentRequestSlide, 
+  userDetails, refreshUserDetails, 
+  handleHelpRequestsData,
+  navigateAndRefresh
+ }) => {
   const navigate = useNavigate();
 
   //notification modal
@@ -144,6 +149,8 @@ const WidgetHelpRequests = ({ currentRequestSlide, carouselRequestItems, setCurr
                       refreshUserDetails={refreshUserDetails} 
                       //itemName={item.fullname_for_comparison}                       
                       openNotificationModal={openNotificationModal}
+                      handleHelpRequestsData={handleHelpRequestsData}
+                      navigateAndRefresh={navigateAndRefresh}
                       />
                       <WidgetShare helpToken={item.help_token}/>
                     </div>

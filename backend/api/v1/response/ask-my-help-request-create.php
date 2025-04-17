@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = $_POST['email'] ?? null;
     $description = $_POST['description'] ?? null;
+    $fullname = $_POST['fullname'] ?? null;
 
 
     //file type check to ensure only images are allowed:
@@ -84,10 +85,10 @@ if ($_FILES['image']['size'] > 2 * 1024 * 1024) { // 2MB max
             }
 
             // Ensure help request data is complete
-            if ($email && $description && $uniqueTargetFilePath && $helpToken) {
+            if ($email && $fullname && $description && $uniqueTargetFilePath && $helpToken) {
 
                 // Add help request with image path
-                $createResult = $response->CreateHelpRequest($email, $description, $uniqueTargetFilePath, $helpToken);
+                $createResult = $response->CreateHelpRequest($email, $fullname, $description, $uniqueTargetFilePath, $helpToken);
 
                 if ($createResult && isset($createResult['success']) && $createResult['success'] === true) {
                     http_response_code(200);

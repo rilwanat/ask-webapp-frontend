@@ -36,7 +36,9 @@ export default function SingleNominatePage({
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
-    userDetails, refreshUserDetails
+    userDetails, refreshUserDetails,
+    handleHelpRequestsData,
+    navigateAndRefresh
 }) {
     const navigate = useNavigate();
     const { helpToken } = useParams();
@@ -183,7 +185,8 @@ export default function SingleNominatePage({
 
                             <div 
               onClick={() => { 
-                navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });
+                const randomIndex = Math.floor(Math.random() * carouselRequestItems.length);
+                navigateTo('/single-request', { selectedItem: carouselRequestItems[randomIndex], allItems: carouselRequestItems  });
             }}
               style={{ borderWidth: '0px', width: '200px' }}
               className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
@@ -242,6 +245,8 @@ export default function SingleNominatePage({
                                 refreshUserDetails={refreshUserDetails} 
                                 //itemName={item.fullname_for_comparison} 
                                 openNotificationModal={openNotificationModal}
+                                handleHelpRequestsData={handleHelpRequestsData}
+                                navigateAndRefresh={navigateAndRefresh}
                                 />
                             </motion.button>
                             <motion.button>
@@ -250,6 +255,16 @@ export default function SingleNominatePage({
                         </div>
                     </motion.div>
                 </div>
+
+                <div 
+                    onClick={() => {
+                        const randomIndex = Math.floor(Math.random() * carouselRequestItems.length);
+                        navigateTo('/single-request', { selectedItem: carouselRequestItems[randomIndex], allItems: carouselRequestItems  });
+                    }}
+                    style={{ width: '300px', borderWidth: '1px' }}
+                    className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1 my-4'>
+                    See Other Requests
+                  </div>
             </div>
     )
 }

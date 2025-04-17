@@ -156,8 +156,8 @@ if ((sponsorType === "Select") || (sponsorType === "")) {
      
 
            const formData = new FormData();
-           formData.append('sponsorName', sponsorName);
-           formData.append('sponsorType', sponsorType);
+           formData.append('sponsorName', sponsorName.trim());
+           formData.append('sponsorType', sponsorType.trim());
         
            if (selectedFile !== null) {
             formData.append('image', selectedFile);

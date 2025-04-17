@@ -372,7 +372,10 @@ function App() {
       }
     };
 
-
+    const navigateAndRefresh = async (updatedItem) => {
+      const data = await handleHelpRequestsData();
+      navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
+  }
 
 
 
@@ -409,6 +412,8 @@ useEffect(() => {
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
+            handleHelpRequestsData={handleHelpRequestsData}
+            navigateAndRefresh={navigateAndRefresh}
             />}/>
             <Route path='/about-us' element={<AboutUsPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
@@ -441,7 +446,9 @@ useEffect(() => {
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
-            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
+            handleHelpRequestsData={handleHelpRequestsData}
+            navigateAndRefresh={navigateAndRefresh}
              />}/>
             <Route path='/single-sponsor' element={<SingleSponsorPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
@@ -461,6 +468,8 @@ useEffect(() => {
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
+            handleHelpRequestsData={handleHelpRequestsData}
+            navigateAndRefresh={navigateAndRefresh}
              />}/>
 
 <Route path='/reset-password/:passwordResetToken' element={<PasswordResetPage isMobile={isMobile}

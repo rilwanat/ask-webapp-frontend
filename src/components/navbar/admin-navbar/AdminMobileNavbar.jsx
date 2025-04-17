@@ -362,8 +362,10 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           className="text-sm  text-red-500 cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
           onClick={() => {
+            
             deleteCookie("admin");
-            navigate('/');
+            window.location.href = '/';
+            // navigate('/');
           }}
         >
           Logout

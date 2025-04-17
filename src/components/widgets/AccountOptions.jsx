@@ -242,8 +242,8 @@ const navigate = useNavigate();
         try {
     
           const requestData = {   
-            email: loginEmailAddress,  
-            password: loginPassword
+            email: loginEmailAddress.trim(),  
+            password: loginPassword.trim()
           };
     
           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_LOGIN, requestData, {
@@ -353,9 +353,9 @@ const navigate = useNavigate();
 
         try {
           const requestData = {   
-            email: registrationEmailAddress,  
-            password: registrationPassword,
-            confirmPassword: registrationConfirmPassword,
+            email: registrationEmailAddress.trim(),  
+            password: registrationPassword.trim(),
+            confirmPassword: registrationConfirmPassword.trim()
           };
     
           // alert(JSON.stringify(requestData, null, 2));

@@ -149,8 +149,8 @@ const is11DigitNumber = (input) => {
       try {
   
         const requestData = {   
-          email: loginEmailAddress,  
-          password: loginPassword
+          email: loginEmailAddress.trim(),  
+          password: loginPassword.trim()
         };
 
         // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_LOGIN);

@@ -44,7 +44,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                   className="text-2xl font-bold text-gray-800 mb-2"
                 >
                   <div className='flex flex-col items-center justify-center mt-0 mb-2'>
-                    <p className='text-softTheme mb-2' style={{ fontWeight: '700', fontSize: '24px' }}>Sponsors</p>
+                    <p className='text-softTheme mb-2' style={{ fontWeight: '700', fontSize: '24px' }}>Benefactors</p>
                     <div className='bg-softTheme mb-2' style={{ width: '80px', height: '4px' }}></div>
                   </div>
                 </motion.h1>

@@ -30,7 +30,10 @@ const WidgetNominate = ({
   refreshUserDetails, 
   //itemName,
   
-  openNotificationModal
+  openNotificationModal,
+  handleHelpRequestsData,
+
+  navigateAndRefresh
 
  }) => {
 
@@ -144,6 +147,23 @@ const WidgetNominate = ({
               // If registration is successful
               setErrorMessage({ message: '' });
       
+              
+              const data = await handleHelpRequestsData();
+              // Find the updated item
+          const updatedItem = data.find(item => item.help_token === helpToken); 
+              navigateAndRefresh(updatedItem);
+            // alert(data.length.toString())
+            // getActiveHelpRequests();            
+            // //get id of request then find in carouselRequestsItems
+            // alert("carouselRequestItems: " + JSON.stringify(carouselRequestItems, null, 2));
+            // const requestItem = data.find(item => item.id === response.data.id);
+            // setMatchingRequestItem(requestItem);
+            // setAllRequestItems(data);
+
+
+
+
+
               
               openNotificationModal(true, "Nomination", response.data.message);
               

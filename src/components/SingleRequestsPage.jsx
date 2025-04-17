@@ -22,7 +22,9 @@ export default function SingleRequestsPage({
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
-    userDetails, refreshUserDetails
+    userDetails, refreshUserDetails, 
+    handleHelpRequestsData,
+    navigateAndRefresh
 }) {
     const navigate = useNavigate();
     const location = useLocation();
@@ -66,6 +68,15 @@ export default function SingleRequestsPage({
     const handleChange = (index) => {
         setSelectedIndex(index);
     };
+
+
+    // const navigateTo = (route, data) => {
+    //     navigate(route, { state: data });
+    //   };
+    //   const navigateAndRefresh = async (updatedItem) => {
+    //     const data = await handleHelpRequestsData();
+    //     navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
+    // }
 
     // Custom carousel configuration to prevent scroll interference
     const carouselConfig = {
@@ -160,7 +171,9 @@ export default function SingleRequestsPage({
                                         helpToken={item.help_token} userDetails={userDetails} 
                                         refreshUserDetails={refreshUserDetails} 
                                         //itemName={item.user.fullname}                                        
-                                        openNotificationModal={openNotificationModal}
+                                        openNotificationModal={openNotificationModal} 
+                                        handleHelpRequestsData={handleHelpRequestsData}
+                                        navigateAndRefresh={navigateAndRefresh}
                                         />
                                     </motion.div>
                                     <motion.div

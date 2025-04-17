@@ -322,8 +322,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
     
     try {
       const updateRequestData = {
-        email: request.userEmail,
-        remark: request.remark
+        email: request.userEmail.trim(),
+        remark: request.remark.trim()
     };
     // alert(JSON.stringify(updateRequestData), null, 2);
     // setIsUpdateDataLoading(false);

@@ -114,7 +114,8 @@ const WidgetForCreateAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequ
      
            const formData = new FormData();
            formData.append('email', userDetails.email_address);
-           formData.append('description', helpDescription);
+           formData.append('description', helpDescription.trim());
+           formData.append('fullname', userDetails.fullname);
         
            if (selectedFile !== null) {
             formData.append('image', selectedFile);
@@ -215,7 +216,6 @@ const WidgetForCreateAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequ
 
        const gotoPageShareNow = () => {
         // alert("here1");
-        // navigateTo('/single-request', { selectedItem: carouselRequestItems[0], allItems: carouselRequestItems  });
         navigateTo('/single-request', { selectedItem: matchingRequestItem, allItems: allRequestItems  });
         // alert("here2");
     }
