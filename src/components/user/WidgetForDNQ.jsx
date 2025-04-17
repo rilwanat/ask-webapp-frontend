@@ -16,7 +16,7 @@ const WidgetForDNQ = ({ userDetails, openNotificationModal, gotoPage }) => {
 
 
   return (
-    <div className="flex flex-col items-center  w-full px-4  z-5000">
+    <div className="flex flex-col items-center  w-full px-4  ">
                 <div className='flex  flex-col items-center justify-center mt-0'>
                     {/* <InfoIcon className='text-theme' style={{ width: '64px', height: '64px' }}/>  */}
                     <p className='text-center font-bold mb-2'>Daily Nomination Quota (DNQ)</p>
@@ -53,7 +53,7 @@ const WidgetForDNQ = ({ userDetails, openNotificationModal, gotoPage }) => {
                     // openNotificationModal(true, "DNQ", "You can increase your influence in deciding beneficiary by boosting your daily nomination quota through becoming a donor.");
                   }}
                   >
-                    {userDetails.voter_consistency}
+                    {userDetails.vote_weight}
                   </div>
                 </div>
               </div>
