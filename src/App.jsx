@@ -34,17 +34,19 @@ import AdminListSponsors from './components/admin/AdminListSponsors.jsx';
 import AdminListCrypto from './components/admin/AdminListCrypto.jsx';
 import AdminManageKyc from './components/admin/AdminManageKyc.jsx';
 import AdminListDonations from './components/admin/AdminListDonations.jsx';
-import AdminManageAdmins from './components/admin/AdminManageAdmins.jsx';
+import AdminListAdmins from './components/admin/AdminListAdmins.jsx';
 
 import AdminSpecificKyc from './components/admin/AdminSpecificKyc.jsx';
 import AdminSpecificRequest from './components/admin/AdminSpecificRequest.jsx';
 import AdminSpecificSponsor from './components/admin/AdminSpecificSponsor.jsx';
 import AdminSpecificCrypto from './components/admin/AdminSpecificCrypto.jsx';
+import AdminSpecificAdmin from './components/admin/AdminSpecificAdmin.jsx';
+
 
 
 import AdminAddSponsorPage from './components/admin/AdminAddSponsorPage.jsx';
 import AdminManageCrypto from './components/admin/AdminManageCrypto.jsx';
-
+import AdminAddAdminPage from './components/admin/AdminAddAdminPage.jsx';
 
 
 import UserDashboardPage from './components/user/UserDashboardPage.jsx';
@@ -587,17 +589,23 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
              /></ProtectedAdminRoute>}/>
 
-<Route path='/manage-admins' element={<ProtectedAdminRoute><AdminManageAdmins isMobile={isMobile}
+<Route path='/list-admins' element={<ProtectedAdminRoute><AdminListAdmins isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
-{/* <Route path='/specific-admin/:id' element={<ProtectedAdminRoute><AdminSpecificCrypto isMobile={isMobile}
+<Route path='/admin-add-admin' element={<ProtectedAdminRoute><AdminAddAdminPage isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/specific-admin/:id' element={<ProtectedAdminRoute><AdminSpecificAdmin isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
-             /></ProtectedAdminRoute>}/> */}
+             /></ProtectedAdminRoute>}/>
 
 
 <Route path='/user-dashboard' element={<ProtectedRoute><UserDashboardPage isMobile={isMobile}

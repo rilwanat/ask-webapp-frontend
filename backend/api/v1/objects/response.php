@@ -1228,6 +1228,11 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
         if ($stmt_nominee->rowCount() > 0) {
             $nominee = $stmt_nominee->fetch(PDO::FETCH_ASSOC);
 
+            // Step 4: Prevent self-nomination
+            if ($email === $nominee['email_address']) {
+                return ["status" => false, "message" => "Oops! Sorry, self-nominations are not allowed."];
+            }
+
             // // Step 4: Check if user KYC is approved
             // if ($userKyc === 'APPROVED') {
             //     return [
@@ -1266,10 +1271,12 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                 // $timeLeft = $interval->format('%h hour(s) %i minute(s)');
 
                 // $response = ["status" => false, "message" => "You have already nominated today. Try again in $timeLeft."];
-                $response = ["status" => false, "message" => "Oops! Try again tomorrow to nominate.#You have either nomited today.#Complete your KYC if you are sharing this device to proceed.#Self-nominations not allowed."];
+                $response = ["status" => false, "message" => "Oops! Try again tomorrow to nominate.#You have already nominated today.#Complete your KYC if you are sharing this device to proceed."];
                 return $response;
             }
             
+            // Step 6: Silently update voter consistency
+            $this->updateVoterConsistencySilently($email);
             
             // All checks passed
             return [
@@ -1285,6 +1292,65 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
         return ["status" => false, "message" => "User does not exist."];
     }
 }
+
+/**
+ * Silently updates voter consistency without returning any value
+ */
+private function updateVoterConsistencySilently($email) {
+    try {
+        // Check if user voted yesterday
+        $votedYesterday = $this->checkVotedYesterday($email);
+        
+        // Get current consistency
+        $currentConsistency = $this->getCurrentConsistency($email);
+        
+        // Determine new consistency value
+        $newConsistency = $votedYesterday ? ($currentConsistency + 1) : 1;
+        
+        // Update consistency
+        $updateQuery = "UPDATE " . $this->users_table . " 
+                       SET voter_consistency = :consistency 
+                       WHERE email_address = :email";
+        
+        $stmt = $this->conn->prepare($updateQuery);
+        $stmt->bindParam(":consistency", $newConsistency, PDO::PARAM_INT);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
+        
+    } catch (Exception $e) {
+        // Fail silently - don't interrupt main flow
+        error_log("Silent consistency update failed: " . $e->getMessage());
+    }
+}
+private function checkVotedYesterday($email) {
+    $query = "SELECT COUNT(*) as count 
+              FROM " . $this->nominations_history_table . " 
+              WHERE voter_email = :email 
+              AND DATE(voting_date) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return ($result && $result['count'] > 0);
+}
+private function getCurrentConsistency($email) {
+    $query = "SELECT voter_consistency 
+              FROM " . $this->users_table . " 
+              WHERE email_address = :email";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return $result ? (int)$result['voter_consistency'] : 1;
+}
+/**
+ * Silently updates voter consistency without returning any value
+ */
+
 
     public function CreateNomination($email, $voterFullname, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $nomineeFullname, $helpToken)
     {

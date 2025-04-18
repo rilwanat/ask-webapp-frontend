@@ -66,7 +66,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import NotificationModal from '../modals/NotificationModal';
 
 
-export default function AdminManageAdmins({ 
+export default function AdminListAdmins({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -124,7 +124,7 @@ useEffect(() => {
     const handleAdminRowClick = (admin, e) => {
       {                
           // alert(JSON.stringify(product, null, 2));
-  return;
+
           // const encryptedData = AES.encrypt(JSON.stringify(product), 'encryptionKey').toString();
           navigate(`/specific-admin/${admin.id}`, {
               state: {

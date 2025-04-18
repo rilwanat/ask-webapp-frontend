@@ -49,10 +49,11 @@ const details = parts.slice(1);
         <div className='flex flex-col  w-full my-4 '>
   
     <div className='mb-2 text-center'>{mainMessage}</div>
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-start justify-center'>
     {details.map((item, index) => (
       <div key={index} className='flex items-center mt-1'>
-        <CheckCircleIcon  className='text-green  mr-1'  /> <span>{item}</span>
+        {/* <CheckCircleIcon  className='text-green  mr-1'  />  */}
+        <span>• {item}</span>
       </div>
     ))}
   </div>

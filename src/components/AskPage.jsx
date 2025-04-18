@@ -20,6 +20,8 @@ import Contact from './widgets/Contact';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+
+import WidgetForEmailVerification from './user/WidgetForEmailVerification';
 import WidgetForKyc from './user/WidgetForKyc';
 
 

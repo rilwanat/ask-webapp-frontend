@@ -80,7 +80,7 @@ function AdminFooter({
                 onClick={() => {
                   
                   
-                  navigate('/manage-admins');
+                  navigate('/list-admins');
                 }}
                 >
                   <p 
