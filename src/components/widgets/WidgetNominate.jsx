@@ -166,7 +166,7 @@ const WidgetNominate = ({
 
             
 
-              openNotificationModal(true, "Nomination", response.data.message);
+              openNotificationModal(true, "Nomination", response.data.message + ".<br>Increase your influence to decide beneficiary by boosting your DNQ.");
               
   
             } else {

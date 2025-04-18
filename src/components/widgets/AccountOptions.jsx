@@ -280,7 +280,13 @@ const navigate = useNavigate();
             // alert("Login Successful: " + response.data.message);
             openNotificationModal(true, "Login", response.data.message);
             
-            navigate('/');
+
+            if (response.data.userData.email_verified !== "Yes") {
+              navigate('/user-dashboard');
+            } else {
+              navigate('/');
+            }
+            
             // gotoUserProfile();
           } else {
             const errors = response.data.errors.map(error => error.msg);

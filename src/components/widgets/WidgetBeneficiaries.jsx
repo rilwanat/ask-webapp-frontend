@@ -114,7 +114,7 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
                         <p className="text-theme mr-2">{item.status}</p>
                         {
                           item.status === 'approved' ? 
-                          <CheckCircleIcon style={{ color: '#ffffff' }}/> 
+                          <CheckCircleIcon className='text-green-800' style={{  }}/> 
                           : 
                           <PendingActionsIcon />
                         }

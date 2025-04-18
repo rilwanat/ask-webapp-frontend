@@ -225,7 +225,7 @@ export default function UserDashboardPage({
     onClick={() => { setShowLevel2KYC(true) }}
     style={{ borderWidth: '0px', width: '300px' }}
     className='mt-4 text-white text-center rounded-sm px-4 py-2  text-sm cursor-pointer mb-20 bg-theme hover:text-softTheme'>
-    {'Complete Level 2 Verification (KYC)'} 
+    {'Complete Level 2 Verification'} 
     </div>
     </div>
         </div>
@@ -244,7 +244,7 @@ export default function UserDashboardPage({
   onClick={() => { setShowLevel1KYC(true) }}
   style={{ borderWidth: '0px', width: '300px' }}
   className='mt-4 text-white text-center rounded-sm px-4 py-2  text-sm cursor-pointer mb-20 bg-theme hover:text-softTheme'>
-  {'Complete Level 1 Verification KYC'} 
+  {'Complete Level 1 Verification'} 
   </div>
   </div>
   </> 
@@ -260,7 +260,7 @@ export default function UserDashboardPage({
     onClick={() => { setShowLevel2KYC(true) }}
     style={{ borderWidth: '0px', width: '300px' }}
     className='mt-4 text-white text-center rounded-sm px-4 py-2  text-sm cursor-pointer mb-20 bg-theme hover:text-softTheme'>
-    {'Complete Level 2 Verification KYC'} 
+    {'Complete Level 2 Verification'} 
     </div>
     </div>
     </> 

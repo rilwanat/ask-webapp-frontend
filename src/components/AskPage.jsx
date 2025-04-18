@@ -122,7 +122,10 @@ export default function AskPage({
             }
           };
     
-
+useEffect(() => {
+      // setShowLevel1KYC(false);
+      refreshUserDetails();
+    }, [isLoading]);
 
     return (
         <div className="">
@@ -142,56 +145,57 @@ export default function AskPage({
 
             
             
-
 {
-  isAuthenticated() ? 
-  (
-
-    userDetails && (userDetails.kyc_status === null || userDetails.kyc_status === 'PENDING' || userDetails.kyc_status === 'REJECTED') ? 
-    <div className="-mt-16">
-    <WidgetForKyc  
-        userDetails={userDetails} 
-        refreshUserDetails={refreshUserDetails} 
-      />
-    </div> :
-
-
+  isAuthenticated() ? (
     <>
-    {
-    !isLoading ?  (
-      myActiveRequestsData === null ? (
-        <WidgetForCreateAsk  
-        userDetails={userDetails} 
-        refreshUserDetails={refreshUserDetails} 
-        getActiveHelpRequests={getActiveHelpRequests}
-
-        navigateTo={navigateTo}
-        carouselRequestItems={carouselRequestItems}
-        handleHelpRequestsData={handleHelpRequestsData}
+      {userDetails && (userDetails.email_verified === null || userDetails.email_verified === "" || userDetails.email_verified === "No") ? (
+        <WidgetForEmailVerification 
+          userDetails={userDetails} 
+          refreshUserDetails={refreshUserDetails} 
         />
-        
-      )
-     
-                : <WidgetForEditAsk  
+      ) : userDetails && (userDetails.kyc_status !== "APPROVED" || userDetails.kyc_status === "" || userDetails.kyc_status === null) ? (
+        <div className="-mt-16">
+          <WidgetForKyc  
+            userDetails={userDetails} 
+            refreshUserDetails={refreshUserDetails} 
+          />
+        </div>
+      ) : (
+        <>
+          {!isLoading ? (
+            myActiveRequestsData === null ? (
+              <WidgetForCreateAsk  
+                userDetails={userDetails} 
+                refreshUserDetails={refreshUserDetails} 
+                getActiveHelpRequests={getActiveHelpRequests}
+                navigateTo={navigateTo}
+                carouselRequestItems={carouselRequestItems}
+                handleHelpRequestsData={handleHelpRequestsData}
+              />
+            ) : (
+              <WidgetForEditAsk  
                 userDetails={userDetails} 
                 refreshUserDetails={refreshUserDetails} 
                 getActiveHelpRequests={getActiveHelpRequests}
                 myActiveRequestsData={myActiveRequestsData}
-                />
-    ) : <Loading />
-  }
+              />
+            )
+          ) : (
+            <Loading />
+          )}
+        </>
+      )}
     </>
-
-
-
-) : <WidgetForLoginAsk  
-userDetails={userDetails} 
-refreshUserDetails={refreshUserDetails} 
-getActiveHelpRequests={getActiveHelpRequests}
-myActiveRequestsData={myActiveRequestsData}
-/>
-  
+  ) : (
+    <WidgetForLoginAsk  
+      userDetails={userDetails} 
+      refreshUserDetails={refreshUserDetails} 
+      getActiveHelpRequests={getActiveHelpRequests}
+      myActiveRequestsData={myActiveRequestsData}
+    />
+  )
 }
+
 
 {/* {myActiveRequestsData === null ? "1": "2"} */}
 

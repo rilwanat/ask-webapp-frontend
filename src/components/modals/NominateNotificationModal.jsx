@@ -38,7 +38,7 @@ const details = parts.slice(1);
       <div className="flex flex-col w-full px-4 pt-4 z-5000">
         <div className='flex justify-center mt-4'>
           {notificationType === true ? 
-            <CheckCircleIcon className='text-theme' style={{ width: '64px', height: '64px' }}/> : 
+            <CheckCircleIcon className='text-green-800' style={{ width: '64px', height: '64px' }}/> : 
             <CancelIcon className='text-red-500' style={{ width: '64px', height: '64px' }}/>
           }
         </div>
@@ -51,9 +51,9 @@ const details = parts.slice(1);
     <div className='mb-2 text-center'>{mainMessage}</div>
     <div className='flex flex-col items-start justify-center'>
     {details.map((item, index) => (
-      <div key={index} className='flex items-center mt-1'>
-        {/* <CheckCircleIcon  className='text-green  mr-1'  />  */}
-        <span>• {item}</span>
+      <div key={index} className='flex items-center justify-center mt-1'>
+        {/* <CheckCircleIcon  className='text-green-800  mr-1'  />  */}
+        <span>{item}</span>
       </div>
     ))}
   </div>
@@ -67,15 +67,17 @@ const details = parts.slice(1);
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
             Okay
           </div>
-{/* {
-goto &&
           <div 
-            onClick={() => navigate(goto) }
+            onClick={() => 
+            {
+              onRequestClose();
+              navigate(donate); 
+            }
+            }
             style={{ width: '128px', borderWidth: '1px' }}
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
-            Okay
+            Boost
           </div>
-} */}
         </div>
       </div>
     </Modal>
