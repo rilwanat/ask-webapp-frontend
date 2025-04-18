@@ -1230,7 +1230,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
 
             // Step 4: Prevent self-nomination
             if ($email === $nominee['email_address']) {
-                return ["status" => false, "message" => "<strong>Oops!</strong><br>Sorry, self-nominations are not allowed."];
+                return ["status" => false, "message" => "Oops! Sorry, self-nominations are not allowed."];
             }
 
             // // Step 4: Check if user KYC is approved
@@ -1270,7 +1270,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                 // $timeLeft = $interval->format('%h hour(s) %i minute(s)');
 
                 // $response = ["status" => false, "message" => "You have already nominated today. Try again in $timeLeft."];
-                $response = ["status" => false, "message" => "<strong>Oops! Try again tomorrow.</strong> You have either nominated already or trying to share device, complete KYC to enable device sharing or come back tomorrow."];
+                $response = ["status" => false, "message" => "Oops! Try again tomorrow. You have either nominated already or trying to share device, complete KYC to enable device sharing or come back tomorrow."];
                 return $response;
             }
             } else { //LVL2 do not check for device

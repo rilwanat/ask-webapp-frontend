@@ -196,6 +196,7 @@ export default function SingleRequestsPage({
               notificationType={notificationType}
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}
+              gotoPage={gotoPage}
             />
 
             <GuestFooter gotoPage={gotoPage} />

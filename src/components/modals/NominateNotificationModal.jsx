@@ -20,7 +20,7 @@ const customModalStyles = {
   },
 };
 
-const NominateNotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage }) => {
+const NominateNotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage, gotoPage }) => {
 
       // const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const details = parts.slice(1);
       <div className="flex flex-col w-full px-4 pt-4 z-5000">
         <div className='flex justify-center mt-4'>
           {notificationType === true ? 
-            <CheckCircleIcon className='text-green-800' style={{ width: '64px', height: '64px' }}/> : 
+            <CheckCircleIcon className='text-green' style={{ width: '64px', height: '64px' }}/> : 
             <CancelIcon className='text-red-500' style={{ width: '64px', height: '64px' }}/>
           }
         </div>
@@ -52,8 +52,8 @@ const details = parts.slice(1);
     <div className='flex flex-col items-start justify-center'>
     {details.map((item, index) => (
       <div key={index} className='flex items-center justify-center mt-1'>
-        {/* <CheckCircleIcon  className='text-green-800  mr-1'  />  */}
-        <span>{item}</span>
+        {/* <CheckCircleIcon  className='text-green  mr-1'  />  */}
+        <span className='text-center'>{item}</span>
       </div>
     ))}
   </div>
@@ -67,17 +67,19 @@ const details = parts.slice(1);
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
             Okay
           </div>
-          <div 
-            onClick={() => 
-            {
+          {
+            notificationType === true ? <div 
+            onClick={() => {
               onRequestClose();
-              navigate(donate); 
-            }
-            }
+              gotoPage('donate');
+            }}
             style={{ width: '128px', borderWidth: '1px' }}
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
             Boost
-          </div>
+          </div> : <></>
+          }
+          
+          
         </div>
       </div>
     </Modal>

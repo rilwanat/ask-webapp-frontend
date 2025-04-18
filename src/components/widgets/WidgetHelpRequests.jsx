@@ -40,6 +40,10 @@ const WidgetHelpRequests = ({
     navigate(route, { state: data });
   };
 
+  const gotoPage = (pageName) => {
+    navigate("/" + pageName);
+}
+
   // Custom carousel configuration to prevent scroll interference
   const carouselConfig = {
     showIndicators: false,
@@ -170,6 +174,7 @@ const WidgetHelpRequests = ({
               notificationType={notificationType}
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}
+              gotoPage={gotoPage}
             />
     </div>
   );

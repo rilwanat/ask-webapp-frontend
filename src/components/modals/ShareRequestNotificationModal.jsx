@@ -33,7 +33,7 @@ const ShareRequestNotificationModal = ({ isOpen, onRequestClose, notificationTyp
       <div className="flex flex-col w-full px-4 pt-4 z-5000">
         <div className='flex justify-center mt-4'>
           {notificationType === true ? 
-            <CheckCircleIcon className='text-green-800' style={{ width: '64px', height: '64px' }}/> : 
+            <CheckCircleIcon className='text-green' style={{ width: '64px', height: '64px' }}/> : 
             <CancelIcon className='text-red-500' style={{ width: '64px', height: '64px' }}/>
           }
         </div>

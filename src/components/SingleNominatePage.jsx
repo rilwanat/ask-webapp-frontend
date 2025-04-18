@@ -279,6 +279,7 @@ export default function SingleNominatePage({
               notificationType={notificationType}
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}
+              gotoPage={gotoPage}
             /> 
 
             <GuestFooter gotoPage={gotoPage} />

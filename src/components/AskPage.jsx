@@ -125,7 +125,7 @@ export default function AskPage({
 useEffect(() => {
       // setShowLevel1KYC(false);
       refreshUserDetails();
-    }, [isLoading]);
+    }, []);
 
     return (
         <div className="">
