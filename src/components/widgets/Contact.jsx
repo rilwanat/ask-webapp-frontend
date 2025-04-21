@@ -26,6 +26,14 @@ import NotificationModal from '../modals/NotificationModal';
 
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
+//
+import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
+import { setCookie, isAuthenticated } from '../../auth/authUtils'; // Ensure the correct relative path
+import { jwtDecode } from 'jwt-decode';
+import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
+//
+
+
 const Contact = ({ }) => {
   const navigate = useNavigate();
 
@@ -46,7 +54,9 @@ const Contact = ({ }) => {
     };
     //notification modal
 
+    
 
+ const [errorMessage, setErrorMessage] = useState('');
   const [isMessageSending, setIsMessageSending] = useState(false);
   const [contactName, setContactName] = useState('');
   const [address, setAddress] = useState('');
@@ -135,45 +145,91 @@ const isValidEmail = (email) => {
   
   
     setIsMessageSending(true);
-    try {
-        const response = await fetch('/mail/send_contact_email.php', {
-            method: 'POST',
-            body: formData
-        });
-  
-        const result = await response.json();
-  
-        // alert(JSON.stringify(result, null, 2));
-  
-        if (result.message == "Message Sent") {
-  
-          
-            // Reset form
-            setContactName('');
-            setAddress('');
-            setPhoneNumber('');
-            setEmail('');
+    
+//     const formDataObj = {};
+// formData.forEach((value, key) => {
+//   formDataObj[key] = value;
+// });
+// alert("FormData as object:\n" + JSON.stringify(formDataObj, null, 2));
+             try {
+         
+    
+    
+              //  alert("requestData: " + JSON.stringify(formData, null, 2));
+         
+               const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_SEND_MAIL, formData, {
+                 headers: {
+                       'Content-Type': 'multipart/form-data',
+                      //  'Content-Type': 'application/json',
+                   },
+               });
+         
+               setIsMessageSending(false);
+              //  alert("requestData: " + JSON.stringify(response.data, null, 2));
+         // return;
+         
+               if (response.data.status) {
+                
+                 // If login is successful
+                 setErrorMessage({ message: '' });
+                 
+    
+                // Reset form
+                setContactName('');
+                setAddress('');
+                setPhoneNumber('');
+                setEmail('');
+                setMessage('');
+    
+       
+    
+                 openNotificationModal(true, "ASK Foundation", response.data.message);
+                 
+                 
+                  
+    
+         
+                 
+               } else {
+                 const errors = response.data.errors.map(error => error.msg);
+                 setErrorMessage({ message: response.data.message, errors });
+                 //alert("Failed1");
+               }
+             } catch (error) {
+              setIsMessageSending(false);
+     
+              //  alert(error);
+             
+               if (error.response && error.response.data && error.response.data.message) {
+               const errorMessage = error.response.data.message;
+               setErrorMessage({ message: errorMessage });
+    
+               openNotificationModal(false, "ASK Foundation", errorMessage);
+                  
+    
+             } else if (error.response && error.response.data && error.response.data.errors) {
+               const { errors } = error.response.data;
+               const errorMessages = errors.map(error => error.msg);
+               const errorMessage = errorMessages.join(', '); // Join all error messages
+               setErrorMessage({ message: errorMessage });
+    
+               openNotificationModal(false, "ASK Foundation", errorMessage);
+                  
+             } else {
+               setErrorMessage({ message: 'ASK Foundation. Please check your data and try again.' });
+    
+               openNotificationModal(false, "ASK Foundation", 'Please check your data and try again.');
+                  
+             }
+           }
 
-  
-            // alert("Message was sent successfully");
-            openNotificationModal(true, "ASK Foundation", "Message was sent successfully");
-            
-            
-        } else {
-            // alert("Failed to send message");
-            openNotificationModal(false, "ASK Foundation", "Failed to send message");
-            
-        }
-  
-        setIsMessageSending(false);
-    } catch (error) {
-      setIsMessageSending(false);
-  
-        console.error("Error sending message:", error);
-        // alert("An error occurred while sending the message");
-        openNotificationModal(false, "ASK Foundation", "An error occurred while sending the message");
-            
-    }
+
+
+
+
+
+
+
   };
 
   const navigateTo = (route) => {

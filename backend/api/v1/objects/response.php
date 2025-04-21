@@ -19,8 +19,9 @@ class Response
     private $tokens_table = "tokens_table";
     private $bank_codes_table = "bank_codes_table";
     private $crypto_info_table = "crypto_info_table";
+    private $subscriptions_table_name = "subscription_table";
 
-    private $subscribe_table_name = "subscribe_table";
+    private $payments_table_name = "payments_table";
     private $password_reset_tokens_table = "password_reset_tokens";
     
     
@@ -541,7 +542,7 @@ public function updateUserKyc(
     ) {
 
 
-        
+        $isCheat = "No";
 
     $query = "UPDATE " . $this->users_table . " 
               SET 
@@ -554,7 +555,8 @@ public function updateUserKyc(
                 gender =:gender,                
                 state_of_residence =:state_of_residence,
                 kyc_status =:kyc_status, 
-                eligibility =:eligibility
+                eligibility =:eligibility,
+                is_cheat =:is_cheat
 
               WHERE email_address = :email";
 
@@ -574,6 +576,9 @@ public function updateUserKyc(
 
     $stmt->bindParam(":kyc_status", $kycStatus);
     $stmt->bindParam(":eligibility", $eligibility);
+
+    $stmt->bindParam(":is_cheat", $isCheat);
+    
 
     // Execute query and return the result
     if ($stmt->execute()) {
@@ -924,7 +929,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
 {
     $query = "INSERT INTO " . $this->help_requests_table . " SET 
         email_address = :email,
-        fullname_for_comparison = :fullname_for_comparison,
+        
         description = :description,
         request_image = :request_image,
         help_token = :help_token";
@@ -933,7 +938,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
     $stmt = $this->conn->prepare($query);
 
     $stmt->bindParam(":email", $email);
-    $stmt->bindParam(":fullname_for_comparison", $fullname);
+    
     $stmt->bindParam(":description", $description);
     $stmt->bindParam(":request_image", $requestImage);
     $stmt->bindParam(":help_token", $helpToken);
@@ -1022,9 +1027,9 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             }
     
             // Step 3: Check if a recent beneficiary record exists (within 12 months)
-            $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE fullname_for_comparison = :fullname_for_comparison ORDER BY date DESC LIMIT 1";
+            $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE email_address = :email_address ORDER BY date DESC LIMIT 1";
             $stmt_beneficiary = $this->conn->prepare($query_beneficiary);
-            $stmt_beneficiary->bindParam(":fullname_for_comparison", $fullname);
+            $stmt_beneficiary->bindParam(":email_address", $email);
             $stmt_beneficiary->execute();
     
             if ($stmt_beneficiary->rowCount() > 0) {
@@ -1056,9 +1061,9 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             }
     
             // Step 4: Ensure user hasn't already submitted a help request
-            $query_help_requests = "SELECT id FROM " . $this->help_requests_table . " WHERE fullname_for_comparison = :fullname_for_comparison LIMIT 1";
+            $query_help_requests = "SELECT id FROM " . $this->help_requests_table . " WHERE email_address = :email_address LIMIT 1";
             $stmt_help_requests = $this->conn->prepare($query_help_requests);
-            $stmt_help_requests->bindParam(":fullname_for_comparison", $fullname);
+            $stmt_help_requests->bindParam(":email_address", $email);
             $stmt_help_requests->execute();
     
             if ($stmt_help_requests->rowCount() > 0) {
@@ -1165,11 +1170,13 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                     p.nomination_count,
                     p.description,
                     p.remark,
-                    p.fullname_for_comparison,
                     p.email_address,
                     p.request_image,
-                    p.help_token 
-                FROM " . $this->help_requests_table . " p  WHERE p.help_token = :help_token";
+                    p.help_token,
+                    u.fullname 
+                FROM " . $this->help_requests_table . " p 
+                LEFT JOIN " . $this->users_table . " u ON p.email_address = u.email_address
+                 WHERE p.help_token = :help_token";
             
             // Prepare the statement
             $stmt = $this->conn->prepare($query);
@@ -1250,12 +1257,11 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             $today = date('Y-m-d');
             $query_existing = "SELECT COUNT(*) as existing_count 
                              FROM " . $this->nominations_history_table . " 
-                             WHERE (voter_fullname = :voter_fullname 
-                               OR voter_device_id = :voter_device_id)
-                               AND (voter_email != nominee_email OR voter_fullname != nominee_fullname)
+                             WHERE (voter_device_id = :voter_device_id)
+                               AND (voter_email != nominee_email)
                               AND DATE(voting_date) = CURRENT_DATE()";
             $stmt_existing = $this->conn->prepare($query_existing);
-            $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
+            // $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
             $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR);  
             // $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
             if (!$stmt_existing->execute()) {
@@ -1297,7 +1303,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                 // $timeLeft = $interval->format('%h hour(s) %i minute(s)');
 
                 // $response = ["status" => false, "message" => "You have already nominated today. Try again in $timeLeft."];
-                $response = ["status" => false, "message" => "Oops! Try again tomorrow to nominate.#You have already nominated today."];
+                $response = ["status" => false, "message" => "You have already nominated today."];
                 return $response;
             }
             } 
@@ -1418,19 +1424,17 @@ private function getCurrentConsistency($email) {
  */
 
 
-    public function CreateNomination($email, $voterFullname, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $nomineeFullname, $helpToken)
+    public function CreateNomination($email, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $helpToken)
     {
         $query = "";
         {
             $query = "INSERT INTO " . $this->nominations_history_table . " SET 
             
             voter_email=:voter_email,
-            voter_fullname=:voter_fullname,
             voter_device_id=:voter_device_id,
 
             voting_weight=:voting_weight,
             nominee_email=:nominee_email,
-            nominee_fullname=:nominee_fullname,
             help_token=:help_token
             ";
         }
@@ -1439,12 +1443,12 @@ private function getCurrentConsistency($email) {
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":voter_email", $email);
-        $stmt->bindParam(":voter_fullname", $voterFullname);
+        // $stmt->bindParam(":voter_fullname", $voterFullname);
         $stmt->bindParam(":voter_device_id", $voterDeviceId);
 
         $stmt->bindParam(":voting_weight", $votingWeight);
         $stmt->bindParam(":nominee_email", $nomineeEmail);
-        $stmt->bindParam(":nominee_fullname", $nomineeFullname);
+        // $stmt->bindParam(":nominee_fullname", $nomineeFullname);
         $stmt->bindParam(":help_token", $helpToken);
         
         // execute query
@@ -1704,6 +1708,316 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
         }
     }
 
+
+
+    public function checkIfUserExistsWithKYCName($kycname, $email) {
+        $kycname = strtolower(trim($kycname));
+        $email = strtolower(trim($email));
+    
+        $query = "SELECT fullname FROM " . $this->users_table . " WHERE fullname = :fullname";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":fullname", $kycname);
+        $stmt->execute();
+    
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($result) {
+            $fullname = strtolower(trim($result['fullname']));
+    
+            if ($kycname === $fullname) {
+                $updateQuery = "UPDATE " . $this->users_table . " 
+                                SET is_cheat = 'No', eligibility = 'No' 
+                                WHERE email_address = :email";
+                $updateStmt = $this->conn->prepare($updateQuery);
+                $updateStmt->bindParam(":email", $email);
+    
+                if ($updateStmt->execute()) {
+                    return true;
+                }
+            }
+        }
+    }
+
+
+    public function calculateShares($shareType, $numberOfBeneficiaries, $totalAmount, $shareRatio = []) {
+        $shares = [];
+    
+        if ($numberOfBeneficiaries <= 0 || $totalAmount <= 0) {
+            return $shares; // empty if invalid input
+        }
+    
+        if ($shareType === "direct") {
+            // Equal split
+            $shareAmount = round($totalAmount / $numberOfBeneficiaries, 2);
+            for ($i = 0; $i < $numberOfBeneficiaries; $i++) {
+                $shares[] = $shareAmount;
+            }
+        } elseif ($shareType === "ratio") {
+            if (count($shareRatio) !== $numberOfBeneficiaries) {
+                return []; // mismatch in ratio count and number of beneficiaries
+            }
+    
+            $ratioSum = array_sum($shareRatio);
+            foreach ($shareRatio as $ratio) {
+                $shares[] = round(($ratio / $ratioSum) * $totalAmount, 2);
+            }
+        }
+    
+        return $shares;
+    }
+    
+
+    // public function updateUserDNQ($email, $price, $type) {
+    //     try {
+    //         // error_log("updateUserDNQ called with email: $email, price: $price, type: $type");
+    
+    //         // Initialize response
+    //         $response = [
+    //             "status" => false,
+    //             "message" => "",
+    //             "dnq" => 0,
+    //             "new_vote_weight" => 0
+    //         ];
+    
+    //         // Calculate DNQ
+    //         $dnq = 0;
+    
+    //         if ($type == "naira") {
+    //             $dnq = (int)($price / 5000);
+    //             // error_log("Currency type is naira. DNQ calculated as: $dnq");
+    //         } else if ($type == "dollar") {
+    //             $dnq = (int)($price / 5);
+    //             // error_log("Currency type is dollar. DNQ calculated as: $dnq");
+    //         } else {
+    //             $response["message"] = "Invalid currency type";
+    //             // error_log("Invalid currency type: $type");
+    //             return $response;
+    //         }
+    
+    //         if ($email !== "anon@askfoundations.org") {
+    //         // Get current vote weight
+    //         $getQuery = "SELECT vote_weight FROM " . $this->users_table . " WHERE email_address = :email";
+    //         $getStmt = $this->conn->prepare($getQuery);
+    //         $getStmt->bindParam(":email", $email);
+    
+    //         if (!$getStmt->execute()) {
+    //             $response["message"] = "Failed to get current vote weight";
+    //             // error_log("Failed to execute SELECT query for user: $email");
+    //             return $response;
+    //         }
+    
+    //         $userData = $getStmt->fetch(PDO::FETCH_ASSOC);
+    //         if (!$userData) {
+    //             $response["message"] = "User not found";
+    //             // error_log("User not found: $email");
+    //             return $response;
+    //         }
+    
+    //         $currentWeight = $userData['vote_weight'];
+    //         $newWeight = $currentWeight + $dnq;
+    //         // error_log("Current vote weight: $currentWeight, New weight after DNQ: $newWeight");
+    
+    //         // Perform the update
+    //         $updateQuery = "UPDATE " . $this->users_table . " SET vote_weight = :new_weight WHERE email_address = :email";
+    //         $updateStmt = $this->conn->prepare($updateQuery);
+    //         $updateStmt->bindParam(":email", $email);
+    //         $updateStmt->bindParam(":new_weight", $newWeight, PDO::PARAM_INT);
+    
+    //         if ($updateStmt->execute()) {
+    //             $response["status"] = true;
+    //             $response["message"] = "Successfully updated DNQ";
+    //             $response["dnq"] = $dnq;
+    //             $response["new_vote_weight"] = $newWeight;
+    //             // error_log("Update successful for user: $email");
+    //         } else {
+    //             $response["message"] = "Update failed";
+    //             // error_log("Update failed for user: $email");
+    //         }
+    //         return $response;
+    //     } else {
+    //         $response["status"] = true;
+    //         $response["message"] = "Anonymous Donation";
+    //         $response["dnq"] = $dnq;
+    //         $response["new_vote_weight"] = $newWeight;
+    //         return $response;
+    //     }
+            
+    
+    //     } catch (Exception $e) {
+    //         $errorMessage = "System error: " . $e->getMessage();
+    //         // error_log($errorMessage);
+    //         return [
+    //             "status" => false,
+    //             "message" => $errorMessage,
+    //             "dnq" => 0,
+    //             "new_vote_weight" => 0
+    //         ];
+    //     }
+    // }
+
+    public function updateUserDNQ($email, $price, $type, $reference) {
+        try {
+            // error_log("updateUserDNQ called with email: $email, price: $price, type: $type");
+    
+            // Initialize response
+            $response = [
+                "status" => false,
+                "message" => "",
+                "dnq" => 0,
+                "new_vote_weight" => 0
+            ];
+    
+            // Calculate DNQ
+            $dnq = 0;
+    
+            if ($type == "naira") {
+                $dnq = (int)($price / 5000);
+                $paymentMethod = "naira";
+                // error_log("Currency type is naira. DNQ calculated as: $dnq");
+            } else if ($type == "dollar") {
+                $dnq = (int)($price / 5);
+                $paymentMethod = "dollar";
+                // error_log("Currency type is dollar. DNQ calculated as: $dnq");
+            } else {
+                $response["message"] = "Invalid currency type";
+                // error_log("Invalid currency type: $type");
+                return $response;
+            }
+    
+            if ($email !== "anon@askfoundations.org") {
+                // Get current vote weight
+                $getQuery = "SELECT vote_weight FROM " . $this->users_table . " WHERE email_address = :email";
+                $getStmt = $this->conn->prepare($getQuery);
+                $getStmt->bindParam(":email", $email);
+    
+                if (!$getStmt->execute()) {
+                    $response["message"] = "Failed to get current vote weight";
+                    // error_log("Failed to execute SELECT query for user: $email");
+                    return $response;
+                }
+    
+                $userData = $getStmt->fetch(PDO::FETCH_ASSOC);
+                if (!$userData) {
+                    $response["message"] = "User not found";
+                    // error_log("User not found: $email");
+                    return $response;
+                }
+    
+                $currentWeight = $userData['vote_weight'];
+                $newWeight = $currentWeight + $dnq;
+                // error_log("Current vote weight: $currentWeight, New weight after DNQ: $newWeight");
+    
+                // Perform the update
+                $updateQuery = "UPDATE " . $this->users_table . " SET vote_weight = :new_weight WHERE email_address = :email";
+                $updateStmt = $this->conn->prepare($updateQuery);
+                $updateStmt->bindParam(":email", $email);
+                $updateStmt->bindParam(":new_weight", $newWeight, PDO::PARAM_INT);
+    
+                if ($updateStmt->execute()) {
+                    // Generate a transaction reference (you might want to use a better method)
+                    // $transactionRef = 'TXN' . time() . rand(100, 999);
+                    
+                    // Record the payment in payments_table
+                    $paymentQuery = "INSERT INTO " . $this->payments_table_name . " (transaction_reference, email, price, subscription_type, payment_method) 
+                                    VALUES (:transaction_ref, :email, :price, 'donation', :payment_method)";
+                    $paymentStmt = $this->conn->prepare($paymentQuery);
+                    $paymentStmt->bindParam(":transaction_ref", $reference);
+                    $paymentStmt->bindParam(":email", $email);
+                    $paymentStmt->bindParam(":price", $price);
+                    $paymentStmt->bindParam(":payment_method", $paymentMethod);
+                    
+                    if ($paymentStmt->execute()) {
+                        $response["status"] = true;
+                        $response["message"] = "Successfully updated Daily Nomination Quota (DNQ)";
+                        $response["dnq"] = $dnq;
+                        $response["new_vote_weight"] = $newWeight;
+                        // error_log("Update and payment record successful for user: $email");
+                    } else {
+                        $response["message"] = "Daily Nomination Quota (DNQ) updated but payment recording failed";
+                        // error_log("Payment recording failed for user: $email");
+                    }
+                } else {
+                    $response["message"] = "Update failed";
+                    // error_log("Update failed for user: $email");
+                }
+                return $response;
+            } else {
+                // For anonymous donations, we'll still record the payment but without an email
+                // $transactionRef = 'TXN' . time() . rand(100, 999);
+                $paymentQuery = "INSERT INTO " . $this->payments_table_name . " (transaction_reference, email, price, subscription_type, payment_method) 
+                                VALUES (:transaction_ref, NULL, :price, 'donation', :payment_method)";
+                $paymentStmt = $this->conn->prepare($paymentQuery);
+                $paymentStmt->bindParam(":transaction_ref", $reference);
+                $paymentStmt->bindParam(":price", $price);
+                $paymentStmt->bindParam(":payment_method", $paymentMethod);
+                
+                if ($paymentStmt->execute()) {
+                    $response["status"] = true;
+                    $response["message"] = "Anonymous Donation recorded";
+                    $response["dnq"] = $dnq;
+                    $response["new_vote_weight"] = 0; // Anonymous donations don't affect vote weight
+                    // error_log("Anonymous donation recorded");
+                } else {
+                    $response["message"] = "Anonymous donation recording failed";
+                    // error_log("Anonymous donation recording failed");
+                }
+                return $response;
+            }
+    
+        } catch (Exception $e) {
+            $errorMessage = "System error: " . $e->getMessage();
+            // error_log($errorMessage);
+            return [
+                "status" => false,
+                "message" => $errorMessage,
+                "dnq" => 0,
+                "new_vote_weight" => 0
+            ];
+        }
+    }
+    
+
+
+    public function logPayment(
+        $transaction_reference, 
+        $username, 
+        $firstname, 
+        $lastname, 
+        $amount, 
+        $email, 
+        $subscription_type)
+    {
+        $amount = $amount;
+        $query = "INSERT INTO " . $this->payments_table_name . " SET             
+            transaction_reference=:transaction_reference,
+            username=:username,
+            firstname=:firstname,
+            lastname=:lastname,
+            price=:price,
+            email=:email,
+            subscription_type=:subscription_type";
+    
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+    
+        // Bind parameters
+        
+        $stmt->bindParam(":transaction_reference", $transaction_reference);
+        $stmt->bindParam(":username", $username);
+        $stmt->bindParam(":firstname", $firstname);
+        $stmt->bindParam(":lastname", $lastname);
+        $stmt->bindParam(":price", $amount);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":subscription_type", $subscription_type);
+        
+        // execute query
+        if ($stmt->execute()) {
+            
+            return true;
+        }
+    
+        return false; 
+    }
 
 
  // // // password reset // //

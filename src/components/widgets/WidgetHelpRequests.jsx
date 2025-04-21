@@ -150,8 +150,7 @@ const WidgetHelpRequests = ({
                     <div className='flex flex-col items-center'>
                       <WidgetNominate 
                       helpToken={item.help_token} userDetails={userDetails} 
-                      refreshUserDetails={refreshUserDetails} 
-                      //itemName={item.fullname_for_comparison}                       
+                      refreshUserDetails={refreshUserDetails}                       
                       openNotificationModal={openNotificationModal}
                       handleHelpRequestsData={handleHelpRequestsData}
                       navigateAndRefresh={navigateAndRefresh}

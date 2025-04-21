@@ -275,6 +275,8 @@ const navigate = useNavigate();
       
             setCookie('ask-user-token', token, expirationDays);
             setCookie('ask-user-details', JSON.stringify(response.data.userData));
+
+            // refreshUserDetails();
     
     toggleAccount();
             // alert("Login Successful: " + response.data.message);
@@ -282,9 +284,11 @@ const navigate = useNavigate();
             
 
             if (response.data.userData.email_verified !== "Yes") {
-              navigate('/user-dashboard');
+              // navigate('/user-dashboard');
+              window.location.href = '/user-dashboard';
             } else {
-              navigate('/');
+              // navigate('/');
+              window.location.href = '/';
             }
             
             // gotoUserProfile();

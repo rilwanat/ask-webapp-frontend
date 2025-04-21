@@ -63,11 +63,11 @@ const WidgetNominate = ({
       //user is authenticated
 
 
-      if (userDetails.email_verified == "Yes") {
-        //user email_verified
+      // if (userDetails.email_verified == "Yes") {
+        // user email_verified
         
 
-        if (userDetails.is_cheat == "No") {
+        // if (userDetails.is_cheat == "No") {
           //user is NOT cheat
           // openNotificationModal(true, "Nominate: authenticated emailVerified isNOTCheat", "user is Authenticated, email is Verified, user is NOT Cheat");
 
@@ -82,13 +82,13 @@ const WidgetNominate = ({
           createNomination(e);
 
           
-        } else {
-          openNotificationModal(false, "Nominate: isCheat", "isCheat");
-        }
+        // } else {
+        //   openNotificationModal(false, "Nominate: isCheat", "isCheat");
+        // }
 
-      } else {
-        openNotificationModal(false, "Nominate: emailNOTVerified", "emailNOTVerified");
-      }
+      // } else {
+      //   openNotificationModal(false, "Nominate: emailNOTVerified", "emailNOTVerified");
+      // }
     
     } else {
       openNotificationModal(false, "Nominate: NOT authenticated", "Please login to nominate");
@@ -114,8 +114,8 @@ const WidgetNominate = ({
       
   
   
-      
-          //alert("login user: " + emailAddress + " " + firstname + " " + lastname);
+          // alert(JSON.stringify(userDetails), null, 2);
+          // return;
           setIsLoading(true);
   
           try {

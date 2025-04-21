@@ -353,6 +353,9 @@ const sample1 = [
 
 
 
+  
+  
+
 
   const formatAmount = (amount) => {
     return Number(amount).toLocaleString('en-US', {
@@ -393,7 +396,9 @@ const sample1 = [
                                               {/* <img className="w-12 h-12 object-scale-down p-1" 
                                             //   src={bars} 
                                               alt=""  /> */}
-                                              <PaymentsIcon/>
+                                              <PaymentsIcon onClick={() => {
+                                                
+                                              }} />
                                             </div>
                                           </div>
                                           <div className="flex flex-col py-2 ml-2 text-theme">

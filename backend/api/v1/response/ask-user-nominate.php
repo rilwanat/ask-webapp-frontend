@@ -35,18 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $voterFullname = $nominateResult['userData']['fullname'];
+    // $voterFullname = $nominateResult['userData']['fullname'];
     $voterConsistency = $nominateResult['userData']['voter_consistency'];
     $voterDeviceId = $data->fingerPrint;
     $votingWeight = $nominateResult['userData']['vote_weight'];
 
     $nomineeEmail = $nominateResult['nomineeData']['email_address'];
-    $nomineeFullname = $nominateResult['nomineeData']['fullname_for_comparison'];
+    // $nomineeFullname = $nominateResult['nomineeData']['fullname_for_comparison'];
 
                 // Add nomination
-                if ($response->CreateNomination($data->email, $voterFullname, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $nomineeFullname, $data->helpToken)) {
+                if ($response->CreateNomination($data->email, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $data->helpToken)) {
                     http_response_code(200);
-                    echo json_encode(["status" => true, "message" => "Nomination created successfully."]);
+                    echo json_encode(["status" => true, "message" => "Successfully Nominated."]);
                 } else {
                     http_response_code(500);
                     echo json_encode(["status" => false, "message" => "Unable to create Nomination."]);

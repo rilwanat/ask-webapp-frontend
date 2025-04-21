@@ -111,10 +111,10 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
                         <p className="text-theme">{item.remark}</p>
                       </div>
                       <div className={`flex p-2 rounded-lg items-center justify-center w-50 ${item.status === 'approved' ? 'bg-green' : 'bg-softTheme'} mt-2`}>
-                        <p className="text-theme mr-2">{item.status}</p>
+                        <p className="text-white mr-2">{item.status.charAt(0).toUpperCase() + item.status.slice(1)}</p>
                         {
                           item.status === 'approved' ? 
-                          <CheckCircleIcon className='text-green' style={{  }}/> 
+                          <CheckCircleIcon className='text-white' style={{  }}/> 
                           : 
                           <PendingActionsIcon />
                         }

@@ -104,6 +104,7 @@ function App() {
                   const storedUserDetails = getCookie('ask-user-details');
                   const parsedUserDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
                   setUserDetails(parsedUserDetails);
+                  // alert(JSON.stringify(parsedUserDetails), null, 2);
               } catch (err) {
                   // setError('Failed to refresh user details');
                   alert('Refresh User error:', err);

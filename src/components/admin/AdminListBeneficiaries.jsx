@@ -159,8 +159,11 @@ const currentFilteredBeneficiaries = filteredBeneficiaries.slice(
 let countFiltered = indexOfFirstFilteredItem + 1;
 
 
- 
-
+ const [isUpdateDataloading, setIsUpdateDataLoading] = useState(false);
+const [shareType, setShareType] = useState("direct");
+  const [numberOfBeneficiaries, setNumberOfBeneficiaries] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
+  const [shareRatio, setShareRatio] = useState("");
 
 
   useEffect(() => {
@@ -209,6 +212,94 @@ let countFiltered = indexOfFirstFilteredItem + 1;
   };
 
 
+    const getShares = async () => {
+     
+    
+
+  //     const [shareType, setShareType] = useState("direct");
+  // const [numberOfBeneficiaries, setNumberOfBeneficiaries] = useState("");
+  // const [totalAmount, setTotalAmount] = useState("");
+  // const [shareRatio, setShareRatio] = useState("");
+
+  if (!shareType) {
+    return openNotificationModal(false, "Error", "Missing: shareType");
+  }
+  
+  if (!numberOfBeneficiaries || isNaN(numberOfBeneficiaries)) {
+    return openNotificationModal(false, "Error", "Missing or invalid: numberOfBeneficiaries");
+  }
+  
+  if (!totalAmount || isNaN(totalAmount)) {
+    return openNotificationModal(false, "Error", "Missing or invalid: totalAmount");
+  }
+  
+
+  if ((shareType === "ratio")) {
+    if (!shareRatio || typeof shareRatio !== "string" || shareRatio.trim() === "") {
+      return openNotificationModal(false, "Error", "Missing: shareRatio");
+    }
+  }
+
+
+  // Convert shareRatio string to array of numbers
+const parsedShareRatio = (shareType === "direct") ? [] : shareRatio.split(",").map(r => parseFloat(r.trim()));
+  // Check if parsed share ratios are all valid numbers
+if (parsedShareRatio.some(isNaN)) {
+  return openNotificationModal(false, "Error", "Invalid values in shareRatio");
+}
+      try {
+        // Define share parameters
+        // const shareType = "ratio"; // or "direct"
+        // const numberOfBeneficiaries = 3;
+        // const totalAmount = 1000;
+        // const shareRatio = [2, 1, 1]; // Only needed if shareType is "ratio"
+    
+        // Convert array to comma-separated string for GET
+        // const ratioString = shareRatio.join(",");
+  
+        setIsDataLoading(true);
+        const requestData = {
+          "shareType": shareType,
+          "numberOfBeneficiaries": numberOfBeneficiaries,
+          "totalAmount": totalAmount,
+          "shareRatio": parsedShareRatio
+        }
+        ;
+    
+        // Construct endpoint with query params
+        const calculateSharesEndpoint = `${import.meta.env.VITE_API_SERVER_URL}${import.meta.env.VITE_CALCULATE_SHARES}`;
+  
+  
+        // Make GET request
+        const calculateSharesResponse = await axiosAdminInstance.post(calculateSharesEndpoint, requestData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+    
+        // alert(calculateSharesResponse.data);
+        alert("Share Ratios: " + JSON.stringify(calculateSharesResponse.data, null, 2));
+        // console.log("Share Calculation Response:", calculateSharesResponse.data);
+        // openNotificationModal(true, "Share Ratios", calculateSharesResponse.data);
+    
+        // Example: update state
+        // setShareData(calculateSharesResponse.data);
+    
+        setIsDataLoading(false);
+      } catch (error) {
+        
+        setIsDataLoading(false);
+    
+        alert(error);
+    
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
+          openNotificationModal(false, currentPageName + " Error", errorMessage);
+        } else {
+          openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+        }
+      }
+    };
 
 
 
@@ -239,6 +330,111 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                   <div className="p-4 bg-theme rounded-lg w-full" style={{  }}>
             
             
+
+            <div className='flex w-full md:flex-row flex-col z-20'>
+                             <div className="flex flex-col flex-grow border rounded-lg border-softTheme mx-4 mt-2 mb-12 px-4 " style={{ flexBasis: '50%' }}>                                 
+                                 <div className='flex flex-col my-2 '>
+
+                                 {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4 ">                                    
+                                 <label htmlFor="fullname" className="block text-sm font-medium text-white mb-2">Profile Picture:</label>
+                                 <div className="flex justify-center">
+                                                <img 
+                                                // src={import.meta.env.VITE_API_SERVER_URL + "../../../" + selectedUser.profile_picture}
+                                                style={{
+                                                  height: '200px',
+                                                  width: '200px',
+                                              }}
+                                                className="w-full h-40 object-cover rounded-md mt-1" />
+                                                  </div>                                  
+                                    </div> */}
+
+                                    
+
+                                    <div className="flex flex-wrap ">
+                                        {/* <div className="w-full md:w-1/3 px-2 mb-4">
+                                            <label htmlFor="fullname" className="block text-sm font-medium text-white mb-2">Share Type:</label>
+                                            <select
+    value={shareType}
+    onChange={(e) => setShareType(e.target.value)}
+    className='p-1 rounded text-black'
+  >
+    <option value="direct">Direct</option>
+    <option value="ratio">Ratio</option>
+  </select>
+                                        </div> */}
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
+                                            <label htmlFor="share_type" className="block text-sm font-medium text-white mb-2">Share Type:</label>
+                                           
+                                            <select
+                id="share_type"
+                name="share_type"
+                className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
+                    block w-full p-2.5"
+                    value={shareType}
+    onChange={(e) => setShareType(e.target.value)}
+            >
+                <option value="Select">Select Share Type</option>
+                <option value="direct">Direct</option>
+                <option value="ratio">Ratio</option>
+            </select>
+                                        </div>
+
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
+                                            <label htmlFor="Number of Beneficiaries" className="block text-sm font-medium text-white mb-2">Number of Beneficiaries:</label>
+                                            <input type="text" id="Number of Beneficiaries" name="Number of Beneficiaries"
+                                            className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
+                                            block w-full p-2.5" placeholder='Number of Beneficiaries' 
+                                            value={numberOfBeneficiaries}
+    onChange={(e) => setNumberOfBeneficiaries(e.target.value)}
+    />
+                                        </div>
+
+                                        
+
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
+                                            <label htmlFor="Total Amount" className="block text-sm font-medium text-white mb-2">Total Amount:</label>
+                                            <input type="text" id="Total Amount" name="Total Amount"
+                                            className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
+                                            block w-full p-2.5" placeholder='Total Amount'   
+                                            value={totalAmount}
+    onChange={(e) => setTotalAmount(e.target.value)}
+    />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-wrap ">
+                                      <div className="w-full md:w-1/3 px-2 mb-4">
+                                            <label htmlFor="Share Ratio" className="block text-sm font-medium text-white mb-2">Share Ratio:</label>
+                                            <input type="text" id="Share Ratio" name="Share Ratio"
+                                            className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
+                                            block w-full p-2.5" placeholder='Share Ratio'   
+                                            value={shareRatio}
+    onChange={(e) => setShareRatio(e.target.value)}/>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="flex flex-wrap ">
+                                        
+                                    </div>  
+
+                                 </div>
+
+
+                                 <hr className='mb-4'/>
+                                 {
+                                    
+                                    <div  
+                    onClick={() => getShares()} 
+                    style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
+                      {/* <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " /> */}
+                      <div className="text-s " style={{color: '#ffffff'}}>{isDataloading ? "Getting.." : 'Get Ratios'}</div>
+                    </div>
+                                    
+                                 }
+                                                                 
+                             </div>
+                         </div>
 
 
             
@@ -528,6 +724,14 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                 </div>
                                 <AdminFooter 
             // gotoPage={gotoPage} 
+            />
+
+<NotificationModal
+              isOpen={isNotificationModalOpen}
+              onRequestClose={closeNotificationModal}
+              notificationType={notificationType}
+              notificationTitle={notificationTitle}
+              notificationMessage={notificationMessage}
             />
         </div>
     );

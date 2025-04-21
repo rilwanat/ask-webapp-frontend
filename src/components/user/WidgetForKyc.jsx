@@ -24,7 +24,7 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import ElderlyIcon from '@mui/icons-material/Elderly';
 
-import NotificationModal from '../modals/NotificationModal';
+import NotificationModalForKyc from '../modals/NotificationModalForKyc';
 
 //
 import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
@@ -63,6 +63,11 @@ const WidgetForKyc = ({ userDetails, refreshUserDetails }) => {
       };
       const closeNotificationModal = () => {
         setIsNotificationModalOpen(false);
+
+        if (notificationType) {
+          refreshUserDetails();
+        navigateTo('/');
+        }
       };
       //notification modal
 
@@ -240,7 +245,7 @@ const dataURLtoBlob = (dataURL) => {
                 if (response.data.status) {
                   setErrorMessage({ message: '' });
                   
-                  openNotificationModal(true, "Update Selfie Image", response.data.message);
+                  // openNotificationModal(true, "Update Selfie Image", response.data.message);
                   
                     
 
@@ -362,9 +367,10 @@ if (!imageSrc) {
 
              
              setCookie('ask-user-details', JSON.stringify(response.data.userData));
-             refreshUserDetails();
+            //  refreshUserDetails();
+            //  navigateTo('/');
 
-             navigateTo('/');
+             openNotificationModal(true, "ASK KYC", response.data.message);
 
 
             //  return;     
@@ -811,7 +817,7 @@ isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSr
         </div>
       </div>
 
-      <NotificationModal
+      <NotificationModalForKyc
               isOpen={isNotificationModalOpen}
               onRequestClose={closeNotificationModal}
               notificationType={notificationType}

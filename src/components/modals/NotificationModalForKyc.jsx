@@ -6,10 +6,9 @@ import { Zoom } from '@mui/material';
 
 // import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
-
 const customModalStyles = {
   content: {
-    maxHeight: '380px',
+    maxHeight: '280px',
     maxWidth: '480px',
     margin: 'auto',
     display: 'flex',
@@ -20,13 +19,9 @@ const customModalStyles = {
   },
 };
 
-const NominateNotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage, gotoPage }) => {
+const NotificationModalForKyc = ({ isOpen, onRequestClose, notificationType, notificationMessage }) => {
 
       // const navigate = useNavigate();
-
-      const parts = notificationMessage.split("#");
-const mainMessage = parts[0];
-const details = parts.slice(1);
 
   return (
     <Modal
@@ -43,56 +38,37 @@ const details = parts.slice(1);
           }
         </div>
 
-        {/* <div className='flex justify-center w-full my-4 text-center'>
+        <div className='flex justify-center w-full my-4 text-center'>
           {notificationMessage}                  
-        </div>   */}
-        <div className='flex flex-col  w-full my-4 '>
-  
-    <div className='mb-2 text-center'>{mainMessage}</div>
-    <div className='flex flex-col items-start justify-center'>
-    {details.map((item, index) => (
-      <div key={index} className='flex items-center justify-center mt-1 w-full text-center'>
-        {/* <CheckCircleIcon  className='text-green  mr-1'  />  */}
-        <span className='text-center'>{item}</span>
-      </div>
-    ))}
-  </div>
-</div>
-
+        </div>  
 
         <div className='flex justify-center'>
           <div 
-            onClick={()=>{
-
+            onClick={() => {
               onRequestClose();
 
-              if (mainMessage === "Oops! you were flagged for cheating. Complete your KYC and contact Support to resume nominating.") {
-                gotoPage('user-dashboard');
-              } else if ( mainMessage === "Email address is not verified.") {
-                gotoPage('user-dashboard');
-              }
+              // if () { 
+
+              // }
+
             }}
             style={{ width: '128px', borderWidth: '1px' }}
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
             Okay
           </div>
-          {
-            notificationType === true ? <div 
-            onClick={() => {
-              onRequestClose();
-              gotoPage('donate');
-            }}
+{/* {
+goto &&
+          <div 
+            onClick={() => navigate(goto) }
             style={{ width: '128px', borderWidth: '1px' }}
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
-            Boost
-          </div> : <></>
-          }
-          
-          
+            Okay
+          </div>
+} */}
         </div>
       </div>
     </Modal>
   );
 };
 
-export default NominateNotificationModal;
+export default NotificationModalForKyc;

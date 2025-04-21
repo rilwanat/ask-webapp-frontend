@@ -55,6 +55,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
              echo json_encode(["status" => false, "message" => "Invalid bank account details. KYC: ". $kycStatus]);
              exit;
          }
+
+
+
+         //NUBAN validated but now check and know if similar account exists
+         //flag as cheat and others and return
+         //if //user is cheat
+         //return cheat user
+        //  if (!$accountNameFromNuban || !$bankNameFromNuban) 
+        //function to get nubian name parameter and match it to fullname 
+        // in users_table if a match toLower for the string was found as is flag the 
+        // two accounts as cheat or just the second account
+        //FLAG THIS NEW ACCOUUN ONLY KYC
+        if($response->checkIfUserExistsWithKYCName($accountNameFromNuban, $data->email))
+         {
+            $kycStatus = "CHEAT"; 
+            $eligibility = "No"; 
+
+
+            // update cheat user
+            //
+            $subject = "ASK: KYC Warning Account Flagged";
+            $message = "Your KYC information has been flagged.";
+            sendMailToUser($accountNameFromNuban, $data->email, $subject, $message);
+            //
+
+             http_response_code(403);
+             echo json_encode(["status" => false, "message" => "Duplicate account not allowed."]);
+             exit;
+         }
+
  
 
          $kycStatus = "APPROVED"; 
@@ -88,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             http_response_code(200);
-            echo json_encode(array("status" => true, "message" => "Account updated successfully!", "userData" => $userData));
+            echo json_encode(array("status" => true, "message" => "Level 2 Verification (KYC) Successful!", "userData" => $userData));
         } else {
             http_response_code(400);
             echo json_encode(array("status" => false, "message" => "Update failed."));

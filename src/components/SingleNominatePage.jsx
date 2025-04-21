@@ -206,7 +206,7 @@ export default function SingleNominatePage({
                     >
                         <div className="w-full text-center">
                             <h1 className="text-2xl font-bold text-gray-800">
-                                You are viewing {item.fullname_for_comparison}'s help request
+                                You are viewing {item.fullname}'s help request
                             </h1>
                             <p className="text-gray-600 my-2">
                                 {item.description || "No Description Available"}
@@ -243,7 +243,6 @@ export default function SingleNominatePage({
                                 <WidgetNominate 
                                 helpToken={helpToken} userDetails={userDetails} 
                                 refreshUserDetails={refreshUserDetails} 
-                                //itemName={item.fullname_for_comparison} 
                                 openNotificationModal={openNotificationModal}
                                 handleHelpRequestsData={handleHelpRequestsData}
                                 navigateAndRefresh={navigateAndRefresh}

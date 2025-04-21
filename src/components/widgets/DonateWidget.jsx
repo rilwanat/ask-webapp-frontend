@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
@@ -36,7 +36,7 @@ import ton from '../../assets/crypto/TON_UQDmODmw1zap0Dp51Vm_57nc6h_RiTXUER6r84v
 import trc20 from '../../assets/crypto/TRC20_TUJqGSxtNaHyv7V2uHRGiGGy7xaiS5pxmA.png';
 
 
-const DonateWidget = ({ userDetails }) => {
+const DonateWidget = ({ userDetails, refreshUserDetails }) => {
   const navigate = useNavigate();
   // const [currentRequestSlide, setCurrentRequestSlide] = useState(0);
   // const [zoomedItemId, setZoomedItemId] = useState(null);
@@ -45,7 +45,8 @@ const DonateWidget = ({ userDetails }) => {
   const [donationsData, setDonationsData] = useState([]);
   const currentPageName = "Donations";
 
-  // const [donatePrice, setDonatePrice] = useState(0);
+  const [donatePrice, setDonatePrice] = useState(0);
+  const currentPriceRef = useRef(0);
   const [donateType, setDonateType] = useState("naira");
 
   //notification modal
@@ -118,6 +119,68 @@ const DonateWidget = ({ userDetails }) => {
         }
       };
 
+      
+      const handleIncrementDNQ = async (reference) => {
+    
+        
+        
+    
+        const requestData = {   
+          email: userDetails?.email_address ?? "anon@askfoundations.org",
+          price: currentPriceRef.current,
+          type: donateType,
+          reference: reference,
+        };
+        // alert(JSON.stringify(requestData), null, 2);
+        // return;
+
+        setIsDataLoading(true);
+    
+        try {
+          const incrememtDNQRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_INCREMENT_DNQ;
+          // alert(beneficiariesRequestsEndpoint);
+          const incrememtDNQRequestsResponse = await axiosInstance.post(incrememtDNQRequestsEndpoint, requestData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          // setDonationsData(incrememtDNQRequestsResponse.data.data);  // Update state with  count
+      
+
+
+          // setCookie('ask-user-token', token, expirationDays);
+                      setCookie('ask-user-details', JSON.stringify(incrememtDNQRequestsResponse.data.userData));
+          refreshUserDetails();
+
+
+          openNotificationModal(true, "", incrememtDNQRequestsResponse.data.message + 
+            ", DNQ: " + incrememtDNQRequestsResponse.data.dnq +
+            ", NewDNQ: " + incrememtDNQRequestsResponse.data.new_vote_weight
+          );
+          // alert(JSON.stringify(incrememtDNQRequestsResponse.data), null, 2);  // Update state with appointments count
+        //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+    
+    
+    
+    
+    
+          // Once all data is fetched, set loading to false
+          setIsDataLoading(false);
+      
+        } catch (error) {
+          setIsDataLoading(false);
+          
+          // alert(error);
+          // Handle errors
+          if (error.response && error.response.data) {
+            const errorMessage = error.response.data.message;
+            openNotificationModal(false, currentPageName + " Error", errorMessage);
+          } else {
+            openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+          }
+        }
+      };
+
 
 // Initialize as empty array if data is not yet loaded
 const filteredDonations = Array.isArray(donationsData) 
@@ -136,46 +199,45 @@ const filteredDonations = Array.isArray(donationsData)
   };
 
 
+  
 
   // PAYSTACK
-  // const [inputValue, setInputValue] = useState('');
-  const [statusResponse, setStatusResponse] = useState('');
-    
     const onSuccess = (reference) => {
       // Implementation for whatever you want to do with reference and after success call.
       // setInputValue('');
       // setDonatePrice(0);
-      console.log(reference);
+      // alert(reference);
+      // alert(JSON.stringify(reference), null, 2);
+      handleIncrementDNQ(reference["reference"]);
+      // alert(reference["reference"]);
+      // userDetails?.email_address ?? "anon@askfoundations.org"
     };
     const onClose = () => {
       // implementation for  whatever you want to do when the Paystack dialog closed.
-      console.log('closed');
+      alert('closed');
     }
-    
     // PAYSTACK
 
 
     const showSelectedPriceToPay = (payDonateType, price, symbol) => {
-      //openNotificationModal(true, "Donate Now", `You are about to donate ${symbol + price}`);
-      //setIsNotificationModalOpen(true);
+      
+      setDonatePrice(price);
+      currentPriceRef.current = price;
 
       if (payDonateType == "naira") {
         const config = {
           reference: (new Date()).getTime().toString(),
           email: userDetails?.email_address ?? "anon@askfoundations.org",
           amount: price * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
+          publicKey: import.meta.env.VITE_PAYSTACK_TEST_PUBLIC_KEY,
         };
         const initializePayment = usePaystackPayment(config);
-        initializePayment(onSuccess, onClose);
+        initializePayment({onSuccess: onSuccess, onClose: onClose});
       } else if (payDonateType == "dollar") {
 
       } else if (payDonateType == "crypto") {
 
       }
-
-  
-      
     };
 
 
@@ -296,6 +358,7 @@ const defaultCrypto =
           <div key={item.id} 
             onClick={() => 
             {
+              
               showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
             }}
             className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
@@ -312,6 +375,7 @@ const defaultCrypto =
         {filteredDonations.map((item) => (
           <div key={item.id} 
             onClick={() => {
+              
               showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
             }}
             className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">

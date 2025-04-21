@@ -23,7 +23,7 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import ElderlyIcon from '@mui/icons-material/Elderly';
 
-import NotificationModal from '../modals/NotificationModal';
+import NotificationModalForKyc from '../modals/NotificationModalForKyc';
 
 //
 import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
@@ -54,6 +54,11 @@ const WidgetForEmailVerification = ({ userDetails, refreshUserDetails }) => {
       };
       const closeNotificationModal = () => {
         setIsNotificationModalOpen(false);
+
+        if (notificationType) {
+         refreshUserDetails();
+             navigateTo('/');
+        }
       };
       //notification modal
 
@@ -226,13 +231,13 @@ const is11DigitNumber = (input) => {
              setVerificationCode('');
 
              setCookie('ask-user-details', JSON.stringify(response.data.userData));
-             refreshUserDetails();
-
+            //  refreshUserDetails();
+            //  navigateTo('/');
      
             //  alert("Your kyc is pending approval. You will be notified once it is approved.");
              openNotificationModal(true, "ASK Email Verification", response.data.message);
 
-             navigateTo('/');
+            //  
               
      
 
@@ -444,7 +449,7 @@ A community-based charity initiative
         </div>
       </div>
 
-      <NotificationModal
+      <NotificationModalForKyc
               isOpen={isNotificationModalOpen}
               onRequestClose={closeNotificationModal}
               notificationType={notificationType}

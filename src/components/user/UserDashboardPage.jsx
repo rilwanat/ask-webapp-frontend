@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import UserHeader from '../navbar/user-navbar/UserHeader';
 // import AskHeader from '../navbar/AskHeader';
@@ -46,6 +46,9 @@ export default function UserDashboardPage({
 }) {
     const navigate = useNavigate();
     
+    const [errorMessage, setErrorMessage] = useState('');
+const [isLoading, setIsLoading] = useState(false);
+
     const [showLevel1KYC, setShowLevel1KYC] = useState(false);
     const [showLevel2KYC, setShowLevel2KYC] = useState(false);
     // const [showBoostInfo, setShowBoostInfo] = useState(false);
@@ -81,6 +84,102 @@ export default function UserDashboardPage({
     }, []);
 
 
+
+    const handleForgotPassword = async (e) => {
+    
+            // alert("here");
+            // if (loginEmailAddress == 'adm' && loginPassword == 'adm'
+            //   ) {
+            //     // alert("here");
+            //     navigate('/admin-home');
+            //     return;
+            //   }
+
+            // {userDetails && userDetails.email_address}
+      
+      
+            //   if (!isValidEmail(userDetails.email_address)) {
+            //     // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
+            //     // alert("Please, enter a valid email.");
+            //     // openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
+                
+      
+            //     setErrorMessage({ message: 'Invalid email.' });
+            //     return;
+            // }
+      
+      
+      
+      
+              e.preventDefault();
+              setErrorMessage({ message: '' });
+            
+              setIsLoading(true);
+            
+              // setLoginEmailAddress();
+              // setLoginPassword();
+            
+              // if (loginEmailAddress === 'Enter your email' || loginEmailAddress === '' 
+              // ) {
+              //   setErrorMessage({ message: 'Password Reset Failed: Please enter a valid email' });
+              //   // setRegistrationStatus("Failed");
+              //   setIsLoading(false);
+              //   return;
+              // }
+            
+              // alert("login user: " + loginEmailAddress + " " + loginPassword);
+              try {
+          
+                const requestData = {   
+                  email: userDetails.email_address,
+                  baseName: `${window.location.origin}/`
+                };
+          
+                const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_FORGOT_PASSWORD, requestData, {
+                  headers: {
+                        // 'Content-Type': 'multipart/form-data',
+                        'Content-Type': 'application/json',
+                    },
+                });
+          
+                setIsLoading(false);
+                // alert("password: " + JSON.stringify(response.data, null, 2));
+          // return;
+          
+                if (response.data.status) {
+                  // If login is successful
+                  // setErrorMessage({ message: '' });
+                  setErrorMessage({ message: response.data.message });
+                
+      
+    
+                  // alert("Login Successful: " + response.data.message);
+                  openNotificationModal(true, "ASK Password Reset", response.data.message);
+                  
+                  
+                } else {
+                  const errors = response.data.errors.map(error => error.msg);
+                  setErrorMessage({ message: response.data.message, errors });
+                  //alert("Failed1");
+                }
+              } catch (error) {
+                setIsLoading(false);
+      
+                // alert(error);
+              
+                if (error.response && error.response.data && error.response.data.message) {
+                const errorMessage = error.response.data.message;
+                setErrorMessage({ message: errorMessage });
+              } else if (error.response && error.response.data && error.response.data.errors) {
+                const { errors } = error.response.data;
+                const errorMessages = errors.map(error => error.msg);
+                const errorMessage = errorMessages.join(', '); // Join all error messages
+                setErrorMessage({ message: errorMessage });
+              } else {
+                setErrorMessage({ message: 'ASK Password Reset failed. Please check your credentials and try again.' });
+              }
+            }
+            };
 
     return (
         <div className="">
@@ -161,7 +260,7 @@ export default function UserDashboardPage({
       )}
 
 
-{userDetails && userDetails.kyc_status === 'APPROVED' && (
+{userDetails && userDetails.kyc_status === 'APPROVED' && userDetails.is_cheat === 'No' && (
         <div className="w-full  ">
         <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">
@@ -187,7 +286,7 @@ export default function UserDashboardPage({
         </div>
 )}
 
-{userDetails && userDetails.kyc_status === 'PENDING' && (
+{userDetails && (userDetails.kyc_status === 'PENDING' || userDetails.is_cheat === 'Yes') && (
         <div className="w-full ">
         <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
           <div className="w-full p-4">
@@ -197,6 +296,10 @@ export default function UserDashboardPage({
             <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC is pending approval</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
             <p className='text-center'>Please wait for the approval process to complete.</p>
+            {
+              userDetails.is_cheat === 'Yes' ? <p className='text-center text-red-500'>Your account has been flagged for cheating.</p> : <></>
+            }
+            
         </div> 
 
 
@@ -273,6 +376,25 @@ export default function UserDashboardPage({
   }
   </div>
             }
+
+
+
+
+            <>
+
+            <div className='flex flex-col items-center justify-center mt-4'>
+  
+  <div 
+  onClick={(e) => { handleForgotPassword(e) }}
+  style={{ borderWidth: '0px', width: '300px' }}
+  className='mt-4 text-white text-center rounded-sm px-4 py-2  text-sm cursor-pointer mb-20 bg-theme hover:text-softTheme'>
+  {isLoading ? 'Please wait..' : 'Change Password'} 
+  </div>
+  {/* <div className='my-2 text-sm' style={{ color: '#c2572b' }}>{errorMessage.message}</div> */}
+
+  </div>
+            
+            </>
   </>
 }
             

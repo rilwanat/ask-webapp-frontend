@@ -30,7 +30,7 @@ const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificat
       contentLabel="Notification"
       style={customModalStyles}
     >
-      <div className="flex flex-col w-full px-4 pt-4 z-5000">
+      <div className="flex flex-col w-full px-4 pt-4 z-6000">
         <div className='flex justify-center mt-4'>
           {notificationType === true ? 
             <CheckCircleIcon className='text-green' style={{ width: '64px', height: '64px' }}/> : 
@@ -44,7 +44,14 @@ const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificat
 
         <div className='flex justify-center'>
           <div 
-            onClick={onRequestClose}
+            onClick={() => {
+              onRequestClose();
+
+              // if () { 
+
+              // }
+
+            }}
             style={{ width: '128px', borderWidth: '1px' }}
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
             Okay
