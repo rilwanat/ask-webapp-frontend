@@ -12,12 +12,12 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share'; 
 
-import NotificationModal from '../modals/NotificationModal';
+import DonateNotificationModal from '../modals/DonateNotificationModal';
 
 
 //
 import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
-import { setCookie, getCookie, deleteCookie } from '../../auth/authUtils'; // Ensure the correct relative path
+import { setCookie, getCookie, deleteCookie, isAuthenticated } from '../../auth/authUtils'; // Ensure the correct relative path
 import { jwtDecode } from 'jwt-decode';
 //
 
@@ -153,7 +153,9 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
           refreshUserDetails();
 
 
-          openNotificationModal(true, "", incrememtDNQRequestsResponse.data.message + 
+          openNotificationModal(true, "", 
+            "THANK YOU FOR YOUR DONATION !#" +
+            incrememtDNQRequestsResponse.data.message + 
             ", DNQ: " + incrememtDNQRequestsResponse.data.dnq +
             ", NewDNQ: " + incrememtDNQRequestsResponse.data.new_vote_weight
           );
@@ -339,6 +341,10 @@ const defaultCrypto =
                   <div className="w-full md:w-1/2 p-4  rounded-lg">
                     <h2 className="text-lg font-semibold mb-2">Donate Now</h2>
                     <p className=" text-gray-600" style={{ fontSize: '18px',  }}>Kindly support us with your kind donations to help us share the pie of kindness to the vulnerable in the society. Together, we can make the world a better place.</p>
+                    {
+                    !isAuthenticated() ? 
+                    <div className='my-1 text-red-500'>Please note: DNQ values are not recorded for Anonymous donations.</div> : <></>
+                  }
                   <div className='flex mt-4 justify-center'>
                     <div className={`mx-2 px-4 py-1 rounded-lg  cursor-pointer border-2 border-theme
                       ${donateType === 'naira' ? 'bg-theme text-softTheme' : 'bg-white text-theme'}
@@ -349,6 +355,8 @@ const defaultCrypto =
                       ${donateType === 'crypto' ? 'bg-theme text-softTheme' : 'bg-white text-theme'}`} onClick={() => {setDonateType('crypto');}}>Crypto</div>
                   </div>
                   </div>
+
+                  
 
                   {/* Right Div */}
                   {donateType === "naira" && (
@@ -451,7 +459,7 @@ const defaultCrypto =
         </div>
       </div>
 
-      <NotificationModal
+      <DonateNotificationModal
               isOpen={isNotificationModalOpen}
               onRequestClose={closeNotificationModal}
               notificationType={notificationType}

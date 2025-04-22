@@ -78,6 +78,7 @@ export default function SingleRequestsPage({
     //     navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
     // }
 
+    const [scrollCarousel, setScrollCarousel] = useState(true);
     // Custom carousel configuration to prevent scroll interference
     const carouselConfig = {
         showIndicators: false,
@@ -85,13 +86,13 @@ export default function SingleRequestsPage({
         showStatus: false,
         showThumbs: false,
         infiniteLoop: true,
-        autoPlay: false,
+        autoPlay:  scrollCarousel ? true : false,
         swipeable: true,
         emulateTouch: true,
         swipeScrollTolerance: 5,
         preventMovementUntilSwipeScrollTolerance: true,
         verticalSwipe: 'natural',
-        stopOnHover: false,
+        stopOnHover: true,
         className: "touch-pan-y", // Added to prevent scroll interference
         selectedItem: selectedIndex, // Start with the selected item
         onChange: handleChange // Update selected index when carousel changes
@@ -174,6 +175,7 @@ export default function SingleRequestsPage({
                                         openNotificationModal={openNotificationModal} 
                                         handleHelpRequestsData={handleHelpRequestsData}
                                         navigateAndRefresh={navigateAndRefresh}
+                                        setScrollCarousel={setScrollCarousel}
                                         />
                                     </motion.div>
                                     <motion.div

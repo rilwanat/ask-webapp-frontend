@@ -321,7 +321,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
                 // navigateActiveTab(1);
-                // navigate('/manage-kyc');
+                // navigate('/manage-users');
 
             } else {
                 // alert("error: " + response.data.message);

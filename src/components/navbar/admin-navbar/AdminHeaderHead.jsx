@@ -107,14 +107,14 @@ export default function AskHeaderAdminHead({ carouselRequestItems, carouselBenef
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
-                                navigateTo('/manage-kyc');
+                                navigateTo('/manage-users');
                             }}
                         >
                             <p
                                 className="text-sm cursor-pointer"
                                 style={{ fontWeight: '600' }}
                             >
-                                Manage Kyc
+                                Manage Users
                             </p>
                         </div>
 

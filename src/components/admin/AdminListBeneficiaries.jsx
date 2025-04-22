@@ -129,8 +129,9 @@ useEffect(() => {
     
 
 
-      const [isDataloading, setIsDataLoading] = useState(true);
+      const [isDataloading, setIsDataLoading] = useState(false);
       const [beneficiaries, setBeneficiariesData] = useState([]);
+      const [beneficiariesRatios, setBeneficiariesRatios] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
     const [totalItems, setTotalItems] = useState(beneficiaries ? beneficiaries.length : 0);
@@ -164,52 +165,10 @@ const [shareType, setShareType] = useState("direct");
   const [numberOfBeneficiaries, setNumberOfBeneficiaries] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [shareRatio, setShareRatio] = useState("");
-
-
-  useEffect(() => {
-    handleData();
-  }, []);
-  const handleData = async () => {
-
-    setIsDataLoading(true);
-
-
-    try {
-      // API request to get  count
-      const adminBeneficiariesEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_BENEFICIARIES_LIST;
-      // alert(adminBeneficiariesEndpoint);
-      const adminBeneficiariesResponse = await axiosAdminInstance.get(adminBeneficiariesEndpoint, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      setBeneficiariesData(adminBeneficiariesResponse.data.data);  // Update state with  count
   
   
-      // openNotificationModal(true, currentPageName, "");
-      // alert(JSON.stringify(adminBeneficiariesResponse.data.data), null, 2);  // Update state with beneficiaries count
-    //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
 
 
-
-
-
-      // Once all data is fetched, set loading to false
-      setIsDataLoading(false);
-  
-    } catch (error) {
-      setIsDataLoading(false);
-      
-      alert(error);
-      // Handle errors
-      if (error.response && error.response.data) {
-        const errorMessage = error.response.data.message;
-        openNotificationModal(false, currentPageName + " Error", errorMessage);
-      } else {
-        openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
-      }
-    }
-  };
 
 
     const getShares = async () => {
@@ -278,12 +237,13 @@ if (parsedShareRatio.some(isNaN)) {
         });
     
         // alert(calculateSharesResponse.data);
-        alert("Share Ratios: " + JSON.stringify(calculateSharesResponse.data, null, 2));
+        // alert("Beneficiaries Share Ratios: " + JSON.stringify(calculateSharesResponse.data, null, 2));
         // console.log("Share Calculation Response:", calculateSharesResponse.data);
         // openNotificationModal(true, "Share Ratios", calculateSharesResponse.data);
     
         // Example: update state
-        // setShareData(calculateSharesResponse.data);
+        setBeneficiariesRatios(calculateSharesResponse.data.ratio);
+        setBeneficiariesData(calculateSharesResponse.data.data);
     
         setIsDataLoading(false);
       } catch (error) {
@@ -371,7 +331,11 @@ if (parsedShareRatio.some(isNaN)) {
                 className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
                     block w-full p-2.5"
                     value={shareType}
-    onChange={(e) => setShareType(e.target.value)}
+    onChange={(e) => {
+      setBeneficiariesData(null);
+      setShareType(e.target.value);
+    }
+      }
             >
                 <option value="Select">Select Share Type</option>
                 <option value="direct">Direct</option>
@@ -385,7 +349,12 @@ if (parsedShareRatio.some(isNaN)) {
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Number of Beneficiaries' 
                                             value={numberOfBeneficiaries}
-    onChange={(e) => setNumberOfBeneficiaries(e.target.value)}
+    onChange={(e) => 
+    {
+      setBeneficiariesData(null);
+      setNumberOfBeneficiaries(e.target.value);
+    }
+    }
     />
                                         </div>
 
@@ -397,7 +366,11 @@ if (parsedShareRatio.some(isNaN)) {
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Total Amount'   
                                             value={totalAmount}
-    onChange={(e) => setTotalAmount(e.target.value)}
+    onChange={(e) => 
+      {
+        setBeneficiariesData(null);
+      setTotalAmount(e.target.value);
+      }}
     />
                                         </div>
                                     </div>
@@ -409,7 +382,35 @@ if (parsedShareRatio.some(isNaN)) {
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Share Ratio'   
                                             value={shareRatio}
-    onChange={(e) => setShareRatio(e.target.value)}/>
+    onChange={(e) => 
+      {
+        setBeneficiariesData(null);
+      setShareRatio(e.target.value);
+      }}/>
+                                        </div>
+
+
+                                        <div className="w-full md:w-1/2 px-2 mb-4">
+                                            <label htmlFor="kyc_status" className="block text-sm font-medium text-red-300 mb-2">Remark:</label>
+                                           
+                                            <select
+                id="userKycStatus"
+                name="userKycStatus"
+                className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
+                    block w-full p-2.5"
+                    // value={requestData.remark}
+                    // disabled
+                    onChange={(e) => {
+                      // alert(e.target.value);
+                      // setRequestData({ ...requestData, remark: e.target.value })                     
+                  }}
+            >
+                <option value="Select">Select Remark</option>
+                <option value="Financial Support">Financial Support</option>
+                <option value="Food Support">Food Support</option>
+                <option value="Sponsored">Sponsored</option>
+                <option value="Wild Card">Wild Card</option>
+            </select>
                                         </div>
 
                                     </div>
@@ -576,7 +577,7 @@ if (parsedShareRatio.some(isNaN)) {
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap text-right border-b border-gray-200">
                             {/* {request.tags.join(', ')} */}
-                            {'₦' + formatAmount(request.amount)}
+                            {'₦' + formatAmount(beneficiariesRatios[index])}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                           <span
@@ -595,44 +596,16 @@ if (parsedShareRatio.some(isNaN)) {
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {request.date_resolved}
                           </td>
-                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
-                            {request.help_token	}
-                          </td> */}
-                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                      <span
-                                    style={{
-                                      backgroundColor: request.request_confirmation_status === 'confirmed' ? '#EDFCF2' : request.request_confirmation_status === 'confirmed' ? '#F0F3FF' : '#FFE2E5', 
-                                      color: request.request_confirmation_status === 'confirmed' ? '#4BC573' : request.request_confirmation_status === 'confirmed' ? '#254EDB' : '#F64E60', 
-                                      borderRadius: '6px'
-                                    
-                                  }} 
-                                    className={'text-white px-2 py-2 '
-                                    }>{request.request_confirmation_status}</span>
-                                    </td>
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                      <span
-                                    style={{
-                                      backgroundColor: request.request_completion_status === 'completed' ? '#EDFCF2' : request.request_completion_status === 'upcoming' ? '#F0F3FF' : '#FFE2E5', 
-                                      color: request.request_completion_status === 'completed' ? '#4BC573' : request.request_completion_status === 'upcoming' ? '#254EDB' : '#F64E60', 
-                                      borderRadius: '6px'
-                                    
-                                  }} 
-                                    className={'text-white px-2 py-2 '
-                                    }>
-                                      {request.request_completion_status}
-                                      </span>
-                                    </td> */}
                           
-                          
+
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
                           <span
-                          className="text-theme cursor-pointer "
+                          className="text-white cursor-pointer bg-theme rounded-lg px-2 py-1"
                           onClick={(e) => {
-                            //setShowDialog(false); 
-                            // handleProductClick(request, e);
+                            alert("#");
                           }}
                           >
-                            See Details
+                            Approve
                             </span>
                           </td>
                          

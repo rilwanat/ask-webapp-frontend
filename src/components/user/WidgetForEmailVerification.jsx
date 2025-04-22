@@ -414,7 +414,7 @@ A community-based charity initiative
                           onClick={(e) => {if (!isLoading) CheckUserVerification(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
-                            {isLoading ? 'Please wait..' : 'Update'}
+                            {isLoading ? 'Please wait..' : 'Submit'}
                             </div>
                           </div>
 

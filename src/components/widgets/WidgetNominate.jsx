@@ -33,7 +33,8 @@ const WidgetNominate = ({
   openNotificationModal,
   handleHelpRequestsData,
 
-  navigateAndRefresh
+  navigateAndRefresh,
+  setScrollCarousel
 
  }) => {
 
@@ -98,7 +99,9 @@ const WidgetNominate = ({
 
         const createNomination = async (e) => {
 
+          setScrollCarousel(false);
 
+          
           if (isLoading) {
             openNotificationModal(true, "Nomination", "Processing, please wait");
             return;
@@ -165,7 +168,7 @@ const WidgetNominate = ({
 
 
             
-
+            // setScrollCarousel(true);
               openNotificationModal(true, "Nomination", response.data.message + ". Increase your influence to decide beneficiary by boosting your DNQ.");
               
   

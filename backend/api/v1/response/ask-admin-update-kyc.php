@@ -29,25 +29,13 @@ $data = json_decode(file_get_contents("php://input"));
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (
         !empty($data->email) && 
-        // !empty($data->fullname) && 
-        // !empty($data->phoneNumber) &&
-        // !empty($data->accountNumber) &&
-        // !empty($data->accountName) &&
-        // !empty($data->bankName) &&
-        // !empty($data->gender) &&
-        // !empty($data->residence) &&
-        !empty($data->kycStatus)
+        !empty($data->isCheat) 
+        // &&  !empty($data->kycStatus)
     ) {
         $updateCustomerKycSpecific = $response->updateUserKycSpecific(            
             $data->email, 
-            // $data->fullname, 
-            // $data->phoneNumber, 
-            // $data->accountNumber, 
-            // $data->accountName, 
-            // $data->bankName, 
-            // $data->gender, 
-            // $data->residence,
-            $data->kycStatus 
+            $data->isCheat, 
+            // $data->kycStatus 
         );
 
         $userData = $response->ReadUser($data->email);
@@ -56,16 +44,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($updateCustomerKycSpecific) {
 
 
-            //
-            $subject = "KYC Update Confirmation";
-            $message = "Your KYC information has been successfully updated: ". $data->kycStatus .". We are reviewing it and will get back to you very soon. Thank you for your patience.";
-            sendMailToUser($data->fullname, $data->email, $subject, $message);
-            //
+            // //
+            // $subject = "KYC Update Confirmation";
+            // $message = "Your KYC information has been successfully updated: ". $data->kycStatus .". We are reviewing it and will get back to you very soon. Thank you for your patience.";
+            // sendMailToUser($data->fullname, $data->email, $subject, $message);
+            // //
 
 
 
             http_response_code(200);
-            echo json_encode(array("status" => true, "message" => "Account updated successfully! KYC Status: " . $data->kycStatus, "userData" => $userData
+            echo json_encode(array("status" => true, "message" => "Account updated successfully!", "userData" => $userData
         ));
         } else {
             http_response_code(400);

@@ -66,7 +66,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import NotificationModal from '../modals/NotificationModal';
 
 
-export default function AdminManageKyc({ 
+export default function AdminManageUsers({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -126,7 +126,7 @@ useEffect(() => {
           // alert(JSON.stringify(product, null, 2));
   
           // const encryptedData = AES.encrypt(JSON.stringify(product), 'encryptionKey').toString();
-          navigate(`/specific-kyc/${user.id}`, {
+          navigate(`/specific-user/${user.id}`, {
               state: {
                 selectedUser: user, // Pass any data you want as props here
               }
@@ -148,7 +148,7 @@ useEffect(() => {
 
     
     
-      const currentPageName = "Manage Kyc";
+      const currentPageName = "Manage Users";
    
 
 

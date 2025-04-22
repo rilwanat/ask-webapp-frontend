@@ -44,6 +44,8 @@ const WidgetHelpRequests = ({
     navigate("/" + pageName);
 }
 
+const [scrollCarousel, setScrollCarousel] = useState(true);
+
   // Custom carousel configuration to prevent scroll interference
   const carouselConfig = {
     showIndicators: false,
@@ -51,13 +53,13 @@ const WidgetHelpRequests = ({
     showStatus: false,
     showThumbs: false,
     infiniteLoop: true,
-    autoPlay: true,
+    autoPlay: scrollCarousel ? true : false,
     swipeable: true,
     emulateTouch: true,
     swipeScrollTolerance: 5, // Makes vertical scrolling easier
     preventMovementUntilSwipeScrollTolerance: true,
     verticalSwipe: 'natural', // Allows natural vertical scrolling
-    stopOnHover: false, // Prevents hover behavior from interfering with scroll
+    stopOnHover: true, // Prevents hover behavior from interfering with scroll
     interval: 5000,
     selectedItem: currentRequestSlide,
     onChange: (index) => setCurrentRequestSlide(index),
@@ -154,6 +156,7 @@ const WidgetHelpRequests = ({
                       openNotificationModal={openNotificationModal}
                       handleHelpRequestsData={handleHelpRequestsData}
                       navigateAndRefresh={navigateAndRefresh}
+                      setScrollCarousel={setScrollCarousel}
                       />
                       <WidgetShare helpToken={item.help_token}/>
                     </div>

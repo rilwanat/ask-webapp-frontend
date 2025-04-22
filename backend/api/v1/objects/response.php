@@ -431,6 +431,49 @@ public function ReadAllHelpRequests()
     return $stmt;
 }
 
+public function ReadAllHelpRequestsNotCheat()
+{
+    $query = "SELECT
+        p.id,
+        p.date,
+        p.nomination_count,
+        p.description,
+        p.remark,
+        p.email_address,
+        p.request_image,
+        p.help_token,
+        u.id as user_id,
+        u.fullname as user_fullname,
+        u.email_address as user_email,
+        u.access_key as user_access_key,
+        u.phone_number as user_phone,
+        u.kyc_status as user_kyc_status,
+        u.account_number as user_account_number,
+        u.account_name as user_account_name,
+        u.bank_name as user_bank_name,
+        u.gender as user_gender,
+        u.state_of_residence as user_state,
+        u.profile_picture as user_profile_picture,
+        u.email_verified as user_email_verified,
+        u.registration_date as user_registration_date,
+        u.user_type as user_type,
+        u.eligibility as user_eligibility,
+        u.is_cheat as user_is_cheat,
+        u.opened_welcome_msg as user_opened_welcome_msg, 
+        u.vote_weight as user_vote_weight 
+        FROM
+        " . $this->help_requests_table . " p 
+        LEFT JOIN 
+            " . $this->users_table . " u ON u.email_address = p.email_address
+        WHERE 
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes')
+        ORDER BY RAND()";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
 
 public function ReadAllBeneficiaries()
 {
@@ -517,7 +560,7 @@ public function ReadAllDonations()
         FROM
         " . $this->donations_table . " p 
         
-        ORDER BY id ASC";
+        ORDER BY price DESC";
 
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
@@ -662,23 +705,18 @@ public function updateSelfiImagePath(
 
 public function updateUserKycSpecific(
     $email, 
-    // $fullname, 
-    // $phoneNumber, 
-    // $accountNumber,
-    // $accountName,
-    // $bankName,
-    // $gender,
-    // $residence,
-    $kycStatus
+    $isCheat
+    // $kycStatus
     ) {
 
 
-        
+        //kyc_status =:kyc_status,
 
     $query = "UPDATE " . $this->users_table . " 
               SET 
                 
-                kyc_status =:kyc_status 
+                
+                is_cheat =:is_cheat 
 
               WHERE email_address = :email";
 
@@ -688,15 +726,8 @@ public function updateUserKycSpecific(
     // Bind parameters
     $stmt->bindParam(":email", $email);
 
-    // $stmt->bindParam(":fullname", $fullname);
-    // $stmt->bindParam(":phone_number", $phoneNumber);
-    // $stmt->bindParam(":account_number", $accountNumber);
-    // $stmt->bindParam(":account_name", $accountName);
-    // $stmt->bindParam(":bank_name", $bankName);
-    // $stmt->bindParam(":gender", $gender);
-    // $stmt->bindParam(":state_of_residence", $residence);
-
-    $stmt->bindParam(":kyc_status", $kycStatus);
+    $stmt->bindParam(":is_cheat", $isCheat);
+    // $stmt->bindParam(":kyc_status", $kycStatus);
 
     // Execute query and return the result
     if ($stmt->execute()) {
@@ -1256,13 +1287,16 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
 // Step 5a: Check for existing nomination (same voter+today+device)
             $today = date('Y-m-d');
             $query_existing = "SELECT COUNT(*) as existing_count 
-                             FROM " . $this->nominations_history_table . " 
-                             WHERE (voter_device_id = :voter_device_id)
-                               AND (voter_email != nominee_email)
-                              AND DATE(voting_date) = CURRENT_DATE()";
-            $stmt_existing = $this->conn->prepare($query_existing);
-            // $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
-            $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR);  
+                   FROM " . $this->nominations_history_table . " nh
+                   JOIN " . $this->users_table . " voter ON nh.voter_email = voter.email_address
+                   JOIN " . $this->users_table . " nominee ON nh.nominee_email = nominee.email_address
+                   WHERE (voter.fullname = :voter_fullname 
+                     OR nh.voter_device_id = :voter_device_id)
+                     AND (nh.voter_email != nh.nominee_email OR voter.fullname != nominee.fullname)
+                     AND DATE(nh.voting_date) = CURRENT_DATE()";
+$stmt_existing = $this->conn->prepare($query_existing);
+$stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
+$stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR); 
             // $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
             if (!$stmt_existing->execute()) {
                 return ["status" => false, "message" => "System error checking nominations"];
@@ -1283,13 +1317,15 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
 // Step 5b: Check for existing nomination (same voter+today)
             $today = date('Y-m-d');
             $query_existing = "SELECT COUNT(*) as existing_count 
-                             FROM " . $this->nominations_history_table . " 
-                             WHERE (voter_fullname = :voter_fullname)
-                               AND (voter_email != nominee_email OR voter_fullname != nominee_fullname)
-                              AND DATE(voting_date) = CURRENT_DATE()";
-            $stmt_existing = $this->conn->prepare($query_existing);
-            $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
-            // $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR);  
+                   FROM " . $this->nominations_history_table . " nh
+                   JOIN " . $this->users_table . " voter ON nh.voter_email = voter.email_address
+                   JOIN " . $this->users_table . " nominee ON nh.nominee_email = nominee.email_address
+                   WHERE (voter.fullname = :voter_fullname)
+                     AND (nh.voter_email != nh.nominee_email OR voter.fullname != nominee.fullname)
+                     AND DATE(nh.voting_date) = CURRENT_DATE()";
+$stmt_existing = $this->conn->prepare($query_existing);
+$stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
+// $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR); 
             // $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
             if (!$stmt_existing->execute()) {
                 return ["status" => false, "message" => "System error checking nominations"];
@@ -2018,6 +2054,51 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
     
         return false; 
     }
+
+
+    public function GenerateBeneficiaries($count)
+{
+    $query = "SELECT
+        p.id,
+        p.date,
+        p.nomination_count,
+        p.description,
+        p.remark,
+        p.email_address,
+        p.request_image,
+        p.help_token,
+        u.id as user_id,
+        u.fullname as user_fullname,
+        u.email_address as user_email,
+        u.access_key as user_access_key,
+        u.phone_number as user_phone,
+        u.kyc_status as user_kyc_status,
+        u.account_number as user_account_number,
+        u.account_name as user_account_name,
+        u.bank_name as user_bank_name,
+        u.gender as user_gender,
+        u.state_of_residence as user_state,
+        u.profile_picture as user_profile_picture,
+        u.email_verified as user_email_verified,
+        u.registration_date as user_registration_date,
+        u.user_type as user_type,
+        u.eligibility as user_eligibility,
+        u.is_cheat as user_is_cheat,
+        u.opened_welcome_msg as user_opened_welcome_msg, 
+        u.vote_weight as user_vote_weight 
+        FROM
+        " . $this->help_requests_table . " p 
+        LEFT JOIN 
+            " . $this->users_table . " u ON u.email_address = p.email_address
+        
+        ORDER BY p.nomination_count DESC
+        LIMIT :count";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':count', $count, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt;
+}
 
 
  // // // password reset // //

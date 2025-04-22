@@ -78,12 +78,23 @@ const [isLoading, setIsLoading] = useState(false);
     }
 
     
+    // useEffect(() => {
+    //   setShowLevel1KYC(false);
+    // }, []);
+
     useEffect(() => {
-      setShowLevel1KYC(false);
-      refreshUserDetails();
-    }, []);
-
-
+      if (userDetails) {  // Only proceed if userDetails exists
+        // alert(userDetails.email_verified);
+        
+        // Your commented logic would work like this:
+        if (userDetails.email_verified === "No" || userDetails.email_verified === null  || userDetails.email_verified === "") {
+          setShowLevel1KYC(true);
+        } else {
+          setShowLevel1KYC(false);
+        }
+      }
+      // refreshUserDetails();
+    }, [userDetails]); // This runs whenever userDetails changes
 
     const handleForgotPassword = async (e) => {
     

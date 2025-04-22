@@ -32,11 +32,11 @@ import AdminListRequests from './components/admin/AdminListRequests.jsx';
 import AdminListBeneficiaries from './components/admin/AdminListBeneficiaries.jsx';
 import AdminListSponsors from './components/admin/AdminListSponsors.jsx';
 import AdminListCrypto from './components/admin/AdminListCrypto.jsx';
-import AdminManageKyc from './components/admin/AdminManageKyc.jsx';
+import AdminManageUsers from './components/admin/AdminManageUsers.jsx';
 import AdminListDonations from './components/admin/AdminListDonations.jsx';
 import AdminListAdmins from './components/admin/AdminListAdmins.jsx';
 
-import AdminSpecificKyc from './components/admin/AdminSpecificKyc.jsx';
+import AdminSpecificUser from './components/admin/AdminSpecificUser.jsx';
 import AdminSpecificRequest from './components/admin/AdminSpecificRequest.jsx';
 import AdminSpecificSponsor from './components/admin/AdminSpecificSponsor.jsx';
 import AdminSpecificCrypto from './components/admin/AdminSpecificCrypto.jsx';
@@ -518,7 +518,7 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
-<Route path='/manage-kyc' element={<ProtectedAdminRoute><AdminManageKyc isMobile={isMobile}
+<Route path='/manage-users' element={<ProtectedAdminRoute><AdminManageUsers isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
@@ -554,7 +554,7 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
-<Route path='/specific-kyc/:id' element={<ProtectedAdminRoute><AdminSpecificKyc isMobile={isMobile}
+<Route path='/specific-user/:id' element={<ProtectedAdminRoute><AdminSpecificUser isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}

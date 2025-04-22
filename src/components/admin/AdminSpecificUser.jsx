@@ -70,7 +70,7 @@ import AddIcon from '@mui/icons-material/Add';
 import UpdateIcon from '@mui/icons-material/Update';
 
 
-export default function AdminSpecificKyc({ 
+export default function AdminSpecificUser({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -163,7 +163,7 @@ useEffect(() => {
 
     
     
-      const currentPageName = "KYC";//userData.userFullname;
+      const currentPageName = "User";//userData.userFullname;
    
 
 
@@ -267,9 +267,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
   const updateUser = async (user) => {
 
-    
 
-
+// alert(user.userIsCheat);
 
     if (isUpdateDataloading) {
         // alert("please wait..");
@@ -277,6 +276,11 @@ let countFiltered = indexOfFirstFilteredItem + 1;
         return;
     }
 
+    if ((user.userIsCheat === "Select") || (user.userIsCheat === "")) {
+        openNotificationModal(false, "Update User", `Select Cheat Status`);
+        
+        return;
+      }
 
 
     setIsUpdateDataLoading(true);
@@ -291,7 +295,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
       const requestData = {
         email: user.userEmailAddress.trim(),
-        kycStatus: user.userKycStatus.trim(),
+        isCheat: user.userIsCheat.trim()
+        // kycStatus: user.userKycStatus,
     };
     // alert(JSON.stringify(requestData), null, 2);
     // setIsUpdateDataLoading(false);
@@ -321,7 +326,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
                 // navigateActiveTab(1);
-                // navigate('/manage-kyc');
+                // navigate('/manage-users');
 
             } else {
                 // alert("error: " + response.data.message);
@@ -576,12 +581,13 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                 className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
                     block w-full p-2.5"
                     value={userData.userKycStatus}
+                    disabled
                     onChange={(e) => {
                       // alert(e.target.value);
                       setUserData({ ...userData, userKycStatus: e.target.value })                      
                   }}
             >
-                <option value="">Select KYC Status</option>
+                <option value="Select">Select KYC Status</option>
                 <option value="PENDING">PENDING</option>
                 <option value="APPROVED">APPROVED</option>
                 <option value="REJECTED">REJECTED</option>
@@ -591,13 +597,28 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
                                     <div className="flex flex-wrap ">
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="is_cheat" className="block text-sm font-medium text-white mb-2">Is Cheat:</label>
-                                            <input type="text" id="is_cheat" name="is_cheat"
+                                            <label htmlFor="is_cheat" className="block text-sm font-medium text-red-500 mb-2">Is Cheat:</label>
+                                            {/* <input type="text" id="is_cheat" name="is_cheat"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Is Cheat' 
                                             value={selectedUser.is_cheat} 
                                             // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
-                                            />
+                                            /> */}
+                                            <select
+                id="userIsCheat"
+                name="userIsCheat"
+                className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
+                    block w-full p-2.5"
+                    value={userData.userIsCheat}
+                    onChange={(e) => {
+                      // alert(e.target.value);
+                      setUserData({ ...userData, userIsCheat: e.target.value })                      
+                  }}
+            >
+                <option value="Select">Select Is Cheat</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
                                         </div>
                                         
                                         <div className="w-full md:w-1/3 px-2 mb-4">
@@ -654,12 +675,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                  <hr className='mb-4'/>
                                  {
                                     
-                    //                 <div  
-                    // // onClick={() => updateUser(userData)} 
-                    // style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
-                    //   <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " />
-                    //   <div className="text-s " style={{color: '#ffffff'}}>{isUpdateDataloading ? "Updating.." : 'Update KYC'}</div>
-                    // </div>
+                                    <div  
+                    onClick={() => updateUser(userData)} 
+                    style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
+                      <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " />
+                      <div className="text-s " style={{color: '#ffffff'}}>{isUpdateDataloading ? "Updating.." : 'Update Cheat'}</div>
+                    </div>
                                     
                                  }
                                                                  

@@ -14,7 +14,7 @@ $db = $database->getConnection();
 $response = new Response($db);
 
 // Fetch all users
-$stmt = $response->ReadAllHelpRequests();
+$stmt = $response->ReadAllHelpRequestsNotCheat();
 
 // Initialize array to store user data
 $help_requests_data["helpRequestsData"] = array();

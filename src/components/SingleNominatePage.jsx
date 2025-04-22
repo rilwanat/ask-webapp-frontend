@@ -45,6 +45,7 @@ export default function SingleNominatePage({
     const [item, setItem] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const [scrollCarousel, setScrollCarousel] = useState(true);
 
     
         //notification modal
@@ -246,6 +247,8 @@ export default function SingleNominatePage({
                                 openNotificationModal={openNotificationModal}
                                 handleHelpRequestsData={handleHelpRequestsData}
                                 navigateAndRefresh={navigateAndRefresh}
+                                setScrollCarousel={setScrollCarousel}
+
                                 />
                             </motion.button>
                             <motion.button>
