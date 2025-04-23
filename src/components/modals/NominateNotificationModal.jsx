@@ -35,7 +35,7 @@ const details = parts.slice(1);
       contentLabel="Notification"
       style={customModalStyles}
     >
-      <div className="flex flex-col w-full px-4 pt-4 z-5000">
+      <div className="flex flex-col w-full px-4 pt-4 z-7000">
         <div className='flex justify-center mt-4'>
           {notificationType === true ? 
             <CheckCircleIcon className='text-green' style={{ width: '64px', height: '64px' }}/> : 

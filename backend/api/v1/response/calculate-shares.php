@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         //
-        $stmt = $response->GenerateBeneficiaries($count);
+        $stmt = $response->GenerateBeneficiariesNotCheat($count);
 
         $beneficiaries_requests_data["beneficiariesRequestsData"] = array();
 ini_set('memory_limit', '-1');

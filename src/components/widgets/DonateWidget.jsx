@@ -13,6 +13,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import ShareIcon from '@mui/icons-material/Share'; 
 
 import DonateNotificationModal from '../modals/DonateNotificationModal';
+import DonateOptionsModal from '../modals/DonateOptionsModal';
+
 
 
 //
@@ -76,6 +78,8 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
 
   
       useEffect(() => {
+        openNotificationModal(null, "A", "Log in to proceed or Proceed without logging in#Note: Anonymous donors may not receive receipts.");
+
         handleDonationsData();
       }, []);
       const handleDonationsData = async () => {
@@ -108,7 +112,7 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
         } catch (error) {
           setIsDataLoading(false);
           
-          alert(error);
+          // alert(error);
           // Handle errors
           if (error.response && error.response.data) {
             const errorMessage = error.response.data.message;
@@ -126,7 +130,7 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
         
     
         const requestData = {   
-          email: userDetails?.email_address ?? "anon@askfoundations.org",
+          email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
           price: currentPriceRef.current,
           type: donateType,
           reference: reference,
@@ -212,11 +216,11 @@ const filteredDonations = Array.isArray(donationsData)
       // alert(JSON.stringify(reference), null, 2);
       handleIncrementDNQ(reference["reference"]);
       // alert(reference["reference"]);
-      // userDetails?.email_address ?? "anon@askfoundations.org"
+      // userDetails?.email_address ?? "anonymousdonor@askfoundations.org"
     };
     const onClose = () => {
       // implementation for  whatever you want to do when the Paystack dialog closed.
-      alert('closed');
+      // alert('closed');
     }
     // PAYSTACK
 
@@ -229,7 +233,7 @@ const filteredDonations = Array.isArray(donationsData)
       if (payDonateType == "naira") {
         const config = {
           reference: (new Date()).getTime().toString(),
-          email: userDetails?.email_address ?? "anon@askfoundations.org",
+          email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
           amount: price * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
           publicKey: import.meta.env.VITE_PAYSTACK_TEST_PUBLIC_KEY,
         };
@@ -299,6 +303,10 @@ const defaultCrypto =
   };
 
 
+  const showShortOptionsDonationModal = (payDonateType, price, symbol) => {
+    openNotificationModal(true, "a","b");
+  }
+
 
   return (
     <div className="w-full mt-4">
@@ -343,7 +351,7 @@ const defaultCrypto =
                     <p className=" text-gray-600" style={{ fontSize: '18px',  }}>Kindly support us with your kind donations to help us share the pie of kindness to the vulnerable in the society. Together, we can make the world a better place.</p>
                     {
                     !isAuthenticated() ? 
-                    <div className='my-1 text-red-500'>Please note: DNQ values are not recorded for Anonymous donations.</div> : <></>
+                    <div className='my-1 text-red-500'>Note: Anonymous donors may not receive a receipt and may forfeit donation value for daily nomination quota (DNQ).</div> : <></>
                   }
                   <div className='flex mt-4 justify-center'>
                     <div className={`mx-2 px-4 py-1 rounded-lg  cursor-pointer border-2 border-theme
@@ -354,6 +362,25 @@ const defaultCrypto =
                     <div className={`mx-2 px-4 py-1 rounded-lg cursor-pointer  border-2 border-theme
                       ${donateType === 'crypto' ? 'bg-theme text-softTheme' : 'bg-white text-theme'}`} onClick={() => {setDonateType('crypto');}}>Crypto</div>
                   </div>
+
+                  {
+                    (donateType === "naira" || donateType === "dollar") ? 
+                    
+                    <>
+                    <div className='flex justify-center items-center mt-2  p-4 rounded'>
+  <label className='flex items-center space-x-2 cursor-pointer'>
+    <input type='radio' name='paymentType' value='one-time' className='accent-red-600' />
+    <span>One-time</span>
+  </label>
+  <div className='mx-2'></div>
+  <label className='flex items-center space-x-2 cursor-pointer'>
+    <input type='radio' name='paymentType' value='recurring' className='accent-red-600' />
+    <span>Recurring</span>
+  </label>
+</div>
+                    </> : <></>
+                  }
+
                   </div>
 
                   
@@ -361,12 +388,12 @@ const defaultCrypto =
                   {/* Right Div */}
                   {donateType === "naira" && (
     <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-2">
         {filteredDonations.map((item) => (
           <div key={item.id} 
             onClick={() => 
             {
-              
+              // showShortOptionsDonationModal();
               showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
             }}
             className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
@@ -379,11 +406,11 @@ const defaultCrypto =
 
 {donateType === "dollar" && (
     <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-2">
         {filteredDonations.map((item) => (
           <div key={item.id} 
             onClick={() => {
-              
+              // showShortOptionsDonationModal();
               showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
             }}
             className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">

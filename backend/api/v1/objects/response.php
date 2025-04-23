@@ -2056,7 +2056,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
     }
 
 
-    public function GenerateBeneficiaries($count)
+    public function GenerateBeneficiariesNotCheat($count)
 {
     $query = "SELECT
         p.id,
@@ -2090,8 +2090,13 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
         " . $this->help_requests_table . " p 
         LEFT JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
+         WHERE 
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes') 
         
-        ORDER BY p.nomination_count DESC
+        ORDER BY 
+            p.nomination_count DESC,
+            p.date ASC,
+            u.registration_date ASC
         LIMIT :count";
 
         $stmt = $this->conn->prepare($query);
@@ -2099,6 +2104,90 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
         $stmt->execute();
         return $stmt;
 }
+
+
+
+
+
+
+
+
+function deleteRequest($email, $helpToken) {
+    try {
+        // Validate inputs
+        if (empty($email) || empty($helpToken)) {
+            return false;
+        }
+
+        // Delete request record
+        $stmt = $this->conn->prepare("DELETE FROM " . $this->help_requests_table . " 
+                            WHERE email_address = :email AND help_token = :help_token");
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":help_token", $helpToken);
+        $stmt->execute();
+        
+        return $stmt->rowCount() > 0;  // Changed affected_rows to rowCount() for PDO
+    } catch (PDOException $e) {  // Changed to catch PDOException specifically
+        error_log("Delete request error: " . $e->getMessage());
+        return false;
+    }
+}
+
+function postBeneficiary($email, $helpToken, $amount, $remark) {
+    try {
+        // Start transaction
+        $this->conn->beginTransaction();
+        
+        // First get the nomination_count from the request table (within transaction)
+        $stmt = $this->conn->prepare("SELECT nomination_count FROM " . $this->help_requests_table . " 
+                            WHERE email_address = ? AND help_token = ? LIMIT 1");
+        $stmt->execute([$email, $helpToken]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if (!$row) {
+            $this->conn->rollBack();
+            return false;
+        }
+        
+        $nominationCount = $row['nomination_count'];
+        
+        // Create beneficiary record
+        $stmt = $this->conn->prepare("INSERT INTO " . $this->$beneficiaries_table . " 
+                            (email_address, amount, nomination_count, remark) 
+                            VALUES (?, ?, ?, ?)");
+        $stmt->execute([$email, $amount, $nominationCount, $remark]);
+        
+        if ($stmt->rowCount() === 0) {
+            $this->conn->rollBack();
+            return false;
+        }
+        
+        // Delete request record
+        $stmt = $this->conn->prepare("DELETE FROM " . $this->help_requests_table . " 
+                            WHERE email_address = ? AND help_token = ?");
+        $stmt->execute([$email, $helpToken]);
+        
+        if ($stmt->rowCount() === 0) {
+            $this->conn->rollBack();
+            return false;
+        }
+        
+        // Commit if all operations succeeded
+        $this->conn->commit();
+        return true;
+        
+    } catch (PDOException $e) {
+        if ($this->conn->inTransaction()) {
+            $this->conn->rollBack();
+        }
+        // Log error if needed
+        error_log("Beneficiary processing error: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+
 
 
  // // // password reset // //

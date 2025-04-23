@@ -543,6 +543,70 @@ const navigate = useNavigate();
 
 
 
+        //
+        const loginUserGoogle = async (e) => {
+          e.preventDefault();
+          if (isGoogleLoginLoading) return false;
+          setIsGoogleLoginLoading(true);
+        
+          // Your Google OAuth configuration
+          const clientId = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+          const redirectUri = encodeURIComponent('YOUR_REDIRECT_URI');
+          const scope = encodeURIComponent('https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile');
+          const nonce = generateNonce(); // You should generate a random nonce
+          const responseType = 'id_token';
+          
+          const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+            `client_id=${clientId}&` +
+            `redirect_uri=${redirectUri}&` +
+            `response_type=${responseType}&` +
+            `scope=${scope}&` +
+            `nonce=${nonce}&` +
+            `prompt=select_account`;
+        
+          try {
+            const success = await openPopupAndWaitForResponse(authUrl, redirectUri);
+            return success;
+          } catch (error) {
+            console.error('Google login failed:', error);
+            return false;
+          } finally {
+            setIsGoogleLoginLoading(false);
+          }
+        };
+
+        const loginUserApple = async (e) => {
+          e.preventDefault();
+          if (isAppleLoginLoading) return false;
+          setIsAppleLoginLoading(true);
+        
+          // Your Apple OAuth configuration
+          const clientId = 'YOUR_APPLE_SERVICE_ID';
+          const redirectUri = encodeURIComponent('YOUR_REDIRECT_URI');
+          const scope = encodeURIComponent('name email');
+          const state = generateState(); // You should generate a random state
+          const responseType = 'code id_token';
+          
+          const authUrl = `https://appleid.apple.com/auth/authorize?` +
+            `client_id=${clientId}&` +
+            `redirect_uri=${redirectUri}&` +
+            `response_type=${responseType}&` +
+            `scope=${scope}&` +
+            `state=${state}&` +
+            `response_mode=form_post`;
+        
+          try {
+            const success = await openPopupAndWaitForResponse(authUrl, redirectUri);
+            return success;
+          } catch (error) {
+            console.error('Apple login failed:', error);
+            return false;
+          } finally {
+            setIsAppleLoginLoading(false);
+          }
+        };
+        //
+
 
     return(
       <>
@@ -818,7 +882,7 @@ const navigate = useNavigate();
 
                             
                           <div  
-                          // onClick={(e) => {if (!isGoogleLoginLoading) registerUser(e)}} 
+                          onClick={(e) => {if (!isGoogleLoginLoading) loginUserGoogle(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='flex mt-4 text-center justify-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
                             <div className='flex items-center '>
@@ -829,7 +893,7 @@ const navigate = useNavigate();
 
                             
                             <div  
-                          // onClick={(e) => {if (!isAppleLoginLoading) registerUser(e)}} 
+                          onClick={(e) => {if (!isAppleLoginLoading) loginUserApple(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='flex mt-4 text-center justify-center rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
                             <div className='flex items-center'>

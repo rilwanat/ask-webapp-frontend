@@ -57,6 +57,13 @@ import { setCookie, getCookie, deleteCookie } from '../../auth/authUtils'; // En
 import { jwtDecode } from 'jwt-decode';
 //
 
+//
+import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
+// import { setCookie, isAuthenticated } from '../../auth/authUtils'; // Ensure the correct relative path
+// import { jwtDecode } from 'jwt-decode';
+// import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
+//
+
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -165,10 +172,109 @@ const [shareType, setShareType] = useState("direct");
   const [numberOfBeneficiaries, setNumberOfBeneficiaries] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [shareRatio, setShareRatio] = useState("");
-  
+  const [remark, setRemark] = useState("");
   
 
 
+
+  // alert("email: " + request.email_address + ", helpToken: " + request.help_token);
+  // postBeneficiary(request.email_address, request.help_token);
+  const postBeneficiary = async (email, helpToken, amount) => { 
+ 
+    // alert(remark);
+    // return;
+    // $email, $helpToken, $amount
+
+    // setIsDataLoading
+    // alert("X");
+    // isDataLoading
+         if (isDataloading) {
+           // alert('Please wait');
+           openNotificationModal(false, "ASK Post Beneficiary", "Please wait..");
+           
+           return;
+         }
+   
+        //  // Validate email before proceeding
+        //  if (!isValidEmail(email)) {
+        //    // alert('Please enter a valid email address');
+        //    openNotificationModal(false, "ASK Subscribe To Newsletter", "Please enter a valid email address");
+           
+        //    return;
+        //  }
+   
+   
+   
+        setIsDataLoading(true);
+         try {
+     
+           const requestData = {
+             email: email,
+             helpToken: helpToken,
+             amount: amount,
+             remark: remark
+         };
+         
+        //  alert(JSON.stringify(requestData));
+         // var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_SUBSCRIBE_TO_NEWSLETTER;
+         //  alert(endpoint);
+         //  setIsSubsLoading(false);
+         //  return;
+         const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_POST_BENEFICIARY, requestData, {
+             headers: {
+                 "Content-Type": "application/json",
+             },
+         });
+         
+         
+         setIsDataLoading(false);
+           //alert(JSON.stringify(response.data, null, 2));
+     
+           if (response.data.status) {
+            //  setEmail("");
+   
+             // alert("dashboard-products " + JSON.stringify(response.data.itemsData, null, 2));
+             // alert("" + response.data.message);
+             openNotificationModal(true, "ASK Post", "" + response.data.message);
+             
+   
+             // Store the retrieved data in state variables
+     
+             // setProductsData(response.data.itemsData);
+           } else {
+             // alert("error1: " + response.data.message);
+             openNotificationModal(false, "ASK Post", "error1: " + response.data.message);
+             
+           }
+     
+         } catch (error) {
+           setIsDataLoading(false);
+   
+           alert(error);
+         
+           if (error.response && error.response.data && error.response.data.message) {
+           const errorMessage = error.response.data.message;
+           // setErrorMessage({ message: errorMessage });
+   
+           openNotificationModal(false, "ASK Post", errorMessage);
+             //  setIsNotificationModalOpen(true);
+   
+         } else if (error.response && error.response.data && error.response.data.errors) {
+           const { errors } = error.response.data;
+           const errorMessages = errors.map(error => error.msg);
+           const errorMessage = errorMessages.join(', '); // Join all error messages
+           // setErrorMessage({ message: errorMessage });
+   
+           openNotificationModal(false, "ASK Post", errorMessage);
+             //  setIsNotificationModalOpen(true);
+         } else {
+           // setErrorMessage({ message: 'ASK Subscribe To Newsletter failed. Please check your data and try again.' });
+   
+           openNotificationModal(false, "ASK Post", 'Please check your data and try again.');
+             //  setIsNotificationModalOpen(true);
+         }
+       }
+       };
 
 
     const getShares = async () => {
@@ -394,15 +500,14 @@ if (parsedShareRatio.some(isNaN)) {
                                             <label htmlFor="kyc_status" className="block text-sm font-medium text-red-300 mb-2">Remark:</label>
                                            
                                             <select
-                id="userKycStatus"
-                name="userKycStatus"
+                id="remark"
+                name="remark"
                 className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
                     block w-full p-2.5"
-                    // value={requestData.remark}
+                    value={remark}
                     // disabled
                     onChange={(e) => {
-                      // alert(e.target.value);
-                      // setRequestData({ ...requestData, remark: e.target.value })                     
+                      setRemark(e.target.value);                    
                   }}
             >
                 <option value="Select">Select Remark</option>
@@ -458,6 +563,22 @@ if (parsedShareRatio.some(isNaN)) {
               style={{ width: '200px' }}
               className='text-center  rounded-sm px-4 py-1 text-sm cursor-pointer  bg-theme text-white mb-4 md:mb-0'>
               {currentPageName + ' (' + totalFilteredItems + ')'}
+            </div>
+
+            <div>
+              <div  
+                                  // onClick={() => updateUser(userData)} 
+                                  style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
+                                    {/* <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " /> */}
+                                    <div className="text-s " style={{color: '#ffffff'}}>{isDataloading ? "Fetching.." : 'Stop Voting'}</div>
+                                  </div>
+
+                                  <div  
+                    // onClick={() => updateUser(userData)} 
+                    style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
+                      {/* <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " /> */}
+                      <div className="text-s " style={{color: '#ffffff'}}>{isDataloading ? "Fetching.." : 'Post Beneficiaries'}</div>
+                    </div>
             </div>
 
   {/* Right section - Search */}
@@ -539,9 +660,9 @@ if (parsedShareRatio.some(isNaN)) {
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Date Resolved
                         </th>
-                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Help Token
-                        </th> */}
+                        </th>
 
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Action
@@ -596,13 +717,17 @@ if (parsedShareRatio.some(isNaN)) {
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {request.date_resolved}
                           </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {request.help_token}
+                          </td>
                           
 
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
                           <span
                           className="text-white cursor-pointer bg-theme rounded-lg px-2 py-1"
                           onClick={(e) => {
-                            alert("#");
+                            // alert("email: " + request.email_address + ", helpToken: " + request.help_token);
+                            postBeneficiary(request.email_address, request.help_token, beneficiariesRatios[index]);
                           }}
                           >
                             Approve

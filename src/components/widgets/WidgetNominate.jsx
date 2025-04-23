@@ -99,6 +99,8 @@ const WidgetNominate = ({
 
         const createNomination = async (e) => {
 
+          e.preventDefault();
+          
           setScrollCarousel(false);
 
           

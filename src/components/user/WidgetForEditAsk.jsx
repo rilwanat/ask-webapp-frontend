@@ -225,61 +225,73 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
 
        const DeleteHelpRequest  = async (e) => {
  
-        alert("nothing happened here");
-        return;
+        // alert("nothing happened here");
+        // return;
       
-        // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
-        if (userDetails === null) {
-          openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send with your help request.`); 
+      //   // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
+      //   if (userDetails === null) {
+      //     openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send with your help request.`); 
           
-          return;
-        }
+      //     return;
+      //   }
   
   
-      //    alert("here");
+      // //    alert("here");
   
-      if (myCurrentActiveRequestsData.description === "") {
-        openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
+      // if (myCurrentActiveRequestsData.description === "") {
+      //   openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
         
-        return;
-      }
+      //   return;
+      // }
   
   
            e.preventDefault();
            setErrorMessage({ message: '' });
          
            
+          //  myCurrentActiveRequestsData.
+          //  myCurrentActiveRequestsData.
+
+           const requestData = {   
+            email: userDetails.email_address, 
+            helpToken: myCurrentActiveRequestsData.helpToken.trim(), 
+           };
          
+          //  const formData = new FormData();
+          //  formData.append('email', userDetails.email_address);
+          //  formData.append('help_token', myCurrentActiveRequestsData.helpToken.trim());
   
            try {
        
-             const formData = new FormData();
-             formData.append('email', userDetails.email_address);
-             formData.append('description', myCurrentActiveRequestsData.description);
+            //  const formData = new FormData();
+            //  formData.append('email', userDetails.email_address);
+            //  formData.append('description', myCurrentActiveRequestsData.description);
           
-             if (selectedFile !== null) {
-              formData.append('image', selectedFile);
-            } else {
-              // alert("Please select an image to upload");
-              openNotificationModal(false, "ASK Help Request", "Select an image to upload");
+            //  if (selectedFile !== null) {
+            //   formData.append('image', selectedFile);
+            // } else {
+            //   // alert("Please select an image to upload");
+            //   openNotificationModal(false, "ASK Help Request", "Select an image to upload");
               
-              return;
-            }
+            //   return;
+            // }
   
+            
+  
+            //  alert("requestData: " + JSON.stringify(requestData, null, 2));
+            //  return;
+
             setIsLoading(true);
-  
-             alert("requestData: " + JSON.stringify(requestData, null, 2));
-             return;
        
-             const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_DELETE_MY_HELP_REQUEST, formData, {
+             const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_DELETE_MY_HELP_REQUEST, requestData, {
                headers: {
-                     'Content-Type': 'multipart/form-data',
-                    //  'Content-Type': 'application/json',
+                    //  'Content-Type': 'multipart/form-data',
+                     'Content-Type': 'application/json',
                  },
              });
        
              setIsLoading(false);
-            //  alert("kyc: " + JSON.stringify(response.data, null, 2));
+            //  alert("delete: " + JSON.stringify(response.data, null, 2));
        // return;
        
              if (response.data.status) {
@@ -295,10 +307,10 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
   
      
               
-              getActiveHelpRequests();
+              // getActiveHelpRequests();
   
   
-               openNotificationModal(true, "ASK Help Request", response.data.message);
+               openNotificationModal(true, "ASK Delete Help Request", response.data.message);
                 
   
        
@@ -306,7 +318,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
              } else {
                const errors = response.data.errors.map(error => error.msg);
                setErrorMessage({ message: response.data.message, errors });
-               //alert("Failed1");
+              //  alert("Failed1");
              }
            } catch (error) {
              setIsLoading(false);
@@ -317,7 +329,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
              const errorMessage = error.response.data.message;
              setErrorMessage({ message: errorMessage });
   
-             openNotificationModal(false, "ASK Help Request", errorMessage);
+             openNotificationModal(false, "ASK Delete Help Request", errorMessage);
                 
   
            } else if (error.response && error.response.data && error.response.data.errors) {
@@ -326,12 +338,12 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
              const errorMessage = errorMessages.join(', '); // Join all error messages
              setErrorMessage({ message: errorMessage });
   
-             openNotificationModal(false, "ASK Help Request", errorMessage);
+             openNotificationModal(false, "ASK Delete Help Request", errorMessage);
                 
            } else {
-             setErrorMessage({ message: 'ASK Help Request failed. Please check your data and try again.' });
+             setErrorMessage({ message: 'ASK Delete Help Request failed. Please check your data and try again.' });
   
-             openNotificationModal(false, "ASK Help Request", 'Please check your data and try again.');
+             openNotificationModal(false, "ASK Delete Help Request", 'Please check your data and try again.');
                 
            }
          }
