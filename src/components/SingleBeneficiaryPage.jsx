@@ -29,6 +29,7 @@ export default function SingleBeneficiaryPage({
 
     // Custom carousel configuration to prevent scroll interference
     const carouselConfig = {
+        stopAutoPlayOnHover: true,
         showIndicators: false,
         showArrows: true,
         showStatus: false,

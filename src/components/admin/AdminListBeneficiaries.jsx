@@ -72,6 +72,8 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 
 import NotificationModal from '../modals/NotificationModal';
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 
 export default function AdminListBeneficiaries({ 
   isMobile,
@@ -133,21 +135,24 @@ useEffect(() => {
     
     
       const currentPageName = "Beneficiaries";
-    
+      
 
 
       const [isDataloading, setIsDataLoading] = useState(false);
-      const [beneficiaries, setBeneficiariesData] = useState([]);
-      const [beneficiariesRatios, setBeneficiariesRatios] = useState([]);
+      const [generatedBeneficiaries, setGeneratedBeneficiariesData] = useState([]);
+      const [generatedBeneficiariesRatios, setGeneratedBeneficiariesRatios] = useState([]);
+
+
+      const [allBeneficiaries, setAllBeneficiariesData] = useState([]);  
   const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const [totalItems, setTotalItems] = useState(beneficiaries ? beneficiaries.length : 0);
+    const [totalItems, setTotalItems] = useState(allBeneficiaries ? allBeneficiaries.length : 0);
     const [searchQuery, setSearchQuery] = useState('');
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
-    const filteredBeneficiaries = (beneficiaries || []).filter((request) =>
+    const filteredBeneficiaries = (allBeneficiaries || []).filter((request) =>
     request.date.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.nomination_count.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
@@ -179,7 +184,10 @@ const [shareType, setShareType] = useState("direct");
 
   // alert("email: " + request.email_address + ", helpToken: " + request.help_token);
   // postBeneficiary(request.email_address, request.help_token);
-  const postBeneficiary = async (email, helpToken, amount) => { 
+  const approveBeneficiary = async (
+    email, 
+    // helpToken, amount
+  ) => { 
  
     // alert(remark);
     // return;
@@ -190,7 +198,7 @@ const [shareType, setShareType] = useState("direct");
     // isDataLoading
          if (isDataloading) {
            // alert('Please wait');
-           openNotificationModal(false, "ASK Post Beneficiary", "Please wait..");
+           openNotificationModal(false, "ASK Approve Beneficiary", "Please wait..");
            
            return;
          }
@@ -210,9 +218,9 @@ const [shareType, setShareType] = useState("direct");
      
            const requestData = {
              email: email,
-             helpToken: helpToken,
-             amount: amount,
-             remark: remark
+            //  helpToken: helpToken,
+            //  amount: amount,
+            //  remark: remark
          };
          
         //  alert(JSON.stringify(requestData));
@@ -220,7 +228,7 @@ const [shareType, setShareType] = useState("direct");
          //  alert(endpoint);
          //  setIsSubsLoading(false);
          //  return;
-         const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_POST_BENEFICIARY, requestData, {
+         const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_APPROVE_BENEFICIARY, requestData, {
              headers: {
                  "Content-Type": "application/json",
              },
@@ -235,7 +243,8 @@ const [shareType, setShareType] = useState("direct");
    
              // alert("dashboard-products " + JSON.stringify(response.data.itemsData, null, 2));
              // alert("" + response.data.message);
-             openNotificationModal(true, "ASK Post", "" + response.data.message);
+             handleAllBeneficiariesData();
+             openNotificationModal(true, "ASK Approve", "" + response.data.message);
              
    
              // Store the retrieved data in state variables
@@ -243,7 +252,7 @@ const [shareType, setShareType] = useState("direct");
              // setProductsData(response.data.itemsData);
            } else {
              // alert("error1: " + response.data.message);
-             openNotificationModal(false, "ASK Post", "error1: " + response.data.message);
+             openNotificationModal(false, "ASK Approve", "error1: " + response.data.message);
              
            }
      
@@ -256,7 +265,7 @@ const [shareType, setShareType] = useState("direct");
            const errorMessage = error.response.data.message;
            // setErrorMessage({ message: errorMessage });
    
-           openNotificationModal(false, "ASK Post", errorMessage);
+           openNotificationModal(false, "ASK Approve", errorMessage);
              //  setIsNotificationModalOpen(true);
    
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -265,16 +274,139 @@ const [shareType, setShareType] = useState("direct");
            const errorMessage = errorMessages.join(', '); // Join all error messages
            // setErrorMessage({ message: errorMessage });
    
-           openNotificationModal(false, "ASK Post", errorMessage);
+           openNotificationModal(false, "ASK Approve", errorMessage);
              //  setIsNotificationModalOpen(true);
          } else {
            // setErrorMessage({ message: 'ASK Subscribe To Newsletter failed. Please check your data and try again.' });
    
-           openNotificationModal(false, "ASK Post", 'Please check your data and try again.');
+           openNotificationModal(false, "ASK Approve", 'Please check your data and try again.');
              //  setIsNotificationModalOpen(true);
          }
        }
        };
+
+       const postBeneficiaries = async (beneficiaries) => { 
+
+        if (beneficiaries === null) {
+          return;
+        }
+ 
+        
+
+
+        // alert(JSON.stringify(beneficiariesRequestData));
+        // return;
+        // $email, $helpToken, $amount
+    
+        // setIsDataLoading
+        // alert("X");
+        // isDataLoading
+             if (isDataloading) {
+               // alert('Please wait');
+               openNotificationModal(false, "ASK Post Beneficiaries", "Please wait..");
+               
+               return;
+             }
+       
+            //  // Validate email before proceeding
+            //  if (!isValidEmail(email)) {
+            //    // alert('Please enter a valid email address');
+            //    openNotificationModal(false, "ASK Subscribe To Newsletter", "Please enter a valid email address");
+               
+            //    return;
+            //  }
+       
+       
+       
+            
+             try {
+         
+               // Transform the JSON data into the required format
+        const beneficiariesRequestData = generatedBeneficiaries.map((beneficiary, index) => ({
+          email: beneficiary.email_address,
+          helpToken: beneficiary.help_token,
+          amount: generatedBeneficiariesRatios[index],
+          remark: beneficiary.remark
+        }));
+             
+            //  alert(JSON.stringify(beneficiariesRequestData));
+            //  return;
+
+
+             setIsDataLoading(true);
+             // var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_SUBSCRIBE_TO_NEWSLETTER;
+             //  alert(endpoint);
+             //  setIsSubsLoading(false);
+             //  return;
+             const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_POST_BENEFICIARIES_ARRAY, 
+              { beneficiaries: beneficiariesRequestData }, {
+                 headers: {
+                     "Content-Type": "application/json",
+                 },
+             });
+             
+             
+             setIsDataLoading(false);
+               //alert(JSON.stringify(response.data, null, 2));
+         
+               if (response.data.status) {
+                //  setEmail("");
+       
+                 // alert("dashboard-products " + JSON.stringify(response.data.itemsData, null, 2));
+                 // alert("" + response.data.message);
+
+                setShareType("direct");
+                setNumberOfBeneficiaries("");
+                setTotalAmount("");
+                setShareRatio("");
+                 setRemark("");
+
+
+                 setGeneratedBeneficiariesData([]);
+                 setGeneratedBeneficiariesRatios(null);
+
+
+                 handleAllBeneficiariesData();
+                 openNotificationModal(true, "ASK Post Beneficiaries", "" + response.data.message);
+                 
+       
+                 // Store the retrieved data in state variables
+         
+                 // setProductsData(response.data.itemsData);
+               } else {
+                 // alert("error1: " + response.data.message);
+                 openNotificationModal(false, "ASK Post Beneficiaries", "error1: " + response.data.message);
+                 
+               }
+         
+             } catch (error) {
+               setIsDataLoading(false);
+       
+               alert(error);
+             
+               if (error.response && error.response.data && error.response.data.message) {
+               const errorMessage = error.response.data.message;
+               // setErrorMessage({ message: errorMessage });
+       
+               openNotificationModal(false, "ASK Post Beneficiaries", errorMessage);
+                 //  setIsNotificationModalOpen(true);
+       
+             } else if (error.response && error.response.data && error.response.data.errors) {
+               const { errors } = error.response.data;
+               const errorMessages = errors.map(error => error.msg);
+               const errorMessage = errorMessages.join(', '); // Join all error messages
+               // setErrorMessage({ message: errorMessage });
+       
+               openNotificationModal(false, "ASK Post Beneficiaries", errorMessage);
+                 //  setIsNotificationModalOpen(true);
+             } else {
+               // setErrorMessage({ message: 'ASK Subscribe To Newsletter failed. Please check your data and try again.' });
+       
+               openNotificationModal(false, "ASK Post Beneficiaries", 'Please check your data and try again.');
+                 //  setIsNotificationModalOpen(true);
+             }
+           }
+           };
 
 
     const getShares = async () => {
@@ -327,7 +459,8 @@ if (parsedShareRatio.some(isNaN)) {
           "shareType": shareType,
           "numberOfBeneficiaries": numberOfBeneficiaries,
           "totalAmount": totalAmount,
-          "shareRatio": parsedShareRatio
+          "shareRatio": parsedShareRatio,
+          "remark": remark
         }
         ;
     
@@ -348,8 +481,8 @@ if (parsedShareRatio.some(isNaN)) {
         // openNotificationModal(true, "Share Ratios", calculateSharesResponse.data);
     
         // Example: update state
-        setBeneficiariesRatios(calculateSharesResponse.data.ratio);
-        setBeneficiariesData(calculateSharesResponse.data.data);
+        setGeneratedBeneficiariesRatios(calculateSharesResponse.data.ratio);
+        setGeneratedBeneficiariesData(calculateSharesResponse.data.data);
     
         setIsDataLoading(false);
       } catch (error) {
@@ -368,6 +501,54 @@ if (parsedShareRatio.some(isNaN)) {
     };
 
 
+
+    const handleAllBeneficiariesData = async () => {
+  
+      setIsDataLoading(true);
+  
+  
+      try {
+        const beneficiariesRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_BENEFICIARIES;
+        // alert(beneficiariesRequestsEndpoint);
+        const beneficiariesRequestsResponse = await axiosInstance.get(beneficiariesRequestsEndpoint, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setAllBeneficiariesData(beneficiariesRequestsResponse.data.data);  // Update state with  count
+    
+    
+        // openNotificationModal(true, currentPageName, "");
+        // alert(JSON.stringify(beneficiariesRequestsResponse.data.data), null, 2);  // Update state with appointments count
+      //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+  
+  
+  
+  
+  
+        // Once all data is fetched, set loading to false
+        setIsDataLoading(false);
+    
+      } catch (error) {
+        setIsDataLoading(false);
+        
+        alert(error);
+        // Handle errors
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
+          openNotificationModal(false, "Beneficiaries" + " Error", errorMessage);
+        } else {
+          openNotificationModal(false, "Beneficiaries" + " Error", "An unexpected error occurred.");
+        }
+      }
+    };
+
+    
+
+    useEffect(() => { 
+      handleAllBeneficiariesData(); 
+  }, []);
+    
 
   const formatAmount = (amount) => {
     return Number(amount).toLocaleString('en-US', {
@@ -438,7 +619,7 @@ if (parsedShareRatio.some(isNaN)) {
                     block w-full p-2.5"
                     value={shareType}
     onChange={(e) => {
-      setBeneficiariesData(null);
+      setGeneratedBeneficiariesData([]);
       setShareType(e.target.value);
     }
       }
@@ -457,7 +638,7 @@ if (parsedShareRatio.some(isNaN)) {
                                             value={numberOfBeneficiaries}
     onChange={(e) => 
     {
-      setBeneficiariesData(null);
+      setGeneratedBeneficiariesData([]);
       setNumberOfBeneficiaries(e.target.value);
     }
     }
@@ -474,7 +655,7 @@ if (parsedShareRatio.some(isNaN)) {
                                             value={totalAmount}
     onChange={(e) => 
       {
-        setBeneficiariesData(null);
+        setGeneratedBeneficiariesData([]);
       setTotalAmount(e.target.value);
       }}
     />
@@ -490,7 +671,7 @@ if (parsedShareRatio.some(isNaN)) {
                                             value={shareRatio}
     onChange={(e) => 
       {
-        setBeneficiariesData(null);
+        setGeneratedBeneficiariesData([]);
       setShareRatio(e.target.value);
       }}/>
                                         </div>
@@ -562,10 +743,12 @@ if (parsedShareRatio.some(isNaN)) {
               }}
               style={{ width: '200px' }}
               className='text-center  rounded-sm px-4 py-1 text-sm cursor-pointer  bg-theme text-white mb-4 md:mb-0'>
-              {currentPageName + ' (' + totalFilteredItems + ')'}
+              {'Generated ' + currentPageName
+              //  + ' (' + totalFilteredItems + ')'
+               }
             </div>
 
-            <div>
+            <div className='flex sm:flex-row flex-col'>
               <div  
                                   // onClick={() => updateUser(userData)} 
                                   style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
@@ -574,23 +757,13 @@ if (parsedShareRatio.some(isNaN)) {
                                   </div>
 
                                   <div  
-                    // onClick={() => updateUser(userData)} 
+                    onClick={() => postBeneficiaries(generatedBeneficiaries)} 
                     style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
                       {/* <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " /> */}
                       <div className="text-s " style={{color: '#ffffff'}}>{isDataloading ? "Fetching.." : 'Post Beneficiaries'}</div>
                     </div>
             </div>
 
-  {/* Right section - Search */}
-  <div className='relative flex items-center w-full md:w-auto'>
-    <SearchIcon className="absolute left-3 h-5 w-5 text-white" />
-    <input
-      type='text'
-      placeholder='Search'
-      className='w-full md:w-64 pl-10 text-white bg-theme border border-white rounded-lg py-1 focus:outline-none focus:border-2 focus:border-theme placeholder-white'
-      onChange={handleSearchChange}
-    />
-  </div>
 </div>
             
             
@@ -658,11 +831,172 @@ if (parsedShareRatio.some(isNaN)) {
                           Nomination Count
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Remark
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Date Resolved
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Help Token
                         </th>
+
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                          Action
+                        </th> */}
+                        
+                      </tr>
+                    </thead>
+            
+                    {
+                      // isDataloading ? <Loading />
+                      // : 
+                    <tbody className='text-xs '>
+                      {generatedBeneficiaries.map((beneficiary, index) => (
+                          <tr key={beneficiary.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
+                        // onClick={(e) => handlerequestRowClick(beneficiary, e)} 
+                          style={{ cursor: "pointer" }}
+                          >
+                          <td className='px-2 py-4 whitespace-no-wrap border-b border-gray-200'>
+                          {countFiltered++}
+                          </td>
+                          {/* <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> */}
+                            {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + beneficiary.productImages[0]} */}
+                            {/* <img src={process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + beneficiary.productImages[0]}  className="h-10 w-10 object-cover" /> */}
+                          {/* </td> */}
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 cursor-pointer" onClick={(e) => {
+                            //setShowDialog(false); 
+                            // handleProductClick(beneficiary, e);
+                          }}>
+                            {beneficiary.date}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                            {beneficiary.email_address}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap text-right border-b border-gray-200">
+                            {/* {beneficiary.tags.join(', ')} */}
+                            {'₦' + formatAmount(generatedBeneficiariesRatios[index])}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                          <span
+                                    style={{
+                                      backgroundColor: beneficiary.status === 'approved' ? '#1cc939' : beneficiary.status === 'pending' ? '#d85a27' : '#FFE2E5', 
+                                      color: beneficiary.status === 'approved' ? '#000000' : beneficiary.status === 'pending' ? '#ffffff' : '#F64E60', 
+                                      borderRadius: '6px'
+                                    
+                                  }} 
+                                    className={'text-white px-2 py-2 '
+                                    }>{beneficiary.status}</span>
+                          </td>	
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {beneficiary.nomination_count}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {beneficiary.remark}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {beneficiary.date_resolved}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {beneficiary.help_token}
+                          </td>
+                          
+
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
+                          <span
+                          className="text-white cursor-pointer bg-theme rounded-lg px-2 py-1"
+                          onClick={(e) => {
+                            // alert("email: " + request.email_address + ", helpToken: " + request.help_token);
+                            approveBeneficiary(request.email_address, request.help_token, generatedBeneficiariesRatios[index]);
+                          }}
+                          >
+                            Approve
+                            </span>
+                          </td> */}
+                         
+                          
+                        </tr>
+                      ))}
+                    </tbody>
+                    }
+            
+                  </table>
+
+                  }
+                </div>
+            
+            
+                <div className='flex flex-col md:flex-row p-2 items-center justify-between mt-16'>
+  {/* Left section - Page title */}
+  {/* <div className="px-4 py-1 flex items-center border border-white text-white mb-4 md:mb-0 rounded-lg">
+    {currentPageName + ' (' + totalFilteredItems + ')'}
+  </div> */}
+  <div 
+              onClick={() => { 
+                // gotoPage('/contact-us') 
+              }}
+              style={{ width: '200px' }}
+              className='text-center  rounded-sm px-4 py-1 text-sm cursor-pointer  bg-theme text-white mb-4 md:mb-0'>
+              {'Live ' + currentPageName + ' (' + totalFilteredItems + ')'}
+            </div>
+
+
+{/* Right section - Search */}
+<div className='relative flex items-center w-full md:w-auto'>
+    <SearchIcon className="absolute left-3 h-5 w-5 text-white" />
+    <input
+      type='text'
+      placeholder='Search'
+      className='w-full md:w-64 pl-10 text-white bg-theme border border-white rounded-lg py-1 focus:outline-none focus:border-2 focus:border-theme placeholder-white'
+      onChange={handleSearchChange}
+    />
+  </div>
+
+</div>
+            <div className='overflow-x-auto mt-4'>
+                  {
+                    isDataloading ? <Loading />
+                    : 
+                    
+                    <table className='min-w-full bg-white shadow-md overflow-hidden'>
+                    {/* Table Header */}
+                    <thead className='text-xs'>
+                      <tr >
+                      <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          SN
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Date
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Email Address
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Bank Name
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Account Name
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Account Number
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Amount
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                          Status
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Nomination Count
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                          Remark
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Date Resolved
+                        </th>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Help Token
+                        </th> */}
 
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Action
@@ -681,7 +1015,7 @@ if (parsedShareRatio.some(isNaN)) {
                           style={{ cursor: "pointer" }}
                           >
                           <td className='px-2 py-4 whitespace-no-wrap border-b border-gray-200'>
-                          {countFiltered++}
+                          {request.id}
                           </td>
                           {/* <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> */}
                             {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + request.productImages[0]} */}
@@ -696,9 +1030,18 @@ if (parsedShareRatio.some(isNaN)) {
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                             {request.email_address}
                           </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                            {request.user.bank_name}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                            {request.user.account_name}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {request.user.account_number}
+                          </td>
                           <td className="px-2 py-4 whitespace-no-wrap text-right border-b border-gray-200">
                             {/* {request.tags.join(', ')} */}
-                            {'₦' + formatAmount(beneficiariesRatios[index])}
+                            {'₦' + formatAmount(request.amount)}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                           <span
@@ -714,24 +1057,34 @@ if (parsedShareRatio.some(isNaN)) {
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {request.nomination_count}
                           </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                            {request.remark}
+                          </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {request.date_resolved}
                           </td>
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {request.help_token}
-                          </td>
+                          </td> */}
                           
 
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
-                          <span
-                          className="text-white cursor-pointer bg-theme rounded-lg px-2 py-1"
-                          onClick={(e) => {
-                            // alert("email: " + request.email_address + ", helpToken: " + request.help_token);
-                            postBeneficiary(request.email_address, request.help_token, beneficiariesRatios[index]);
-                          }}
-                          >
-                            Approve
-                            </span>
+                          
+
+                            <span 
+                                    style={{
+                                      
+                                      borderRadius: '6px'
+                                    
+                                  }} 
+                                  onClick={(e) => {
+                                    // alert("email: " + request.email_address + ", helpToken: " + request.help_token);
+                                    approveBeneficiary(request.email_address, request.help_token, generatedBeneficiariesRatios[index]);
+                                  }}
+                                    className={'text-white px-2 py-2 cursor-pointer bg-theme rounded-lg '
+                                    }>Approve 
+                                    {/* <CheckCircleIcon className='text-white w' style={{  }}/>  */}
+                                    </span>
                           </td>
                          
                           
@@ -744,7 +1097,6 @@ if (parsedShareRatio.some(isNaN)) {
 
                   }
                 </div>
-            
             
             
             

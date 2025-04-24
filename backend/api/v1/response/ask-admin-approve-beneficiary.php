@@ -15,29 +15,33 @@ $response = new Response($db);
 $data = json_decode(file_get_contents("php://input"));
 
 
-// file_put_contents('dada.txt', print_r($data, true));
 if (
-!empty($data->email) &&
-!empty($data->helpToken)
+!empty($data->email) 
+// &&
+// !empty($data->helpToken) && 
+// !empty($data->amount) &&
+// !empty($data->remark)
 ) {
 
 
 
 
-    if ($response->deleteRequest($data->email, $data->helpToken)) {
+    if ($response->approveBeneficiary($data->email
+    // , $data->helpToken, $data->amount, $data->remark 
+    )) {
 
         // set response code - 201 created
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => true, "message" => "ASK Request Deleted Successfully."));
+        echo json_encode(array("status" => true, "message" => "ASK Beneficiary Approved Successfully."));
     } else {
 
         // set response code - 503 service unavailable
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => false, "message" => "ASK Delete Request: Not found."));
+        echo json_encode(array("status" => false, "message" => "ASK Approve Beneficiary: Beneficiary not found."));
     }
 
 
@@ -48,7 +52,7 @@ if (
     http_response_code(200);
 
     // tell the user
-    echo json_encode(array("status" => false, "message" => "Unable to Delete. Data is incomplete."));
+    echo json_encode(array("status" => false, "message" => "Unable to Post. Data is incomplete."));
 }
 
 

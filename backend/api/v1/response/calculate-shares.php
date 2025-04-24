@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (
         isset($data->shareType) &&
         isset($data->numberOfBeneficiaries) &&
-        isset($data->totalAmount)
+        isset($data->totalAmount) &&
+        isset($data->remark)
     ) {
         $type = strtolower($data->shareType);
         $count = (int) $data->numberOfBeneficiaries;
@@ -80,7 +81,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         "date" => $row['date'],
         "nomination_count" => $row['nomination_count'],
         "description" => $row['description'],
-        "remark" => $row['remark'],
+        "remark" => $data->remark,//$row['remark'],
         "email_address" => $row['email_address'],
         "request_image" => $row['request_image'],
         "help_token" => $row['help_token'],

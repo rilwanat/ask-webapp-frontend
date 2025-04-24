@@ -48,7 +48,7 @@ const details = parts.slice(1);
         </div>   */}
         <div className='flex flex-col  w-full my-4 '>
   
-    <div className='mb-2 text-center'>{mainMessage}</div>
+    <div className='mb-2 text-center '>{mainMessage}</div>
     <div className='flex flex-col items-start justify-center'>
     {details.map((item, index) => (
       <div key={index} className='flex items-center justify-center mt-1 w-full text-center'>

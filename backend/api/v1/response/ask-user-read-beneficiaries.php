@@ -34,6 +34,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         "status" => $row['status'],
         "date_resolved" => $row['date_resolved'],
         "nomination_count" => $row['nomination_count'],
+        "remark" => $row['remark'],
 
         // User fields
         "user" => array(

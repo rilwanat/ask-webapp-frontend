@@ -24,7 +24,7 @@ export default function SingleRequestsPage({
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
     userDetails, refreshUserDetails, 
     handleHelpRequestsData,
-    navigateAndRefresh
+    // navigateAndRefresh
 }) {
     const navigate = useNavigate();
     const location = useLocation();
@@ -70,17 +70,18 @@ export default function SingleRequestsPage({
     };
 
 
-    // const navigateTo = (route, data) => {
-    //     navigate(route, { state: data });
-    //   };
-    //   const navigateAndRefresh = async (updatedItem) => {
-    //     const data = await handleHelpRequestsData();
-    //     navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
-    // }
+    const navigateTo = (route, data) => {
+        navigate(route, { state: data });
+      };
+      const navigateAndRefresh = async (updatedItem) => {
+        const data = await handleHelpRequestsData();
+        navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
+    }
 
     const [scrollCarousel, setScrollCarousel] = useState(true);
     // Custom carousel configuration to prevent scroll interference
     const carouselConfig = {
+        stopAutoPlayOnHover: true,
         showIndicators: false,
         showArrows: true,
         showStatus: false,

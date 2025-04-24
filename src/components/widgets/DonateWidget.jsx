@@ -78,8 +78,10 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
 
   
       useEffect(() => {
-        openNotificationModal(null, "A", "Log in to proceed or Proceed without logging in#Note: Anonymous donors may not receive receipts.");
-
+        if (!isAuthenticated()) {
+          openNotificationModal(null, "A", "Log in to proceed or Proceed without logging in#Note: Anonymous donors may not receive receipts.");
+        }
+        
         handleDonationsData();
       }, []);
       const handleDonationsData = async () => {

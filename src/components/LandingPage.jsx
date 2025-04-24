@@ -31,7 +31,7 @@ export default function LandingPage({
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
     userDetails, refreshUserDetails,
     handleHelpRequestsData,
-    navigateAndRefresh
+    // navigateAndRefresh
 
 }) {
     const navigate = useNavigate();
@@ -41,6 +41,14 @@ export default function LandingPage({
     useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []); 
     const gotoPage = (pageName) => {
         navigate("/" + pageName)
+    }
+
+    const navigateTo = (route, data) => {
+        navigate(route, { state: data });
+      };
+      const navigateAndRefresh = async (updatedItem) => {
+        const data = await handleHelpRequestsData();
+        navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
     }
 
     useEffect(() => { refreshUserDetails(); }, []); 

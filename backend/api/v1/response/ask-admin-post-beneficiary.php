@@ -49,7 +49,7 @@ if (
     http_response_code(200);
 
     // tell the user
-    echo json_encode(array("status" => false, "message" => "Unable to Subscribe. Data is incomplete."));
+    echo json_encode(array("status" => false, "message" => "Unable to Post. Data is incomplete."));
 }
 
 

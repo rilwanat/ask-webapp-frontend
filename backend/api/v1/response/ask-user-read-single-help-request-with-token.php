@@ -29,9 +29,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $requestData = $response->ReadSingleHelpRequest($data->helpToken);
 
-            // Request successful
-            http_response_code(200);
-            echo json_encode(array("status" => true, "message" => "Request retrieved successfully.", "requestData" => $requestData));
+        if ($requestData['status'])
+        {
+// Request successful
+http_response_code(200);
+echo json_encode(array("status" => true, "message" => "Request retrieved successfully.", "data" => $requestData['data']));
+        } else 
+        {
+            
+http_response_code(400);
+echo json_encode(array("status" => false, "message" => $requestData['message']));
+        }
+            
         
     } else {
         // Incomplete request data provided

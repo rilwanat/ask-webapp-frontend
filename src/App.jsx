@@ -311,7 +311,7 @@ function App() {
     
     
         // openNotificationModal(true, currentPageName, "");
-        // alert(JSON.stringify(helpRequestsResponse.data.data), null, 2);  // Update state with appointments count
+        // alert(JSON.stringify(beneficiariesRequestsResponse.data.data), null, 2);  // Update state with appointments count
       //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
   
   
@@ -376,10 +376,6 @@ function App() {
       }
     };
 
-    const navigateAndRefresh = async (updatedItem) => {
-      const data = await handleHelpRequestsData();
-      navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
-  }
 
 
 
@@ -417,7 +413,6 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
             handleHelpRequestsData={handleHelpRequestsData}
-            navigateAndRefresh={navigateAndRefresh}
             />}/>
             <Route path='/about-us' element={<AboutUsPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
@@ -452,7 +447,6 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
             handleHelpRequestsData={handleHelpRequestsData}
-            navigateAndRefresh={navigateAndRefresh}
              />}/>
             <Route path='/single-sponsor' element={<SingleSponsorPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
@@ -473,7 +467,6 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
             handleHelpRequestsData={handleHelpRequestsData}
-            navigateAndRefresh={navigateAndRefresh}
              />}/>
 
 <Route path='/reset-password/:passwordResetToken' element={<PasswordResetPage isMobile={isMobile}

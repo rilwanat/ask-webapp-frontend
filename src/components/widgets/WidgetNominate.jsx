@@ -55,6 +55,7 @@ const WidgetNominate = ({
 
 // alert(helpToken);
   const handleNominate = async (e) => {
+    
 
     // alert("Nominate: " + "isAuthenticated: " + isAuthenticated());
     // alert("Nominate: " + JSON.stringify(userDetails, null, 2));
@@ -98,7 +99,7 @@ const WidgetNominate = ({
   }
 
         const createNomination = async (e) => {
-
+          e.stopPropagation(); // Prevent event bubbling
           e.preventDefault();
           
           setScrollCarousel(false);
@@ -157,6 +158,8 @@ const WidgetNominate = ({
               // Find the updated item
           const updatedItem = data.find(item => item.help_token === helpToken); 
               navigateAndRefresh(updatedItem);
+
+
             // alert(data.length.toString())
             // getActiveHelpRequests();            
             // //get id of request then find in carouselRequestsItems
@@ -171,7 +174,7 @@ const WidgetNominate = ({
 
             
             // setScrollCarousel(true);
-              openNotificationModal(true, "Nomination", response.data.message + ". Increase your influence to decide beneficiary by boosting your DNQ.");
+              openNotificationModal(true, "Nomination", response.data.message.toUpperCase() + "# Increase your influence to decide beneficiary by boosting your DNQ.");
               
   
             } else {

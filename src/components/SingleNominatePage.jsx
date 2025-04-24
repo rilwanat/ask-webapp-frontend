@@ -38,7 +38,7 @@ export default function SingleNominatePage({
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
     userDetails, refreshUserDetails,
     handleHelpRequestsData,
-    navigateAndRefresh
+    // navigateAndRefresh
 }) {
     const navigate = useNavigate();
     const { helpToken } = useParams();
@@ -74,6 +74,7 @@ export default function SingleNominatePage({
 
     const fetchHelpRequest = async () => {
         // if ()
+        // alert("");
 
         try {
     
@@ -99,7 +100,7 @@ export default function SingleNominatePage({
               setErrorMessage({ message: '' });              
       
             //   alert(JSON.stringify(response.data.requestData, null, 2));
-              setItem(response.data.requestData);
+              setItem(response.data.data);
       
             } else {
               const errors = response.data.errors.map(error => error.msg);
@@ -131,6 +132,10 @@ export default function SingleNominatePage({
     const navigateTo = (route, data) => {
         navigate(route, { state: data });
       };
+      const navigateAndRefresh = async (updatedItem) => {
+        const data = await handleHelpRequestsData();
+        navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
+    }
     
 
     
@@ -170,12 +175,24 @@ export default function SingleNominatePage({
     ) 
     : 
     errorMessage.message ? (
-        <div className="flex flex-col justify-center items-center  text-red-500 text-center my-32">
+        <div className="flex flex-col justify-center items-center  text-center my-32">
 
             <CancelIcon className='text-red-500' style={{ width: '64px', height: '64px' }}/>
             <h1 className="mt-2 font-bold ">
             {errorMessage.message}
-                            </h1></div>
+                            </h1>
+                            
+                            <div 
+              onClick={() => { 
+                const randomIndex = Math.floor(Math.random() * carouselRequestItems.length);
+                navigateTo('/single-request', { selectedItem: carouselRequestItems[randomIndex], allItems: carouselRequestItems  });
+            }}
+              style={{ borderWidth: '0px', width: '200px' }}
+              className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
+              Okay
+            </div>
+            
+            </div>
     ) : 
     !item ? (
         <div className="flex flex-col justify-center items-center  my-32">

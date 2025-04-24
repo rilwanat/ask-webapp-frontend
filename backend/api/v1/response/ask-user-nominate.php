@@ -46,19 +46,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Add nomination
                 if ($response->CreateNomination($data->email, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $data->helpToken)) {
                     http_response_code(200);
-                    echo json_encode(["status" => true, "message" => "Successfully Nominated."]);
+                    echo json_encode(["status" => true, "message" => "Successfully Nominated!"]);
                 } else {
                     http_response_code(500);
-                    echo json_encode(["status" => false, "message" => "Unable to create Nomination."]);
+                    echo json_encode(["status" => false, "message" => "Unable to create Nomination!"]);
                 }
             
             } else {
                 http_response_code(400);
-                echo json_encode(["status" => false, "message" => "Incomplete data."]);
+                echo json_encode(["status" => false, "message" => "Incomplete data!"]);
             }
 
 } else {
     http_response_code(405); // Method not allowed
-    echo json_encode(["status" => false, "message" => "Only POST method is allowed."]);
+    echo json_encode(["status" => false, "message" => "Only POST method is allowed!"]);
 }
 ?>

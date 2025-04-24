@@ -20,6 +20,7 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
 
   // Custom carousel configuration to prevent scroll interference
   const carouselConfig = {
+    stopAutoPlayOnHover: true,
     showIndicators: false,
     showArrows: true,
     showStatus: false,
@@ -101,7 +102,7 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
                     </div>
 
                     <div className="pt-4 mt-auto">
-                      <h3 className="text-2xl font-bold text-theme">{item.name}</h3>
+                      {/* <h3 className="text-2xl font-bold text-theme">{item.user.fullname}</h3> */}
                       <p className="text-theme font-bold mt-1">{'₦' + formatAmount(item.amount)}</p>
                       <p className="text-theme mt-1">{item.date}</p>
                     </div>
@@ -110,13 +111,13 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
                       <div className='flex p-2 rounded-lg items-center justify-center w-50 bg-softTheme mt-2'>
                         <p className="text-theme">{item.remark}</p>
                       </div>
-                      <div className={`flex p-2 rounded-lg items-center justify-center w-50 ${item.status === 'approved' ? 'bg-green' : 'bg-softTheme'} mt-2`}>
+                      <div className={`flex p-2 rounded-lg items-center justify-center w-50 ${item.status === 'approved' ? 'bg-green' : item.status === 'pending' ? 'bg-orange' : ''} mt-2`}>
                         <p className="text-white mr-2">{item.status.charAt(0).toUpperCase() + item.status.slice(1)}</p>
                         {
                           item.status === 'approved' ? 
                           <CheckCircleIcon className='text-white' style={{  }}/> 
                           : 
-                          <PendingActionsIcon />
+                          <PendingActionsIcon className='text-white' style={{  }}/>
                         }
                       </div>
                     </div>

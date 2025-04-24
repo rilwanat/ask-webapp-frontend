@@ -474,6 +474,27 @@ public function ReadAllHelpRequestsNotCheat()
     return $stmt;
 }
 
+public function ReadAllHelpRequestsEmailsNotCheat()
+{
+    $query = "SELECT
+        p.id,
+        
+        p.email_address,
+        u.fullname as user_fullname,
+        u.email_address as user_email 
+        FROM
+        " . $this->help_requests_table . " p 
+        LEFT JOIN 
+            " . $this->users_table . " u ON u.email_address = p.email_address
+        WHERE 
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes')
+        ORDER BY RAND()";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
 
 public function ReadAllBeneficiaries()
 {
@@ -486,6 +507,7 @@ public function ReadAllBeneficiaries()
         p.status,
         p.date_resolved,
         p.nomination_count,
+        p.remark,
         u.id as user_id,
         u.fullname as user_fullname,
         u.email_address as user_email,
@@ -1204,7 +1226,8 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                     p.email_address,
                     p.request_image,
                     p.help_token,
-                    u.fullname 
+                    u.fullname,
+                    u.is_cheat 
                 FROM " . $this->help_requests_table . " p 
                 LEFT JOIN " . $this->users_table . " u ON p.email_address = u.email_address
                  WHERE p.help_token = :help_token";
@@ -1221,16 +1244,40 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             // Fetch the result
             $request = $stmt->fetch(PDO::FETCH_ASSOC);
     
-            if ($request === false) {
-                return null; // No record found
-            }
+            
 
-        return $request; // User not found
+            if ($request === false) {
+                return [
+                    'status' => false,
+                    'message' => 'Request no longer available'
+                ];
+            }
+    
+            // Check if user is marked as cheat
+            if (isset($request['is_cheat']) && $request['is_cheat'] === 'Yes') {
+                return [
+                    'status' => false,
+                    'message' => 'Request currently not available'
+                ];
+            }
+    
+            // Remove is_cheat from the response since we don't need to expose it
+            unset($request['is_cheat']);
+    
+            return [
+                'status' => true,
+                'message' => 'Success',
+                'data' => $request
+            ];
+
     
         } catch (Exception $e) {
-            // Log the error message and return null for security
-            // error_log("Error reading user: " . $e->getMessage());
-            return null;
+            // Log the error message
+        error_log("Error reading help request: " . $e->getMessage());
+        return [
+            'status' => false,
+            'message' => 'An error occurred while processing your request'
+        ];
         }
 
     }
@@ -1250,7 +1297,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
 
         // Step 2: Validate user credentials
         if ($user['is_cheat'] !== 'No') {
-            return ["status" => false, "message" => "Oops! you were flagged for cheating. Complete your KYC and contact Support to resume nominating."];
+            return ["status" => false, "message" => "Oops!#You were flagged for cheating. Complete your KYC and contact Support to resume nominating."];
         }
 
         if ($user['email_verified'] !== 'Yes') {
@@ -1268,7 +1315,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
 
             // Step 4: Prevent self-nomination
             if ($email === $nominee['email_address']) {
-                return ["status" => false, "message" => "Oops! Sorry, self-nominations are not allowed."];
+                return ["status" => false, "message" => "Oops!#Sorry, self-nominations are not allowed."];
             }
 
             // // Step 4: Check if user KYC is approved
@@ -1310,7 +1357,7 @@ $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR);
                 // $timeLeft = $interval->format('%h hour(s) %i minute(s)');
 
                 // $response = ["status" => false, "message" => "You have already nominated today. Try again in $timeLeft."];
-                $response = ["status" => false, "message" => "Oops! Try again tomorrow. You have either nominated already or trying to share device, complete KYC to enable device sharing or come back tomorrow."];
+                $response = ["status" => false, "message" => "Oops!#Try again tomorrow. You have either nominated already or trying to share device, complete KYC to enable device sharing or come back tomorrow."];
                 return $response;
             }
             } else { //LVL2 do not check for device
@@ -2091,7 +2138,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
         LEFT JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
          WHERE 
-        (u.is_cheat IS NULL OR u.is_cheat != 'Yes') 
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes') AND (p.nomination_count > 0)
         
         ORDER BY 
             p.nomination_count DESC,
@@ -2186,8 +2233,103 @@ function postBeneficiary($email, $helpToken, $amount, $remark) {
     }
 }
 
+function postBeneficiariesArray($beneficiaries) {
+    try {
+        // Validate input
+        if (!is_array($beneficiaries) || empty($beneficiaries)) {
+            throw new Exception("No beneficiaries provided");
+        }
 
 
+
+
+        
+        // Start transaction
+        $this->conn->beginTransaction();
+        
+        // Process each beneficiary
+        foreach ($beneficiaries as $beneficiary) {
+            $email = $beneficiary['email'];
+            $helpToken = $beneficiary['helpToken'];
+            $amount = $beneficiary['amount'];
+            $remark = $beneficiary['remark'] ?? ''; // Optional field with default value
+            
+            // First get the nomination_count from the request table (within transaction)
+            $stmt = $this->conn->prepare("SELECT nomination_count FROM " . $this->help_requests_table . " 
+                                WHERE email_address = ? AND help_token = ? LIMIT 1");
+            $stmt->execute([$email, $helpToken]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$row) {
+                $this->conn->rollBack();
+                return false;
+            }
+            
+            $nominationCount = $row['nomination_count'];
+            
+            // Create beneficiary record
+            $stmt = $this->conn->prepare("INSERT INTO " . $this->beneficiaries_table . " 
+                                (email_address, amount, nomination_count, remark) 
+                                VALUES (?, ?, ?, ?)");
+            $stmt->execute([$email, $amount, $nominationCount, $remark]);
+            
+            if ($stmt->rowCount() === 0) {
+                $this->conn->rollBack();
+                return false;
+            }
+            
+            // Delete request record
+            $stmt = $this->conn->prepare("DELETE FROM " . $this->help_requests_table . " 
+                                WHERE email_address = ? AND help_token = ?");
+            $stmt->execute([$email, $helpToken]);
+            
+            if ($stmt->rowCount() === 0) {
+                $this->conn->rollBack();
+                return false;
+            }
+        }
+
+        
+        
+        // Reset all nominations in history table
+        $resetStmt = $this->conn->prepare("UPDATE " . $this->help_requests_table . " 
+                                SET nomination_count = 0");
+        $resetStmt->execute();
+
+
+
+        
+        // Commit if all operations succeeded
+        $this->conn->commit();
+        return true;
+        
+    } catch (PDOException $e) {
+        if ($this->conn->inTransaction()) {
+            $this->conn->rollBack();
+        }
+        // Log error if needed
+        error_log("Beneficiary processing error: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+public function approveBeneficiary($email) {
+    
+    $status = "approved";
+    
+    $query = "UPDATE " . $this->beneficiaries_table . " 
+              SET status = :status 
+              WHERE email_address = :email_address";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email_address", $email);
+    $stmt->bindParam(":status", $status);
+    if ($stmt->execute()) {
+        // Check if any row was actually updated
+        return true;
+    }
+    return false;
+}
 
 
  // // // password reset // //
