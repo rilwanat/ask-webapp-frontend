@@ -148,7 +148,8 @@ useEffect(() => {
 {
   isAuthenticated() ? (
     <>
-      {userDetails && (userDetails.email_verified === null || userDetails.email_verified === "" || userDetails.email_verified === "No") ? (
+      {
+      userDetails && (userDetails.email_verified === null || userDetails.email_verified === "" || userDetails.email_verified === "No") ? (
         <WidgetForEmailVerification 
           userDetails={userDetails} 
           refreshUserDetails={refreshUserDetails} 
@@ -163,24 +164,54 @@ useEffect(() => {
       ) : (
         <>
           {!isLoading ? (
-            myActiveRequestsData === null ? (
-              <WidgetForCreateAsk  
-                userDetails={userDetails} 
-                refreshUserDetails={refreshUserDetails} 
-                getActiveHelpRequests={getActiveHelpRequests}
-                navigateTo={navigateTo}
-                carouselRequestItems={carouselRequestItems}
-                handleHelpRequestsData={handleHelpRequestsData}
-              />
-            ) : (
-              <WidgetForEditAsk  
-                userDetails={userDetails} 
-                refreshUserDetails={refreshUserDetails} 
-                getActiveHelpRequests={getActiveHelpRequests}
-                myActiveRequestsData={myActiveRequestsData}
-              />
-            )
-          ) : (
+
+
+userDetails && (userDetails.kyc_status === 'PENDING' || userDetails.is_cheat === 'Yes') ?
+            
+
+<div className="w-full ">
+        <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
+          <div className="w-full p-4">
+
+
+          <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
+            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC is pending approval</p>
+            <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
+            <p className='text-center'>Please wait for the approval process to complete.</p>
+            {
+              userDetails.is_cheat === 'Yes' ? <p className='text-center text-red-500'>Your account has been flagged for cheating.</p> : <></>
+            }
+            
+        </div> 
+
+
+        </div>
+        </div>
+        </div> :
+
+(
+            
+  myActiveRequestsData === null ? (
+    <WidgetForCreateAsk  
+      userDetails={userDetails} 
+      refreshUserDetails={refreshUserDetails} 
+      getActiveHelpRequests={getActiveHelpRequests}
+      navigateTo={navigateTo}
+      carouselRequestItems={carouselRequestItems}
+      handleHelpRequestsData={handleHelpRequestsData}
+    />
+  ) : (
+    <WidgetForEditAsk  
+      userDetails={userDetails} 
+      refreshUserDetails={refreshUserDetails} 
+      getActiveHelpRequests={getActiveHelpRequests}
+      myActiveRequestsData={myActiveRequestsData}
+    />
+  )
+)
+          )
+
+           : (
             <Loading />
           )}
         </>
