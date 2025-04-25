@@ -50,10 +50,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
-//
-import { useGoogleLogin } from '@react-oauth/google';
-//
-
+import { GoogleLogin } from '@react-oauth/google';
 
 const SlideInAccount = styled(motion.div)`
   position: fixed;
@@ -187,17 +184,18 @@ const navigate = useNavigate();
     const [isAppleLoginLoading, setIsAppleLoginLoading] = useState(false);
     const [isAppleSignUpLoading, setIsAppleSignUpLoading] = useState(false);
 
+     
+     
+
+
     const [loginEmailAddress, setLoginEmailAddress] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
+
     const [errorMessage, setErrorMessage] = useState('');
+    // const [registrationStatus, setRegistrationStatus] = useState('');
+  
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const [registrationEmailAddress, setRegistrationEmailAddress] = useState('');
-    const [registrationPassword, setRegistrationPassword] = useState('');
-    const [registrationConfirmPassword, setRegistrationConfirmPassword] = useState('');
-    
-
-      
     const loginUser = async (e) => {
 
       // // alert("here");
@@ -317,7 +315,13 @@ const navigate = useNavigate();
         }
       }
       };
-
+    
+      // const [registrationFirstname, setRegistrationFirstname] = useState('');
+      // const [registrationLastname, setRegistrationLastname] = useState('');
+      const [registrationEmailAddress, setRegistrationEmailAddress] = useState('');
+      const [registrationPassword, setRegistrationPassword] = useState('');
+      const [registrationConfirmPassword, setRegistrationConfirmPassword] = useState('');
+    
       const registerUser = async (e) => {
         
         
@@ -433,6 +437,9 @@ const navigate = useNavigate();
         }
       };
 
+
+
+
       const handleForgotPassword = async (e) => {
 
         // // alert("here");
@@ -533,13 +540,25 @@ const navigate = useNavigate();
         };
 
 
+
+
+
         //
         const loginUserGoogle = async (e) => {
           e.preventDefault();
           if (isGoogleLoginLoading) return false;
           setIsGoogleLoginLoading(true);
+          setIsGoogleLoginLoading(false);
         
-          
+        };
+
+        const loginUserApple = async (e) => {
+          e.preventDefault();
+          if (isAppleLoginLoading) return false;
+          setIsAppleLoginLoading(true);
+          setIsAppleLoginLoading(false);
+        
+        
         };
         //
 
@@ -598,6 +617,25 @@ const navigate = useNavigate();
                       <div className=" mx-4 mt-4" >
                         <div className="justify-center">
                         
+                            {/* <div className='flex flex-col sm:flex-row relative my-2 '>
+                                <input 
+                                type='text' name='user_firstname' inputMode="text" autoComplete='given-name'
+                                placeholder='Enter your Firstname' 
+                                className='border border-gray-300 rounded-sm py-2 px-2 w-full mr-1 bg-white'
+                                value={registrationFirstname}
+                                onChange={(e) => setRegistrationFirstname(e.target.value)}
+                                style={{  }} 
+                                />
+                                
+                                <input 
+                                type='text'  name='user_lastname' inputMode="text" autoComplete='given-name'
+                                placeholder='Enter your Lastname' 
+                                className='border border-gray-300 rounded-sm py-2 px-2 w-full md:ml-2 mt-4 md:mt-0 bg-white'
+                                value={registrationLastname}
+                                onChange={(e) => setRegistrationLastname(e.target.value)}
+                                style={{  }} 
+                                />
+                             </div> */}
 
                              <div className='flex flex-col sm:flex-row relative my-2 '>
                                 <input 
@@ -786,6 +824,8 @@ const navigate = useNavigate();
 
                           <div className='flex justify-between items-center flex-col md:flex-row '>
                             
+                          
+
                           <div  
                           onClick={(e) => {if (!isLoading) loginUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
@@ -803,8 +843,17 @@ const navigate = useNavigate();
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='flex mt-4 text-center justify-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
                             <div className='flex items-center '>
-                            <img src={googleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
-                            {isGoogleLoginLoading ? 'Please wait..' : 'Login with Google'}
+                            {/* <img src={googleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
+                            {isGoogleLoginLoading ? 'Please wait..' : 'Login with Google'} */}
+                            <GoogleLogin 
+                          onSuccess={(credentialResponse) => {
+                            console.log(credentialResponse);
+                            const decodedCredential = jwtDecode(credentialResponse.credential);
+                            console.log(decodedCredential);
+                          }} 
+                          onError={() => {
+
+                          }}/>
                             </div>
                             </div>
 
