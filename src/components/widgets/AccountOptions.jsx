@@ -50,6 +50,9 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
+//
+import { useGoogleLogin } from '@react-oauth/google';
+//
 
 
 const SlideInAccount = styled(motion.div)`
@@ -184,18 +187,17 @@ const navigate = useNavigate();
     const [isAppleLoginLoading, setIsAppleLoginLoading] = useState(false);
     const [isAppleSignUpLoading, setIsAppleSignUpLoading] = useState(false);
 
-     
-     
-
-
     const [loginEmailAddress, setLoginEmailAddress] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
-
     const [errorMessage, setErrorMessage] = useState('');
-    // const [registrationStatus, setRegistrationStatus] = useState('');
-  
     const [passwordVisible, setPasswordVisible] = useState(false);
 
+    const [registrationEmailAddress, setRegistrationEmailAddress] = useState('');
+    const [registrationPassword, setRegistrationPassword] = useState('');
+    const [registrationConfirmPassword, setRegistrationConfirmPassword] = useState('');
+    
+
+      
     const loginUser = async (e) => {
 
       // // alert("here");
@@ -315,13 +317,7 @@ const navigate = useNavigate();
         }
       }
       };
-    
-      // const [registrationFirstname, setRegistrationFirstname] = useState('');
-      // const [registrationLastname, setRegistrationLastname] = useState('');
-      const [registrationEmailAddress, setRegistrationEmailAddress] = useState('');
-      const [registrationPassword, setRegistrationPassword] = useState('');
-      const [registrationConfirmPassword, setRegistrationConfirmPassword] = useState('');
-    
+
       const registerUser = async (e) => {
         
         
@@ -437,9 +433,6 @@ const navigate = useNavigate();
         }
       };
 
-
-
-
       const handleForgotPassword = async (e) => {
 
         // // alert("here");
@@ -540,70 +533,13 @@ const navigate = useNavigate();
         };
 
 
-
-
-
         //
         const loginUserGoogle = async (e) => {
           e.preventDefault();
           if (isGoogleLoginLoading) return false;
           setIsGoogleLoginLoading(true);
         
-          // Your Google OAuth configuration
-          const clientId = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
-          const redirectUri = encodeURIComponent('YOUR_REDIRECT_URI');
-          const scope = encodeURIComponent('https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile');
-          const nonce = generateNonce(); // You should generate a random nonce
-          const responseType = 'id_token';
           
-          const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
-            `client_id=${clientId}&` +
-            `redirect_uri=${redirectUri}&` +
-            `response_type=${responseType}&` +
-            `scope=${scope}&` +
-            `nonce=${nonce}&` +
-            `prompt=select_account`;
-        
-          try {
-            const success = await openPopupAndWaitForResponse(authUrl, redirectUri);
-            return success;
-          } catch (error) {
-            console.error('Google login failed:', error);
-            return false;
-          } finally {
-            setIsGoogleLoginLoading(false);
-          }
-        };
-
-        const loginUserApple = async (e) => {
-          e.preventDefault();
-          if (isAppleLoginLoading) return false;
-          setIsAppleLoginLoading(true);
-        
-          // Your Apple OAuth configuration
-          const clientId = 'YOUR_APPLE_SERVICE_ID';
-          const redirectUri = encodeURIComponent('YOUR_REDIRECT_URI');
-          const scope = encodeURIComponent('name email');
-          const state = generateState(); // You should generate a random state
-          const responseType = 'code id_token';
-          
-          const authUrl = `https://appleid.apple.com/auth/authorize?` +
-            `client_id=${clientId}&` +
-            `redirect_uri=${redirectUri}&` +
-            `response_type=${responseType}&` +
-            `scope=${scope}&` +
-            `state=${state}&` +
-            `response_mode=form_post`;
-        
-          try {
-            const success = await openPopupAndWaitForResponse(authUrl, redirectUri);
-            return success;
-          } catch (error) {
-            console.error('Apple login failed:', error);
-            return false;
-          } finally {
-            setIsAppleLoginLoading(false);
-          }
         };
         //
 
@@ -662,25 +598,6 @@ const navigate = useNavigate();
                       <div className=" mx-4 mt-4" >
                         <div className="justify-center">
                         
-                            {/* <div className='flex flex-col sm:flex-row relative my-2 '>
-                                <input 
-                                type='text' name='user_firstname' inputMode="text" autoComplete='given-name'
-                                placeholder='Enter your Firstname' 
-                                className='border border-gray-300 rounded-sm py-2 px-2 w-full mr-1 bg-white'
-                                value={registrationFirstname}
-                                onChange={(e) => setRegistrationFirstname(e.target.value)}
-                                style={{  }} 
-                                />
-                                
-                                <input 
-                                type='text'  name='user_lastname' inputMode="text" autoComplete='given-name'
-                                placeholder='Enter your Lastname' 
-                                className='border border-gray-300 rounded-sm py-2 px-2 w-full md:ml-2 mt-4 md:mt-0 bg-white'
-                                value={registrationLastname}
-                                onChange={(e) => setRegistrationLastname(e.target.value)}
-                                style={{  }} 
-                                />
-                             </div> */}
 
                              <div className='flex flex-col sm:flex-row relative my-2 '>
                                 <input 

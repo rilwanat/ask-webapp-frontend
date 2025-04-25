@@ -326,7 +326,10 @@ const [shareType, setShareType] = useState("direct");
           email: beneficiary.email_address,
           helpToken: beneficiary.help_token,
           amount: generatedBeneficiariesRatios[index],
-          remark: beneficiary.remark
+          remark: beneficiary.remark,
+
+          fullname: beneficiary.user.fullname,
+          nomination_count: beneficiary.nomination_count,
         }));
              
             //  alert(JSON.stringify(beneficiariesRequestData));

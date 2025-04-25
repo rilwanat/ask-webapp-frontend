@@ -50,6 +50,8 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
   const [donatePrice, setDonatePrice] = useState(0);
   const currentPriceRef = useRef(0);
   const [donateType, setDonateType] = useState("naira");
+  const [donateRecurring, setDonateRecurring] = useState(false);
+  
 
   //notification modal
       const [notificationType, setNotificationType] = useState(false);
@@ -83,6 +85,8 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
         }
         
         handleDonationsData();
+
+        handlePlansData();
       }, []);
       const handleDonationsData = async () => {
     
@@ -125,6 +129,9 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
         }
       };
 
+      const handlePlansData = async () => {
+
+      }
       
       const handleIncrementDNQ = async (reference) => {
     
@@ -242,6 +249,15 @@ const filteredDonations = Array.isArray(donationsData)
         const initializePayment = usePaystackPayment(config);
         initializePayment({onSuccess: onSuccess, onClose: onClose});
       } else if (payDonateType == "dollar") {
+        const config = {
+          reference: (new Date()).getTime().toString(),
+          email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
+          amount: price * 100, //Amount is cents
+          publicKey: import.meta.env.VITE_PAYSTACK_TEST_PUBLIC_KEY,
+          
+        };
+        const initializePayment = usePaystackPayment(config);
+        initializePayment({onSuccess: onSuccess, onClose: onClose});
 
       } else if (payDonateType == "crypto") {
 
@@ -351,10 +367,10 @@ const defaultCrypto =
                   <div className="w-full md:w-1/2 p-4  rounded-lg">
                     <h2 className="text-lg font-semibold mb-2">Donate Now</h2>
                     <p className=" text-gray-600" style={{ fontSize: '18px',  }}>Kindly support us with your kind donations to help us share the pie of kindness to the vulnerable in the society. Together, we can make the world a better place.</p>
-                    {
+                    {/*{
                     !isAuthenticated() ? 
                     <div className='my-1 text-red-500'>Note: Anonymous donors may not receive a receipt and may forfeit donation value for daily nomination quota (DNQ).</div> : <></>
-                  }
+                  }*/}
                   <div className='flex mt-4 justify-center'>
                     <div className={`mx-2 px-4 py-1 rounded-lg  cursor-pointer border-2 border-theme
                       ${donateType === 'naira' ? 'bg-theme text-softTheme' : 'bg-white text-theme'}
@@ -371,12 +387,12 @@ const defaultCrypto =
                     <>
                     <div className='flex justify-center items-center mt-2  p-4 rounded'>
   <label className='flex items-center space-x-2 cursor-pointer'>
-    <input type='radio' name='paymentType' value='one-time' className='accent-red-600' />
+    <input type='radio' name='paymentType' value='one-time' className='accent-red-600' checked={!donateRecurring ? true : false} onClick={() => {setDonateRecurring(false);}} />
     <span>One-time</span>
   </label>
   <div className='mx-2'></div>
   <label className='flex items-center space-x-2 cursor-pointer'>
-    <input type='radio' name='paymentType' value='recurring' className='accent-red-600' />
+    <input type='radio' name='paymentType' value='recurring' className='accent-red-600' checked={donateRecurring ? true : false} onClick={() => {setDonateRecurring(true);}} />
     <span>Recurring</span>
   </label>
 </div>

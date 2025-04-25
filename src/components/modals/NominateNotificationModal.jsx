@@ -66,9 +66,11 @@ const details = parts.slice(1);
 
               onRequestClose();
 
-              if (mainMessage === "Oops! you were flagged for cheating. Complete your KYC and contact Support to resume nominating.") {
+              if (mainMessage === "Oops!" && details[0] === "You were flagged for cheating. Complete your KYC and contact Support to resume nominating.") {
                 gotoPage('user-dashboard');
-              } else if ( mainMessage === "Email address is not verified.") {
+              }
+              
+              if ( mainMessage === "Email address is not verified.") {
                 gotoPage('user-dashboard');
               }
             }}
