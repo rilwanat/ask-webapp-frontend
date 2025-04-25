@@ -50,6 +50,7 @@ import AccountOptions from '../../widgets/AccountOptions';
 
 import MenuIcon from '@mui/icons-material/Menu';
 
+import { GoogleLogin, googleLogout } from '@react-oauth/google';
 
 const SlideInMenu = styled(motion.div)`
   position: fixed;
@@ -190,7 +191,7 @@ export default function ProfileMobileNavbar({ carouselRequestItems, carouselBene
     className="bg-theme border-1 border-softTheme flex items-center justify-center z-200 cursor-pointer"
     style={{ height: '40px', width: '40px', borderRadius: '4px' }}
     onClick={() => { 
-      alert("logged in: user res");
+      // alert("logged in: user res");
       // gotoUserProfile(); 
     }}
   >
@@ -339,6 +340,8 @@ export default function ProfileMobileNavbar({ carouselRequestItems, carouselBene
           className="text-sm  text-red-500 cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
           onClick={() => {
+            
+            googleLogout();
             
             deleteCookie("user");
             window.location.href = '/';

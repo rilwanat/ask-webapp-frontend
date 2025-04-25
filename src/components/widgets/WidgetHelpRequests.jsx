@@ -14,8 +14,7 @@ import NominateNotificationModal from '../modals/NominateNotificationModal';
 const WidgetHelpRequests = ({ 
   currentRequestSlide, carouselRequestItems, setCurrentRequestSlide, 
   userDetails, refreshUserDetails, 
-  handleHelpRequestsData,
-  navigateAndRefresh
+  handleHelpRequestsData
  }) => {
   const navigate = useNavigate();
 
@@ -39,10 +38,18 @@ const WidgetHelpRequests = ({
   const navigateTo = (route, data) => {
     navigate(route, { state: data });
   };
+      const navigateAndRefresh = async (updatedItem) => {
+        const data = await handleHelpRequestsData();
+        navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
+    }
+
+    
 
   const gotoPage = (pageName) => {
     navigate("/" + pageName);
 }
+
+
 
 const [scrollCarousel, setScrollCarousel] = useState(true);
 

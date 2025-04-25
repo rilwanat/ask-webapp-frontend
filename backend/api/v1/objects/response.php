@@ -857,6 +857,33 @@ public function checkIfUserExists($email)
     
         return false; // User creation failed
     }
+    public function createUserWithoutPassword($email)
+    {
+        // $customer_id = strval(time());
+
+        $query = "INSERT INTO " . $this->users_table . " SET             
+            
+            email_address=:email
+            ";
+    
+        // prepare query
+        $stmt = $this->conn->prepare($query);    
+        
+        
+        $stmt->bindParam(":email", $email);
+
+        
+        // execute query
+        if ($stmt->execute()) {
+            // User inserted successfully, generate authentication token
+            $authToken = $this->generateAuthToken();
+    
+            // Return the generated authentication token
+            return $authToken;
+        }
+    
+        return false; // User creation failed
+    }
     public function InsertEmailTokenForUser($email, $randomToken)
     {
         // $customer_id = strval(time());

@@ -193,7 +193,7 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
     className="bg-theme border-1 border-softTheme flex items-center justify-center z-200 cursor-pointer"
     style={{ height: '40px', width: '40px', borderRadius: '4px' }}
     onClick={() => { 
-        alert("logged in: admin res");
+        // alert("logged in: admin res");
 
       // gotoAdminProfile(); 
     }}

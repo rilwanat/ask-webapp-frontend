@@ -23,8 +23,7 @@ export default function SingleRequestsPage({
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
     userDetails, refreshUserDetails, 
-    handleHelpRequestsData,
-    // navigateAndRefresh
+    handleHelpRequestsData
 }) {
     const navigate = useNavigate();
     const location = useLocation();

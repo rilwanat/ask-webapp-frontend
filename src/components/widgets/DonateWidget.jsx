@@ -213,6 +213,19 @@ const filteredDonations = Array.isArray(donationsData)
     }
   };
 
+  const formatPrice = (price) => {
+    const numericPrice = parseInt(price);
+    
+    if (numericPrice >= 1000000) {
+      // Format as millions (e.g., 1m, 1.5m)
+      const millions = numericPrice / 1000000;
+      return millions % 1 === 0 ? `${millions}m` : `${millions.toFixed(1)}m`;
+    } else {
+      // Format with thousand separators (e.g., 100,000)
+      return numericPrice.toLocaleString();
+    }
+  };
+
 
   
 
@@ -415,7 +428,7 @@ const defaultCrypto =
               showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
             }}
             className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
-            {getCurrencySymbol(item.type)}{parseInt(item.price).toLocaleString()}
+            {getCurrencySymbol(item.type)}{formatPrice(item.price)}
           </div>
         ))}
       </div>
@@ -432,7 +445,7 @@ const defaultCrypto =
               showSelectedPriceToPay(donateType, item.price, getCurrencySymbol(item.type));
             }}
             className="cursor-pointer px-4 py-2 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange">
-            {getCurrencySymbol(item.type)}{parseInt(item.price).toLocaleString()}
+            {getCurrencySymbol(item.type)}{formatPrice(item.price)}
           </div>
         ))}
       </div>

@@ -28,7 +28,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import DonateAndAsk from '../../widgets/WidgetDonateAndAsk';
 import AccountOptions from '../../widgets/AccountOptions';
 
-
+import { GoogleLogin, googleLogout } from '@react-oauth/google';
 
 
 export default function AskProfileHeaderHead({ carouselRequestItems, carouselBeneficiaryItems, carouselSponsorItems }) {
@@ -185,9 +185,12 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
 
 
                         <div
-                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme text-red-500"
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme text-red-500 g_id_signout"
                             onClick={() => {
                                 
+                                googleLogout();
+                                
+
                                 deleteCookie("user");
                                 window.location.href = '/';
                                 // navigate('/');
@@ -280,7 +283,7 @@ export default function AskProfileHeaderHead({ carouselRequestItems, carouselBen
         </IconButton>
  : <IconButton aria-label="shopping cart" sx={{ color: '#ffffff' }}
  onClick={() => {
-    alert("logged in: user des");
+    // alert("logged in: user des");
 //   gotoUserProfile();
  }}
  >

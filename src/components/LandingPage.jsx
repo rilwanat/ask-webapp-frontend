@@ -43,13 +43,7 @@ export default function LandingPage({
         navigate("/" + pageName)
     }
 
-    const navigateTo = (route, data) => {
-        navigate(route, { state: data });
-      };
-      const navigateAndRefresh = async (updatedItem) => {
-        const data = await handleHelpRequestsData();
-        navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
-    }
+    
 
     useEffect(() => { refreshUserDetails(); }, []); 
     
@@ -74,7 +68,6 @@ export default function LandingPage({
             setCurrentRequestSlide={setCurrentRequestSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
             handleHelpRequestsData={handleHelpRequestsData}
-            navigateAndRefresh={navigateAndRefresh}
             />
 
             <WidgetBeneficiaries 

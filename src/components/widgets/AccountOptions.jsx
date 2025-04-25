@@ -50,7 +50,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
-import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin, GoogleLogin, googleLogout } from '@react-oauth/google';
 
 const SlideInAccount = styled(motion.div)`
   position: fixed;
@@ -132,11 +132,16 @@ const navigate = useNavigate();
   
     const [isSignUpOpen, setIsSignUpOpen] = useState(false);
     const toggleAccountForSignUp = () => {
+      setRegistrationPassword('');
+      setRegistrationConfirmPassword('');
+
       setErrorMessage({ message: '' });
       setIsSignUpOpen(!isSignUpOpen);
     }  
   
     const toggleAccountForSignIn = () => {
+      setLoginPassword('');
+
       setErrorMessage({ message: '' });
       setIsSignUpOpen(false);
     }
@@ -437,7 +442,7 @@ const navigate = useNavigate();
         }
       };
 
-
+      
 
 
       const handleForgotPassword = async (e) => {
@@ -544,13 +549,201 @@ const navigate = useNavigate();
 
 
         //
-        const loginUserGoogle = async (e) => {
-          e.preventDefault();
-          if (isGoogleLoginLoading) return false;
-          setIsGoogleLoginLoading(true);
-          setIsGoogleLoginLoading(false);
+        const loginUserGoogleApple = async (email) => {
+   
+    
+    
+            // e.preventDefault();
+            setErrorMessage({ message: '' });
+          
+            setIsLoading(true);
+          
+          
+            // alert("login user: " + loginEmailAddress + " " + loginPassword);
+            try {
         
-        };
+              const requestData = {   
+                email: email
+              };
+        
+              const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_LOGIN_GOOGLE_APPLE, requestData, {
+                headers: {
+                      // 'Content-Type': 'multipart/form-data',
+                      'Content-Type': 'application/json',
+                  },
+              });
+        
+              setIsLoading(false);
+              // alert("login: " + JSON.stringify(response.data, null, 2));
+        // return;
+        
+              if (response.data.status) {
+                // If login is successful
+                setErrorMessage({ message: '' });
+                
+                setLoginEmailAddress('');
+                setLoginPassword('');
+        
+        
+        
+                const token = response.data.token;
+                const decodedToken = jwtDecode(token);
+                // alert(JSON.stringify(decodedToken), null, 2);
+                  
+                const expirationDays = (decodedToken.exp - decodedToken.iat) / (24 * 60 * 60);
+                // alert(expirationDays * (24 * 60 * 60)); //seconds
+          
+                setCookie('ask-user-token', token, expirationDays);
+                setCookie('ask-user-details', JSON.stringify(response.data.userData));
+    
+                // refreshUserDetails();
+        
+        toggleAccount();
+                // alert("Login Successful: " + response.data.message);
+                openNotificationModal(true, "Login", response.data.message);
+                
+    
+                if (response.data.userData.email_verified !== "Yes") {
+                  // navigate('/user-dashboard');
+                  window.location.href = '/user-dashboard';
+                } else {
+                  // navigate('/');
+                  window.location.href = '/';
+                }
+                
+                // gotoUserProfile();
+              } else {
+                const errors = response.data.errors.map(error => error.msg);
+                setErrorMessage({ message: response.data.message, errors });
+                //alert("Failed1");
+              }
+            } catch (error) {
+              setIsLoading(false);
+    
+              // alert(error);
+            
+              if (error.response && error.response.data && error.response.data.message) {
+              const errorMessage = error.response.data.message;
+              setErrorMessage({ message: errorMessage });
+            } else if (error.response && error.response.data && error.response.data.errors) {
+              const { errors } = error.response.data;
+              const errorMessages = errors.map(error => error.msg);
+              const errorMessage = errorMessages.join(', '); // Join all error messages
+              setErrorMessage({ message: errorMessage });
+            } else {
+              setErrorMessage({ message: 'Login failed. Please check your credentials and try again.' });
+            }
+          }
+          };
+
+          const registerUserGoogleApple = async (email) => {
+        
+        
+            
+            setErrorMessage({ message: '' });
+            //alert("");
+        
+            
+    
+    
+    
+        
+            //alert("login user: " + emailAddress + " " + firstname + " " + lastname);
+            setIsLoading(true);
+    
+            try {
+              const requestData = {   
+                email: email
+                // password: registrationPassword.trim(),
+                // confirmPassword: registrationConfirmPassword.trim()
+              };
+        
+              // alert(JSON.stringify(requestData, null, 2));
+            
+              const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_REGISTER_GOOGLE_APPLE, requestData, {
+                headers: {
+                    // 'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
+        
+                },
+              });
+            
+              setIsLoading(false);
+              alert(JSON.stringify(response.data, null, 2));
+                // return;
+            
+              if (response.data.status) {
+        
+                
+        
+                // If registration is successful
+                setErrorMessage({ message: '' });
+        
+                // //handleEmailAddress(emailAddress);
+                
+                // // navigate('/confirm-email/' + emailAddress);
+                // //navigate('/confirm-email');
+        
+                // setLoginEmailAddress(registrationEmailAddress);
+                // setLoginPassword('');
+        
+                // setRegistrationFirstname('');
+                // setRegistrationLastname('');
+                // setRegistrationEmailAddress('');
+                // setRegistrationPassword(''); 
+                // setRegistrationConfirmPassword('');
+                
+        
+                toggleAccount();
+                // alert(response.data.message + "\n\n Please check your mail for a link to reset your password");
+                
+                openNotificationModal(true, "Registration", response.data.message + "\n\n Please check your mail for a verification code.");
+                
+    
+                // toggleAccountForSignIn();
+              } else {
+                
+                // If there are errors in the response
+                const errors = response.data.errors.map(error => error.msg);
+                const errorMessage = errors.join(', ');
+                setErrorMessage({ message: errorMessage });
+                // alert("Registration Failed");
+        
+                alert(errorMessage);
+                
+                openNotificationModal(false, "Registration Error", "Registration Failed");
+              }
+            } catch (error) {
+              setIsLoading(false);
+
+              alert(error);
+            
+              if (error.response && error.response.data && error.response.data.message) {
+                const errorMessage = error.response.data.message;
+                setErrorMessage({ message: errorMessage });
+              } else if (error.response && error.response.data && error.response.data.errors) {
+                const { errors } = error.response.data;
+                const errorMessages = errors.map(error => error.msg);
+                const errorMessage = errorMessages.join(', '); // Join all error messages
+                setErrorMessage({ message: errorMessage });
+              } else {
+                setErrorMessage({ message: 'Registration failed. Please check your credentials and try again.' });
+              }
+            }
+          };
+
+          
+          const registerUserWithGoogle = useGoogleLogin({
+            onSuccess: (credentialResponse) => {
+              const decodedCredential = jwtDecode(credentialResponse.credential);
+              registerUserGoogleApple(decodedCredential.email); // your logic
+            },
+            onError: () => {
+              console.log('Google Signup Failed');
+            },
+            prompt: 'select_account',
+            useOneTap: false,
+          });
 
         const loginUserApple = async (e) => {
           e.preventDefault();
@@ -699,15 +892,40 @@ const navigate = useNavigate();
 
                           <div className='flex justify-between items-center flex-col md:flex-row '>
                             
-                          <div  
-                          // onClick={(e) => {if (!isGoogleSignUpLoading) registerUser(e)}} 
+                          {/* <div  
+                          onClick={() => {if (!isGoogleSignUpLoading) registerUserWithGoogle()}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
                             <div className='flex items-center '>
                             <img src={googleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
                             {isGoogleSignUpLoading ? 'Please wait..' : 'Register with Google'}
                           </div>
-                          </div>
+                          </div> */}
+                          <div  
+                          // onClick={(e) => {if (!isGoogleLoginLoading) loginUserGoogle(e)}} 
+                          style={{ borderWidth: '0px', width: '100%' }} //px-4 py-2  bg-theme
+                          className='flex mt-4 text-center justify-center  rounded-sm 
+                          
+                          text-sm cursor-pointer md:mr-2  text-white  hover:text-softTheme'>
+                            <div className='flex items-center '>
+                            {/* <img src={googleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
+                            {isGoogleSignUpLoading ? 'Please wait..' : 'Register with Google'} */}
+ <GoogleLogin 
+                          onSuccess={(credentialResponse) => {
+                            // console.log(credentialResponse);
+                            const decodedCredential = jwtDecode(credentialResponse.credential);
+                            // console.log(decodedCredential.email);
+                            registerUserGoogleApple(decodedCredential.email);
+
+                          }} 
+                          onError={() => {
+
+                          }}
+                          useOneTap={false} // optional: disable One Tap auto login
+                          prompt="select_account"
+  />
+                            </div>
+                            </div>
 
                             <div  
                           // onClick={(e) => {if (!isAppleSignUpLoading) registerUser(e)}} 
@@ -839,21 +1057,28 @@ const navigate = useNavigate();
 
                             
                           <div  
-                          onClick={(e) => {if (!isGoogleLoginLoading) loginUserGoogle(e)}} 
-                          style={{ borderWidth: '0px', width: '100%' }} 
-                          className='flex mt-4 text-center justify-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:mr-2 bg-theme text-white  hover:text-softTheme'>
+                          // onClick={(e) => {if (!isGoogleLoginLoading) loginUserGoogle(e)}} 
+                          style={{ borderWidth: '0px', width: '100%' }} //px-4 py-2  bg-theme
+                          className='flex mt-4 text-center justify-center  rounded-sm 
+                          
+                          text-sm cursor-pointer md:mr-2  text-white  hover:text-softTheme'>
                             <div className='flex items-center '>
                             {/* <img src={googleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
                             {isGoogleLoginLoading ? 'Please wait..' : 'Login with Google'} */}
-                            <GoogleLogin 
+ <GoogleLogin 
                           onSuccess={(credentialResponse) => {
-                            console.log(credentialResponse);
+                            // console.log(credentialResponse);
                             const decodedCredential = jwtDecode(credentialResponse.credential);
-                            console.log(decodedCredential);
+                            // console.log(decodedCredential.email);
+                            loginUserGoogleApple(decodedCredential.email);
+
                           }} 
                           onError={() => {
 
-                          }}/>
+                          }}
+                          useOneTap={false} // optional: disable One Tap auto login
+                          prompt="select_account"
+  />
                             </div>
                             </div>
 
