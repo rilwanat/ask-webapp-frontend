@@ -670,7 +670,7 @@ const navigate = useNavigate();
               });
             
               setIsLoading(false);
-              alert(JSON.stringify(response.data, null, 2));
+              // alert(JSON.stringify(response.data, null, 2));
                 // return;
             
               if (response.data.status) {

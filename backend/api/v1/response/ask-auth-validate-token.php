@@ -1,12 +1,15 @@
 <?php
-// pw-auth-validate-token.php
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php'; // Adjust path based on your structure
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+
 function validateToken() {
-    $secretKey = "your_secret_key_here";
+    $secretKey = $_ENV['ASK_SECRET_ENCRYPTION_KEY'];
 
     // Get the token from the Authorization header
     $authorizationHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';

@@ -3,6 +3,10 @@
 require __DIR__ . '/../vendor/autoload.php';
 use Firebase\JWT\JWT;
 
+require_once __DIR__ . '/../vendor/autoload.php'; // Adjust path based on your structure
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 
 class Response
 {
@@ -55,12 +59,13 @@ class Response
     
     
     // Your secret key used for signing the tokens
-    private $secretKey = "your_secret_key_here";
+    private $secretKey;
 
 
     public function __construct($db)
     {
         $this->conn = $db;
+        $this->secretKey = $_ENV['ASK_SECRET_ENCRYPTION_KEY'];
     }
 
     

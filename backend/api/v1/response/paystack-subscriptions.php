@@ -1,4 +1,9 @@
-<?php
+<?php 
+require_once __DIR__ . '/../vendor/autoload.php'; // Adjust path based on your structure
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET");
@@ -7,7 +12,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // Paystack Subscription Plans Fetcher
 function fetchPaystackPlans() {
-    $secretKey = 'sk_live_825ca42003c4951036d45a70d6728d2125b0b22e'; // Replace with your Paystack secret key
+    $secretKey = $_ENV['PAYSTACK_SK_LIVE'];
     
     $url = "https://api.paystack.co/plan";
     
