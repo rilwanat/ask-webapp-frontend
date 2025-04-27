@@ -9,6 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+
+require_once 'ask-auth-validate-token.php';
+// Validate token
+validateToken();
+
+
 // Set CORS headers for actual POST request
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

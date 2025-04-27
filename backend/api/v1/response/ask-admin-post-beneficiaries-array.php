@@ -5,6 +5,12 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+
+require_once 'ask-auth-validate-token.php';
+// Validate token
+validateToken();
+
+
 include_once '../config/database.php';
 include_once '../objects/response.php';
 
@@ -37,7 +43,7 @@ if (
 
         // Get list of selected beneficiaries for the email
         $selectedBeneficiaries = array_map(function($b) {
-            return "" . $b['fullname'] . " (<strong>N" . (number_format($b['amount'], 2) ?? '') . "</strong>)". " (Nomination: <strong>" . ($b['nomination_count'] ?? '') . "</strong>)";
+            return "" . $b['fullname'] . " (N" . (number_format($b['amount'], 2) ?? '') . ")". " (Nomination: " . ($b['nomination_count'] ?? '') . ")";
         }, $data['beneficiaries']);
 
         // Convert to HTML unordered list
@@ -49,17 +55,18 @@ $beneficiariesList = '<ul>' . implode('', array_map(function($item) {
         while ($row = $requests->fetch(PDO::FETCH_ASSOC)) {
             if (!empty($row['email_address'])) {
                 // Personalize each email with the recipient's name
-                $message = "Dear " . $row['user_fullname'] . ",<br><br>"
+                $message = "" 
+                // "Dear " . $row['user_fullname'] . ",<br><br>"
                  . "The following requests have been selected as beneficiaries for this cycle:<br>"
                  . $beneficiariesList . "<br><br>"
-                 . "Thank you for participating. Kindly join the next round cycle, and start mobilizing for nominations.<br><br>"
+                 . "Thank you for participating. Kindly join the next cycle, and start mobilizing for nominations.<br><br>"
                  . "Best of luck,<br>"
                  . "ASK Foundations Team";
 
                  
 
                 sendMailToUser(
-                    $row['user_fullname'],
+                    explode(" ", $row['user_fullname'])[0], //$row['user_fullname'],
                     $row['email_address'],
                     $subject,
                     $message
@@ -72,7 +79,7 @@ foreach ($data['beneficiaries'] as $beneficiary) {
     if (!empty($beneficiary['email'])) {
         $message = "" 
         // "Dear " . ($beneficiary['fullname'] ?? 'User') . ",<br><br>"
-                 . "Congratulations " . ($beneficiary['fullname'] ?? 'User') . "! You have been selected as this week's beneficiary of A.S.K FOUNDATION weekly support initiative.<br><br>"
+                 . "Congratulations!! You have been selected as this week's beneficiary of A.S.K FOUNDATION weekly support initiative.<br><br>"
                  . "Your request is currently being processed.<br><br>"
                  . "Please when you receive the credit alert send us a short VIDEO to our WhatsApp (+2349051047138) telling us your name, how you got to know A.S.K Foundation and how you eventually got nominated.<br><br>"
                  . "ASK Foundations Team";

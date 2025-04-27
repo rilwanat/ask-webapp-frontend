@@ -206,6 +206,7 @@ userDetails && (userDetails.kyc_status === 'PENDING' || userDetails.is_cheat ===
       refreshUserDetails={refreshUserDetails} 
       getActiveHelpRequests={getActiveHelpRequests}
       myActiveRequestsData={myActiveRequestsData}
+      handleHelpRequestsData={handleHelpRequestsData}
     />
   )
 )

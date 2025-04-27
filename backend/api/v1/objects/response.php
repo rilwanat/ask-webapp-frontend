@@ -1132,7 +1132,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                     return [
                         "status" => false, 
                         "message" => sprintf(
-                            "Your request was granted %d month(s) ago. You can request again in %d month(s).",
+                            "Your request was granted %d month(s) ago. You can request again in %d month(s).#Kindly commit to nominating others for now.",
                             $elapsedMonths,
                             $remainingMonths
                         )

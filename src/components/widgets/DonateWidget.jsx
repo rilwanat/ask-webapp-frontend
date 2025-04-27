@@ -45,12 +45,15 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
 
   const [isDataloading, setIsDataLoading] = useState(true);
   const [donationsData, setDonationsData] = useState([]);
+  const [donationsSubscriptionsData, setDonationsSubscriptionsData] = useState([]);
   const currentPageName = "Donations";
 
   const [donatePrice, setDonatePrice] = useState(0);
   const currentPriceRef = useRef(0);
   const [donateType, setDonateType] = useState("naira");
   const [donateRecurring, setDonateRecurring] = useState(false);
+
+  
   
 
   //notification modal
@@ -130,7 +133,44 @@ const DonateWidget = ({ userDetails, refreshUserDetails }) => {
       };
 
       const handlePlansData = async () => {
-
+        // VITE_PAYSTACK_SUBSCRIPTIONS
+        setIsDataLoading(true);
+    
+    
+        try {
+          const donationsSubscriptionsRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_PAYSTACK_SUBSCRIPTIONS;
+          // alert(beneficiariesRequestsEndpoint);
+          const donationsSubscriptionsRequestsResponse = await axiosInstance.get(donationsSubscriptionsRequestsEndpoint, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          setDonationsSubscriptionsData(donationsSubscriptionsRequestsResponse.data.data.plans_data);  // Update state with  count
+      
+      
+          // openNotificationModal(true, currentPageName, "");
+          // alert(JSON.stringify(donationsSubscriptionsRequestsResponse.data.data.plans_data), null, 2);  // Update state with appointments count
+        //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+    
+    
+    
+    
+    
+          // Once all data is fetched, set loading to false
+          setIsDataLoading(false);
+      
+        } catch (error) {
+          setIsDataLoading(false);
+          
+          // alert(error);
+          // Handle errors
+          if (error.response && error.response.data) {
+            const errorMessage = error.response.data.message;
+            openNotificationModal(false, currentPageName + " Error", errorMessage);
+          } else {
+            openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+          }
+        }
       }
       
       const handleIncrementDNQ = async (reference) => {
@@ -257,7 +297,7 @@ const filteredDonations = Array.isArray(donationsData)
           reference: (new Date()).getTime().toString(),
           email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
           amount: price * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-          publicKey: import.meta.env.VITE_PAYSTACK_TEST_PUBLIC_KEY,
+          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
         };
         const initializePayment = usePaystackPayment(config);
         initializePayment({onSuccess: onSuccess, onClose: onClose});
@@ -266,7 +306,7 @@ const filteredDonations = Array.isArray(donationsData)
           reference: (new Date()).getTime().toString(),
           email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
           amount: price * 100, //Amount is cents
-          publicKey: import.meta.env.VITE_PAYSTACK_TEST_PUBLIC_KEY,
+          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
           
         };
         const initializePayment = usePaystackPayment(config);
@@ -274,6 +314,54 @@ const filteredDonations = Array.isArray(donationsData)
 
       } else if (payDonateType == "crypto") {
 
+      }
+    };
+
+    const showSelectedSubscribePriceToPay = (payDonateType, price, symbol, isRecurring = false, planCode = null) => {
+      setDonatePrice(price);
+      currentPriceRef.current = price;
+
+      // alert(planCode);
+    
+      if (payDonateType === "naira") {
+        const config = {
+          reference: (new Date()).getTime().toString(),
+          email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
+          amount: price * 100, // Amount in Kobo
+          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
+          ...(isRecurring && planCode ? { plan: planCode } : {}),
+        };
+        const initializePayment = usePaystackPayment(config);
+        initializePayment({onSuccess: onSuccess, onClose: onClose});
+        
+      } else if (payDonateType === "dollar") {
+        const config = {
+          reference: (new Date()).getTime().toString(),
+          email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
+          amount: price * 100, // Amount in Cents
+          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
+          ...(isRecurring && planCode ? { plan: planCode, currency: 'USD' } : { currency: 'USD' }),
+        };
+        const initializePayment = usePaystackPayment(config);
+        initializePayment({onSuccess: onSuccess, onClose: onClose});
+    
+      } else if (payDonateType === "crypto") {
+        // Handle crypto payment if needed
+      }
+    };
+    
+    
+    // Helper function to track subscription in your backend
+    const trackSubscription = async (subscriptionCode, planCode) => {
+      try {
+        await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + '/track-subscription', {
+          user_id: userDetails?.id,
+          subscription_code: subscriptionCode,
+          plan_code: planCode,
+          email: userDetails?.email_address
+        });
+      } catch (error) {
+        console.error('Error tracking subscription:', error);
       }
     };
 
@@ -417,8 +505,11 @@ const defaultCrypto =
                   
 
                   {/* Right Div */}
-                  {donateType === "naira" && (
+                  {donateType === "naira" && !donateRecurring && (
     <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
+      <h3 className="text-lg font-semibold mb-2 capitalize text-white">
+                Naira Plans
+              </h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-2">
         {filteredDonations.map((item) => (
           <div key={item.id} 
@@ -434,6 +525,97 @@ const defaultCrypto =
       </div>
     </div>
   )}
+  {/* {donateType === "naira" && donateRecurring && (
+  <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
+    {donationsSubscriptionsData && donationsSubscriptionsData.length > 0 ? (
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-2">
+        {donationsSubscriptionsData.map((plan) => (
+          <div 
+            key={plan.id}
+            onClick={() => {
+              showSelectedPriceToPay(
+                donateType, 
+                plan.amount, 
+                getCurrencySymbol('naira'),
+                true, // isRecurring
+                plan.plan_code // Include plan code for subscriptions
+              );
+            }}
+            className="cursor-pointer px-4 py-1 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange"
+          >
+            <div className="font-bold">{getCurrencySymbol('naira')}{formatPrice(plan.amount)}</div>
+            <div className="text-sm mt-0">{plan.name}</div>
+            <div className="text-xs text-gray-500">{plan.interval}</div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div className="text-center py-4">
+        <p>No subscription plans available</p>
+      </div>
+    )}
+  </div>
+)} */}
+{donateType === "naira" && donateRecurring && (
+  <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">
+    {donationsSubscriptionsData && donationsSubscriptionsData.length > 0 ? (
+      <div>
+        {/* First group and sort the plans */}
+        {Object.entries(
+          donationsSubscriptionsData.reduce((groups, plan) => {
+            const interval = plan.interval.toLowerCase();
+            if (!groups[interval]) {
+              groups[interval] = [];
+            }
+            groups[interval].push(plan);
+            return groups;
+          }, {})
+        )
+        .map(([interval, plans]) => {
+          // Sort plans by amount in descending order
+          const sortedPlans = [...plans].sort((a, b) => b.amount - a.amount);
+          
+          return (
+            <div key={interval} className="mb-6">
+              <h3 className="text-lg font-semibold mb-2 capitalize text-white">
+                {interval} Plans
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 p-2">
+                {sortedPlans.map((plan) => (
+                  <div 
+                    key={plan.id}
+                    onClick={() => {
+                      showSelectedSubscribePriceToPay(
+                        donateType, 
+                        plan.amount, 
+                        getCurrencySymbol('naira'),
+                        true, // isRecurring
+                        plan.plan_code
+                      );
+                    }}
+                    className="cursor-pointer px-4 py-1 bg-gray-100 text-center rounded-lg shadow-md font-semibold text-lg hover:bg-softTheme hover:text-orange"
+                  >
+                    <div className="font-bold">
+                      {getCurrencySymbol('naira')}{formatPrice(plan.amount)}
+                    </div>
+                    <div className="text-sm mt-0">{plan.name}</div>
+                    <div className="text-xs text-gray-500">
+                      {plan.interval}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <div className="text-center py-4">
+        <p>No subscription plans available</p>
+      </div>
+    )}
+  </div>
+)}
 
 {donateType === "dollar" && (
     <div className="w-full md:w-1/2 p-4 bg-theme rounded-lg">

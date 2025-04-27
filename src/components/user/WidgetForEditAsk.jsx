@@ -43,7 +43,7 @@ import ShareIcon from '@mui/icons-material/Share';
 
 import WidgetShare from '../widgets/WidgetShare';
 
-const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests, myActiveRequestsData }) => {
+const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpRequests, myActiveRequestsData, handleHelpRequestsData }) => {
   const navigate = useNavigate();
 
   const navigateTo = (route) => {
@@ -179,6 +179,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
    
             
             getActiveHelpRequests();
+            handleHelpRequestsData();
 
 
              openNotificationModal(true, "ASK Edit Help Request", response.data.message);

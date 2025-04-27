@@ -13,6 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
+
+require_once 'ask-auth-validate-token.php';
+// Validate token
+validateToken();
+
+
 include_once '../config/database.php';
 include_once '../objects/response.php';
 

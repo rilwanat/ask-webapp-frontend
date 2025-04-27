@@ -51,6 +51,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 import { useGoogleLogin, GoogleLogin, googleLogout } from '@react-oauth/google';
+import AppleSignin from 'react-apple-signin-auth';
 
 const SlideInAccount = styled(motion.div)`
   position: fixed;
@@ -1083,15 +1084,42 @@ const navigate = useNavigate();
                             </div>
 
                             
-                            <div  
+                            {/* <div  
                           onClick={(e) => {if (!isAppleLoginLoading) loginUserApple(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='flex mt-4 text-center justify-center rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
                             <div className='flex items-center'>
                             <img src={appleIcon} className='w-5 h-5 mr-2 mt-0.5' />
                             {isAppleLoginLoading ? 'Please wait..' : 'Login with Apple'}
+<AppleSignin
+  authOptions={{
+    clientId: import.meta.env.REACT_APP_APPLE_SERVICE_ID,
+    scope: 'email',
+    redirectURI: window.location.origin + '/auth/apple/callback',
+    state: crypto.randomUUID(), // Secure random state
+    usePopup: true
+  }}
+  onSuccess={(response) => {
+    const decoded = jwtDecode(response.authorization.id_token);
+    loginUserGoogleApple(
+      decoded.email || `user_${decoded.sub.slice(0, 8)}@apple.com`
+    );
+  }}
+  onError={() => {
+    // Match your Google error handling
+  }}
+  render={(props) => (
+    <div 
+      onClick={props.onClick}
+      className="flex items-center justify-center ..." 
+    >
+      <img src={appleIcon} className="w-5 h-5 mr-2" />
+      Sign in with Apple
+    </div>
+  )}
+/>
                             </div>
-                          </div>
+                          </div> */}
                           </div>
 
 
