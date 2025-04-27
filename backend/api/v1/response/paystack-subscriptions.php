@@ -12,7 +12,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // Paystack Subscription Plans Fetcher
 function fetchPaystackPlans() {
-    $secretKey = $_ENV['PAYSTACK_SK_LIVE'];
+    $secretKey = $_ENV['PAYSTACK_SK_TEST'];
     
     $url = "https://api.paystack.co/plan";
     

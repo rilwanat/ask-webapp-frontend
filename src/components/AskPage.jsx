@@ -39,6 +39,9 @@ import { getCookie, deleteCookie } from '../auth/authUtils'; // Import getCookie
 import Loading from './widgets/Loading';
 import MiniLoading from './widgets/MiniLoading';
 
+import NotificationModal from './modals/NotificationModal';
+
+
 
 export default function AskPage({ 
   isMobile,
@@ -49,6 +52,25 @@ export default function AskPage({
     handleHelpRequestsData
  }) {
     const navigate = useNavigate();
+    //notification modal
+          const [notificationType, setNotificationType] = useState(false);
+          const [notificationTitle, setNotificationTitle] = useState("");
+          const [notificationMessage, setNotificationMessage] = useState("");
+          const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+          const openNotificationModal = (type, title, message) => {
+            setNotificationType(type);
+            setNotificationTitle(title);
+            setNotificationMessage(message);
+        
+            setIsNotificationModalOpen(true);
+          };
+          const closeNotificationModal = () => {
+            setIsNotificationModalOpen(false);
+          };
+          //notification modal
+
+
+
 
     const location = useLocation();
     const { selectedItem, allItems } = location.state || {}; // Handle undefined case
@@ -65,9 +87,13 @@ export default function AskPage({
     
       const [isLoading, setIsLoading] = useState(false);
       const [myActiveRequestsData, setMyActiveRequestsData] = useState(null);
+
+      const [checkIfUserCanAsk, setCheckIfUserCanAsk] = useState(null);
+      const currentPageName = "iAsk";
       
     
            useEffect(() => {
+            getCheckIfUserCanAsk();
             getActiveHelpRequests();
           }, [userDetails]);
           const getActiveHelpRequests = async () => {
@@ -126,6 +152,74 @@ useEffect(() => {
       // setShowLevel1KYC(false);
       refreshUserDetails();
     }, []);
+
+
+
+
+    const getCheckIfUserCanAsk = async () => {
+      
+      if (userDetails === null) { return; }
+      // alert("D2");
+
+          setIsLoading(true);
+      
+      
+          const requestData = {   
+              email: userDetails.email_address, 
+             };
+
+            //  alert(JSON.stringify(userDetails), null, 2);
+            //  alert(JSON.stringify(requestData), null, 2);
+          // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST);
+          try {
+            // API request to get  count
+            const checkIfUserCanRequestEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CHECK_IF_USER_CAN_ASK;
+            // alert(adminBankCodesEndpoint);
+            const checkIfUserCanRequestResponse = await axiosInstance.post(checkIfUserCanRequestEndpoint, requestData, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            setIsLoading(false);
+
+            setCheckIfUserCanAsk(checkIfUserCanRequestResponse.data);
+            if (checkIfUserCanRequestResponse.data.status) {
+              
+            // alert(JSON.stringify(checkIfUserCanRequestResponse.data), null, 2);
+              // Update state with  count
+        
+            // openNotificationModal(true, currentPageName, checkIfUserCanRequestResponse.data.message);
+             // Update state with beneficiaries count
+          //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+      
+      
+      
+      
+      
+            // Once all data is fetched, set loading to false
+                            } else {
+              
+                              // navigate("/");
+                              openNotificationModal(false, currentPageName, checkIfUserCanRequestResponse.data.message);
+                              
+
+                            }
+            
+            
+        
+          } catch (error) {
+            setIsLoading(false);
+            
+            // alert(error);
+            // Handle errors
+            if (error.response && error.response.data) {
+              const errorMessage = error.response.data.message;
+              openNotificationModal(false, currentPageName + " Error", errorMessage);
+            } else {
+              openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+            }
+          }
+        };
 
     return (
         <div className="">
@@ -192,22 +286,37 @@ userDetails && (userDetails.kyc_status === 'PENDING' || userDetails.is_cheat ===
 (
             
   myActiveRequestsData === null ? (
-    <WidgetForCreateAsk  
+    
+    checkIfUserCanAsk && checkIfUserCanAsk.status ? (
+        <WidgetForCreateAsk  
       userDetails={userDetails} 
       refreshUserDetails={refreshUserDetails} 
       getActiveHelpRequests={getActiveHelpRequests}
       navigateTo={navigateTo}
       carouselRequestItems={carouselRequestItems}
       handleHelpRequestsData={handleHelpRequestsData}
+      
     />
+      ) : <div className='flex flex-col items-center justify-center my-8   w-full'>
+      <p className='text-center text-red-500 font-bold'>Your account has been flagged. Please contact support.</p>
+      
+  </div> 
+    
+    
   ) : (
+    checkIfUserCanAsk && checkIfUserCanAsk.status ? (
     <WidgetForEditAsk  
       userDetails={userDetails} 
       refreshUserDetails={refreshUserDetails} 
       getActiveHelpRequests={getActiveHelpRequests}
       myActiveRequestsData={myActiveRequestsData}
       handleHelpRequestsData={handleHelpRequestsData}
-    />
+      
+      />
+    ) : <div className='flex flex-col items-center justify-center my-8   w-full'>
+    <p className='text-center text-red-500 font-bold'>Your account has been flagged. Please contact support.</p>
+    
+</div> 
   )
 )
           )
@@ -230,6 +339,13 @@ userDetails && (userDetails.kyc_status === 'PENDING' || userDetails.is_cheat ===
 
 
 {/* {myActiveRequestsData === null ? "1": "2"} */}
+<NotificationModal
+                          isOpen={isNotificationModalOpen}
+                          onRequestClose={closeNotificationModal}
+                          notificationType={notificationType}
+                          notificationTitle={notificationTitle}
+                          notificationMessage={notificationMessage}
+                        />
 
 
             <GuestFooter gotoPage={gotoPage} />
