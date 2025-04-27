@@ -38,7 +38,7 @@ import ton from '../../assets/crypto/TON_UQDmODmw1zap0Dp51Vm_57nc6h_RiTXUER6r84v
 import trc20 from '../../assets/crypto/TRC20_TUJqGSxtNaHyv7V2uHRGiGGy7xaiS5pxmA.png';
 
 
-const DonateWidget = ({ userDetails, refreshUserDetails }) => {
+const DonateWidget = ({ userDetails, refreshUserDetails, gotoPage }) => {
   const navigate = useNavigate();
   // const [currentRequestSlide, setCurrentRequestSlide] = useState(0);
   // const [zoomedItemId, setZoomedItemId] = useState(null);
@@ -705,6 +705,7 @@ const defaultCrypto =
               notificationType={notificationType}
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}
+              gotoPage={gotoPage}
             />
 
 

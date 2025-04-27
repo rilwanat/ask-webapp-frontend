@@ -5,9 +5,7 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require_once 'ask-auth-validate-token.php';
-// Validate token
-validateToken();
+
 
 include_once '../config/database.php';
 include_once '../objects/response.php';
@@ -24,6 +22,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204); // No Content
     exit();
 }
+
+
+
+
+
+require_once 'ask-auth-validate-token.php';
+// Validate token
+validateToken();
+
+
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     

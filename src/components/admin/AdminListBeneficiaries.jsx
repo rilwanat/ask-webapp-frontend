@@ -259,7 +259,7 @@ const [shareType, setShareType] = useState("direct");
          } catch (error) {
            setIsDataLoading(false);
    
-           alert(error);
+          //  alert(error);
          
            if (error.response && error.response.data && error.response.data.message) {
            const errorMessage = error.response.data.message;
@@ -385,7 +385,7 @@ const [shareType, setShareType] = useState("direct");
              } catch (error) {
                setIsDataLoading(false);
        
-               alert(error);
+              //  alert(error);
              
                if (error.response && error.response.data && error.response.data.message) {
                const errorMessage = error.response.data.message;
@@ -492,7 +492,7 @@ if (parsedShareRatio.some(isNaN)) {
         
         setIsDataLoading(false);
     
-        alert(error);
+        // alert(error);
     
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;
@@ -535,7 +535,7 @@ if (parsedShareRatio.some(isNaN)) {
       } catch (error) {
         setIsDataLoading(false);
         
-        alert(error);
+        // alert(error);
         // Handle errors
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;

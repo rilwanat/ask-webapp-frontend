@@ -113,7 +113,7 @@ const WidgetForKyc = ({ userDetails, refreshUserDetails }) => {
     };
   // Filter and sort countries with dial codes
 
-
+  const currentPageName = "KYC";
 
 
       // const [fullname, setFullname] = useState('');
@@ -458,7 +458,7 @@ if (!imageSrc) {
         } catch (error) {
           setIsLoading(false);
           
-          alert(error);
+          // alert(error);
           // Handle errors
           if (error.response && error.response.data) {
             const errorMessage = error.response.data.message;

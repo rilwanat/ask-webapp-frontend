@@ -85,6 +85,20 @@ const details = parts.slice(1);
             Okay
           </div>
           
+          {
+            // notificationType === true ? 
+            <div 
+            onClick={() => {
+              onRequestClose();
+              gotoPage('ask-login');
+              
+            }}
+            style={{ width: '128px', borderWidth: '1px' }}
+            className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
+            Login
+          </div>
+          //  : <></>
+          }
           
         </div>
       </div>

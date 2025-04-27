@@ -71,7 +71,7 @@ export default function AskPage({
             getActiveHelpRequests();
           }, [userDetails]);
           const getActiveHelpRequests = async () => {
-        // if (userDetails === null) { return; }
+        if (userDetails === null) { return; }
     
             setIsLoading(true);
         
@@ -111,7 +111,7 @@ export default function AskPage({
             } catch (error) {
               setIsLoading(false);
               
-              alert(error);
+              // alert(error);
               // Handle errors
               if (error.response && error.response.data) {
                 const errorMessage = error.response.data.message;

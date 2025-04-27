@@ -710,14 +710,14 @@ const navigate = useNavigate();
                 setErrorMessage({ message: errorMessage });
                 // alert("Registration Failed");
         
-                alert(errorMessage);
+                // alert(errorMessage);
                 
                 openNotificationModal(false, "Registration Error", "Registration Failed");
               }
             } catch (error) {
               setIsLoading(false);
 
-              alert(error);
+              // alert(error);
             
               if (error.response && error.response.data && error.response.data.message) {
                 const errorMessage = error.response.data.message;

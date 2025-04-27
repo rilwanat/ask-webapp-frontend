@@ -214,7 +214,7 @@ if ((sponsorType === "Select") || (sponsorType === "")) {
          } catch (error) {
            setIsLoading(false);
  
-           alert(error);
+          //  alert(error);
          
            if (error.response && error.response.data && error.response.data.message) {
            const errorMessage = error.response.data.message;

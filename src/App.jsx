@@ -25,6 +25,8 @@ import AskPage from './components/AskPage.jsx';
 
 
 
+import LoginPage from './components/LoginPage.jsx';
+
 import AdminLoginPage from './components/admin/AdminLoginPage.jsx';
 import AdminLandingPage from './components/admin/AdminLandingPage.jsx';
 import ManageWebsiteImagesPage from './components/admin/ManageWebsiteImagesPage.jsx';
@@ -282,7 +284,7 @@ function App() {
       } catch (error) {
         setIsDataLoading(false);
         
-        alert(error);
+        // alert(error);
         // Handle errors
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;
@@ -324,7 +326,7 @@ function App() {
       } catch (error) {
         setIsDataLoading(false);
         
-        alert(error);
+        // alert(error);
         // Handle errors
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;
@@ -365,7 +367,7 @@ function App() {
       } catch (error) {
         setIsDataLoading(false);
         
-        alert(error);
+        // alert(error);
         // Handle errors
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;
@@ -488,6 +490,12 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
             handleHelpRequestsData={handleHelpRequestsData}
+             />}/>
+  
+<Route path='/ask-login' element={<LoginPage isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              />}/>
 
 

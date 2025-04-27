@@ -73,7 +73,7 @@ export default function DonatePage({
 
             {/* <Contact/> */}
             
-            <DonateWidget userDetails={userDetails} refreshUserDetails={refreshUserDetails}/>
+            <DonateWidget userDetails={userDetails} refreshUserDetails={refreshUserDetails} gotoPage={gotoPage}/>
 
 
             {/* <LatestNews/> */}

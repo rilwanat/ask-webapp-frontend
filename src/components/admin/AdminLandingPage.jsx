@@ -340,7 +340,7 @@ const sample1 = [
     } catch (error) {
       setIsDataLoading(false);
       
-      alert(error);
+      // alert(error);
       // Handle errors
       if (error.response && error.response.data) {
         const errorMessage = error.response.data.message;
