@@ -23,19 +23,13 @@ class Response
     private $tokens_table = "tokens_table";
     private $bank_codes_table = "bank_codes_table";
     private $crypto_info_table = "crypto_info_table";
-    private $subscriptions_table_name = "subscription_table";
+    private $subscriptions_table_name = "subscribe_table";
 
     private $payments_table_name = "payments_table";
     private $password_reset_tokens_table = "password_reset_tokens";
     
-    
-
-
-    private $bene_factors_table = "bene_factors";    
-    private $bene_messages_table = "bene_messages";
-    private $bene_payments_table = "bene_payments";    
-    private $bene_tokens_table = "bene_tokens";
-    private $bene_voters_table = "bene_voters";
+    private $dnq_values_table = "dnq_values_table";
+    private $dollar_exchange_rate_table = "dollar_exchange_rate_table";
 
 
     // public $username;
@@ -270,7 +264,7 @@ class Response
     {
         $query = "";
         {
-            $query = "INSERT INTO " . $this->subscribe_table_name . " SET 
+            $query = "INSERT INTO " . $this->subscriptions_table_name . " SET 
             
             email_address=:email
             ";
@@ -468,7 +462,7 @@ public function ReadAllHelpRequestsNotCheat()
         u.vote_weight as user_vote_weight 
         FROM
         " . $this->help_requests_table . " p 
-        LEFT JOIN 
+        INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
         WHERE 
         (u.is_cheat IS NULL OR u.is_cheat != 'Yes')
@@ -489,7 +483,7 @@ public function ReadAllHelpRequestsEmailsNotCheat()
         u.email_address as user_email 
         FROM
         " . $this->help_requests_table . " p 
-        LEFT JOIN 
+        INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
         WHERE 
         (u.is_cheat IS NULL OR u.is_cheat != 'Yes')
@@ -594,9 +588,70 @@ public function ReadAllDonations()
     return $stmt;
 }
 
+public function ReadAllPayments()
+{
+    $query = "SELECT
+        p.id,
+        p.created_on,
+        p.transaction_reference,
+        p.email,
+        p.price,
+        p.subscription_type,
+        p.payment_method 
+        FROM
+        " . $this->payments_table_name . " p 
+        
+        ORDER BY price DESC";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
+// public function ReadAllPayments()
+// {
+//     $query = "SELECT
+//         p.id,
+//         p.created_on,
+//         p.transaction_reference,
+//         p.email,
+//         p.price,
+//         (SELECT SUM(price) FROM " . $this->payments_table_name . " 
+//          WHERE email = p.email AND created_on <= p.created_on) as cumulative_price,
+//         p.subscription_type,
+//         p.payment_method 
+//         FROM
+//         " . $this->payments_table_name . " p 
+//         ORDER BY p.email, p.created_on ASC";  // Important to order by email and date for cumulative sum
+
+//     $stmt = $this->conn->prepare($query);
+//     $stmt->execute();
+//     return $stmt;
+// }
 
 
+public function getTopNominations()
+{
+    $query = "SELECT
+        h.id,
+        h.date,
+        h.nomination_count, 
+        
+        h.email_address,
+        u.fullname
+        FROM
+        " . $this->help_requests_table . " h
+        INNER JOIN users_table u ON h.email_address = u.email_address
+        ORDER BY h.nomination_count DESC";
 
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    
+    // Fetch all results as an associative array
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    return $result;
+}
 
 public function updateUserKyc(
     $email, 
@@ -985,6 +1040,21 @@ public function ReadAllBankCodes()
     return $stmt;
 }
 
+public function ReadDollarExchangeRate()
+{
+    $query = "SELECT
+        p.id,
+        p.rate 
+        FROM
+        " . $this->dollar_exchange_rate_table . " p 
+        
+        ORDER BY id ASC";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
 
 public function getEmailVerificationCode($email)
 {
@@ -1137,7 +1207,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                     return [
                         "status" => false, 
                         "message" => sprintf(
-                            "Your request was granted %d month(s) ago. You can request again in %d month(s).#Kindly commit to nominating others for now.",
+                            "Your request was granted %d month(s) ago. You can request again in %d month(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW.",
                             $elapsedMonths,
                             $remainingMonths
                         )
@@ -1882,93 +1952,6 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
     }
     
 
-    // public function updateUserDNQ($email, $price, $type) {
-    //     try {
-    //         // error_log("updateUserDNQ called with email: $email, price: $price, type: $type");
-    
-    //         // Initialize response
-    //         $response = [
-    //             "status" => false,
-    //             "message" => "",
-    //             "dnq" => 0,
-    //             "new_vote_weight" => 0
-    //         ];
-    
-    //         // Calculate DNQ
-    //         $dnq = 0;
-    
-    //         if ($type == "naira") {
-    //             $dnq = (int)($price / 5000);
-    //             // error_log("Currency type is naira. DNQ calculated as: $dnq");
-    //         } else if ($type == "dollar") {
-    //             $dnq = (int)($price / 5);
-    //             // error_log("Currency type is dollar. DNQ calculated as: $dnq");
-    //         } else {
-    //             $response["message"] = "Invalid currency type";
-    //             // error_log("Invalid currency type: $type");
-    //             return $response;
-    //         }
-    
-    //         if ($email !== "anon@askfoundations.org") {
-    //         // Get current vote weight
-    //         $getQuery = "SELECT vote_weight FROM " . $this->users_table . " WHERE email_address = :email";
-    //         $getStmt = $this->conn->prepare($getQuery);
-    //         $getStmt->bindParam(":email", $email);
-    
-    //         if (!$getStmt->execute()) {
-    //             $response["message"] = "Failed to get current vote weight";
-    //             // error_log("Failed to execute SELECT query for user: $email");
-    //             return $response;
-    //         }
-    
-    //         $userData = $getStmt->fetch(PDO::FETCH_ASSOC);
-    //         if (!$userData) {
-    //             $response["message"] = "User not found";
-    //             // error_log("User not found: $email");
-    //             return $response;
-    //         }
-    
-    //         $currentWeight = $userData['vote_weight'];
-    //         $newWeight = $currentWeight + $dnq;
-    //         // error_log("Current vote weight: $currentWeight, New weight after DNQ: $newWeight");
-    
-    //         // Perform the update
-    //         $updateQuery = "UPDATE " . $this->users_table . " SET vote_weight = :new_weight WHERE email_address = :email";
-    //         $updateStmt = $this->conn->prepare($updateQuery);
-    //         $updateStmt->bindParam(":email", $email);
-    //         $updateStmt->bindParam(":new_weight", $newWeight, PDO::PARAM_INT);
-    
-    //         if ($updateStmt->execute()) {
-    //             $response["status"] = true;
-    //             $response["message"] = "Successfully updated DNQ";
-    //             $response["dnq"] = $dnq;
-    //             $response["new_vote_weight"] = $newWeight;
-    //             // error_log("Update successful for user: $email");
-    //         } else {
-    //             $response["message"] = "Update failed";
-    //             // error_log("Update failed for user: $email");
-    //         }
-    //         return $response;
-    //     } else {
-    //         $response["status"] = true;
-    //         $response["message"] = "Anonymous Donation";
-    //         $response["dnq"] = $dnq;
-    //         $response["new_vote_weight"] = $newWeight;
-    //         return $response;
-    //     }
-            
-    
-    //     } catch (Exception $e) {
-    //         $errorMessage = "System error: " . $e->getMessage();
-    //         // error_log($errorMessage);
-    //         return [
-    //             "status" => false,
-    //             "message" => $errorMessage,
-    //             "dnq" => 0,
-    //             "new_vote_weight" => 0
-    //         ];
-    //     }
-    // }
 
     public function updateUserDNQ($email, $price, $type, $reference) {
         try {
@@ -1984,13 +1967,27 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
     
             // Calculate DNQ
             $dnq = 0;
+            $rate = 1;
+
+            //go and get rates
+            $query = "SELECT rate FROM " . $this->dnq_values_table . " WHERE name = :type";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':type', $type, PDO::PARAM_STR);
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $rate = $row['rate'];
+    }
+
+
     
             if ($type == "naira") {
-                $dnq = (int)($price / 5000);
+                $dnq = (int)($price / $rate);
                 $paymentMethod = "naira";
                 // error_log("Currency type is naira. DNQ calculated as: $dnq");
             } else if ($type == "dollar") {
-                $dnq = (int)($price / 5);
+                $dnq = (int)($price / $rate);
                 $paymentMethod = "dollar";
                 // error_log("Currency type is dollar. DNQ calculated as: $dnq");
             } else {
@@ -1999,7 +1996,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
                 return $response;
             }
     
-            if ($email !== "anon@askfoundations.org") {
+            if ($email !== "anonymousdonor@askfoundations.org") {
                 // Get current vote weight
                 $getQuery = "SELECT vote_weight FROM " . $this->users_table . " WHERE email_address = :email";
                 $getStmt = $this->conn->prepare($getQuery);
@@ -2167,7 +2164,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
         u.vote_weight as user_vote_weight 
         FROM
         " . $this->help_requests_table . " p 
-        LEFT JOIN 
+        INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
          WHERE 
         (u.is_cheat IS NULL OR u.is_cheat != 'Yes') AND (p.nomination_count > 0)
@@ -2362,6 +2359,151 @@ public function approveBeneficiary($email) {
     }
     return false;
 }
+
+
+
+public function getDNQData()
+{
+    $query = "SELECT * 
+              FROM " . $this->dnq_values_table . " 
+              ORDER BY id ASC 
+              LIMIT 2";
+    
+    try {
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch all results as an associative array
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    } catch (PDOException $e) {
+        // Log error or handle it appropriately
+        error_log("Database error in getDNQData(): " . $e->getMessage());
+        return []; // Return empty array on error
+    }
+}
+
+public function getDollarExchange()
+{
+    $query = "SELECT * 
+              FROM " . $this->dollar_exchange_rate_table . " 
+              ORDER BY id ASC 
+              LIMIT 1";
+    
+    // Prepare the statement
+    $stmt = $this->conn->prepare($query);
+
+    // Execute the statement
+    $stmt->execute();
+
+    // Fetch the result
+    $result = $stmt->fetch(PDO::PARAM_STR);
+
+    return $result ;
+}
+
+
+public function updateDNQValues($nairaRate, $dollarRate) 
+{
+    try {
+        // Start transaction
+        $this->conn->beginTransaction();
+        
+        // Update Naira rate (id = 1)
+        $stmt1 = $this->conn->prepare("
+            UPDATE " . $this->dnq_values_table . " 
+            SET rate = :rate 
+            WHERE id = 1 AND name = 'naira'
+        ");
+        $stmt1->bindParam(':rate', $nairaRate, PDO::PARAM_STR);
+        $stmt1->execute();
+        
+        // Update Dollar rate (id = 2)
+        $stmt2 = $this->conn->prepare("
+            UPDATE " . $this->dnq_values_table . " 
+            SET rate = :rate 
+            WHERE id = 2 AND name = 'dollar'
+        ");
+        $stmt2->bindParam(':rate', $dollarRate, PDO::PARAM_STR);
+        $stmt2->execute();
+        
+        // Commit transaction
+        $this->conn->commit();
+        
+        return [
+            'status' => true,
+            'message' => 'DNQ values updated successfully',
+            'updated_rates' => [
+                'naira' => $nairaRate,
+                'dollar' => $dollarRate
+            ]
+        ];
+        
+    } catch (PDOException $e) {
+        // Rollback transaction if error occurs
+        $this->conn->rollBack();
+        
+        return [
+            'status' => false,
+            'message' => 'Failed to update DNQ values: ' . $e->getMessage()
+        ];
+    }
+}
+
+
+public function updateExchangeRate($rate) 
+{
+    try {
+        
+        
+        // Update Naira rate (id = 1)
+        $stmt1 = $this->conn->prepare("
+            UPDATE " . $this->dollar_exchange_rate_table . " 
+            SET rate = :rate 
+            WHERE id = 1 
+        ");
+        $stmt1->bindParam(':rate', $rate, PDO::PARAM_STR);
+        $stmt1->execute();
+        
+        
+        
+        return [
+            'status' => true,
+            'message' => 'Exchange Rate updated successfully'            
+        ];
+        
+    } catch (PDOException $e) {
+        
+        
+        return [
+            'status' => false,
+            'message' => 'Failed to update Exchange Rate: ' . $e->getMessage()
+        ];
+    }
+}
+
+
+
+
+public function updateAdminPassword($email, $newPassword) {
+    $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
+    $query = "UPDATE " . $this->admins_table . " 
+              SET access_key = :access_key 
+              WHERE email_address = :email_address";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email_address", $email);
+    $stmt->bindParam(":access_key", $hashed);
+    if ($stmt->execute()) {
+        // Check if any row was actually updated
+        return $stmt->rowCount() > 0;
+    }
+    return false;
+}
+
 
 
  // // // password reset // //

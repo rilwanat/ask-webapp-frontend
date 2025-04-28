@@ -66,7 +66,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import NotificationModal from '../modals/NotificationModal';
 
 
-export default function AdminListDonations({ 
+export default function AdminListPayments({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -125,34 +125,37 @@ useEffect(() => {
 
     
     
-      const currentPageName = "Manage Donations";
+      const currentPageName = "Show Payments";
     
 
 
       const [isDataloading, setIsDataLoading] = useState(true);
-      const [donations, setDonationsData] = useState([]);
+      const [payments, setPaymentsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const [totalItems, setTotalItems] = useState(donations ? donations.length : 0);
+    const [totalItems, setTotalItems] = useState(payments ? payments.length : 0);
     const [searchQuery, setSearchQuery] = useState('');
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
-    const filteredDonations = donations.filter((donation) =>
-    donation.date.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || donation.type.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || donation.price.toLowerCase().includes(searchQuery.toLowerCase()) 
-    // || donation.tags && donation.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
-    // || donation.categories && donation.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
-    // || donation.price.includes(searchQuery)
+    const filteredDonations = payments.filter((payment) =>
+    payment.created_on.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || payment.transaction_reference.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || payment.email && payment.email.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || payment.price.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || payment.subscription_type.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || payment.payment_method.toLowerCase().includes(searchQuery.toLowerCase()) 
+    // || payment.tags && payment.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
+    // || payment.categories && payment.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
+    // || payment.price.includes(searchQuery)
 );
 
 const totalFilteredItems = filteredDonations.length;
 const totalFilteredPages = Math.ceil(totalFilteredItems / itemsPerPage);
 const indexOfLastFilteredItem = currentPage * itemsPerPage;
 const indexOfFirstFilteredItem = indexOfLastFilteredItem - itemsPerPage;
-const currentFilteredBeneficiaries = filteredDonations.slice(
+const currentFilteredPayments = filteredDonations.slice(
   indexOfFirstFilteredItem,
   indexOfLastFilteredItem
 );
@@ -172,19 +175,19 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
     try {
-      // API donation to get  count
-      const adminBeneficiariesEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_DONATIONS;
-      // alert(adminBeneficiariesEndpoint);
-      const adminBeneficiariesResponse = await axiosAdminInstance.get(adminBeneficiariesEndpoint, {
+      // API payment to get  count
+      const adminPaymentsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_READ_PAYMENTS;
+      // alert(adminPaymentsEndpoint);
+      const adminPaymentsResponse = await axiosAdminInstance.get(adminPaymentsEndpoint, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      setDonationsData(adminBeneficiariesResponse.data.data);  // Update state with  count
+      setPaymentsData(adminPaymentsResponse.data.data);  // Update state with  count
   
   
       // openNotificationModal(true, currentPageName, "");
-      // alert(JSON.stringify(adminBeneficiariesResponse.data.data), null, 2);  // Update state with donations count
+      // alert(JSON.stringify(adminPaymentsResponse.data.data), null, 2);  // Update state with payments count
     //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
 
 
@@ -218,9 +221,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
   };
 
     
-  const navigateTo = (route, data) => {
-    navigate(route, { state: data });
-  };
+    
 
     return (
         <div className="bg-theme h-full">
@@ -258,18 +259,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
               onClick={() => { 
                 // gotoPage('/contact-us') 
               }}
-              style={{ width: '240px' }}
+              style={{ width: '200px' }}
               className='text-center  rounded-sm px-4 py-1 text-sm cursor-pointer  bg-theme text-white mb-4 md:mb-0'>
-              {currentPageName + ' Data (' + totalFilteredItems + ')'}
+              {currentPageName + ' (' + totalFilteredItems + ')'}
             </div>
 
-            {/* Center section - Page title */}
-    <div 
-              onClick={() =>  navigateTo('/admin-show-donations')}
-              style={{ width: '200px' }}
-              className='text-center  rounded-sm px-4 py-1 text-sm cursor-pointer border border-white bg-theme text-white  hover:text-softTheme mb-4 md:mb-0'>
-              Show Donations
-            </div>
+            {/* <div></div> */}
 
   {/* Right section - Search */}
   <div className='relative flex items-center w-full md:w-auto'>
@@ -336,15 +331,27 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           Date
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
-                          Type
+                          Transaction Reference
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Email
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Price
                         </th>
-
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
-                          Action
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Total Paid
+                        </th> */}
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Subscription Type
                         </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Payment Method
+                        </th>
+
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                          Action
+                        </th> */}
                         
                       </tr>
                     </thead>
@@ -353,55 +360,84 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                       // isDataloading ? <Loading />
                       // : 
                     <tbody className='text-xs '>
-                      {currentFilteredBeneficiaries.map((donation, index) => (
-                          <tr key={donation.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
-                        // onClick={(e) => handlerequestRowClick(donation, e)} 
+                      {currentFilteredPayments.map((payment, index) => (
+                          <tr key={payment.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
+                        // onClick={(e) => handlerequestRowClick(payment, e)} 
                           style={{ cursor: "pointer" }}
                           >
                           <td className='px-2 py-4 whitespace-no-wrap border-b border-gray-200'>
                           {countFiltered++}
                           </td>
                           {/* <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> */}
-                            {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + donation.productImages[0]} */}
-                            {/* <img src={process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + donation.productImages[0]}  className="h-10 w-10 object-cover" /> */}
+                            {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + payment.productImages[0]} */}
+                            {/* <img src={process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + payment.productImages[0]}  className="h-10 w-10 object-cover" /> */}
                           {/* </td> */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 cursor-pointer" onClick={(e) => {
                             //setShowDialog(false); 
-                            // handleProductClick(donation, e);
+                            // handleProductClick(payment, e);
                           }}>
-                            {donation.date}
+                            {payment.created_on}
                           </td>
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {donation.type}
+                            {payment.type}
                           </td> */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                           <span
                                     style={{
-                                      backgroundColor: donation.type === 'naira' ? '#1cc939' : donation.type === 'dollar' ? '#161c34' : '#d85a27', 
-                                      color: donation.type === 'naira' ? '#ffffff' : donation.type === 'dollar' ? '#ffffff': '#ffffff', 
+                                      backgroundColor: payment.type === 'naira' ? '#1cc939' : payment.type === 'dollar' ? '#161c34' : '#d85a27', 
+                                      color: payment.type === 'naira' ? '#ffffff' : payment.type === 'dollar' ? '#ffffff': '#ffffff', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
-                                    }>{donation.type}</span>
+                                    }>{payment.transaction_reference}</span>
                           </td>	
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 cursor-pointer" onClick={(e) => {
+                            //setShowDialog(false); 
+                            // handleProductClick(payment, e);
+                          }}>
+                            {payment.email}
+                          </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {/* {donation.tags.join(', ')} */}
-                            {formatAmount(donation.price)}
+                            {/* {payment.tags.join(', ')} */}
+                            {formatAmount(payment.price)}
+                          </td>
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {formatAmount(payment.cumulative_price)}
+                          </td> */}
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right cursor-pointer" onClick={(e) => {
+                            //setShowDialog(false); 
+                            // handleProductClick(payment, e);
+                          }}>
+                            {payment.subscription_type}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right cursor-pointer" onClick={(e) => {
+                            //setShowDialog(false); 
+                            // handleProductClick(payment, e);
+                          }}>
+                            {/* {payment.payment_method} */}
+                            <span
+                                    style={{
+                                      backgroundColor: payment.payment_method === 'naira' ? '#1cc939' : payment.payment_method === 'dollar' ? '#161c34' : '#d85a27', 
+                                      color: payment.payment_method === 'naira' ? '#ffffff' : payment.payment_method === 'dollar' ? '#ffffff': '#ffffff', 
+                                      borderRadius: '6px'
+                                    
+                                  }} 
+                                    className={'text-white px-2 py-2 '
+                                    }>{payment.payment_method}</span>
                           </td>
                           
-                          
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
                           <span
                           className="text-theme cursor-pointer "
                           onClick={(e) => {
                             //setShowDialog(false); 
-                            // handleProductClick(donation, e);
+                            // handleProductClick(payment, e);
                           }}
                           >
                             See Details
                             </span>
-                          </td>
+                          </td> */}
                          
                           
                         </tr>

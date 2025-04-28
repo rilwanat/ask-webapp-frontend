@@ -287,7 +287,8 @@ userDetails && (userDetails.kyc_status === 'PENDING' || userDetails.is_cheat ===
             
   myActiveRequestsData === null ? (
     
-    checkIfUserCanAsk && checkIfUserCanAsk.status ? (
+    // checkIfUserCanAsk && checkIfUserCanAsk.status ? 
+    (
         <WidgetForCreateAsk  
       userDetails={userDetails} 
       refreshUserDetails={refreshUserDetails} 
@@ -297,14 +298,16 @@ userDetails && (userDetails.kyc_status === 'PENDING' || userDetails.is_cheat ===
       handleHelpRequestsData={handleHelpRequestsData}
       
     />
-      ) : <div className='flex flex-col items-center justify-center my-8   w-full'>
-      <p className='text-center text-red-500 font-bold'>Your account has been flagged. Please contact support.</p>
+      ) 
+      // : <div className='flex flex-col items-center justify-center my-8   w-full'>
+      // <p className='text-center text-red-500 font-bold'>Your account has been flagged. Please contact support.</p>
       
-  </div> 
+  // </div> 
     
     
   ) : (
-    checkIfUserCanAsk && checkIfUserCanAsk.status ? (
+    // checkIfUserCanAsk && checkIfUserCanAsk.status ? 
+    (
     <WidgetForEditAsk  
       userDetails={userDetails} 
       refreshUserDetails={refreshUserDetails} 
@@ -313,10 +316,11 @@ userDetails && (userDetails.kyc_status === 'PENDING' || userDetails.is_cheat ===
       handleHelpRequestsData={handleHelpRequestsData}
       
       />
-    ) : <div className='flex flex-col items-center justify-center my-8   w-full'>
-    <p className='text-center text-red-500 font-bold'>Your account has been flagged. Please contact support.</p>
+    ) 
+//     : <div className='flex flex-col items-center justify-center my-8   w-full'>
+//     <p className='text-center text-red-500 font-bold'>Your account has been flagged. Please contact support.</p>
     
-</div> 
+// </div> 
   )
 )
           )
@@ -345,6 +349,7 @@ userDetails && (userDetails.kyc_status === 'PENDING' || userDetails.is_cheat ===
                           notificationType={notificationType}
                           notificationTitle={notificationTitle}
                           notificationMessage={notificationMessage}
+                          gotoPage={gotoPage}
                         />
 
 

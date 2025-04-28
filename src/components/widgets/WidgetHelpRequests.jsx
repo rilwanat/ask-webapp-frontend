@@ -18,6 +18,9 @@ const WidgetHelpRequests = ({
  }) => {
   const navigate = useNavigate();
 
+  const [updatedItem, setUpdatedItem] = useState([]);
+
+
   //notification modal
   const [notificationType, setNotificationType] = useState(false);
   const [notificationTitle, setNotificationTitle] = useState("");
@@ -165,6 +168,8 @@ const [scrollCarousel, setScrollCarousel] = useState(true);
                       handleHelpRequestsData={handleHelpRequestsData}
                       navigateAndRefresh={navigateAndRefresh}
                       setScrollCarousel={setScrollCarousel}
+
+                      setUpdatedItem={setUpdatedItem}
                       />
                       <WidgetShare helpToken={item.help_token}/>
                     </div>
@@ -185,6 +190,9 @@ const [scrollCarousel, setScrollCarousel] = useState(true);
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}
               gotoPage={gotoPage}
+
+              updatedItem={updatedItem}
+              navigateAndRefresh={navigateAndRefresh}
             />
     </div>
   );

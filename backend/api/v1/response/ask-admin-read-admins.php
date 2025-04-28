@@ -6,9 +6,8 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 
-require_once 'ask-auth-validate-token.php';
-// Validate token
-validateToken();
+
+
 
 
 include_once '../config/database.php';
@@ -24,6 +23,20 @@ $stmt = $response->ReadAllAdmins();
 
 // Initialize array to store user data
 $admins_data["admins_data"] = array();
+
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204); // No Content
+    exit();
+}
+
+require_once 'ask-auth-validate-token.php';
+// Validate token
+validateToken();
+
+
+
 
 
 ini_set('memory_limit', '-1');

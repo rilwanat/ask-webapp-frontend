@@ -22,11 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204); // No Content
     exit();
 }
-
-
-
-
-
 require_once 'ask-auth-validate-token.php';
 // Validate token
 validateToken();

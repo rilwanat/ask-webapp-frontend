@@ -15,16 +15,17 @@ header("Content-Type: application/json; charset=UTF-8");
 
 
 
+
 include_once '../config/database.php';
 include_once '../objects/response.php';
 
-// require_once __DIR__ . '/../send_mail.php';
 
 $database = new Database();
 $db = $database->getConnection();
 $response = new Response($db);
 
 $data = json_decode(file_get_contents("php://input"));
+
 
 
 // Handle preflight OPTIONS request
@@ -36,27 +37,30 @@ require_once 'ask-auth-validate-token.php';
 // Validate token
 validateToken();
 
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (
-        !empty($data->sponsorId) && 
-        !empty($data->sponsorName) && 
-        !empty($data->sponsorType)
+        !empty($data->rate)
     ) {
-        $updateSponsorDetails = $response->updateSponsor(            
-            $data->sponsorId, 
-            $data->sponsorName,
-            $data->sponsorType
+        
+
+
+ 
+        $updateExchangeRate = $response->updateExchangeRate(            
+            $data->rate
         );
 
 
-        if ($updateSponsorDetails) {
+        if ($updateExchangeRate) {
 
 
             http_response_code(200);
-            echo json_encode(array("status" => true, "message" => "Sponsor updated successfully!"));
+            echo json_encode(array("status" => true, "message" => "Exchange Rate Updated Successfully!"));
         } else {
             http_response_code(400);
-            echo json_encode(array("status" => false, "message" => "Sponsor Update failed."));
+            echo json_encode(array("status" => false, "message" => "Update failed."));
         }
     } else {
         http_response_code(400);

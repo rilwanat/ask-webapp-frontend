@@ -273,9 +273,9 @@ export default function AdminMobileNavbar({ carouselRequestItems, carouselBenefi
           animate={isMenuOpen ? "visible" : "hidden"}
           className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
           style={{ fontWeight: '600' }}
-          onClick={() => {navigateTo('/manage-hero-images');}}
+          onClick={() => {navigateTo('/general-settings');}}
         >
-          Hero Images
+          Gen. Settings
         </motion.span>
 
         <motion.span

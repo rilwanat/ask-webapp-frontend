@@ -94,7 +94,7 @@ function GuestFooter({ gotoPage }) {
       
       
       setIsSubsLoading(false);
-        //alert(JSON.stringify(response.data, null, 2));
+        // alert(JSON.stringify(response.data, null, 2));
   
         if (response.data.status) {
           setEmail("");
@@ -116,7 +116,7 @@ function GuestFooter({ gotoPage }) {
       } catch (error) {
         setIsSubsLoading(false);
 
-       //  alert(error);
+        // alert(error);
       
         if (error.response && error.response.data && error.response.data.message) {
         const errorMessage = error.response.data.message;

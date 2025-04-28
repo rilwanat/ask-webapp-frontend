@@ -34,7 +34,9 @@ const WidgetNominate = ({
   handleHelpRequestsData,
 
   navigateAndRefresh,
-  setScrollCarousel
+  setScrollCarousel,
+
+  setUpdatedItem
 
  }) => {
 
@@ -157,8 +159,9 @@ const WidgetNominate = ({
               const data = await handleHelpRequestsData();
               // Find the updated item
           const updatedItem = data.find(item => item.help_token === helpToken); 
-              navigateAndRefresh(updatedItem);
+              // navigateAndRefresh(updatedItem);
 
+              setUpdatedItem(updatedItem);
 
             // alert(data.length.toString())
             // getActiveHelpRequests();            

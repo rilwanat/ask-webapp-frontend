@@ -47,6 +47,8 @@ export default function SingleNominatePage({
     const [scrollCarousel, setScrollCarousel] = useState(true);
 
     
+    const [updatedItem, setUpdatedItem] = useState([]);
+
         //notification modal
         const [notificationType, setNotificationType] = useState(false);
         const [notificationTitle, setNotificationTitle] = useState("");
@@ -264,6 +266,8 @@ export default function SingleNominatePage({
                                 handleHelpRequestsData={handleHelpRequestsData}
                                 navigateAndRefresh={navigateAndRefresh}
                                 setScrollCarousel={setScrollCarousel}
+                                
+                                setUpdatedItem={setUpdatedItem}
 
                                 />
                             </motion.button>
@@ -298,6 +302,9 @@ export default function SingleNominatePage({
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}
               gotoPage={gotoPage}
+
+              updatedItem={updatedItem}
+              navigateAndRefresh={navigateAndRefresh}
             /> 
 
             <GuestFooter gotoPage={gotoPage} />

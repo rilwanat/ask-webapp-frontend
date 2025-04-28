@@ -676,13 +676,13 @@ const sample1 = [
                                     <div className="text-s px-2 mr-0 rounded bg-orange" style={{  color: '#ffffff' }}>{
                                       isDataloading ? <MiniLoading />
                                       : 
-                                    dashboard.dashboardData[0].Total_Nominations
+                                    dashboard.dashboardData[0].Top_Nominations.length
                                     }</div>
                                 </div>
                                 
                             </div>
                             <div>
-                                {upcomingAppointmentData.map((requestData, index) => (
+                                {dashboard?.dashboardData?.[0]?.Top_Nominations?.map((requestData, index) => (
                                     <div key={index} 
                                     className='flex justify-between rounded-lg my-2' style={{ padding: '10px 10px', backgroundColor: '#FAF3E0'}}
                                     // onClick={(e) => navigateToAppointments()}
@@ -693,16 +693,16 @@ const sample1 = [
 
                                     
                                             <div className='flex flex-col'>
-                                            <p style={{fontSize: '14px', fontWeight: 'bold'}}>{requestData.name} (##)</p>
+                                            <p style={{fontSize: '14px', fontWeight: 'bold'}}>{requestData.fullname}</p>
                                           <p style={{fontSize: '10px'}}>{requestData.name}</p>
                                           <div className='flex'>
-                                          <p style={{fontSize: '10px'}} className='mr-4'>{requestData.time}</p>
+                                          <p style={{fontSize: '10px'}} className='mr-4'>{requestData.date}</p>
                                           {/* <p style={{fontSize: '10px'}}>{requestData.description}</p> */}
                                           </div>
                                       </div>
                                       </div>
                                       <div className='flex flex-col items-end'>
-                                      <p style={{fontSize: '12px' }}>Web app</p>
+                                      <p style={{fontSize: '12px', fontWeight: 'bold' }}>{requestData.nomination_count}</p>
                                       <p style={{fontSize: '12px' }} className=''>{requestData.specialist}</p>
                                       </div>
                                       
@@ -712,7 +712,7 @@ const sample1 = [
                                     ))}
                             </div>
                             <div className='flex w-full justify-end my-4 ' style={{ cursor: 'pointer' }} 
-                            // onClick={() => { navigate('/manage-nominations'); }}
+                            onClick={() => { navigate('/requests-list'); }}
                             >
                               <p style={{fontSize: '12px' }}>View All</p>
                             </div>

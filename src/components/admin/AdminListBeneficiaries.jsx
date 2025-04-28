@@ -57,12 +57,6 @@ import { setCookie, getCookie, deleteCookie } from '../../auth/authUtils'; // En
 import { jwtDecode } from 'jwt-decode';
 //
 
-//
-import axiosInstance from '../../auth/axiosConfig'; // Ensure the correct relative path
-// import { setCookie, isAuthenticated } from '../../auth/authUtils'; // Ensure the correct relative path
-// import { jwtDecode } from 'jwt-decode';
-// import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
-//
 
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -228,7 +222,7 @@ const [shareType, setShareType] = useState("direct");
          //  alert(endpoint);
          //  setIsSubsLoading(false);
          //  return;
-         const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_APPROVE_BENEFICIARY, requestData, {
+         const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_APPROVE_BENEFICIARY, requestData, {
              headers: {
                  "Content-Type": "application/json",
              },
@@ -294,7 +288,7 @@ const [shareType, setShareType] = useState("direct");
         
 
 
-        // alert(JSON.stringify(beneficiariesRequestData));
+        // alert(JSON.stringify(beneficiaries));
         // return;
         // $email, $helpToken, $amount
     
@@ -341,7 +335,7 @@ const [shareType, setShareType] = useState("direct");
              //  alert(endpoint);
              //  setIsSubsLoading(false);
              //  return;
-             const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_POST_BENEFICIARIES_ARRAY, 
+             const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_POST_BENEFICIARIES_ARRAY, 
               { beneficiaries: beneficiariesRequestData }, {
                  headers: {
                      "Content-Type": "application/json",
@@ -513,7 +507,7 @@ if (parsedShareRatio.some(isNaN)) {
       try {
         const beneficiariesRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_BENEFICIARIES;
         // alert(beneficiariesRequestsEndpoint);
-        const beneficiariesRequestsResponse = await axiosInstance.get(beneficiariesRequestsEndpoint, {
+        const beneficiariesRequestsResponse = await axiosAdminInstance.get(beneficiariesRequestsEndpoint, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -854,7 +848,7 @@ if (parsedShareRatio.some(isNaN)) {
                       // isDataloading ? <Loading />
                       // : 
                     <tbody className='text-xs '>
-                      {generatedBeneficiaries.map((beneficiary, index) => (
+                      {generatedBeneficiaries && generatedBeneficiaries.map((beneficiary, index) => (
                           <tr key={beneficiary.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
                         // onClick={(e) => handlerequestRowClick(beneficiary, e)} 
                           style={{ cursor: "pointer" }}
@@ -1082,7 +1076,7 @@ if (parsedShareRatio.some(isNaN)) {
                                   }} 
                                   onClick={(e) => {
                                     // alert("email: " + request.email_address + ", helpToken: " + request.help_token);
-                                    approveBeneficiary(request.email_address, request.help_token, generatedBeneficiariesRatios[index]);
+                                    approveBeneficiary(request.email_address, request.help_token);
                                   }}
                                     className={'text-white px-2 py-2 cursor-pointer bg-theme rounded-lg '
                                     }>Approve 

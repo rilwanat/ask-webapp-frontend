@@ -10,10 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 
-require_once 'ask-auth-validate-token.php';
-// Validate token
-validateToken();
-
 
 // Set CORS headers for actual POST request
 header("Access-Control-Allow-Origin: *");
@@ -31,6 +27,18 @@ $response = new Response($db);
 
 // Read JSON input
 $data = json_decode(file_get_contents("php://input"));
+
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204); // No Content
+    exit();
+}
+require_once 'ask-auth-validate-token.php';
+// Validate token
+validateToken();
+
+
 
 // Validate inputs
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

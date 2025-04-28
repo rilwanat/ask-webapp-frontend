@@ -105,6 +105,7 @@ useEffect(() => {
         userId: selectedAdmin.id,
         userFullname: selectedAdmin.fullname,
         userEmailAddress: selectedAdmin.email_address,
+        userPassword: selectedAdmin.password,
         userPhoneNumber: selectedAdmin.phone_number,
         userKycStatus: selectedAdmin.kyc_status,
         userAccountNumber: selectedAdmin.account_number,
@@ -218,52 +219,6 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 
-  // useEffect(() => {
-  //   handleData();
-  // }, []);
-  // const handleData = async () => {
-
-  //   setIsDataLoading(true);
-
-
-  //   try {
-  //     // API user to get  count
-  //     const adminUsersEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_READ_USERS;
-  //     // alert(adminUsersEndpoint);
-  //     const adminUsersResponse = await axiosAdminInstance.get(adminUsersEndpoint, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     setUsersData(adminUsersResponse.data.data);  // Update state with  count
-  
-  
-  //     // openNotificationModal(true, currentPageName, "");
-  //     // alert(JSON.stringify(adminRequestsResponse.data.data), null, 2);  // Update state with users count
-  //   //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
-
-
-
-
-
-  //     // Once all data is fetched, set loading to false
-  //     setIsDataLoading(false);
-  
-  //   } catch (error) {
-  //     setIsDataLoading(false);
-      
-  //     alert(error);
-  //     // Handle errors
-  //     if (error.response && error.response.data) {
-  //       const errorMessage = error.response.data.message;
-  //       openNotificationModal(false, currentPageName + " Error", errorMessage);
-  //     } else {
-  //       openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
-  //     }
-  //   }
-  // };
-
-
 
   const updateAdmin = async (user) => {
 
@@ -273,11 +228,14 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     if (isUpdateDataloading) {
         // alert("please wait..");
-        openNotificationModal(false, "Update User", "Please wait...");
+        openNotificationModal(false, "Update Admin", "Please wait...#");
         return;
     }
 
-
+if (user.userPassword == "") {
+    openNotificationModal(false, "Update Admin", "Enter a valid admin pasword#");
+    return;
+}
 
     setIsUpdateDataLoading(true);
 
@@ -291,7 +249,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
       const requestData = {
         email: user.userEmailAddress.trim(),
-        kycStatus: user.userKycStatus.trim(),
+        password: user.userPassword.trim(),
     };
     // alert(JSON.stringify(requestData), null, 2);
     // setIsUpdateDataLoading(false);
@@ -301,7 +259,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
         
-        var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_KYC;
+        var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_DETAILS;
   //  alert(endpoint);
 //    return;
 
@@ -316,7 +274,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
             // alert(JSON.stringify(response.data, null, 2));
             if (response.data.status) {
                 // alert("update-product " + JSON.stringify(response.data, null, 2));
-                openNotificationModal(true, "Update User", response.data.adminData.fullname + "'s " + response.data.message);
+                openNotificationModal(true, "Update Admin", response.data.message + "#");
                 
 
 
@@ -325,13 +283,13 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
             } else {
                 // alert("error: " + response.data.message);
-                openNotificationModal(false, "Update User", response.data.message);
+                openNotificationModal(false, "Update Admin", response.data.message + "#");
                 
             }
     } catch (error) {
         setIsUpdateDataLoading(false);
         // alert("error: " + error);
-        openNotificationModal(false, "Update User", error);
+        openNotificationModal(false, "Update Admin", error + "#");
         
     }
 };
@@ -440,7 +398,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             <input type="text" id="fullname" name="fullname"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Fullname' 
-                                            value={selectedAdmin.fullname} 
+                                            value={adminData.userFullname} 
                                             // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                                             />
                                         </div>
@@ -450,8 +408,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             <input type="text" id="fullname" name="email_address"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Email Address' 
-                                            value={selectedAdmin.email_address} 
-                                            // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
+                                            value={adminData.userEmailAddress} 
+                                            // onChange={(e) => setAdminData({ ...adminData, userEmailAddress: e.target.value })}
                                             />
                                         </div>
 
@@ -460,7 +418,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             <input type="text" id="phone_number" name="phone_number"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Phone Number'   
-                                            value={selectedAdmin.phone_number}
+                                            value={adminData.userPhoneNumber}
                                             // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
                                             />
                                         </div>
@@ -472,7 +430,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             <input type="text" id="email_address" name="email_address"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Gender'   
-                                            value={selectedAdmin.gender}
+                                            value={adminData.userGender}
                                             // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
                                             />
                                         </div>
@@ -489,11 +447,11 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
                                         <div className="w-full md:w-1/3 px-2 mb-4">
                                             <label htmlFor="eligibility" className="block text-sm font-medium text-white mb-2">Password:</label>
-                                            <input type="text" id="eligibility" name="eligibility"
+                                            <input type="password" id="eligibility" name="eligibility"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Password'   
-                                            // value={selectedAdmin.eligibility}
-                                            // onChange={(e) => setProductData({ ...productData, productSlug: e.target.value })}
+                                            value={adminData.userPassword}
+                                            onChange={(e) => setAdminData({ ...adminData, userPassword: e.target.value })}
                                             />
                                         </div>
                                     </div>
@@ -655,7 +613,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                  {
                                     
                                     <div  
-                    // onClick={() => updateAdmin(adminData)} 
+                    onClick={() => updateAdmin(adminData)} 
                     style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
                       <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " />
                       <div className="text-s " style={{color: '#ffffff'}}>{isUpdateDataloading ? "Updating.." : 'Update Admin'}</div>

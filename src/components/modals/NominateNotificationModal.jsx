@@ -20,7 +20,7 @@ const customModalStyles = {
   },
 };
 
-const NominateNotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage, gotoPage }) => {
+const NominateNotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage, gotoPage, updatedItem, navigateAndRefresh }) => {
 
       // const navigate = useNavigate();
 
@@ -72,6 +72,10 @@ const details = parts.slice(1);
               
               if ( mainMessage === "Email address is not verified.") {
                 gotoPage('user-dashboard');
+              }
+
+              if ( mainMessage === "SUCCESSFULLY NOMINATED!") {
+                navigateAndRefresh(updatedItem);
               }
             }}
             style={{ width: '128px', borderWidth: '1px' }}

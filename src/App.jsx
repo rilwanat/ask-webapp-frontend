@@ -29,13 +29,14 @@ import LoginPage from './components/LoginPage.jsx';
 
 import AdminLoginPage from './components/admin/AdminLoginPage.jsx';
 import AdminLandingPage from './components/admin/AdminLandingPage.jsx';
-import ManageWebsiteImagesPage from './components/admin/ManageWebsiteImagesPage.jsx';
+import GeneralSettingsPage from './components/admin/GeneralSettingsPage.jsx';
 import AdminListRequests from './components/admin/AdminListRequests.jsx';
 import AdminListBeneficiaries from './components/admin/AdminListBeneficiaries.jsx';
 import AdminListSponsors from './components/admin/AdminListSponsors.jsx';
 import AdminListCrypto from './components/admin/AdminListCrypto.jsx';
 import AdminManageUsers from './components/admin/AdminManageUsers.jsx';
 import AdminListDonations from './components/admin/AdminListDonations.jsx';
+import AdminListPayments from './components/admin/AdminListPayments.jsx';
 import AdminListAdmins from './components/admin/AdminListAdmins.jsx';
 
 import AdminSpecificUser from './components/admin/AdminSpecificUser.jsx';
@@ -513,7 +514,7 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
 
-<Route path='/manage-hero-images' element={<ProtectedAdminRoute><ManageWebsiteImagesPage isMobile={isMobile}
+<Route path='/general-settings' element={<ProtectedAdminRoute><GeneralSettingsPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
@@ -554,6 +555,13 @@ useEffect(() => {
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
              /></ProtectedAdminRoute>}/>
+
+<Route path='/admin-show-donations' element={<ProtectedAdminRoute><AdminListPayments isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
 
 <Route path='/specific-user/:id' element={<ProtectedAdminRoute><AdminSpecificUser isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 

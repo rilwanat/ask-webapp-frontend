@@ -31,43 +31,27 @@ validateToken();
 
 
 // Initialize array to store dashboard data
-$dashboard_data = array();
-$dashboard_data["dashboardData"] = array();
+$general_settings_data = array();
+$general_settings_data["generalSettingsData"] = array();
 
 try {
     // Fetch data from the Response class
-    $total_users = $response->getTotalUsers();
-    $total_help_requests = $response->getTotalHelpRequests();
-    $total_beneficiaries = $response->getTotalBeneficiaries();
-    $total_sponsors = $response->getTotalSponsors();
-    $total_nominations = $response->getTotalNominations();
-
-    $total_incoming = $response->getTotalIncoming();
-    $total_outgoing = $response->getTotalOutgoing();
-
-    $top_nominations = $response->getTopNominations();
+    $dnq = $response->getDNQData();
+    $dollaExchange = $response->getDollarExchange();
 
     // Prepare dashboard data item
     $dashboard_item = array(
-        "Total_Users" => $total_users,
-        "Total_Help_Requests" => $total_help_requests,
-        "Total_Beneficiaries" => $total_beneficiaries,
-        "Total_Sponsors" => $total_sponsors,
-        "Total_Nominations" => $total_nominations,
-
-        "Total_Incoming" => $total_incoming,
-        "Total_Outgoing" => $total_outgoing,
-
-        "Top_Nominations" => $top_nominations,
+        "DNQ" => $dnq,
+        "Dollar_Exchange" => $dollaExchange,
 
 
     );
 
-    array_push($dashboard_data["dashboardData"], $dashboard_item);
+    array_push($general_settings_data["generalSettingsData"], $dashboard_item);
 
     // Check if data fetching was successful
-    if (!empty($dashboard_data["dashboardData"])) {
-        $response_data = array("status" => true, "dashboardData" => $dashboard_data["dashboardData"]);
+    if (!empty($general_settings_data["generalSettingsData"])) {
+        $response_data = array("status" => true, "generalSettingsData" => $general_settings_data["generalSettingsData"]);
     } else {
         $response_data = array("status" => false, "message" => "No data found.");
     }

@@ -14,9 +14,9 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 
-require_once 'ask-auth-validate-token.php';
-// Validate token
-validateToken();
+// require_once 'ask-auth-validate-token.php';
+// // Validate token
+// validateToken();
 
 
 

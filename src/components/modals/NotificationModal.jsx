@@ -8,7 +8,7 @@ import { Zoom } from '@mui/material';
 
 const customModalStyles = {
   content: {
-    maxHeight: '280px',
+    maxHeight: '340px',
     maxWidth: '480px',
     margin: 'auto',
     display: 'flex',
@@ -19,9 +19,13 @@ const customModalStyles = {
   },
 };
 
-const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage }) => {
+const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage, gotoPage }) => {
 
       // const navigate = useNavigate();
+
+      const parts = notificationMessage.split("#");
+const mainMessage = parts[0];
+const details = parts.slice(1);
 
   return (
     <Modal
@@ -38,18 +42,30 @@ const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificat
           }
         </div>
 
-        <div className='flex justify-center w-full my-4 text-center'>
+        {/* <div className='flex justify-center w-full my-4 text-center'>
           {notificationMessage}                  
-        </div>  
+        </div>   */}
+        <div className='flex flex-col  w-full my-4 '>
+  
+    <div className='mb-2 text-center'>{mainMessage}</div>
+    <div className='flex flex-col items-start justify-center'>
+    {details.map((item, index) => (
+      <div key={index} className='flex items-center justify-center mt-1 w-full text-center'>
+        {/* <CheckCircleIcon  className='text-green  mr-1'  />  */}
+        <span className='text-center'>{item}</span>
+      </div>
+    ))}
+  </div>
+</div>
 
         <div className='flex justify-center'>
           <div 
             onClick={() => {
               onRequestClose();
 
-              // if () { 
-
-              // }
+              if (mainMessage == "Your request was granted 0 month(s) ago. You can request again in 12 month(s).") { 
+                gotoPage("");
+              }
 
             }}
             style={{ width: '128px', borderWidth: '1px' }}

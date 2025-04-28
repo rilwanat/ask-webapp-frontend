@@ -928,7 +928,7 @@ const navigate = useNavigate();
                             </div>
                             </div>
 
-                            <div  
+                            {/* <div  
                           // onClick={(e) => {if (!isAppleSignUpLoading) registerUser(e)}} 
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
@@ -936,7 +936,7 @@ const navigate = useNavigate();
                             <img src={appleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
                             {isAppleSignUpLoading ? 'Please wait..' : 'Register with Apple'}
                             </div>
-                          </div>
+                          </div> */}
                           </div>
 
 

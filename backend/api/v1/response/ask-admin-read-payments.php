@@ -5,8 +5,6 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-
-
 include_once '../config/database.php';
 include_once '../objects/response.php';
 
@@ -16,10 +14,10 @@ $db = $database->getConnection();
 $response = new Response($db);
 
 // Fetch all users
-$stmt = $response->ReadAllBankCodes();
+$stmt = $response->ReadAllPayments();
 
 // Initialize array to store user data
-$bank_codes_data["bank_codes_data"] = array();
+$payments_data["payments_data"] = array();
 
 
 ini_set('memory_limit', '-1');
@@ -30,20 +28,24 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     // Extract user data from the row
     $product_item = array(
         "id" => $row['id'],
-        "bank_name" => $row['bank_name'],
-        "bank_code" => $row['bank_code']
-
+        "created_on" => $row['created_on'],
+        "transaction_reference" => $row['transaction_reference'],
+        "email" => $row['email'],
+        "price" => $row['price'],
+        // "cumulative_price" => $row['cumulative_price'],
+        "subscription_type" => $row['subscription_type'],
+        "payment_method" => $row['payment_method']
 
     );
 
-    array_push($bank_codes_data["bank_codes_data"], $product_item);
+    array_push($payments_data["payments_data"], $product_item);
 
 }
 
 
 // Check if successfully fetched
-if ($bank_codes_data["bank_codes_data"]) {
-    $response_data = array("status" => true, "data" => $bank_codes_data["bank_codes_data"]);
+if ($payments_data["payments_data"]) {
+    $response_data = array("status" => true, "data" => $payments_data["payments_data"]);
 } else {
     $response_data = array("status" => false);
 }

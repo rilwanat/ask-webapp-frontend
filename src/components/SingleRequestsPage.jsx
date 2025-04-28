@@ -30,6 +30,8 @@ export default function SingleRequestsPage({
     const { selectedItem, allItems } = location.state || {};
     const [selectedIndex, setSelectedIndex] = useState(0);
 
+    const [updatedItem, setUpdatedItem] = useState([]);
+
     //notification modal
     const [notificationType, setNotificationType] = useState(false);
     const [notificationTitle, setNotificationTitle] = useState("");
@@ -176,6 +178,8 @@ export default function SingleRequestsPage({
                                         handleHelpRequestsData={handleHelpRequestsData}
                                         navigateAndRefresh={navigateAndRefresh}
                                         setScrollCarousel={setScrollCarousel}
+
+                                        setUpdatedItem={setUpdatedItem}
                                         />
                                     </motion.div>
                                     <motion.div
@@ -199,6 +203,9 @@ export default function SingleRequestsPage({
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}
               gotoPage={gotoPage}
+
+              updatedItem={updatedItem}
+              navigateAndRefresh={navigateAndRefresh}
             />
 
             <GuestFooter gotoPage={gotoPage} />
