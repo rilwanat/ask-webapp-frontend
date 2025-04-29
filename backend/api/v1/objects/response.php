@@ -470,7 +470,7 @@ public function ReadAllHelpRequestsNotCheat()
         INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
         WHERE 
-        (u.is_cheat IS NULL OR u.is_cheat != 'Yes')
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '')
         ORDER BY RAND()";
 
     $stmt = $this->conn->prepare($query);
@@ -491,7 +491,7 @@ public function ReadAllHelpRequestsEmailsNotCheat()
         INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
         WHERE 
-        (u.is_cheat IS NULL OR u.is_cheat != 'Yes')
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '')
         ORDER BY RAND()";
 
     $stmt = $this->conn->prepare($query);
@@ -635,7 +635,7 @@ public function ReadAllPayments()
 // }
 
 
-public function getTopNominations()
+public function getTopNominations($limit = 3)
 {
     $query = "SELECT
         h.id,
@@ -646,10 +646,37 @@ public function getTopNominations()
         u.fullname
         FROM
         " . $this->help_requests_table . " h
-        INNER JOIN users_table u ON h.email_address = u.email_address
-        ORDER BY h.nomination_count DESC";
+        INNER JOIN users_table u ON h.email_address = u.email_address 
+        WHERE  u.fullname != ''
+        ORDER BY h.nomination_count DESC 
+        LIMIT :limit";
 
     $stmt = $this->conn->prepare($query);
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    // Fetch all results as an associative array
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    return $result;
+}
+
+public function getTopConsistencies($limit = 3)
+{
+    $query = "SELECT
+        u.id,
+        u.registration_date,
+        u.voter_consistency, 
+        u.email_address,
+        u.fullname, 
+        u.phone_number 
+        FROM " . $this->users_table . " u
+        WHERE u.voter_consistency > 0  AND u.fullname != ''
+        ORDER BY u.voter_consistency DESC 
+        LIMIT :limit";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
     $stmt->execute();
     
     // Fetch all results as an associative array
@@ -814,6 +841,7 @@ public function updateUserKycSpecific(
 
 
         //
+        if ($kycStatus === "") {$kycStatus = null;}
 
     $query = "UPDATE " . $this->users_table . " 
               SET 
@@ -2563,14 +2591,49 @@ public function UpdatePasswordResetUserPassword($email, $newPassword) {
 
 
 public function DeletePasswordResetEmailToken($email) {
-    $query = "DELETE FROM " . $this->password_reset_tokens_table . " WHERE email_address = :email_address";
+    $query = "DELETE FROM " . $this->subscriptions_table_name . " WHERE email_address = :email_address";    
+    $stmt = $this->conn->prepare($query);    
+    if ($stmt === false) {
+        // Optional: log error
+        return false;    
+    }
+    $stmt->bindParam(":email_address", $email, PDO::PARAM_STR);    
+    return $stmt->execute();
+}
+
+
+ // // // password reset // //
+
+//
+
+
+public function UnsubscribeEmail($email) {
+    $query = "DELETE FROM " . $this->subscriptions_table_name . " WHERE email_address = :email_address";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(":email_address", $email);
     return $stmt->execute();
 }
 
- // // // password reset // //
 
-//
+
+
+public function UpdateUserWelcomeMessage($email) {
+
+    $opened_welcome_message = 'Yes';
+    $query = "UPDATE " . $this->users_table . " 
+              SET opened_welcome_message = :opened_welcome_message 
+              WHERE email_address = :email_address";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email_address", $email);
+    $stmt->bindParam(":opened_welcome_message", $opened_welcome_message);
+    if ($stmt->execute()) {
+        // Check if any row was actually updated
+        return $stmt->rowCount() > 0;
+    }
+    return false;
+}
+
+
+
 }
 ?>

@@ -66,7 +66,8 @@ const WidgetForKyc = ({ userDetails, refreshUserDetails }) => {
 
         if (notificationType) {
           refreshUserDetails();
-        navigateTo('/');
+        // navigateTo('/');
+        navigateTo('/welcome');
         }
       };
       //notification modal
@@ -819,7 +820,9 @@ isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSr
 
       <NotificationModalForKyc
               isOpen={isNotificationModalOpen}
-              onRequestClose={closeNotificationModal}
+              onRequestClose={() => {
+                closeNotificationModal();
+              }}
               notificationType={notificationType}
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}

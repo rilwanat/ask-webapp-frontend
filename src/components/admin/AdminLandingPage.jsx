@@ -718,7 +718,7 @@ const sample1 = [
                             </div>
                             </div>
 
-                            <div className='rounded-lg shadow-lg px-4 mx-0 border-2 border-black-200 bg-white mt-4'>
+                            {/* <div className='rounded-lg shadow-lg px-4 mx-0 border-2 border-black-200 bg-white mt-4'>
                             <div className="flex justify-between my-2 pb-2 " style={{ }}>
                                 <div className="flex w-full items-center justify-between">
                                     <div className="text-s font-bold pr-2">#</div>
@@ -751,12 +751,7 @@ const sample1 = [
             >
               <div className='flex flex-col'>
               <div className='flex'>
-              {/* <div className="relative flex mr-4 items-center justify-center" style={{ borderRadius: '12px', width: '48px', height: '48px' }}>
-                                            <img className="object-scale-down" src={getRandomImage()} alt="" style={{ borderRadius: '12px', width: '100%', height: '100%' }} />
-                                            <div className='absolute z-50 border-2 border-white' style={{ width: '12px', height: '12px', 
-                                              backgroundColor: getRandomColor(), 
-                                              borderRadius: '6px', top: '0px', right: '0px' }}></div>
-                                          </div> */}
+              
               <div className="flex-shrink-0 flex mr-4 items-center justify-center  bg-black" style={{ borderRadius: '20px', width: '40px', height: '40px' }}>
                                     <img className="object-scale-down" 
                                     // src={doctor.profile_image} 
@@ -766,36 +761,23 @@ const sample1 = [
 <div className='flex flex-col text-sm w-full'>
 
                                   
-              {/* <p><strong>Chat ID:</strong> {chat.id}</p> */}
               <div className='flex justify-between '>
                 <div className='flex flex-col'>
                 <p className=''>
-                {/* <strong>Sender:</strong>  */}
                 {chat.lastMessageSenderName}</p>
                 <p style={{fontSize: '10px'}} >{chat.lastMessageTimestamp && chat.lastMessageTimestamp.toDate().toLocaleString()}</p>
                 </div>
-                {/* <p><strong>Last Message:</strong> {chat.lastMessage}</p> */}
                 <div className='flex flex-col'>
                 <p className='' style={{ fontSize: '10px' }}>
-                  {/* ## */}
+                  
                   {chat.lastMessageTimestamp && getElapsedTime(chat.lastMessageTimestamp)}
                   </p>
                   <div className="text-s text-center rounded" style={{ backgroundColor:'#E53761', color: '#ffffff', width: '22px', height: '22px' }} >.</div>
                 </div>
               </div>
-                {/* <p><strong>ReceiverName:</strong> {chat.lastMessageReceiverName}</p>               */}
-                {/* <p><strong>Timestamp:</strong> {chat.lastMessageTimestamp && chat.lastMessageTimestamp.toDate().toLocaleString()}</p> */}
-                {/* <p style={{fontSize: '10px'}} >{chat.lastMessageTimestamp && chat.lastMessageTimestamp.toDate().toLocaleString()}</p> */}
-                {/* <p className='text-xs text-eDoctorTextGray'>title</p> */}
-                {/* <hr className='my-2'/> */}
               </div>
               </div>
 
-              {/* <div className='text-sm mt-1'>
-              <p className='mt-2 text-eDoctorTextGray'>
-                <strong>Last Message:</strong> 
-                {chat.lastMessage}</p>
-              </div> */}
               </div>
               <hr className='my-4'/>
             </li>
@@ -807,35 +789,6 @@ const sample1 = [
 
 
 
-                                {/* {requestDatas.map((requestData, index) => (
-                                    <div className='flex flex-col'>
-                                      <div key={index} 
-                                      className='cursor-pointer flex justify-between rounded-lg my-2' style={{ padding: '8px 0px', backgroundColor: '#FFFFFF'}}
-                                      onClick={(e) => navigateToMessages()} 
-                                      >
-                                        <div className='flex'>
-                                          <div className="relative flex mr-4 items-center justify-center" style={{ borderRadius: '12px', width: '48px', height: '48px' }}>
-                                            <img className="object-scale-down" src={getRandomImage()} alt="" style={{ borderRadius: '12px', width: '100%', height: '100%' }} />
-                                            <div className='absolute z-50 border-2 border-white' style={{ width: '12px', height: '12px', 
-                                              backgroundColor: getRandomColor(), 
-                                              borderRadius: '6px', top: '0px', right: '0px' }}></div>
-                                          </div>
-
-                                          <div className='flex flex-col justify-center'>
-                                            <p style={{fontSize: '14px'}}>{requestData.title}</p>
-                                            <p style={{fontSize: '10px'}}>{requestData.time}</p>
-                                          </div>
-                                        </div>
-
-                                        <div className='flex flex-col  items-end'>
-                                          <p style={{fontSize: '10px'}}>{requestData.time}</p>
-                                          <div className="text-s text-center rounded" style={{ backgroundColor:'#E53761', color: '#ffffff', width: '22px', height: '22px' }} >3</div>
-                                        </div>                                      
-                                  </div>
-                                   <hr />
-                                    </div>
-                                  
-                                    ))} */}
 
 
 <div className='flex w-full justify-end my-4 ' style={{ cursor: 'pointer' }} 
@@ -845,9 +798,56 @@ const sample1 = [
                             </div>
 
                             </div>
+                            </div> */}
+
+<div className='rounded-lg shadow-lg px-4 mx-0 border-black-200 border-2 bg-white mt-4'>
+                            <div className="flex justify-between my-2 pb-2 " style={{ }}>
+                                <div className="flex w-full items-center justify-between  bg-">
+                                    <div className="text-s font-bold pr-2">Top Consistencies</div>
+                                    <div className="text-s px-2 mr-0 rounded bg-theme" style={{  color: '#ffffff' }}>{
+                                      isDataloading ? <MiniLoading />
+                                      : 
+                                    dashboard.dashboardData[0].Top_Consistencies.length
+                                    }</div>
+                                </div>
+                                
                             </div>
+                            <div>
+                                {dashboard?.dashboardData?.[0]?.Top_Consistencies?.map((requestData, index) => (
+                                    <div key={index} 
+                                    className='flex justify-between rounded-lg my-2' style={{ padding: '10px 10px', backgroundColor: '#FAF3E0'}}
+                                    // onClick={(e) => navigateToAppointments()}
+                                    >
+                                    <div className='flex'>
+                                    
+                                    <div className='mr-2 bg-theme' style={{ width: '6px', height: '100%', }}></div>
 
-
+                                    
+                                            <div className='flex flex-col'>
+                                            <p style={{fontSize: '14px', fontWeight: 'bold'}}>{requestData.fullname}</p>
+                                          <p style={{fontSize: '10px'}}>{requestData.name}</p>
+                                          <div className='flex flex-col'>
+                                          <p style={{fontSize: '10px'}} className='mr-4'>{requestData.registration_date}</p>
+                                          <p style={{fontSize: '10px'}}>{requestData.email_address}</p>
+                                          </div>
+                                      </div>
+                                      </div>
+                                      <div className='flex flex-col items-end'>
+                                      <p style={{fontSize: '12px', fontWeight: 'bold' }}>{requestData.voter_consistency}</p>
+                                      {/* <p style={{fontSize: '12px' }} className=''>{requestData.email_address}</p> */}
+                                      </div>
+                                      
+                                      
+                                      
+                                  </div>
+                                    ))}
+                            </div>
+                            <div className='flex w-full justify-end my-4 ' style={{ cursor: 'pointer' }} 
+                            onClick={() => { navigate('/manage-users'); }}
+                            >
+                              <p style={{fontSize: '12px' }}>View All</p>
+                            </div>
+                            </div>
 
 
 

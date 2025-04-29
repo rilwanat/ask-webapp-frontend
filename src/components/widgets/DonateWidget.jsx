@@ -543,7 +543,7 @@ const defaultCrypto =
     <span>One-time</span>
   </label>
   <div className='mx-2'></div>
-  { isAuthenticated() ?
+  { isAuthenticated() && donateType === "naira" ?
   <label className='flex items-center space-x-2 cursor-pointer'>
     <input type='radio' name='paymentType' value='recurring' className='accent-red-600' checked={donateRecurring ? true : false} 
     onClick={() => {

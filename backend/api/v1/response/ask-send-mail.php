@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //
 $subject = "ASK Mail";
 $message = "<h4>Name: " . $contactName . ' PhoneNumber: ' . $phoneNumber . ' Message: ' . $message . ' Address: ' . $address . "</h4>";
-$sentMail = sendMailFromGuest($email, "info@askfoundations.org", $subject, $message);
+$sentMail = sendMailFromGuest($email, "askfoundationss@gmail.com", $subject, $message);
 
 if ($sentMail) {
     http_response_code(200);

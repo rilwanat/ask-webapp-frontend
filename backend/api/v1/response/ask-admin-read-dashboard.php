@@ -46,6 +46,7 @@ try {
     $total_outgoing = $response->getTotalOutgoing();
 
     $top_nominations = $response->getTopNominations();
+    $top_consistencies = $response->getTopConsistencies();
 
     // Prepare dashboard data item
     $dashboard_item = array(
@@ -59,6 +60,7 @@ try {
         "Total_Outgoing" => $total_outgoing,
 
         "Top_Nominations" => $top_nominations,
+        "Top_Consistencies" => $top_consistencies,
 
 
     );

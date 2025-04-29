@@ -118,13 +118,13 @@ const isValidEmail = (email) => {
     // }
   
   
-    if (!isValidNumber(phoneNumber)) {
-      // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
-      // alert("Please, enter a valid phone number, numbers only.");
-      openNotificationModal(false, "ASK Foundation", "Please, enter a valid phone number, numbers only.");
+  //   if (!isValidNumber(phoneNumber)) {
+  //     // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
+  //     // alert("Please, enter a valid phone number, numbers only.");
+  //     openNotificationModal(false, "ASK Foundation", "Please, enter a valid phone number, numbers only.");
       
-      return;
-  }
+  //     return;
+  // }
   
     if (!isValidEmail(email)) {
       // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');

@@ -41,8 +41,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     if (!empty($row['email_address'])) {
         $message = $messageBody . "<br><br><strong>ASK Foundations Team</strong>";
 
-        sendMailToUser(
-            'Subscriber',
+        sendMailToSubscribe(
+            'ASK Community',
             $row['email_address'],
             $subject,
             $message

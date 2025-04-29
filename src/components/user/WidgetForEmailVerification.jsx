@@ -57,7 +57,8 @@ const WidgetForEmailVerification = ({ userDetails, refreshUserDetails }) => {
 
         if (notificationType) {
          refreshUserDetails();
-             navigateTo('/');
+            //  navigateTo('/');
+             navigateTo('/welcome');
         }
       };
       //notification modal
@@ -96,6 +97,10 @@ const is11DigitNumber = (input) => {
     return pattern.test(input);
   };
 
+
+  useEffect(() => {
+        
+      }, []);
 
 
   const resendVerificationCode = async (e) => {
@@ -180,11 +185,12 @@ const is11DigitNumber = (input) => {
 
     const CheckUserVerification  = async (e) => {
  
-    
- 
+
  
          e.preventDefault();
          setErrorMessage({ message: '' });
+
+
 
   //        // Basic input validation
   //   if (!verificationCode || verificationCode.length < 4) {
@@ -451,7 +457,9 @@ A community-based charity initiative
 
       <NotificationModalForKyc
               isOpen={isNotificationModalOpen}
-              onRequestClose={closeNotificationModal}
+              onRequestClose={() => {
+                closeNotificationModal();
+              }}
               notificationType={notificationType}
               notificationTitle={notificationTitle}
               notificationMessage={notificationMessage}

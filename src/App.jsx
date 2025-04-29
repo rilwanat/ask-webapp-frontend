@@ -22,6 +22,7 @@ import SingleBeneficiaryPage from './components/SingleBeneficiaryPage.jsx';
 
 import DonatePage from './components/DonatePage.jsx';
 import AskPage from './components/AskPage.jsx';
+import WelcomePage from './components/WelcomePage.jsx';
 
 
 
@@ -632,6 +633,12 @@ useEffect(() => {
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              /></ProtectedRoute>}/>
 
+<Route path='/welcome' element={<ProtectedRoute><WelcomePage isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
+             /></ProtectedRoute>}/>
             
 
 
