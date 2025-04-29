@@ -672,7 +672,10 @@ public function getTopConsistencies($limit = 3)
         u.phone_number 
         FROM " . $this->users_table . " u
         WHERE u.voter_consistency > 0  AND u.fullname != ''
-        ORDER BY u.voter_consistency DESC 
+        ORDER BY 
+        u.voter_consistency DESC, 
+        u.vote_weight DESC, 
+        u.registration_date ASC 
         LIMIT :limit";
 
     $stmt = $this->conn->prepare($query);

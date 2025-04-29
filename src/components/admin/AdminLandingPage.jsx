@@ -829,6 +829,7 @@ const sample1 = [
                                           <div className='flex flex-col'>
                                           <p style={{fontSize: '10px'}} className='mr-4'>{requestData.registration_date}</p>
                                           <p style={{fontSize: '10px'}}>{requestData.email_address}</p>
+                                          <p style={{fontSize: '12px', fontWeight: 'bold'}}>{requestData.phone_number}</p>
                                           </div>
                                       </div>
                                       </div>
