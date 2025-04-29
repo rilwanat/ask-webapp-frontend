@@ -261,27 +261,32 @@ class Response
     }
 
     public function CreateSubscribe($email)
-    {
-        $query = "";
-        {
-            $query = "INSERT INTO " . $this->subscriptions_table_name . " SET 
-            
-            email_address=:email
-            ";
-        }
-
-        // prepare query
-        $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(":email", $email);
-        
-        // execute query
-        if ($stmt->execute()) {
-            return true;
-        }
-
+{
+    // First check if email already exists
+    $check_query = "SELECT COUNT(*) as email_count 
+                   FROM " . $this->subscriptions_table_name . " 
+                   WHERE email_address = :email";
+    
+    $check_stmt = $this->conn->prepare($check_query);
+    $check_stmt->bindParam(":email", $email);
+    $check_stmt->execute();
+    
+    $result = $check_stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // If email exists, return false
+    if ($result && $result['email_count'] > 0) {
         return false;
     }
+    
+    // If email doesn't exist, proceed with insertion
+    $insert_query = "INSERT INTO " . $this->subscriptions_table_name . " 
+                    SET email_address = :email";
+    
+    $insert_stmt = $this->conn->prepare($insert_query);
+    $insert_stmt->bindParam(":email", $email);
+    
+    return $insert_stmt->execute();
+}
 
 
     // Function to generate a random password
@@ -653,6 +658,22 @@ public function getTopNominations()
     return $result;
 }
 
+public function ReadAllSubscriptions()
+{
+    $query = "SELECT
+        p.id,
+        p.email_address 
+        FROM
+        " . $this->subscriptions_table_name . " p 
+        
+        ORDER BY id ASC";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
+
 public function updateUserKyc(
     $email, 
     // $fullname, 
@@ -787,18 +808,19 @@ public function updateSelfiImagePath(
 
 public function updateUserKycSpecific(
     $email, 
-    $isCheat
-    // $kycStatus
+    $isCheat,
+    $kycStatus
     ) {
 
 
-        //kyc_status =:kyc_status,
+        //
 
     $query = "UPDATE " . $this->users_table . " 
               SET 
                 
                 
-                is_cheat =:is_cheat 
+                is_cheat =:is_cheat,
+                kyc_status =:kyc_status 
 
               WHERE email_address = :email";
 
@@ -809,7 +831,7 @@ public function updateUserKycSpecific(
     $stmt->bindParam(":email", $email);
 
     $stmt->bindParam(":is_cheat", $isCheat);
-    // $stmt->bindParam(":kyc_status", $kycStatus);
+    $stmt->bindParam(":kyc_status", $kycStatus);
 
     // Execute query and return the result
     if ($stmt->execute()) {
@@ -1439,7 +1461,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                    FROM " . $this->nominations_history_table . " nh
                    JOIN " . $this->users_table . " voter ON nh.voter_email = voter.email_address
                    JOIN " . $this->users_table . " nominee ON nh.nominee_email = nominee.email_address
-                   WHERE (voter.fullname = :voter_fullname 
+                   WHERE ((voter.fullname = :voter_fullname AND voter.fullname != '')
                      OR nh.voter_device_id = :voter_device_id)
                      AND (nh.voter_email != nh.nominee_email OR voter.fullname != nominee.fullname)
                      AND DATE(nh.voting_date) = CURRENT_DATE()";

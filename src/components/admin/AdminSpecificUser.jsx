@@ -272,12 +272,18 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     if (isUpdateDataloading) {
         // alert("please wait..");
-        openNotificationModal(false, "Update User", "Please wait...");
+        openNotificationModal(false, "Update User", "Please wait...#");
         return;
     }
 
     if ((user.userIsCheat === "Select") || (user.userIsCheat === "")) {
-        openNotificationModal(false, "Update User", `Select Cheat Status`);
+        openNotificationModal(false, "Update User", `Select Cheat Status#`);
+        
+        return;
+      }
+
+      if ((user.userKycStatus === "Select")) {
+        openNotificationModal(false, "Update KycStatus", `Select KycStatus#`);
         
         return;
       }
@@ -295,8 +301,8 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
       const requestData = {
         email: user.userEmailAddress.trim(),
-        isCheat: user.userIsCheat.trim()
-        // kycStatus: user.userKycStatus,
+        isCheat: user.userIsCheat.trim(),
+        kycStatus: user.userKycStatus.trim(),
     };
     // alert(JSON.stringify(requestData), null, 2);
     // setIsUpdateDataLoading(false);
@@ -573,7 +579,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                         </div>
                                         
                                         <div className="w-full md:w-1/2 px-2 mb-4">
-                                            <label htmlFor="kyc_status" className="block text-sm font-medium text-white mb-2">KYC Status:</label>
+                                            <label htmlFor="kyc_status" className="block text-sm font-medium text-red-500 mb-2">KYC Status:</label>
                                            
                                             <select
                 id="userKycStatus"
@@ -581,13 +587,14 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                 className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
                     block w-full p-2.5"
                     value={userData.userKycStatus}
-                    disabled
+                    // disabled
                     onChange={(e) => {
                       // alert(e.target.value);
                       setUserData({ ...userData, userKycStatus: e.target.value })                      
                   }}
             >
                 <option value="Select">Select KYC Status</option>
+                <option value=""></option>
                 <option value="PENDING">PENDING</option>
                 <option value="APPROVED">APPROVED</option>
                 <option value="REJECTED">REJECTED</option>
@@ -679,7 +686,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                     onClick={() => updateUser(userData)} 
                     style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
                       <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " />
-                      <div className="text-s " style={{color: '#ffffff'}}>{isUpdateDataloading ? "Updating.." : 'Update Cheat'}</div>
+                      <div className="text-s " style={{color: '#ffffff'}}>{isUpdateDataloading ? "Updating.." : 'Update Cheat & KYC'}</div>
                     </div>
                                     
                                  }

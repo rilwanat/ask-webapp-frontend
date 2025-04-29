@@ -43,12 +43,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (
         !empty($data->email) && 
         !empty($data->isCheat) 
-        // &&  !empty($data->kycStatus)
+        // &&
+        // !empty($data->kycStatus)
     ) {
         $updateCustomerKycSpecific = $response->updateUserKycSpecific(            
             $data->email, 
             $data->isCheat, 
-            // $data->kycStatus 
+            $data->kycStatus 
         );
 
         $userData = $response->ReadUser($data->email);
@@ -66,15 +67,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             http_response_code(200);
-            echo json_encode(array("status" => true, "message" => "Account updated successfully!", "userData" => $userData
+            echo json_encode(array("status" => true, "message" => "Account updated successfully!#", "userData" => $userData
         ));
         } else {
             http_response_code(400);
-            echo json_encode(array("status" => false, "message" => "Update failed."));
+            echo json_encode(array("status" => false, "message" => "Update failed.#"));
         }
     } else {
         http_response_code(400);
-        echo json_encode(array("status" => false, "message" => "Incomplete data."));
+        echo json_encode(array("status" => false, "message" => "Incomplete data.#"));
     }
 }
 ?>

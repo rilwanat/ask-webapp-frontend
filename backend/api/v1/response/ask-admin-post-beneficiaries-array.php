@@ -94,8 +94,8 @@ foreach ($data['beneficiaries'] as $beneficiary) {
         // "Dear " . ($beneficiary['fullname'] ?? 'User') . ",<br><br>"
                  . "Congratulations!! You have been selected as this week's beneficiary of A.S.K FOUNDATION weekly support initiative.<br><br>"
                  . "Your request is currently being processed.<br><br>"
-                 . "Please when you receive the credit alert send us a short VIDEO to our WhatsApp (+2349051047138) telling us your name, how you got to know A.S.K Foundation and how you eventually got nominated.<br><br>"
-                 . "ASK Foundations Team";
+                 . "Please when you receive the credit alert send us a short VIDEO to our WhatsApp (+2349051047138) telling us your name, how you got to know A.S.K Foundation and how you eventually got nominated.<br><br><br>"
+                 . "<strong>ASK Foundations Team</strong><br>";
 
         sendMailToUser(
             $beneficiary['fullname'] ?? 'User',

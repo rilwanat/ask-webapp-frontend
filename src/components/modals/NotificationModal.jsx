@@ -22,6 +22,7 @@ const customModalStyles = {
 const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage, gotoPage }) => {
 
       // const navigate = useNavigate();
+      // alert(notificationMessage);
 
       const parts = notificationMessage.split("#");
 const mainMessage = parts[0];

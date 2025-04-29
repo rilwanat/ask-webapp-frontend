@@ -38,6 +38,7 @@ import AdminManageUsers from './components/admin/AdminManageUsers.jsx';
 import AdminListDonations from './components/admin/AdminListDonations.jsx';
 import AdminListPayments from './components/admin/AdminListPayments.jsx';
 import AdminListAdmins from './components/admin/AdminListAdmins.jsx';
+import AdminBroadcastPage from './components/admin/AdminBroadcastPage.jsx';
 
 import AdminSpecificUser from './components/admin/AdminSpecificUser.jsx';
 import AdminSpecificRequest from './components/admin/AdminSpecificRequest.jsx';
@@ -615,6 +616,12 @@ useEffect(() => {
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+
+<Route path='/admin-broadcast' element={<ProtectedAdminRoute><AdminBroadcastPage isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
              /></ProtectedAdminRoute>}/>
 
 

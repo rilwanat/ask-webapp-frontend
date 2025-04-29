@@ -329,7 +329,7 @@ A community-based charity initiative
 
 
                              <div className='flex flex-col my-2 '>
-                             <label className='text-xs mb-1'>Passord:</label>
+                             <label className='text-xs mb-1'>Password:</label>
                                 <input 
                                 type='password'  name='sponsor-name' inputMode="text" autoComplete='sponsor-name'
                                 placeholder='Enter Password' 

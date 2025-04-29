@@ -304,69 +304,105 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 
-  const updateRemark = async (request) => {
+  const updateUser = async (user) => {
 
-    if (isUpdateDataloading) {
-        // alert("please wait..");
-        openNotificationModal(false, "Update Remark", "Please wait...");
-        return;
-    }
-
-    if (request.remark === "" || request.remark === "Select") {
-        openNotificationModal(false, "Update Remark", `Select a Remark`);
-        
-        return;
-      }
-
-
-
-    setIsUpdateDataLoading(true);
 
     
-    try {
-      const updateRequestData = {
-        email: request.userEmail.trim(),
-        remark: request.remark.trim()
-    };
-    // alert(JSON.stringify(updateRequestData), null, 2);
-    // setIsUpdateDataLoading(false);
-    // return;
-
+    
+        if (isUpdateDataloading) {
+            // alert("please wait..");
+            openNotificationModal(false, "Update User", "Please wait...#");
+            return;
+        }
+    
+        if ((user.userIsCheat === "Select") || (user.userIsCheat === "")) {
+            openNotificationModal(false, "Update User", `Select Cheat Status#`);
+            
+            return;
+          }
+    
+          if ((user.userKycStatus === "Select")) {
+            openNotificationModal(false, "Update KycStatus", `Select KycStatus#`);
+            
+            return;
+          }
+    
+    
+        setIsUpdateDataLoading(true);
+    
+    
+    
         
-        var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_REMARK;
-  //  alert(endpoint);
-//    return;
-
-  const response = await axiosAdminInstance.post(endpoint, updateRequestData, {
-              headers: {
-                "Content-Type": "application/json",
-                //Authorization: `Bearer ${token}`,
-              },
-            });
-
+        // userId: selectedRequest.user.id,
+        // userFullname: selectedRequest.user.fullname,
+        // userEmail: selectedRequest.user.email_address,
+        // userKycStatus: selectedRequest.user.kyc_status,
+        // userAccessKey: selectedRequest.user.access_key,
+        // userPhone: selectedRequest.user.phone,
+        // userAccountNumber: selectedRequest.user.account_number,
+        // userAccountName: selectedRequest.user.account_name,
+        // userBankName: selectedRequest.user.bank_name,
+        // userGender: selectedRequest.user.gender,
+        // userState: selectedRequest.user.state,
+        // userProfilePicture: selectedRequest.user.profile_picture,
+        // userEmailVerified: selectedRequest.user.email_verified,
+        // userRegistrationDate: selectedRequest.user.registration_date,
+        // userType: selectedRequest.user.type,
+        // userEligibility: selectedRequest.user.eligibility,
+        // userIsCheat: selectedRequest.user.is_cheat,
+        // userOpenedWelcomeMsg: selectedRequest.user.opened_welcome_msg,
+        // userVoteWeight: selectedRequest.user.vote_weight,
+    
+        
+        try {
+    
+          const requestData = {
+            email: user.userEmail.trim(),
+            isCheat: user.userIsCheat.trim(),
+            kycStatus: user.userKycStatus.trim(),
+        };
+        // alert(JSON.stringify(requestData), null, 2);
+        // setIsUpdateDataLoading(false);
+        // return;
+    
+    
+    
+    
+            
+            var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_KYC;
+      //  alert(endpoint);
+    //    return;
+    
+      const response = await axiosAdminInstance.post(endpoint, requestData, {
+                  headers: {
+                    "Content-Type": "application/json",
+                    //Authorization: `Bearer ${token}`,
+                  },
+                });
+    
+                setIsUpdateDataLoading(false);
+                // alert(JSON.stringify(response.data, null, 2));
+                if (response.data.status) {
+                    // alert("update-product " + JSON.stringify(response.data, null, 2));
+                    openNotificationModal(true, "Update User", response.data.userData.fullname + "'s " + response.data.message);
+                    
+    
+    
+                    // navigateActiveTab(1);
+                    // navigate('/manage-users');
+    
+                } else {
+                    // alert("error: " + response.data.message);
+                    openNotificationModal(false, "Update User", response.data.message);
+                    
+                }
+        } catch (error) {
             setIsUpdateDataLoading(false);
-            // alert(JSON.stringify(response.data, null, 2));
-            if (response.data.status) {
-                // alert("update-product " + JSON.stringify(response.data, null, 2));
-                openNotificationModal(true, "Update Help Request Remark", response.data.userData.fullname + "'s " + response.data.message);
-                
-
-
-                // navigateActiveTab(1);
-                // navigate('/manage-users');
-
-            } else {
-                // alert("error: " + response.data.message);
-                openNotificationModal(false, "Update Help Request Remark", response.data.message);
-                
-            }
-    } catch (error) {
-        setIsUpdateDataLoading(false);
-        // alert("error: " + error);
-        openNotificationModal(false, "Update Help Request Remark", error);
-        
-    }
-};
+            // alert("error: " + error);
+            openNotificationModal(false, "Update User", error);
+            
+        }
+    };
     
     
 
@@ -525,7 +561,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             />
                                         </div> */}
 
-<div className="w-full md:w-1/2 px-2 mb-4">
+{/* <div className="w-full md:w-1/2 px-2 mb-4">
                                             <label htmlFor="kyc_status" className="block text-sm font-medium text-red-300 mb-2">Remark:</label>
                                            
                                             <select
@@ -545,7 +581,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                 <option value="Food Support">Food Support</option>
                 <option value="Sponsored">Sponsored</option>
             </select>
-                                        </div>
+                                        </div> */}
                                     </div>
 
 
@@ -683,7 +719,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                         </div>
                                         
                                         <div className="w-full md:w-1/2 px-2 mb-4">
-                                            <label htmlFor="kyc_status" className="block text-sm font-medium text-white mb-2">KYC Status:</label>
+                                            <label htmlFor="kyc_status" className="block text-sm font-medium text-red-500 mb-2">KYC Status:</label>
                                            
                                             <select
                 id="userKycStatus"
@@ -691,13 +727,14 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                 className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
                     block w-full p-2.5"
                     value={requestData.userKycStatus}
-                    disabled
+                    // disabled
                     onChange={(e) => {
                       // alert(e.target.value);
                       setRequestData({ ...requestData, userKycStatus: e.target.value })                      
                   }}
             >
-                <option value="">Select KYC Status</option>
+                <option value="Select">Select KYC Status</option>
+                <option value=""></option>
                 <option value="PENDING">PENDING</option>
                 <option value="APPROVED">APPROVED</option>
                 <option value="REJECTED">REJECTED</option>
@@ -707,7 +744,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
                                     <div className="flex flex-wrap ">
                                         <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="userIsCheat" className="block text-sm font-medium text-white mb-2">Is Cheat:</label>
+                                            <label htmlFor="userIsCheat" className="block text-sm font-medium text-red-500 mb-2">Is Cheat:</label>
                                             <input type="text" id="userIsCheat" name="userIsCheat"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Is Cheat' 
@@ -775,10 +812,10 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                  {
                                     
                                     <div  
-                    onClick={() => updateRemark(requestData)} 
+                    onClick={() => updateUser(requestData)} 
                     style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
                       <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " />
-                      <div className="text-s " style={{color: '#ffffff'}}>{isUpdateDataloading ? "Updating.." : 'Update Remark'}</div>
+                      <div className="text-s " style={{color: '#ffffff'}}>{isUpdateDataloading ? "Updating.." : 'Update Cheat & KYC'}</div>
                     </div>
                                     
                                  }

@@ -284,6 +284,11 @@ const [shareType, setShareType] = useState("direct");
         if (beneficiaries === null) {
           return;
         }
+
+        if (generatedBeneficiaries.length !== numberOfBeneficiaries) {
+          openNotificationModal(false, "ASK Post Beneficiaries", "Count mismatch: Number of beneficiaries not equal to Generated beneficiaries count");
+          return;
+        }
  
         
 

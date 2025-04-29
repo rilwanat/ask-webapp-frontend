@@ -153,7 +153,10 @@ function sendMailToUser($username, $email, $subject, $message) {
         <h2>'. $subject .'</h2>
     </div>
     <div class="content">
-        <p>Dear ' . $username . ',</p>
+        <p>Dear ' . 
+        // $username
+        explode(" ", $username)[0]
+        . ',</p>
         <p>' . $message . '</p>
         
         <p>If you have any questions or need further assistance, feel free to contact us at <a href="mailto:info@askfoundations.org">info@askfoundations.org</a>.</p>
