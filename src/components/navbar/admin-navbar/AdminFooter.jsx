@@ -122,7 +122,7 @@ function AdminFooter({
             <div className="mt-auto mb-10">
                 <div className="bottom-0 w-full text-center">
                     <p className="text-xs py-2 text-white">
-                        &copy; 2025 ASK Foundation. All rights reserved.
+                        &copy; 2025 A.S.K Foundation. All rights reserved.
                     </p>
                 </div>
             </div>

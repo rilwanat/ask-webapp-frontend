@@ -47,6 +47,7 @@ try {
 
     $top_nominations = $response->getTopNominations();
     $top_consistencies = $response->getTopConsistencies();
+    $beneficiaires_bargraph = $response->getBeneficiairesBargraph();
 
     // Prepare dashboard data item
     $dashboard_item = array(
@@ -61,6 +62,7 @@ try {
 
         "Top_Nominations" => $top_nominations,
         "Top_Consistencies" => $top_consistencies,
+        "Beneficiaries_Bargraph" => $beneficiaires_bargraph
 
 
     );

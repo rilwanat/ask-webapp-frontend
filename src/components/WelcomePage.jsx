@@ -106,7 +106,7 @@ export default function WelcomePage({
 
 
           <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
-            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>You are welcome to ASK Foundation.</p>
+            <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>You are welcome to A.S.K Foundation.</p>
             <p className='mb-2 text-center' style={{ color: '', fontWeight: '400', fontSize: '16px' }}>You are strongly encouraged to follow our <strong>WhatsApp channel now</strong> and our other social media pages to maximize your experience with us. </p>
             <p className='mb-2 text-center' style={{ color: '', fontWeight: '400', fontSize: '16px' }}>Feel free to watch our VIDEO GUIDES below. </p>
             

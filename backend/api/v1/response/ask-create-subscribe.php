@@ -28,14 +28,14 @@ if (
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => true, "message" => "ASK: Email subscription successful."));
+        echo json_encode(array("status" => true, "message" => "A.S.K: Email subscription successful."));
     } else {
 
         // set response code - 503 service unavailable
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => false, "message" => "ASK: Email unable to Subscribe."));
+        echo json_encode(array("status" => false, "message" => "A.S.K: Email unable to Subscribe."));
     }
 
 

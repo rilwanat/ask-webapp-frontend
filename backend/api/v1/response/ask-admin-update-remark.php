@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             //
-            $subject = "ASK Remark Update";
+            $subject = "A.S.K Remark Update";
             $message = "Your Help request remark has successfully been updated to: " . $data->remark . ". Thank you for your patience.";
             sendMailToUser('', $data->email, $subject, $message);
             //

@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $eligibility = "No"; 
 
             //
-            $subject = "ASK: KYC " . $kycStatus;
+            $subject = "A.S.K: KYC " . $kycStatus;
             $message = "Oops! There seem to be a mismatch in your supplied data. Your KYC information has been '" . $kycStatus . "'. Please try again with accurate details.";
             sendMailToUser($accountNameFromNuban, $data->email, $subject, $message);
             //
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // update cheat user
             //
-            $subject = "ASK: KYC Warning Account Flagged";
+            $subject = "A.S.K: KYC Warning Account Flagged";
             $message = "Your KYC information has been flagged.";
             sendMailToUser($accountNameFromNuban, $data->email, $subject, $message);
             //
@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             //
-            $subject = "ASK: KYC Update Confirmation";
+            $subject = "A.S.K: KYC Update Confirmation";
             $message = "Your KYC information has been successfully updated: '" . $kycStatus . "'. You are now eligible.";
             sendMailToUser($accountNameFromNuban, $data->email, $subject, $message);
             //

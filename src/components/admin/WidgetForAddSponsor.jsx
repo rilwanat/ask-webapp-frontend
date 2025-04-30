@@ -124,7 +124,7 @@ const is11DigitNumber = (input) => {
        // Validate Fullname before proceeding
   if (!isValidSponsorName(sponsorName)) {
     // alert('Invalid Fullname');
-    openNotificationModal(false, "ASK Add Sponsor", "Invalid Sponsor Name. Only alphabetic characters and single spaces between words are allowed.");
+    openNotificationModal(false, "A.S.K Add Sponsor", "Invalid Sponsor Name. Only alphabetic characters and single spaces between words are allowed.");
     
     return;
 }
@@ -132,7 +132,7 @@ const is11DigitNumber = (input) => {
 
 
 if ((sponsorType === "Select") || (sponsorType === "")) {
-  openNotificationModal(false, "ASK Add Sponsor", `Select Sponsor Type`);
+  openNotificationModal(false, "A.S.K Add Sponsor", `Select Sponsor Type`);
   
   return;
 }
@@ -163,7 +163,7 @@ if ((sponsorType === "Select") || (sponsorType === "")) {
             formData.append('image', selectedFile);
           } else {
             // alert("Please select an image to upload");
-            openNotificationModal(false, "ASK Add Sponsor", "Select a sponsor image to upload");
+            openNotificationModal(false, "A.S.K Add Sponsor", "Select a sponsor image to upload");
             
             return;
           }
@@ -199,7 +199,7 @@ if ((sponsorType === "Select") || (sponsorType === "")) {
              setPreview(null);
              
             //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-             openNotificationModal(true, "ASK Add Sponsor", response.data.message);
+             openNotificationModal(true, "A.S.K Add Sponsor", response.data.message);
               
      
 
@@ -220,7 +220,7 @@ if ((sponsorType === "Select") || (sponsorType === "")) {
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Add Sponsor", errorMessage);
+           openNotificationModal(false, "A.S.K Add Sponsor", errorMessage);
               
 
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -229,12 +229,12 @@ if ((sponsorType === "Select") || (sponsorType === "")) {
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Add Sponsor", errorMessage);
+           openNotificationModal(false, "A.S.K Add Sponsor", errorMessage);
               
          } else {
-           setErrorMessage({ message: 'ASK Add Sponsor failed. Please check your data and try again.' });
+           setErrorMessage({ message: 'A.S.K Add Sponsor failed. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK Add Sponsor", 'ASK Add Sponsor failed. Please check your data and try again.');
+           openNotificationModal(false, "A.S.K Add Sponsor", 'A.S.K Add Sponsor failed. Please check your data and try again.');
               
          }
        }

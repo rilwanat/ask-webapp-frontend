@@ -688,6 +688,30 @@ public function getTopConsistencies($limit = 3)
     return $result;
 }
 
+public function getBeneficiairesBargraph()
+{
+    $query = "SELECT 
+        u.state_of_residence, 
+        COUNT(b.id) AS total_beneficiaries
+        FROM 
+        " . $this->beneficiaries_table . " b
+        JOIN 
+        " . $this->users_table . " u ON b.email_address = u.email_address
+        GROUP BY 
+        u.state_of_residence
+        ORDER BY 
+        total_beneficiaries DESC";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    
+    // Fetch all results as an associative array
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    return $result;
+}
+
+
 public function ReadAllSubscriptions()
 {
     $query = "SELECT
@@ -2220,7 +2244,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
         INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
          WHERE 
-        (u.is_cheat IS NULL OR u.is_cheat != 'Yes') AND (p.nomination_count > 0)
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes') AND (p.nomination_count > 0) AND (u.fullname != '') 
         
         ORDER BY 
             p.nomination_count DESC,

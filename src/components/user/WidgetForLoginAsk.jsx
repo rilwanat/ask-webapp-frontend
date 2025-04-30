@@ -89,7 +89,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
       
       // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
       if (userDetails === null) {
-        openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send your help request.`); 
+        openNotificationModal(false, "A.S.K Help Request", `You are not logged in. Please register or login to send your help request.`); 
         
         return;
       }
@@ -98,7 +98,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
     //    alert("here");
 
     if (helpDescription === "") {
-      openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
+      openNotificationModal(false, "A.S.K Help Request", `Enter a Help Request description`);
       
       return;
     }
@@ -120,7 +120,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
             formData.append('image', selectedFile);
           } else {
             // alert("Please select an image to upload");
-            openNotificationModal(false, "ASK Help Request", "Select an image to upload");
+            openNotificationModal(false, "A.S.K Help Request", "Select an image to upload");
             
             return;
           }
@@ -156,7 +156,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
             getActiveHelpRequests();
 
 
-             openNotificationModal(true, "ASK Help Request", response.data.message);
+             openNotificationModal(true, "A.S.K Help Request", response.data.message);
               
 
      
@@ -175,7 +175,7 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Help Request", errorMessage);
+           openNotificationModal(false, "A.S.K Help Request", errorMessage);
               
 
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -184,12 +184,12 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Help Request", errorMessage);
+           openNotificationModal(false, "A.S.K Help Request", errorMessage);
               
          } else {
-           setErrorMessage({ message: 'ASK Help Request failed. Please check your data and try again.' });
+           setErrorMessage({ message: 'A.S.K Help Request failed. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK Help Request", 'Please check your data and try again.');
+           openNotificationModal(false, "A.S.K Help Request", 'Please check your data and try again.');
               
          }
        }

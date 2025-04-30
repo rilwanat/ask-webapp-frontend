@@ -22,60 +22,56 @@ $database = new Database();
 $db = $database->getConnection();
 $response = new Response($db);
 
-// $data = json_decode(file_get_contents("php://input"));
-
-// Handle register endpoint -> ask-register-user.php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Receive registration data from the request
-    // $data = json_decode(file_get_contents("php://input"));
+    // Sanitize and validate input
+    $email = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
+    $message = htmlspecialchars($_POST['message'] ?? '');
+    $contactName = htmlspecialchars($_POST['contact_name'] ?? '');
+    $phoneNumber = htmlspecialchars($_POST['phone_number'] ?? '');
+    $address = htmlspecialchars($_POST['address'] ?? '');
 
-    // formData.append('contact_name', contactName);
-    // formData.append('phone_number', phoneNumber);
-    // formData.append('email', email);    
-    // formData.append('address', address);
-    // formData.append('message', message);
-
-    $email = $_POST['email'] ?? null;
-    $message = $_POST['message'] ?? null;
-    $contactName = $_POST['contact_name'] ?? null;
-    $phoneNumber = $_POST['phone_number'] ?? null;
-    $address = $_POST['address'] ?? null;
-
-    if (
-        !empty($email) && 
-        !empty($message)
-        // !empty($data->contact_name) &&
-        // !empty($data->phone_number) &&
-        // !empty($data->address)
-        
-        ) {
-        
-            //
-$subject = "ASK Mail";
-$message = "<h4>Name: " . $contactName . ' PhoneNumber: ' . $phoneNumber . ' Message: ' . $message . ' Address: ' . $address . "</h4>";
-$sentMail = sendMailFromGuest($email, "askfoundationss@gmail.com", $subject, $message);
-
-if ($sentMail) {
-    http_response_code(200);
-                    echo json_encode([
-                        "status" => true,
-                        "message" => "Mail sent."
-                    ]);
-} else {
-    http_response_code(400);
-                    echo json_encode([
-                        "status" => false,
-                        "message" => "Mail not sent, failed."
-                    ]);
-}
-//
-
-
-        
-    } else {
-        // Registration data is incomplete
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         http_response_code(400);
-        echo json_encode(array("status" => false, "message" => "Mail data is incomplete."));
+        echo json_encode(["status" => false, "message" => "Invalid email address"]);
+        exit;
     }
+
+    if (empty($message)) {
+        http_response_code(400);
+        echo json_encode(["status" => false, "message" => "Message cannot be empty"]);
+        exit;
+    }
+
+    $subject = "A.S.K Mail from " . $contactName;
+    $htmlMessage = "
+        <h3>Contact Details</h3>
+        <p><strong>Name:</strong> {$contactName}</p>
+        <p><strong>Phone:</strong> {$phoneNumber}</p>
+        <p><strong>Address:</strong> {$address}</p>
+        <h3>Message:</h3>
+        <p>{$message}</p>
+    ";
+
+    // Try sending to both addresses
+    $sentToAdmin = sendMailFromGuest($contactName, $email, $subject, $htmlMessage);
+
+    if ($sentToAdmin || $sentToBackup) {
+        http_response_code(200);
+        echo json_encode([
+            "status" => true,
+            "message" => "Mail sent successfully"
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode([
+            "status" => false,
+            "message" => "Failed to send mail. Please try again later."
+        ]);
+        
+        // Log the error for debugging
+        error_log("Mail sending failed for email: $email");
+    }
+} else {
+    http_response_code(405);
+    echo json_encode(["status" => false, "message" => "Method not allowed"]);
 }
-?>

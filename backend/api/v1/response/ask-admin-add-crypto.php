@@ -72,16 +72,16 @@ if ($_FILES['image']['size'] > 2 * 1024 * 1024) { // 2MB max
             
             
 
-            // Ensure ASK Sponsor data is complete
+            // Ensure A.S.K Sponsor data is complete
             if ($cryptoNetwork && $cryptoAddress && $uniqueTargetFilePath) {
 
-                // Add ASK Sponsor with image path
+                // Add A.S.K Sponsor with image path
                 if ($response->CreateCrypto($cryptoNetwork, $cryptoAddress, $uniqueTargetFilePath)) {
                     http_response_code(200);
-                    echo json_encode(["status" => true, "message" => "ASK Crypto created successfully."]);
+                    echo json_encode(["status" => true, "message" => "A.S.K Crypto created successfully."]);
                 } else {
                     http_response_code(500);
-                    echo json_encode(["status" => false, "message" => "Unable to create ASK Crypto."]);
+                    echo json_encode(["status" => false, "message" => "Unable to create A.S.K Crypto."]);
                 }
             } else {
                 http_response_code(400);

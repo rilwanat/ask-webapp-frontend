@@ -154,67 +154,7 @@ useEffect(() => {
       const [upcomingAppointmentData, setUpcomingAppointmentData] = useState([]);
     
       const currentPageName = "Overview";
-      useEffect(() => {
-        
-        //const storedName = localStorage.getItem('user_name');
-        //setStoredName(storedName);
-    
-    
-        // Mock workshops data for demonstration
-        const sample = Array.from({ length: 10 }, (_, index) => ({
-          id: index + 1,
-          sn: index + 1,
-          name: `User ${index + 1}`,
-          workshop: `Workshop ${index + 1}`,
-          email: `user${index + 1}@example.com`,
-          time: '10:00 AM',
-        }));
-    
-        setSampleDatas(sample);
-    
-    
-        const request = Array.from({ length: 5 }, (_, index) => ({
-          id: index + 1,
-          name: "James",
-          time: '02:00 PM',
-        }));
-    
-        setRequestDatas(request);
-    
-    
-        const nomineesData = [
-          {
-            id: 1,
-            type: 'Consultation',
-            name: 'Martha Joseph',
-            time: '10:00 AM',
-            description: 'High fever with extreme cold for over a week',
-            specialist: 'Rb Apps',
-            specialization: 'General Practitioner'
-          },
-          {
-            id: 2,
-            type: 'Follow-up',
-            name: 'Chinedu Okafor',
-            time: '11:30 AM',
-            description: 'Persistent headache and dizziness',
-            specialist: 'Rb Apps',
-            specialization: 'Neurologist'
-          },
-          {
-            id: 3,
-            type: 'Follow-up',
-            name: 'Khatrin Abu',
-            time: '1:30 PM',
-            description: 'Tummy upsets and dizziness',
-            specialist: 'Rb Apps',
-            specialization: 'Neurologist'
-          },
-        ];
-        setUpcomingAppointmentData(nomineesData);
-    
-    
-      }, []);
+
     
 
 
@@ -249,35 +189,6 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 
-const sample1 = [
-  { name: 'Jan', sales: 6000, nominations: 5470},
-  { name: 'Feb', sales: 5600, nominations: 1618},
-  { name: 'Mar', sales: 2500, nominations: 9890},
-  { name: 'Apr', sales: 7780, nominations: 1928},
-  { name: 'May', sales: 4890, nominations: 3470},
-  { name: 'Jun', sales: 6390, nominations: 1870},
-  { name: 'Jul', sales: 5490, nominations: 8300},
-  { name: 'Aug', sales: 7310, nominations: 4410},
-  { name: 'Sep', sales: 3250, nominations: 1358},
-  { name: 'Oct', sales: 1200, nominations: 6800},
-  { name: 'Nov', sales: 3780, nominations: 2948},
-  { name: 'Dec', sales: 4890, nominations: 9800}
-];
-  // Function to generate a random number within a range
-  const getRandomNumberInRange = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  };
-    // Function to randomize data
-  const randomizeData = (data) => {
-    return data.map(item => ({
-      ...item,
-      sales: getRandomNumberInRange(1000, 10000), // Adjust the range as needed
-      totalOrders: getRandomNumberInRange(1000, 10000), // Adjust the range as needed
-    }));
-  };
-  
-  // Randomized data arrays
-  const randomizedSample1 = randomizeData([...sample1]);
 
 
 
@@ -354,6 +265,10 @@ const sample1 = [
 
 
   
+  const barData = dashboard?.dashboardData?.[0]?.Beneficiaries_Bargraph?.map(item => ({
+    name: item.state_of_residence,
+    total: parseInt(item.total_beneficiaries, 10)
+  })) || [];
   
 
 
@@ -604,15 +519,14 @@ const sample1 = [
                                           <div className='flex flex-row w-full justify-end'>
                                           <div className="w-full md:w-2/6 mb-4 mr-4 h-full flex items-center relative">
                   <select
-                    id="patientsSelect"
-                    name="patientsSelect"
+                    id="beneficiariesSelect"
+                    name="beneficiariesSelect"
                     className="bg-white border border-gray-300 text-eDoctorBlue text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2 pl-4 pr-8 appearance-none"
                     onChange={(e) => {
                       // handleChange for 
                     }}
                   >
-                    <option value="">Nominations</option>
-                    {/* Map categories here */}
+                    <option value="">Beneficiaries</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <KeyboardArrowDownIcon style={{ color: '#254EDB', width: '20px', height: '20px' }}/>
@@ -640,17 +554,20 @@ const sample1 = [
                                           </div>
                                         </div>
                                       </div>
-                              
-                              <ResponsiveContainer width="100%" height={240}>
-                                <LineChart data={randomizedSample1} barSize={8}>
-                                  <CartesianGrid strokeDasharray="3 3" />
-                                  <XAxis dataKey="name" />
-                                  <YAxis />
-                                  <Tooltip />
-                                  <Line type="monotone" dataKey="nominations" stroke="#82ca9d" strokeWidth={3}/>
-                                  
-                                </LineChart>
-                              </ResponsiveContainer>
+
+              
+
+
+
+                                      <ResponsiveContainer width="100%" height={240}>
+                                        <BarChart data={barData} barSize={30}>
+                                          <CartesianGrid strokeDasharray="3 3" />
+                                          <XAxis dataKey="name" />
+                                          <YAxis allowDecimals={false} />
+                                          <Tooltip />
+                                          <Bar dataKey="total" fill="#82ca9d" />
+                                        </BarChart>
+                                      </ResponsiveContainer>
 
                             </div>
                                         

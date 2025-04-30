@@ -271,7 +271,7 @@ const dataURLtoBlob = (dataURL) => {
 // Validate Phonenumber before proceeding
 if (!(isValidWorldNumber(phoneNumber))) {
     // alert('Enter a valid phone number');
-    openNotificationModal(false, "ASK KYC", `Enter a valid phone number`);
+    openNotificationModal(false, "A.S.K KYC", `Enter a valid phone number`);
     
     return;
 }
@@ -279,7 +279,7 @@ if (!(isValidWorldNumber(phoneNumber))) {
 // Validate Account number before proceeding
 if (!isNumericWithLength(accountNumber)) {
     // alert('Invalid Account number');
-    openNotificationModal(false, "ASK KYC", `Invalid Account number`);
+    openNotificationModal(false, "A.S.K KYC", `Invalid Account number`);
             
     return;
 }
@@ -288,17 +288,17 @@ if (!isNumericWithLength(accountNumber)) {
 // alert( bankName + " " + gender + " " + residence );
 
 if ((bankName === "Select") || (bankName === "")) {
-  openNotificationModal(false, "ASK KYC", `Select your Bank`);
+  openNotificationModal(false, "A.S.K KYC", `Select your Bank`);
   
   return;
 }
 if ((gender === "Select") || (gender === "")) {
-  openNotificationModal(false, "ASK KYC", `Select your Gender`);
+  openNotificationModal(false, "A.S.K KYC", `Select your Gender`);
   
   return;
 }
 if ((residence === "Select") || (residence === "")) {
-  openNotificationModal(false, "ASK KYC", `Select your Residence`);
+  openNotificationModal(false, "A.S.K KYC", `Select your Residence`);
   
   return;
 }
@@ -371,12 +371,12 @@ if (!imageSrc) {
             //  refreshUserDetails();
             //  navigateTo('/');
 
-             openNotificationModal(true, "ASK KYC", response.data.message);
+             openNotificationModal(true, "A.S.K KYC", response.data.message);
 
 
             //  return;     
             // //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-            //  openNotificationModal(true, "ASK KYC", `Your kyc is pending approval. You will be notified once it is approved.`);
+            //  openNotificationModal(true, "A.S.K KYC", `Your kyc is pending approval. You will be notified once it is approved.`);
             //   setIsNotificationModalOpen(true);
      
 
@@ -397,7 +397,7 @@ if (!imageSrc) {
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK KYC", errorMessage);
+           openNotificationModal(false, "A.S.K KYC", errorMessage);
               
 
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -406,12 +406,12 @@ if (!imageSrc) {
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK KYC", errorMessage);
+           openNotificationModal(false, "A.S.K KYC", errorMessage);
               
          } else {
            setErrorMessage({ message: 'Kyc failed. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK KYC", 'Kyc failed. Please check your data and try again.');
+           openNotificationModal(false, "A.S.K KYC", 'Kyc failed. Please check your data and try again.');
               
          }
        }

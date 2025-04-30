@@ -8,7 +8,7 @@ import { Zoom } from '@mui/material';
 
 const customModalStyles = {
   content: {
-    maxHeight: '280px',
+    maxHeight: '340px',
     maxWidth: '480px',
     margin: 'auto',
     display: 'flex',

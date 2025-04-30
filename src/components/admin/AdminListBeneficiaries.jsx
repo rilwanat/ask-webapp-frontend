@@ -192,7 +192,7 @@ const [shareType, setShareType] = useState("direct");
     // isDataLoading
          if (isDataloading) {
            // alert('Please wait');
-           openNotificationModal(false, "ASK Approve Beneficiary", "Please wait..");
+           openNotificationModal(false, "A.S.K Approve Beneficiary", "Please wait..");
            
            return;
          }
@@ -200,7 +200,7 @@ const [shareType, setShareType] = useState("direct");
         //  // Validate email before proceeding
         //  if (!isValidEmail(email)) {
         //    // alert('Please enter a valid email address');
-        //    openNotificationModal(false, "ASK Subscribe To Newsletter", "Please enter a valid email address");
+        //    openNotificationModal(false, "A.S.K Subscribe To Newsletter", "Please enter a valid email address");
            
         //    return;
         //  }
@@ -238,7 +238,7 @@ const [shareType, setShareType] = useState("direct");
              // alert("dashboard-products " + JSON.stringify(response.data.itemsData, null, 2));
              // alert("" + response.data.message);
              handleAllBeneficiariesData();
-             openNotificationModal(true, "ASK Approve", "" + response.data.message);
+             openNotificationModal(true, "A.S.K Approve", "" + response.data.message);
              
    
              // Store the retrieved data in state variables
@@ -246,7 +246,7 @@ const [shareType, setShareType] = useState("direct");
              // setProductsData(response.data.itemsData);
            } else {
              // alert("error1: " + response.data.message);
-             openNotificationModal(false, "ASK Approve", "error1: " + response.data.message);
+             openNotificationModal(false, "A.S.K Approve", "error1: " + response.data.message);
              
            }
      
@@ -259,7 +259,7 @@ const [shareType, setShareType] = useState("direct");
            const errorMessage = error.response.data.message;
            // setErrorMessage({ message: errorMessage });
    
-           openNotificationModal(false, "ASK Approve", errorMessage);
+           openNotificationModal(false, "A.S.K Approve", errorMessage);
              //  setIsNotificationModalOpen(true);
    
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -268,12 +268,12 @@ const [shareType, setShareType] = useState("direct");
            const errorMessage = errorMessages.join(', '); // Join all error messages
            // setErrorMessage({ message: errorMessage });
    
-           openNotificationModal(false, "ASK Approve", errorMessage);
+           openNotificationModal(false, "A.S.K Approve", errorMessage);
              //  setIsNotificationModalOpen(true);
          } else {
-           // setErrorMessage({ message: 'ASK Subscribe To Newsletter failed. Please check your data and try again.' });
+           // setErrorMessage({ message: 'A.S.K Subscribe To Newsletter failed. Please check your data and try again.' });
    
-           openNotificationModal(false, "ASK Approve", 'Please check your data and try again.');
+           openNotificationModal(false, "A.S.K Approve", 'Please check your data and try again.');
              //  setIsNotificationModalOpen(true);
          }
        }
@@ -285,13 +285,13 @@ const [shareType, setShareType] = useState("direct");
           return;
         }
 
-        if (generatedBeneficiaries.length !== numberOfBeneficiaries) {
-          openNotificationModal(false, "ASK Post Beneficiaries", "Count mismatch: Number of beneficiaries not equal to Generated beneficiaries count");
+        if (Number(generatedBeneficiaries.length) !== Number(numberOfBeneficiaries)) {
+          // alert(generatedBeneficiaries.length + " " + numberOfBeneficiaries);
+          openNotificationModal(false, "A.S.K Post Beneficiaries", "Count mismatch: Number of beneficiaries not equal to Generated beneficiaries count");
           return;
         }
  
         
-
 
         // alert(JSON.stringify(beneficiaries));
         // return;
@@ -302,7 +302,7 @@ const [shareType, setShareType] = useState("direct");
         // isDataLoading
              if (isDataloading) {
                // alert('Please wait');
-               openNotificationModal(false, "ASK Post Beneficiaries", "Please wait..");
+               openNotificationModal(false, "A.S.K Post Beneficiaries", "Please wait..");
                
                return;
              }
@@ -310,7 +310,7 @@ const [shareType, setShareType] = useState("direct");
             //  // Validate email before proceeding
             //  if (!isValidEmail(email)) {
             //    // alert('Please enter a valid email address');
-            //    openNotificationModal(false, "ASK Subscribe To Newsletter", "Please enter a valid email address");
+            //    openNotificationModal(false, "A.S.K Subscribe To Newsletter", "Please enter a valid email address");
                
             //    return;
             //  }
@@ -369,7 +369,7 @@ const [shareType, setShareType] = useState("direct");
 
 
                  handleAllBeneficiariesData();
-                 openNotificationModal(true, "ASK Post Beneficiaries", "" + response.data.message);
+                 openNotificationModal(true, "A.S.K Post Beneficiaries", "" + response.data.message);
                  
        
                  // Store the retrieved data in state variables
@@ -377,7 +377,7 @@ const [shareType, setShareType] = useState("direct");
                  // setProductsData(response.data.itemsData);
                } else {
                  // alert("error1: " + response.data.message);
-                 openNotificationModal(false, "ASK Post Beneficiaries", "error1: " + response.data.message);
+                 openNotificationModal(false, "A.S.K Post Beneficiaries", "error1: " + response.data.message);
                  
                }
          
@@ -390,7 +390,7 @@ const [shareType, setShareType] = useState("direct");
                const errorMessage = error.response.data.message;
                // setErrorMessage({ message: errorMessage });
        
-               openNotificationModal(false, "ASK Post Beneficiaries", errorMessage);
+               openNotificationModal(false, "A.S.K Post Beneficiaries", errorMessage);
                  //  setIsNotificationModalOpen(true);
        
              } else if (error.response && error.response.data && error.response.data.errors) {
@@ -399,12 +399,12 @@ const [shareType, setShareType] = useState("direct");
                const errorMessage = errorMessages.join(', '); // Join all error messages
                // setErrorMessage({ message: errorMessage });
        
-               openNotificationModal(false, "ASK Post Beneficiaries", errorMessage);
+               openNotificationModal(false, "A.S.K Post Beneficiaries", errorMessage);
                  //  setIsNotificationModalOpen(true);
              } else {
-               // setErrorMessage({ message: 'ASK Subscribe To Newsletter failed. Please check your data and try again.' });
+               // setErrorMessage({ message: 'A.S.K Subscribe To Newsletter failed. Please check your data and try again.' });
        
-               openNotificationModal(false, "ASK Post Beneficiaries", 'Please check your data and try again.');
+               openNotificationModal(false, "A.S.K Post Beneficiaries", 'Please check your data and try again.');
                  //  setIsNotificationModalOpen(true);
              }
            }

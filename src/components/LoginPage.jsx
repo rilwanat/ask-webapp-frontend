@@ -213,7 +213,7 @@ export default function LoginPage({
         if (!isValidEmail(loginEmailAddress)) {
           // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
           // alert("Please, enter a valid email.");
-          // openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
+          // openNotificationModal(false, "A.S.K Foundation", "Please, enter a valid email.");
           
 
           setErrorMessage({ message: 'Please, enter a valid email.' });
@@ -457,7 +457,7 @@ export default function LoginPage({
           if (!isValidEmail(loginEmailAddress)) {
             // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
             // alert("Please, enter a valid email.");
-            // openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
+            // openNotificationModal(false, "A.S.K Foundation", "Please, enter a valid email.");
             
   
             setErrorMessage({ message: 'Please, enter a valid email.' });
@@ -515,7 +515,7 @@ export default function LoginPage({
               //toggleAccount();
 
               // alert("Login Successful: " + response.data.message);
-              openNotificationModal(true, "ASK Password Reset", response.data.message);
+              openNotificationModal(true, "A.S.K Password Reset", response.data.message);
               
               
             } else {
@@ -537,7 +537,7 @@ export default function LoginPage({
             const errorMessage = errorMessages.join(', '); // Join all error messages
             setErrorMessage({ message: errorMessage });
           } else {
-            setErrorMessage({ message: 'ASK Password Reset failed. Please check your credentials and try again.' });
+            setErrorMessage({ message: 'A.S.K Password Reset failed. Please check your credentials and try again.' });
           }
         }
         };
@@ -964,7 +964,7 @@ export default function LoginPage({
                                   </div>
                                   </div>
       
-                                  <div  
+                                  {/* <div  
                                 // onClick={(e) => {if (!isAppleSignUpLoading) registerUser(e)}} 
                                 style={{ borderWidth: '0px', width: '100%' }} 
                                 className='mt-4 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer md:ml-2 bg-theme text-white  hover:text-softTheme'>
@@ -972,7 +972,7 @@ export default function LoginPage({
                                   <img src={appleIcon}  className='w-5 h-5 mr-2 mt-0.5'/>
                                   {isAppleSignUpLoading ? 'Please wait..' : 'Register with Apple'}
                                   </div>
-                                </div>
+                                </div> */}
                                 </div>
       
       

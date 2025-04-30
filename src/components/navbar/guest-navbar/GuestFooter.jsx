@@ -59,7 +59,7 @@ function GuestFooter({ gotoPage }) {
         
       if (isSubsLoading) {
         // alert('Please wait');
-        openNotificationModal(false, "ASK Subscribe To Newsletter", "Please wait..");
+        openNotificationModal(false, "A.S.K Subscribe To Newsletter", "Please wait..");
         
         return;
       }
@@ -67,7 +67,7 @@ function GuestFooter({ gotoPage }) {
       // Validate email before proceeding
       if (!isValidEmail(email)) {
         // alert('Please enter a valid email address');
-        openNotificationModal(false, "ASK Subscribe To Newsletter", "Please enter a valid email address");
+        openNotificationModal(false, "A.S.K Subscribe To Newsletter", "Please enter a valid email address");
         
         return;
       }
@@ -101,7 +101,7 @@ function GuestFooter({ gotoPage }) {
 
           // alert("dashboard-products " + JSON.stringify(response.data.itemsData, null, 2));
           // alert("" + response.data.message);
-          openNotificationModal(true, "ASK Subscribe To Newsletter", "" + response.data.message);
+          openNotificationModal(true, "A.S.K Subscribe To Newsletter", "" + response.data.message);
           
 
           // Store the retrieved data in state variables
@@ -109,7 +109,7 @@ function GuestFooter({ gotoPage }) {
           // setProductsData(response.data.itemsData);
         } else {
           // alert("error1: " + response.data.message);
-          openNotificationModal(false, "ASK Subscribe To Newsletter", "error1: " + response.data.message);
+          openNotificationModal(false, "A.S.K Subscribe To Newsletter", "error1: " + response.data.message);
           
         }
   
@@ -122,7 +122,7 @@ function GuestFooter({ gotoPage }) {
         const errorMessage = error.response.data.message;
         // setErrorMessage({ message: errorMessage });
 
-        openNotificationModal(false, "ASK Subscribe To Newsletter", errorMessage);
+        openNotificationModal(false, "A.S.K Subscribe To Newsletter", errorMessage);
           //  setIsNotificationModalOpen(true);
 
       } else if (error.response && error.response.data && error.response.data.errors) {
@@ -131,12 +131,12 @@ function GuestFooter({ gotoPage }) {
         const errorMessage = errorMessages.join(', '); // Join all error messages
         // setErrorMessage({ message: errorMessage });
 
-        openNotificationModal(false, "ASK Subscribe To Newsletter", errorMessage);
+        openNotificationModal(false, "A.S.K Subscribe To Newsletter", errorMessage);
           //  setIsNotificationModalOpen(true);
       } else {
-        // setErrorMessage({ message: 'ASK Subscribe To Newsletter failed. Please check your data and try again.' });
+        // setErrorMessage({ message: 'A.S.K Subscribe To Newsletter failed. Please check your data and try again.' });
 
-        openNotificationModal(false, "ASK Subscribe To Newsletter", 'Please check your data and try again.');
+        openNotificationModal(false, "A.S.K Subscribe To Newsletter", 'Please check your data and try again.');
           //  setIsNotificationModalOpen(true);
       }
     }
@@ -268,7 +268,7 @@ function GuestFooter({ gotoPage }) {
             <div className="mt-auto mb-10">
                 <div className="bottom-0 w-full text-center">
                     <p className="text-xs py-2 text-white">
-                        &copy; 2025 ASK Foundation. All rights reserved.
+                        &copy; 2025 A.S.K Foundation. All rights reserved.
                     </p>
                 </div>
             </div>

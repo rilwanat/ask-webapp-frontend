@@ -22,34 +22,46 @@ $database = new Database();
 $db = $database->getConnection();
 $response = new Response($db);
 
-// Read incoming JSON payload
-$input = json_decode(file_get_contents("php://input"), true);
+// Check for file upload
+$fileUploaded = isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK;
+$attachmentPath = null;
+if ($fileUploaded) {
+    $uploadDir = __DIR__ . '/../uploads/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+    $fileName = basename($_FILES['file']['name']);
+    $targetFilePath = $uploadDir . $fileName;
+    if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
+        $attachmentPath = $targetFilePath;
+    }
+}
 
-if (!isset($input['message']) || trim($input['message']) === '') {
+$message = isset($_POST['message']) ? trim($_POST['message']) : '';
+if ($message === '') {
     http_response_code(400);
     echo json_encode(["status" => false, "message" => "Message body is required."]);
     exit();
 }
 
-$messageBody = nl2br(htmlspecialchars($input['message'], ENT_QUOTES, 'UTF-8')); // Sanitized and formatted
-$subject = "ASK Foundation Message";
+$messageBody = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
+$subject = "A.S.K Foundation Broadcast";
 
-// Read all subscriptions
 $stmt = $response->ReadAllSubscriptions();
-
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     if (!empty($row['email_address'])) {
-        $message = $messageBody . "<br><br><strong>ASK Foundations Team</strong>";
-
+        $finalMessage = $messageBody . "<br><br><strong>A.S.K Foundations Team</strong>";
         sendMailToSubscribe(
-            'ASK Community',
-            $row['email_address'],
+            'A.S.K Community',
+            $row['email_address'], //"rilwan.at@gmail.com", //
             $subject,
-            $message
+            $finalMessage,
+            $attachmentPath
         );
     }
 }
 
 http_response_code(200);
-echo json_encode(["status" => true, "message" => "ASK Broadcast: Sent Successfully."]);
+echo json_encode(["status" => true, "message" => "A.S.K Broadcast: Sent Successfully."]);
+
 ?>

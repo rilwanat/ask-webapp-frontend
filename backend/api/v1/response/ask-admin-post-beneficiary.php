@@ -47,14 +47,14 @@ if (
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => true, "message" => "ASK Post Beneficiary: Posted Successfully."));
+        echo json_encode(array("status" => true, "message" => "A.S.K Post Beneficiary: Posted Successfully."));
     } else {
 
         // set response code - 503 service unavailable
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => false, "message" => "ASK Post Beneficiary: Post not found or already done."));
+        echo json_encode(array("status" => false, "message" => "A.S.K Post Beneficiary: Post not found or already done."));
     }
 
 

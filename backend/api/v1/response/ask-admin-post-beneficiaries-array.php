@@ -52,7 +52,7 @@ if (
         $requests = $response->ReadAllHelpRequestsEmailsNotCheat();
 
         // Prepare the base email content
-        $subject = "ASK Notification of Beneficiary Selection";
+        $subject = "A.S.K Notification of Beneficiary Selection";
 
         // Get list of selected beneficiaries for the email
         $selectedBeneficiaries = array_map(function($b) {
@@ -74,7 +74,7 @@ $beneficiariesList = '<ul>' . implode('', array_map(function($item) {
                  . $beneficiariesList . "<br><br>"
                  . "Thank you for participating. Kindly join the next cycle, and start mobilizing for nominations.<br><br>"
                  . "Best of luck,<br>"
-                 . "ASK Foundations Team";
+                 . "A.S.K Foundations Team";
 
                  
 
@@ -95,7 +95,7 @@ foreach ($data['beneficiaries'] as $beneficiary) {
                  . "Congratulations!! You have been selected as this week's beneficiary of A.S.K FOUNDATION weekly support initiative.<br><br>"
                  . "Your request is currently being processed.<br><br>"
                  . "Please when you receive the credit alert send us a short VIDEO to our WhatsApp (+2349051047138) telling us your name, how you got to know A.S.K Foundation and how you eventually got nominated.<br><br><br>"
-                 . "<strong>ASK Foundations Team</strong><br>";
+                 . "<strong>A.S.K Foundations Team</strong><br>";
 
         sendMailToUser(
             $beneficiary['fullname'] ?? 'User',
@@ -113,14 +113,14 @@ foreach ($data['beneficiaries'] as $beneficiary) {
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => true, "message" => "ASK Post Beneficiaries: Posted Successfully."));
+        echo json_encode(array("status" => true, "message" => "A.S.K Post Beneficiaries: Posted Successfully."));
     } else {
 
         // set response code - 503 service unavailable
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => false, "message" => "ASK Post Beneficiaries: Post not found or already done."));
+        echo json_encode(array("status" => false, "message" => "A.S.K Post Beneficiaries: Post not found or already done."));
     }
 
 

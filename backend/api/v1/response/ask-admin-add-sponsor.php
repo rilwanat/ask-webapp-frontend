@@ -74,16 +74,16 @@ if ($_FILES['image']['size'] > 2 * 1024 * 1024) { // 2MB max
             
             
 
-            // Ensure ASK Sponsor data is complete
+            // Ensure A.S.K Sponsor data is complete
             if ($sponsorName && $sponsorType && $uniqueTargetFilePath) {
 
-                // Add ASK Sponsor with image path
+                // Add A.S.K Sponsor with image path
                 if ($response->CreateSponsor($sponsorName, $sponsorType, $uniqueTargetFilePath)) {
                     http_response_code(200);
-                    echo json_encode(["status" => true, "message" => "ASK Sponsor created successfully."]);
+                    echo json_encode(["status" => true, "message" => "A.S.K Sponsor created successfully."]);
                 } else {
                     http_response_code(500);
-                    echo json_encode(["status" => false, "message" => "Unable to create ASK Sponsor."]);
+                    echo json_encode(["status" => false, "message" => "Unable to create A.S.K Sponsor."]);
                 }
             } else {
                 http_response_code(400);

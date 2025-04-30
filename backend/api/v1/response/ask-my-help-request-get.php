@@ -46,12 +46,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $requestData = $response->ReadMyHelpRequest($data->email);
         // 
         http_response_code(200);
-        echo json_encode(array("status" => true, "message" => "ASK Active help Request", "requestData" => $requestData));
+        echo json_encode(array("status" => true, "message" => "A.S.K Active help Request", "requestData" => $requestData));
         
     } else {
         // Incomplete login data provided
         http_response_code(400);
-        echo json_encode(array("status" => false, "message" => "ASK Active help Request data is incomplete."));
+        echo json_encode(array("status" => false, "message" => "A.S.K Active help Request data is incomplete."));
     }
 }
 ?>

@@ -45,13 +45,13 @@ try {
     $mail->Port = 587;
 
 
-    $mail->setFrom('hello@askfoundations.org', 'ASK Team');
+    $mail->setFrom('hello@askfoundations.org', 'A.S.K Team');
     $mail->addAddress($email); // Recipient email
     // $mail->addBCC('bcc.email@gmail.com');
 
 
     // Email Subject & Body
-    $mail->Subject = 'ASK';
+    $mail->Subject = 'A.S.K';
     $mail->Body = "Hi";//"Company Name: $companyName\nAddress: $address\nPhone: $phoneNumber";
 
     // // Handle file attachment

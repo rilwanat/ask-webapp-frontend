@@ -77,7 +77,7 @@ const Contact = ({ }) => {
 
     if (missingFields.length > 0) {
         // alert(`Please fill in the following required fields: ${missingFields.join(', ')}`);
-        openNotificationModal(false, "ASK Foundation", `Please fill in the following required fields: ${missingFields.join(', ')}`);
+        openNotificationModal(false, "A.S.K Foundation", `Please fill in the following required fields: ${missingFields.join(', ')}`);
         setIsNotificationModalOpen(true);
         return false;
     }
@@ -102,7 +102,7 @@ const isValidEmail = (email) => {
   
     if (isMessageSending) {
       // alert("Please, wait message is sending");
-      openNotificationModal(false, "ASK Foundation", "Please, wait message is sending");
+      openNotificationModal(false, "A.S.K Foundation", "Please, wait message is sending");
           setIsNotificationModalOpen(true);
   
       return;
@@ -112,7 +112,7 @@ const isValidEmail = (email) => {
     //   // || !validateCheckboxes()
     // ) {
     //   // alert("Please, enter a valid inputs");
-    //   // openNotificationModal(false, "ASK Foundation", "Please, enter a valid inputs");
+    //   // openNotificationModal(false, "A.S.K Foundation", "Please, enter a valid inputs");
     //   
     //     return;
     // }
@@ -121,7 +121,7 @@ const isValidEmail = (email) => {
   //   if (!isValidNumber(phoneNumber)) {
   //     // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
   //     // alert("Please, enter a valid phone number, numbers only.");
-  //     openNotificationModal(false, "ASK Foundation", "Please, enter a valid phone number, numbers only.");
+  //     openNotificationModal(false, "A.S.K Foundation", "Please, enter a valid phone number, numbers only.");
       
   //     return;
   // }
@@ -129,7 +129,7 @@ const isValidEmail = (email) => {
     if (!isValidEmail(email)) {
       // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
       // alert("Please, enter a valid email.");
-      openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
+      openNotificationModal(false, "A.S.K Foundation", "Please, enter a valid email.");
       
       return;
   }
@@ -183,7 +183,7 @@ const isValidEmail = (email) => {
     
        
     
-                 openNotificationModal(true, "ASK Foundation", response.data.message);
+                 openNotificationModal(true, "A.S.K Foundation", response.data.message);
                  
                  
                   
@@ -204,7 +204,7 @@ const isValidEmail = (email) => {
                const errorMessage = error.response.data.message;
                setErrorMessage({ message: errorMessage });
     
-               openNotificationModal(false, "ASK Foundation", errorMessage);
+               openNotificationModal(false, "A.S.K Foundation", errorMessage);
                   
     
              } else if (error.response && error.response.data && error.response.data.errors) {
@@ -213,12 +213,12 @@ const isValidEmail = (email) => {
                const errorMessage = errorMessages.join(', '); // Join all error messages
                setErrorMessage({ message: errorMessage });
     
-               openNotificationModal(false, "ASK Foundation", errorMessage);
+               openNotificationModal(false, "A.S.K Foundation", errorMessage);
                   
              } else {
-               setErrorMessage({ message: 'ASK Foundation. Please check your data and try again.' });
+               setErrorMessage({ message: 'A.S.K Foundation. Please check your data and try again.' });
     
-               openNotificationModal(false, "ASK Foundation", 'Please check your data and try again.');
+               openNotificationModal(false, "A.S.K Foundation", 'Please check your data and try again.');
                   
              }
            }

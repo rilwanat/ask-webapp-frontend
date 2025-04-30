@@ -18,9 +18,9 @@ const Hero = ({  }) => {
   const navigate = useNavigate();
   //
   const images = [
-    hero1,
-    hero2,
-    hero3,
+    "https://www.playground.askfoundations.org/images/slider-images/slide1.png",
+    "https://www.playground.askfoundations.org/images/slider-images/slide2.png",
+    "https://www.playground.askfoundations.org/images/slider-images/slide3.png",
   ];
 
   const headerText = [

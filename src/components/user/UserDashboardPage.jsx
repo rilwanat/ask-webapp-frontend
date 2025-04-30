@@ -112,7 +112,7 @@ const [isLoading, setIsLoading] = useState(false);
             //   if (!isValidEmail(userDetails.email_address)) {
             //     // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
             //     // alert("Please, enter a valid email.");
-            //     // openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
+            //     // openNotificationModal(false, "A.S.K Foundation", "Please, enter a valid email.");
                 
       
             //     setErrorMessage({ message: 'Invalid email.' });
@@ -165,7 +165,7 @@ const [isLoading, setIsLoading] = useState(false);
       
     
                   // alert("Login Successful: " + response.data.message);
-                  openNotificationModal(true, "ASK Password Reset", response.data.message);
+                  openNotificationModal(true, "A.S.K Password Reset", response.data.message);
                   
                   
                 } else {
@@ -187,7 +187,7 @@ const [isLoading, setIsLoading] = useState(false);
                 const errorMessage = errorMessages.join(', '); // Join all error messages
                 setErrorMessage({ message: errorMessage });
               } else {
-                setErrorMessage({ message: 'ASK Password Reset failed. Please check your credentials and try again.' });
+                setErrorMessage({ message: 'A.S.K Password Reset failed. Please check your credentials and try again.' });
               }
             }
             };

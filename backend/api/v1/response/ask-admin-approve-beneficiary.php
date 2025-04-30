@@ -52,14 +52,14 @@ if (
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => true, "message" => "ASK Beneficiary Approved Successfully."));
+        echo json_encode(array("status" => true, "message" => "A.S.K Beneficiary Approved Successfully."));
     } else {
 
         // set response code - 503 service unavailable
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => false, "message" => "ASK Approve Beneficiary: Beneficiary not found."));
+        echo json_encode(array("status" => false, "message" => "A.S.K Approve Beneficiary: Beneficiary not found."));
     }
 
 

@@ -86,25 +86,33 @@ export default function GeneralSettingsPage({
   };
 
   const handleSingleUpload = async (index, item) => {
+    // alert("1");
     const file = selectedFiles[index];
     if (!file) {
       setMessage('Please select a file for ' + item);
       return;
     }
-  
+    setMessage('');
+    // alert("2");
+    
     const formData = new FormData();
     formData.append('image', file, `slide${index + 1}.png`);
   
-    const endpoint = process.env.REACT_APP_API_SERVER_URL + '/response/upload.php';
+    const endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_SLIDER_IMAGE;
   
     try {
       const response = await axiosAdminInstance.post(endpoint, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      setMessage(`Slide ${index + 1} uploaded successfully.`);
+      // setMessage(`Slide ${index + 1} uploaded successfully.`);
+      // alert(JSON.stringify(response.data.message), null, 2);
+
+      openNotificationModal(true, "Update Slide", response.data.message + "#");
     } catch (error) {
-      console.error(`Error uploading slide${index + 1}:`, error);
-      setMessage(`Slide ${index + 1} failed to upload.`);
+      // alert(error);
+      // console.error(`Error uploading slide${index + 1}:`, error);
+      // setMessage(`Slide ${index + 1} failed to upload.`);
+      openNotificationModal(false, "Update Slide", response.data.message + "#");
     }
   };
   

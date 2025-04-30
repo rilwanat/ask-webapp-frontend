@@ -109,7 +109,7 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
        // Validate Fullname before proceeding
   if (!isValidName(cryptoNetwork)) {
     // alert('Invalid Fullname');
-    openNotificationModal(false, "ASK Crypto", `Invalid Crypto Network`);
+    openNotificationModal(false, "A.S.K Crypto", `Invalid Crypto Network`);
     
     return;
 }
@@ -119,7 +119,7 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
        // Validate Fullname before proceeding
        if (!isValidCryptoAddress(cryptoAddress)) {
         // alert('Invalid Fullname');
-        openNotificationModal(false, "ASK Crypto", `Invalid Crypto Address`);
+        openNotificationModal(false, "A.S.K Crypto", `Invalid Crypto Address`);
         
         return;
     }
@@ -145,7 +145,7 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
            formData.append('image', selectedFile);
          } else {
            // alert("Please select an image to upload");
-           openNotificationModal(false, "ASK Add Crypto", "Select a crypto image to upload");
+           openNotificationModal(false, "A.S.K Add Crypto", "Select a crypto image to upload");
            
            return;
          }
@@ -182,7 +182,7 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
              setPreview(null);
              
             //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-             openNotificationModal(true, "ASK Add Crypto", response.data.message);
+             openNotificationModal(true, "A.S.K Add Crypto", response.data.message);
               
      
 
@@ -203,7 +203,7 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Add Crypto", errorMessage);
+           openNotificationModal(false, "A.S.K Add Crypto", errorMessage);
               
 
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -212,12 +212,12 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Add Crypto", errorMessage);
+           openNotificationModal(false, "A.S.K Add Crypto", errorMessage);
               
          } else {
-           setErrorMessage({ message: 'ASK Add Crypto failed. Please check your data and try again.' });
+           setErrorMessage({ message: 'A.S.K Add Crypto failed. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK Add Crypto failed", 'ASK Add Crypto failed. Please check your data and try again.');
+           openNotificationModal(false, "A.S.K Add Crypto failed", 'A.S.K Add Crypto failed. Please check your data and try again.');
               
          }
        }

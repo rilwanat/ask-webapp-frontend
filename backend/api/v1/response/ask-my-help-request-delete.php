@@ -47,14 +47,14 @@ if (
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => true, "message" => "ASK Request Deleted Successfully."));
+        echo json_encode(array("status" => true, "message" => "A.S.K Request Deleted Successfully."));
     } else {
 
         // set response code - 503 service unavailable
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => false, "message" => "ASK Delete Request: Not found."));
+        echo json_encode(array("status" => false, "message" => "A.S.K Delete Request: Not found."));
     }
 
 

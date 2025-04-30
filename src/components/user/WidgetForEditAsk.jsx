@@ -112,7 +112,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
       
       // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
       if (userDetails === null) {
-        openNotificationModal(false, "ASK Edit Help Request", `You are not logged in. Please register or login to update with your help request.`); 
+        openNotificationModal(false, "A.S.K Edit Help Request", `You are not logged in. Please register or login to update with your help request.`); 
         
         return;
       }
@@ -121,7 +121,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
     //    alert("here");
 
     if (myCurrentActiveRequestsData.description === "" || myCurrentActiveRequestsData.description === myActiveRequestsData.description) {
-      openNotificationModal(false, "ASK Edit Request", `Enter or edit your Help Request description`);
+      openNotificationModal(false, "A.S.K Edit Request", `Enter or edit your Help Request description`);
       
       return;
     }
@@ -144,7 +144,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
           //   formData.append('image', selectedFile);
           // } else {
           //   // alert("Please select an image to upload");
-          //   openNotificationModal(false, "ASK Help Request", "Select an image to upload");
+          //   openNotificationModal(false, "A.S.K Help Request", "Select an image to upload");
           //   setIsNotificationModalOpen(true);
           //   return;
           // }
@@ -182,7 +182,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
             handleHelpRequestsData();
 
 
-             openNotificationModal(true, "ASK Edit Help Request", response.data.message);
+             openNotificationModal(true, "A.S.K Edit Help Request", response.data.message);
               
 
      
@@ -201,7 +201,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Help Request", errorMessage);
+           openNotificationModal(false, "A.S.K Help Request", errorMessage);
               
 
          } else if (error.response && error.response.data && error.response.data.errors) {
@@ -210,12 +210,12 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Help Request", errorMessage);
+           openNotificationModal(false, "A.S.K Help Request", errorMessage);
               
          } else {
-           setErrorMessage({ message: 'ASK Help Request failed. Please check your data and try again.' });
+           setErrorMessage({ message: 'A.S.K Help Request failed. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK Help Request", 'Please check your data and try again.');
+           openNotificationModal(false, "A.S.K Help Request", 'Please check your data and try again.');
               
          }
        }
@@ -231,7 +231,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
       
       //   // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
       //   if (userDetails === null) {
-      //     openNotificationModal(false, "ASK Help Request", `You are not logged in. Please register or login to send with your help request.`); 
+      //     openNotificationModal(false, "A.S.K Help Request", `You are not logged in. Please register or login to send with your help request.`); 
           
       //     return;
       //   }
@@ -240,7 +240,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
       // //    alert("here");
   
       // if (myCurrentActiveRequestsData.description === "") {
-      //   openNotificationModal(false, "ASK Help Request", `Enter a Help Request description`);
+      //   openNotificationModal(false, "A.S.K Help Request", `Enter a Help Request description`);
         
       //   return;
       // }
@@ -272,7 +272,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
             //   formData.append('image', selectedFile);
             // } else {
             //   // alert("Please select an image to upload");
-            //   openNotificationModal(false, "ASK Help Request", "Select an image to upload");
+            //   openNotificationModal(false, "A.S.K Help Request", "Select an image to upload");
               
             //   return;
             // }
@@ -311,7 +311,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
               // getActiveHelpRequests();
   
   
-               openNotificationModal(true, "ASK Delete Help Request", response.data.message);
+               openNotificationModal(true, "A.S.K Delete Help Request", response.data.message);
                 
   
        
@@ -330,7 +330,7 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
              const errorMessage = error.response.data.message;
              setErrorMessage({ message: errorMessage });
   
-             openNotificationModal(false, "ASK Delete Help Request", errorMessage);
+             openNotificationModal(false, "A.S.K Delete Help Request", errorMessage);
                 
   
            } else if (error.response && error.response.data && error.response.data.errors) {
@@ -339,12 +339,12 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
              const errorMessage = errorMessages.join(', '); // Join all error messages
              setErrorMessage({ message: errorMessage });
   
-             openNotificationModal(false, "ASK Delete Help Request", errorMessage);
+             openNotificationModal(false, "A.S.K Delete Help Request", errorMessage);
                 
            } else {
-             setErrorMessage({ message: 'ASK Delete Help Request failed. Please check your data and try again.' });
+             setErrorMessage({ message: 'A.S.K Delete Help Request failed. Please check your data and try again.' });
   
-             openNotificationModal(false, "ASK Delete Help Request", 'Please check your data and try again.');
+             openNotificationModal(false, "A.S.K Delete Help Request", 'Please check your data and try again.');
                 
            }
          }

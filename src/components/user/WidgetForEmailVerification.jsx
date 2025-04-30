@@ -143,7 +143,7 @@ const is11DigitNumber = (input) => {
 
 
        //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-        openNotificationModal(true, "ASK: Resend Email Verification", response.data.message);
+        openNotificationModal(true, "A.S.K: Resend Email Verification", response.data.message);
         //  setIsNotificationModalOpen(true);
 
 
@@ -164,7 +164,7 @@ const is11DigitNumber = (input) => {
       const errorMessage = error.response.data.message;
       setErrorMessage({ message: errorMessage });
 
-      openNotificationModal(false, "ASK: Resend Email Verification", errorMessage);
+      openNotificationModal(false, "A.S.K: Resend Email Verification", errorMessage);
         //  setIsNotificationModalOpen(true);
     } else if (error.response && error.response.data && error.response.data.errors) {
       const { errors } = error.response.data;
@@ -172,12 +172,12 @@ const is11DigitNumber = (input) => {
       const errorMessage = errorMessages.join(', '); // Join all error messages
       setErrorMessage({ message: errorMessage });
 
-      openNotificationModal(false, "ASK: Resend Email Verification", errorMessage);
+      openNotificationModal(false, "A.S.K: Resend Email Verification", errorMessage);
         //  setIsNotificationModalOpen(true);
     } else {
-      setErrorMessage({ message: 'ASK: Resend Email Verification. Please check your data and try again.' });
+      setErrorMessage({ message: 'A.S.K: Resend Email Verification. Please check your data and try again.' });
 
-      openNotificationModal(false, "ASK: Resend Email Verification", 'Please check your data and try again.');
+      openNotificationModal(false, "A.S.K: Resend Email Verification", 'Please check your data and try again.');
         //  setIsNotificationModalOpen(true);
     }
   }
@@ -241,7 +241,7 @@ const is11DigitNumber = (input) => {
             //  navigateTo('/');
      
             //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-             openNotificationModal(true, "ASK Email Verification", response.data.message);
+             openNotificationModal(true, "A.S.K Email Verification", response.data.message);
 
             //  
               
@@ -264,7 +264,7 @@ const is11DigitNumber = (input) => {
            const errorMessage = error.response.data.message;
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Email Verification", errorMessage);
+           openNotificationModal(false, "A.S.K Email Verification", errorMessage);
               
          } else if (error.response && error.response.data && error.response.data.errors) {
            const { errors } = error.response.data;
@@ -272,12 +272,12 @@ const is11DigitNumber = (input) => {
            const errorMessage = errorMessages.join(', '); // Join all error messages
            setErrorMessage({ message: errorMessage });
 
-           openNotificationModal(false, "ASK Email Verification", errorMessage);
+           openNotificationModal(false, "A.S.K Email Verification", errorMessage);
               
          } else {
-           setErrorMessage({ message: 'ASK Email Verification. Please check your data and try again.' });
+           setErrorMessage({ message: 'A.S.K Email Verification. Please check your data and try again.' });
 
-           openNotificationModal(false, "ASK Email Verification", 'ASK Email Verification. Please check your data and try again.');
+           openNotificationModal(false, "A.S.K Email Verification", 'A.S.K Email Verification. Please check your data and try again.');
               
          }
        }

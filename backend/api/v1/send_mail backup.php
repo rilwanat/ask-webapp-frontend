@@ -43,12 +43,12 @@ $mail = new PHPMailer(true);
 
 
                 // Email the random password to the user
-                $emailSubject = 'ASK: Welcome to ASK!';
+                $emailSubject = 'A.S.K: Welcome to A.S.K!';
         $emailBody = '
         <!DOCTYPE html>
 <html>
 <head>
-    <title>ASK Foundation</title>
+    <title>A.S.K Foundation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -138,7 +138,7 @@ $mail = new PHPMailer(true);
     <div class="container">
         <div class="header">
             
-            <h2>Welcome to ASK!</h2>
+            <h2>Welcome to A.S.K!</h2>
         </div>
         <div class="content">
             <p>Hi User,</p>
@@ -156,7 +156,7 @@ $mail = new PHPMailer(true);
             <p>If you have any questions or need further assistance, feel free to contact us at <a href="mailto:info@askfoundations.org">info@askfoundations.org</a>.</p>
         </div>
         <div class="footer">
-            <p>&copy; 2025 ASK Foundation. All rights reserved.</p>
+            <p>&copy; 2025 A.S.K Foundation. All rights reserved.</p>
         </div>
     </div>
 </body>

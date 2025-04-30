@@ -117,7 +117,7 @@ const is11DigitNumber = (input) => {
       if (!isValidEmail(loginEmailAddress)) {
         // openNotificationModal(false, currentPageName + " Form Error", 'Invalid email address');
         // alert("Please, enter a valid email.");
-        // openNotificationModal(false, "ASK Foundation", "Please, enter a valid email.");
+        // openNotificationModal(false, "A.S.K Foundation", "Please, enter a valid email.");
         
 
         setErrorMessage({ message: 'Please, enter a valid email.' });
