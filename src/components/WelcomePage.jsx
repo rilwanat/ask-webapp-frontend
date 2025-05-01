@@ -140,12 +140,12 @@ export default function WelcomePage({
                                 <img src={InstagramIcon} style={{cursor: "pointer", color: "#ffffff", width:'28px', height:'28px' }}/>
                               </a>
                             </li>
-                            {/* <li className='mr-4 border-2 border-theme rounded-full bg-theme'>
+                            <li className='mr-4 border-2 border-theme rounded-full bg-theme'>
                               <a href="https://www.tiktok.com/@askfoundations" target='_blank'>
                                 <FontAwesomeIcon icon={faTiktok} className='' style={{cursor: "pointer", color: "#ffffff", width:'20px', height:'20px', marginTop: '4px' }}/>
                               </a>
                             </li>
-                            <li className='mr-4 border-2 border-theme rounded-full bg-theme'>
+                            {/* <li className='mr-4 border-2 border-theme rounded-full bg-theme'>
                               <a href="https://www.youtube.com/@Askfoundations" target='_blank'>
                                 <img src={YouTubeIcon} style={{cursor: "pointer", color: "#ffffff", width:'24px', height:'24px', marginTop: '2px' }}/>
                               </a>

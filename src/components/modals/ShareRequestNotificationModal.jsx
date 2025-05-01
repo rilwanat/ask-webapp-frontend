@@ -8,7 +8,7 @@ import { Zoom } from '@mui/material';
 
 const customModalStyles = {
   content: {
-    maxHeight: '380px',
+    maxHeight: '400px',
     maxWidth: '480px',
     margin: 'auto',
     display: 'flex',
@@ -60,7 +60,14 @@ const details = parts.slice(1);
 
         <div className='flex justify-center'>
           <div 
-            onClick={onRequestClose}
+            onClick={() => {
+              onRequestClose();
+
+              if (mainMessage.toLowerCase().startsWith("your request was granted")) {
+                window.location.href = '/';
+              }
+            
+            }}
             style={{ width: '128px', borderWidth: '1px' }}
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
             Okay

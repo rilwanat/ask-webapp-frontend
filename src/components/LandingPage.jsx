@@ -45,7 +45,9 @@ export default function LandingPage({
 
     
 
-    useEffect(() => { refreshUserDetails(); }, []); 
+    useEffect(() => { 
+        carouselRequestItems = handleHelpRequestsData();
+        refreshUserDetails(); }, []); 
     
     
 

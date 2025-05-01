@@ -50,7 +50,7 @@ $subject = "A.S.K Foundation Broadcast";
 $stmt = $response->ReadAllSubscriptions();
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     if (!empty($row['email_address'])) {
-        $finalMessage = $messageBody . "<br><br><strong>A.S.K Foundations Team</strong>";
+        $finalMessage = $messageBody . "<br><br><strong>A.S.K Foundation Team</strong>";
         sendMailToSubscribe(
             'A.S.K Community',
             $row['email_address'], //"rilwan.at@gmail.com", //

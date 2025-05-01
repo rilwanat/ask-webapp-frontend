@@ -559,7 +559,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 
-                                      <ResponsiveContainer width="100%" height={240}>
+                                      {/*<ResponsiveContainer width="100%" height={240}>
                                         <BarChart data={barData} barSize={30}>
                                           <CartesianGrid strokeDasharray="3 3" />
                                           <XAxis dataKey="name" />
@@ -567,7 +567,28 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                           <Tooltip />
                                           <Bar dataKey="total" fill="#82ca9d" />
                                         </BarChart>
-                                      </ResponsiveContainer>
+                                      </ResponsiveContainer>*/}
+                                      <ResponsiveContainer width="100%" height={60}>
+  <BarChart
+    data={barData}
+    layout="vertical"  // This makes the chart horizontal
+    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+  >
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis type="number" />  // Now shows numbers (was YAxis in vertical chart)
+    <YAxis 
+      type="category" 
+      dataKey="name" 
+      width={80}  // Give more space for state names
+    />
+    <Tooltip />
+    <Bar 
+      dataKey="total" 
+      fill="#82ca9d" 
+      radius={[0, 4, 4, 0]}  // Rounded corners on the right side
+    />
+  </BarChart>
+</ResponsiveContainer>
 
                             </div>
                                         

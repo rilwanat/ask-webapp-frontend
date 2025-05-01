@@ -85,43 +85,14 @@ export default function GeneralSettingsPage({
     setPreviews(updatedPreviews);
   };
 
-  const handleSingleUpload = async (index, item) => {
-    // alert("1");
-    const file = selectedFiles[index];
-    if (!file) {
-      setMessage('Please select a file for ' + item);
-      return;
-    }
-    setMessage('');
-    // alert("2");
-    
-    const formData = new FormData();
-    formData.append('image', file, `slide${index + 1}.png`);
   
-    const endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_SLIDER_IMAGE;
-  
-    try {
-      const response = await axiosAdminInstance.post(endpoint, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      // setMessage(`Slide ${index + 1} uploaded successfully.`);
-      // alert(JSON.stringify(response.data.message), null, 2);
-
-      openNotificationModal(true, "Update Slide", response.data.message + "#");
-    } catch (error) {
-      // alert(error);
-      // console.error(`Error uploading slide${index + 1}:`, error);
-      // setMessage(`Slide ${index + 1} failed to upload.`);
-      openNotificationModal(false, "Update Slide", response.data.message + "#");
-    }
-  };
   
   useEffect(() => { 
           window.scrollTo({ top: 0, behavior: 'smooth' }); 
       }, []);
     
 
-  const [isDataloading, setIsDataLoading] = useState(true);
+  const [isDataLoading, setIsDataLoading] = useState(true);
   const [generalSettings, setGeneralSettings] = useState([]);
   const [gs, setGs] = useState({
           naira: 1,
@@ -187,14 +158,53 @@ export default function GeneralSettingsPage({
       };
 
 
-
+      const handleSingleUpload = async (index, item) => {
+        // alert("1");
+        if (isDataLoading) {
+          alert('Please wait');
+          return;
+        }
+    
+    
+        const file = selectedFiles[index];
+        if (!file) {
+          setMessage('Please select a file for ' + item);
+          return;
+        }
+        setMessage('');
+        // alert("2");
+        
+        const formData = new FormData();
+        formData.append('image', file, `slide${index + 1}.png`);
+      
+        const endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_SLIDER_IMAGE;
+      
+        try {
+          setIsDataLoading(true);
+          const response = await axiosAdminInstance.post(endpoint, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+          });
+          // setMessage(`Slide ${index + 1} uploaded successfully.`);
+          // alert(JSON.stringify(response.data.message), null, 2);
+    
+          setIsDataLoading(false);
+          openNotificationModal(true, "Update Slide", response.data.message + "#");
+        } catch (error) {
+          setIsDataLoading(false);
+    
+          // alert(error);
+          // console.error(`Error uploading slide${index + 1}:`, error);
+          // setMessage(`Slide ${index + 1} failed to upload.`);
+          openNotificationModal(false, "Update Slide", response.data.message + "#");
+        }
+      };
 
       const updateDNQ = async (user) => {
 
 
         // alert(user.userIsCheat);
 
-        if (isDataloading) {
+        if (isDataLoading) {
           return;
         }
         
@@ -264,7 +274,7 @@ export default function GeneralSettingsPage({
 
           // alert(user.userIsCheat);
   
-          if (isDataloading) {
+          if (isDataLoading) {
             return;
           }
           
@@ -374,7 +384,7 @@ export default function GeneralSettingsPage({
         }}
         
       >
-        Upload Slide {index + 1}
+        {isDataLoading ? 'Please wait...' : `Upload Slide ${index + 1}`}
       </button>
     </div>
   ))}
@@ -433,7 +443,7 @@ export default function GeneralSettingsPage({
 
 
 {/* Youtube video Section */}
-<div className='flex w-full sm:w-1/2 flex-col justify-center items-center px-4 sm:px-16 md:px-8 h-full'>
+{/* <div className='flex w-full sm:w-1/2 flex-col justify-center items-center px-4 sm:px-16 md:px-8 h-full'>
 
 <div className='flex flex-col  gap-6 mt-4 p-4 w-full bg-white items-center justify-center border rounded-lg shadow-lg'>
 <div className="font-semibold">Youtube Section</div>
@@ -457,7 +467,7 @@ export default function GeneralSettingsPage({
   
 </div>
 
-</div>
+</div> */}
 
 
 
@@ -466,12 +476,12 @@ export default function GeneralSettingsPage({
 
 
 {/* Contact Us Section */}
-<div className='flex w-full sm:w-1/2  flex-col justify-center items-center px-4 sm:px-16 md:px-8 h-full '>
+{/* <div className='flex w-full sm:w-1/2  flex-col justify-center items-center px-4 sm:px-16 md:px-8 h-full '>
 <div className='flex flex-col  gap-6 mt-4 p-4 w-full bg-white items-center border rounded-lg shadow-lg '>
 <div className="font-semibold">Contact Us Section</div>
 
 <div className='flex'>
-{/* <label className="font-semibold">Background Image: </label> */}
+<label className="font-semibold">Background Image: </label>
       <input
         type="file"
         accept="image/*"
@@ -506,7 +516,7 @@ export default function GeneralSettingsPage({
 </div>
 
 
-</div>
+</div> */}
 
 
 
@@ -559,7 +569,7 @@ export default function GeneralSettingsPage({
       className="px-4 py-1 bg-theme text-white rounded-lg cursor-pointer "
       onClick={() => updateDNQ()}
     >
-      { isDataloading ? 'Please wait..' : "Update DNQs" }
+      { isDataLoading ? 'Please wait..' : "Update DNQs" }
     </button>
 
 </div>
@@ -598,7 +608,7 @@ export default function GeneralSettingsPage({
         
       onClick={() => updateExhangeRate()}
     >
-      { isDataloading ? 'Please wait..' : "Update Exchange Rate" }
+      { isDataLoading ? 'Please wait..' : "Update Exchange Rate" }
     </button>
 
 

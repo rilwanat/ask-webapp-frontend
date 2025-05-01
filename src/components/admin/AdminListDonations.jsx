@@ -139,10 +139,13 @@ useEffect(() => {
         setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
-    const filteredDonations = donations.filter((donation) =>
-    donation.date.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || donation.type.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || donation.price.toLowerCase().includes(searchQuery.toLowerCase()) 
+    const filteredDonations = (donations || []).filter((donation) =>
+      donation.fullname && donation.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || donation.email && donation.email.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || donation.total_amount.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || donation.payment_count.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || donation.last_payment_date.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || donation.payment_methods.toLowerCase().includes(searchQuery.toLowerCase()) 
     // || donation.tags && donation.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
     // || donation.categories && donation.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
     // || donation.price.includes(searchQuery)
@@ -173,7 +176,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     try {
       // API donation to get  count
-      const adminBeneficiariesEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_DONATIONS;
+      const adminBeneficiariesEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_ADMIN_CUMMULATIVE_DONATIONS;
       // alert(adminBeneficiariesEndpoint);
       const adminBeneficiariesResponse = await axiosAdminInstance.get(adminBeneficiariesEndpoint, {
         headers: {
@@ -268,7 +271,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
               onClick={() =>  navigateTo('/admin-show-donations')}
               style={{ width: '200px' }}
               className='text-center  rounded-sm px-4 py-1 text-sm cursor-pointer border border-white bg-theme text-white  hover:text-softTheme mb-4 md:mb-0'>
-              Show Donations
+              Show Donation Details
             </div>
 
   {/* Right section - Search */}
@@ -333,18 +336,27 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           SN
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
-                          Date
+                          Fullname
                         </th>
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
-                          Type
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Email
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
-                          Price
+                          Total Amount
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Payment Count
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Last Payment Date
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Payment Method
                         </th>
 
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Action
-                        </th>
+                        </th> */}
                         
                       </tr>
                     </thead>
@@ -369,12 +381,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                             //setShowDialog(false); 
                             // handleProductClick(donation, e);
                           }}>
-                            {donation.date}
+                            {donation.fullname}
                           </td>
-                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {donation.type}
-                          </td> */}
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                            {donation.email}
+                          </td>
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                           <span
                                     style={{
                                       backgroundColor: donation.type === 'naira' ? '#1cc939' : donation.type === 'dollar' ? '#161c34' : '#d85a27', 
@@ -384,14 +396,22 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                   }} 
                                     className={'text-white px-2 py-2 '
                                     }>{donation.type}</span>
-                          </td>	
+                          </td>	 */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {/* {donation.tags.join(', ')} */}
-                            {formatAmount(donation.price)}
+                            {formatAmount(donation.total_amount)}
                           </td>
                           
-                          
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {donation.payment_count}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {donation.last_payment_date}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {donation.payment_methods}
+                          </td>
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
                           <span
                           className="text-theme cursor-pointer "
                           onClick={(e) => {
@@ -401,7 +421,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           >
                             See Details
                             </span>
-                          </td>
+                          </td> */}
                          
                           
                         </tr>

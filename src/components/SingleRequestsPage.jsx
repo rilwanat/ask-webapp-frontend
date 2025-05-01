@@ -17,6 +17,9 @@ import WidgetNominate from './widgets/WidgetNominate';
 
 import NominateNotificationModal from './modals/NominateNotificationModal';
 
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+
 export default function SingleRequestsPage({ 
     isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
@@ -32,6 +35,11 @@ export default function SingleRequestsPage({
 
     const [updatedItem, setUpdatedItem] = useState([]);
 
+
+    useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []);
+
+
+    
     //notification modal
     const [notificationType, setNotificationType] = useState(false);
     const [notificationTitle, setNotificationTitle] = useState("");
@@ -51,8 +59,7 @@ export default function SingleRequestsPage({
 
 
     useEffect(() => { 
-        window.scrollTo({ top: 0, behavior: 'smooth' }); 
-
+       
           // Find the index of the selected item when component mounts
           if (selectedItem && allItems) {
             const index = allItems.findIndex(item => item.id === selectedItem.id);
@@ -88,7 +95,7 @@ export default function SingleRequestsPage({
         showStatus: false,
         showThumbs: false,
         infiniteLoop: true,
-        autoPlay:  scrollCarousel ? true : false,
+        autoPlay: false,// scrollCarousel ? true : false,
         swipeable: true,
         emulateTouch: true,
         swipeScrollTolerance: 5,
@@ -97,8 +104,35 @@ export default function SingleRequestsPage({
         stopOnHover: true,
         className: "touch-pan-y", // Added to prevent scroll interference
         selectedItem: selectedIndex, // Start with the selected item
-        onChange: handleChange // Update selected index when carousel changes
+        onChange: handleChange, // Update selected index when carousel changes
+
+        // Add these additional props for better arrow visibility:
+    renderArrowPrev: (onClickHandler, hasPrev, label) =>
+        hasPrev && (
+            <button
+                type="button"
+                onClick={onClickHandler}
+                title={label}
+                className="absolute left-2 z-10 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
+                style={{ top: '50%', transform: 'translateY(-50%)' }}
+            >
+                <KeyboardArrowLeftIcon />
+            </button>
+        ),
+    renderArrowNext: (onClickHandler, hasNext, label) =>
+        hasNext && (
+            <button
+                type="button"
+                onClick={onClickHandler}
+                title={label}
+                className="absolute right-2 z-10 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
+                style={{ top: '50%', transform: 'translateY(-50%)' }}
+            >
+                <KeyboardArrowRightIcon />
+            </button>
+        )
     };
+
 
     return (
         <div className="touch-pan-y"> {/* Main container with touch action */}

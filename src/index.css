@@ -13,3 +13,26 @@
     
 }
 
+
+
+
+
+
+/* Add this to your global CSS file or style tag */
+.react-responsive-carousel .carousel .control-arrow {
+    opacity: 1 !important;
+    background: rgba(0,0,0,0.3) !important;
+    height: 50px !important;
+    width: 40px !important;
+    margin-top: -25px !important;
+    top: 50% !important;
+    border-radius: 50% !important;
+  }
+  
+  .react-responsive-carousel .carousel .control-arrow:hover {
+    background: rgba(0,0,0,0.6) !important;
+  }
+  
+  .react-responsive-carousel .carousel .control-arrow:before {
+    margin: 0 5px !important;
+  }

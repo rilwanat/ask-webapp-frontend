@@ -15,12 +15,17 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setScrollPosition((prev) => (prev + 1) % (carouselSponsorItems.length * 300)); // Adjust item width (300px per item)
-    }, 30); // Adjust speed
+    if (carouselSponsorItems && carouselSponsorItems.length > 0) {
+      const itemWidth = 150; // Adjust this if your item width changes
+      const totalWidth = carouselSponsorItems.length * itemWidth;
 
-    return () => clearInterval(interval);
-  }, [carouselSponsorItems.length]);
+      const interval = setInterval(() => {
+        setScrollPosition((prev) => (prev + 1) % totalWidth);
+      }, 30); // Adjust speed
+
+      return () => clearInterval(interval);
+    }
+  }, [carouselSponsorItems]);
 
   return (
     <div className="w-full mt-4  bg-gold overflow-hidden h-84"> {/* Hide overflow */}
@@ -59,62 +64,40 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                 style={{
                   transform: `translateX(-${scrollPosition}px)`,
                   transition: "transform 0.1s linear", // Smooth movement
-                  width: `${carouselSponsorItems.length * 300}px`, // Ensure all items fit
+                  width: `${carouselSponsorItems.length * 150}px`, // Ensure all items fit
                 }}
               >
-                {carouselSponsorItems.concat(carouselSponsorItems).map((item, index) => ( // Duplicate for infinite loop
-                <div key={index} 
-                onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
-                 className="bg-white
-                          border border-gray-300 shadow-md
-                           p-2 rounded-lg cursor-pointer ">
-                            <div className="flex justify-center" 
-                            style={{
-                              height: '150px',
-                              width: '150px',
-                          }}
-                          >
-                            <img 
-                            src={import.meta.env.VITE_API_SERVER_URL + "../../../" + item.image}
-                            style={{
-                              height: '150px',
-                              width: '300px',
-                          }}
-                            alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md mt-1" />
-                              </div>
-                
-                <div className="flex flex-col items-center  mb-2 mt-auto">
-                                  {/* <h3 className="text-2xl font-bold text-theme">{item.score}</h3> */}
-                                  <div className='flex text-sm font-bold rounded-lg items-center justify-center w-full text-center mt-2'><p className="text-theme">{'' + item.name}</p> </div>
-                                  <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-0'><p className="text-theme">{'' + item.type}</p></div>
-                                </div>
-                
-                
-                          </div>
+                {[...carouselSponsorItems, ...carouselSponsorItems].map((item, index) => ( // Duplicate for infinite loop
+                  <div key={index}
+                    onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
+                    className="bg-white
+                              border border-gray-300 shadow-md
+                                p-2 rounded-lg cursor-pointer ">
+                                <div className="flex justify-center"
+                                style={{
+                                  height: '150px',
+                                  width: '150px',
+                                }}
+                              >
+                                <img
+                                src={import.meta.env.VITE_API_SERVER_URL + "../../../" + item.image}
+                                style={{
+                                  height: '150px',
+                                  width: '150',
+                                }}
+                                alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md mt-1" />
+                                  </div>
+
+                    <div className="flex flex-col items-center  mb-2 mt-auto">
+                                      {/* <h3 className="text-2xl font-bold text-theme">{item.score}</h3> */}
+                                      <div className='flex text-sm font-bold rounded-lg items-center justify-center w-full text-center mt-2'><p className="text-theme">{'' + item.name}</p> </div>
+                                      <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-0'><p className="text-theme">{'' + item.type}</p></div>
+                                    </div>
 
 
-                  // <div
-                  //   key={index}
-                  //   className="flex-none w-56 cursor-pointer bg-white rounded-lg shadow-md"
-                  //   onClick={() => navigateTo('/single-sponsor', { selectedItem: item, allItems: carouselSponsorItems })}
-                  // >
-                  //   <div className="w-full flex justify-center">
-                  //   <img
-                  //     className="w-full  object-cover rounded-lg mt-4 "
-                  //     style={{
-                  //       height: '108px',
-                  //       width: '108px',
-                  //   }}
-                  //     src={item.type == 'Donor' ? sponsor2 : sponsor}
-                  //     alt={item.title}
-                  //   />
-                  //     </div>
-                  //   <div className="flex flex-col p-2 items-center justify-center">
-                  //     <h3 className="text-lg font-bold text-theme">{item.name}</h3>
-                  //     <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-0'><p className="text-theme">{'' + item.type}</p></div>
-                  //   </div>
+                                  </div>
 
-                  // </div>
+
                 ))}
               </div>
             </div>

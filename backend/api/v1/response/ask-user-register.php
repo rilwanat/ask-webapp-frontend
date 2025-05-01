@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             http_response_code(400);
             echo json_encode(array("status" => false, "message" => "Registration failed. Email already exists."));
         } else {
-            $response->createSubscribe($data->email);
+            
 
             // Attempt to create user
             $authToken = $response->createUser($data->email, $data->password);
@@ -115,6 +115,8 @@ sendMailToUser($data->email, $data->email, $subject, $message);
 //
 
 
+
+$response->createSubscribe($data->email);
                 // User created successfully, return authentication token
                 http_response_code(200);
                 echo json_encode(array("status" => true, "message" => "Registration successful.", "token" => $authToken,

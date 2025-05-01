@@ -7,13 +7,19 @@
 
 
 function sendMailToUser($username, $email, $subject, $message) {
-    $headers = "MIME-Version: 1.0" . "\r\n";
+    // $headers = "MIME-Version: 1.0" . "\r\n";
+    // $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    // $headers .= 'From: hello@askfoundations.org' . "\r\n";
+
+
+
+    $headers = "MIME-Version: 1.0\r\n";
+    $headers .= "From: A.S.K Foundation <noreply@askfoundations.org>\r\n";
+    $headers .= "X-Auto-Response-Suppress: All\r\n"; // Disables auto-replies
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= 'From: hello@askfoundations.org' . "\r\n";
 
-
-
-
+    
+    // $headers .= "Content-Type: multipart/related; boundary=\"$boundary\"\r\n";
 
 
 
@@ -368,9 +374,16 @@ function sendMailFromGuest($username, $email, $subject, $message) {
 function sendMailToSubscribe($username, $email, $subject, $message, $attachmentPath = null) {
     $boundary = md5(time());
     
+    // $headers = "MIME-Version: 1.0\r\n";
+    // $headers .= "From: hello@askfoundations.org\r\n";
+    // $headers .= "Content-Type: multipart/related; boundary=\"$boundary\"\r\n";
+
     $headers = "MIME-Version: 1.0\r\n";
-    $headers .= "From: hello@askfoundations.org\r\n";
+    $headers .= "From: A.S.K Foundation <noreply@askfoundations.org>\r\n";
+    $headers .= "X-Auto-Response-Suppress: All\r\n"; // Disables auto-replies
     $headers .= "Content-Type: multipart/related; boundary=\"$boundary\"\r\n";
+
+    
 
     // HTML email body (keep your original HTML exactly as is)
     $emailBody = '

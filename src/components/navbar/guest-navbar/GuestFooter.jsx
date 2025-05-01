@@ -217,7 +217,8 @@ function GuestFooter({ gotoPage }) {
                         <div className="flex justify-center md:justify-start  py-2 my-2">
                             <img
                                 onClick={() => {
-                                    alert('googleplay');
+                                    // alert('googleplay');
+                                    openNotificationModal(null, "", "Mobile App coming soon");
                                 }}
                                 className="mr-4 cursor-pointer border-black border-4"
                                 src={googleplay}
@@ -231,7 +232,8 @@ function GuestFooter({ gotoPage }) {
                             />
                             <img
                                 onClick={() => {
-                                    alert('appStore');
+                                    // alert('appStore');
+                                    openNotificationModal(null, "", "Mobile App coming soon");
                                 }}
                                 className="mr-4 cursor-pointer border-black border-4"
                                 src={appstore}

@@ -162,7 +162,7 @@ useEffect(() => {
         setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
-    const filteredUsers = users.filter((user) =>
+    const filteredUsers = (users || []).filter((user) =>
     user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.email_address && user.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.phone_number && user.phone_number.toLowerCase().includes(searchQuery.toLowerCase()) 

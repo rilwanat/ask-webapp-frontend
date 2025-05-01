@@ -21,10 +21,12 @@ function verifyNuban($accountNumber, $bankCode, $bankNameFromClient) {
     // file_put_contents('nuban_data.txt', print_r($data, true));
 
     // Get the first item from the response array
-    $firstItem = $data[0];
+    // $firstItem = $data[0];
+    $firstItem = $data[0] ?? null;
     
     // Extract account name and bank name
-    $accountName = strtoupper($firstItem['account_name']) ?? null;
+    // $accountName = strtoupper($firstItem['account_name']) ?? null;
+    $accountName = isset($firstItem['account_name']) ? strtoupper($firstItem['account_name']) : null;
     // $bankName = $firstItem['bank_name'] ?? strtoupper($bankNameFromClient);
     $bankName = !empty($firstItem['bank_name']) 
         ? $firstItem['bank_name'] 

@@ -81,13 +81,13 @@ const [scrollCarousel, setScrollCarousel] = useState(true);
     <div className="w-full mt-4 touch-pan-y"> {/* Added touch-pan-y for better scroll */}
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
-          <div className="flex flex-col items-center justify-between">
+          <div className="flex flex-col items-center justify-between" >
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex items-center justify-center"
+              className="flex items-center justify-center "
             >
               <div className="mx-auto">
                 <motion.h1

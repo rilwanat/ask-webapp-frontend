@@ -27,7 +27,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
 
-import NotificationModal from './modals/NotificationModal';
+import PasswordNotificationModal from './modals/PasswordNotificationModal';
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -157,7 +157,7 @@ export default function PasswordResetPage({
             resetPassword === '' || resetConfirmPassword === ''
         ) {
         //   setErrorMessage({ message: 'Password Reset Failed: Please enter valid credentials' });
-          openNotificationModal(true, "Reset Password", 'Password Reset Failed: Please enter valid credentials' );
+          openNotificationModal(false, "Reset Password", 'Password Reset Failed: Please enter valid credentials' );
           // setRegistrationStatus("Failed");
           setIsLoading(false);
         
@@ -169,13 +169,13 @@ export default function PasswordResetPage({
         
       if (!isValidPassword(resetPassword)) {
         // setErrorMessage({ message: 'Password must be at least 8 characters.' });
-        openNotificationModal(true, "Reset Password", 'Password must be at least 8 characters.' );
+        openNotificationModal(false, "Reset Password", 'Password must be at least 8 characters.' );
         return;
       }
 
       if (!passwordsMatch(resetPassword, resetConfirmPassword)) {
         // setErrorMessage({ message: 'Passwords must match.' });
-        openNotificationModal(true, "Reset Password", 'Passwords must match.' );
+        openNotificationModal(false, "Reset Password", 'Passwords must match.' );
         return;
       }
 
@@ -279,7 +279,7 @@ export default function PasswordResetPage({
         }
 
             <HeaderParallax 
-                title={"A.S.K Nomination"}
+                title={"A.S.K Password Reset"}
                 subtitle={""}
             />
 
@@ -390,13 +390,10 @@ export default function PasswordResetPage({
 
 
         
-<NotificationModal
+<PasswordNotificationModal
               isOpen={isNotificationModalOpen}
               onRequestClose={
-                // closeNotificationModal
-                () => {
-                  window.location.href = '/';
-                }
+                closeNotificationModal
               }
               notificationType={notificationType}
               notificationTitle={notificationTitle}

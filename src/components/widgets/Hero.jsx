@@ -18,10 +18,10 @@ const Hero = ({  }) => {
   const navigate = useNavigate();
   //
   const images = [
-    "https://www.playground.askfoundations.org/images/slider-images/slide1.png",
-    "https://www.playground.askfoundations.org/images/slider-images/slide2.png",
-    "https://www.playground.askfoundations.org/images/slider-images/slide3.png",
-  ];
+    `https://www.playground.askfoundations.org/images/slider-images/slide1.png?${Date.now()}`,
+    `https://www.playground.askfoundations.org/images/slider-images/slide2.png?${Date.now()}`,
+    `https://www.playground.askfoundations.org/images/slider-images/slide3.png?${Date.now()}`,
+];
 
   const headerText = [
     'Header1',
@@ -118,7 +118,7 @@ const swipePower = (offset, velocity) => {
 
 
 
-    <div className="w-full h-[280px] overflow-hidden mt-24 sm:mt-20 shadow-lg">
+    <div className="w-full h-[280px] md:h-[300px] lg:h-[400px] overflow-hidden mt-24 sm:mt-20 shadow-lg">
       <Carousel
         showArrows={true}
         showStatus={false}
@@ -151,7 +151,7 @@ const swipePower = (offset, velocity) => {
         // )}
       >
         {images.map((img, index) => (
-          <div key={index} className="h-64 md:h-96">
+          <div key={index} className="w-full h-[280px] md:h-[300px] lg:h-[400px]">
             <img 
               src={img} 
               // alt={`Slide ${index}`}

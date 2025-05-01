@@ -745,12 +745,27 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                     <div className="flex flex-wrap ">
                                         <div className="w-full md:w-1/3 px-2 mb-4">
                                             <label htmlFor="userIsCheat" className="block text-sm font-medium text-red-500 mb-2">Is Cheat:</label>
-                                            <input type="text" id="userIsCheat" name="userIsCheat"
+                                            {/* <input type="text" id="userIsCheat" name="userIsCheat"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
                                             block w-full p-2.5" placeholder='Is Cheat' 
                                             value={requestData.userIsCheat} 
                                             // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
-                                            />
+                                            /> */}
+                                            <select
+                id="userIsCheat"
+                name="userIsCheat"
+                className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
+                    block w-full p-2.5"
+                    value={requestData.userIsCheat}
+                    onChange={(e) => {
+                      // alert(e.target.value);
+                      setRequestData({ ...requestData, userIsCheat: e.target.value })                      
+                  }}
+            >
+                <option value="Select">Select Is Cheat</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
                                         </div>
                                         
                                         <div className="w-full md:w-1/3 px-2 mb-4">

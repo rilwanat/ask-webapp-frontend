@@ -23,9 +23,9 @@ class Response
     private $tokens_table = "tokens_table";
     private $bank_codes_table = "bank_codes_table";
     private $crypto_info_table = "crypto_info_table";
-    private $subscriptions_table_name = "subscribe_table";
+    private $subscriptions_table = "subscribe_table";
 
-    private $payments_table_name = "payments_table";
+    private $payments_table = "payments_table";
     private $password_reset_tokens_table = "password_reset_tokens";
     
     private $dnq_values_table = "dnq_values_table";
@@ -264,7 +264,7 @@ class Response
 {
     // First check if email already exists
     $check_query = "SELECT COUNT(*) as email_count 
-                   FROM " . $this->subscriptions_table_name . " 
+                   FROM " . $this->subscriptions_table . " 
                    WHERE email_address = :email";
     
     $check_stmt = $this->conn->prepare($check_query);
@@ -279,7 +279,7 @@ class Response
     }
     
     // If email doesn't exist, proceed with insertion
-    $insert_query = "INSERT INTO " . $this->subscriptions_table_name . " 
+    $insert_query = "INSERT INTO " . $this->subscriptions_table . " 
                     SET email_address = :email";
     
     $insert_stmt = $this->conn->prepare($insert_query);
@@ -604,9 +604,37 @@ public function ReadAllPayments()
         p.subscription_type,
         p.payment_method 
         FROM
-        " . $this->payments_table_name . " p 
+        " . $this->payments_table . " p 
         
         ORDER BY price DESC";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
+public function ReadAllCummulativePayments()
+{
+    $query = "SELECT 
+                u.id as user_id,
+                u.fullname,
+                p.email,
+                u.phone_number,
+                u.account_name,
+                u.bank_name,
+                COUNT(p.id) as payment_count,
+                SUM(p.price) as total_amount,
+                MAX(p.created_on) as last_payment_date,
+                GROUP_CONCAT(DISTINCT p.subscription_type SEPARATOR ', ') as subscription_types,
+                GROUP_CONCAT(DISTINCT p.payment_method SEPARATOR ', ') as payment_methods
+              FROM 
+                " . $this->payments_table . " p
+              LEFT JOIN 
+                " . $this->users_table . " u ON p.email = u.email_address
+              GROUP BY 
+                p.email, u.id, u.fullname, u.phone_number, u.account_name, u.bank_name
+              ORDER BY 
+                total_amount DESC";
 
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
@@ -621,12 +649,12 @@ public function ReadAllPayments()
 //         p.transaction_reference,
 //         p.email,
 //         p.price,
-//         (SELECT SUM(price) FROM " . $this->payments_table_name . " 
+//         (SELECT SUM(price) FROM " . $this->payments_table . " 
 //          WHERE email = p.email AND created_on <= p.created_on) as cumulative_price,
 //         p.subscription_type,
 //         p.payment_method 
 //         FROM
-//         " . $this->payments_table_name . " p 
+//         " . $this->payments_table . " p 
 //         ORDER BY p.email, p.created_on ASC";  // Important to order by email and date for cumulative sum
 
 //     $stmt = $this->conn->prepare($query);
@@ -647,7 +675,8 @@ public function getTopNominations($limit = 3)
         FROM
         " . $this->help_requests_table . " h
         INNER JOIN users_table u ON h.email_address = u.email_address 
-        WHERE  u.fullname != ''
+        WHERE  u.fullname != ''  
+        AND u.is_cheat != 'Yes' AND u.email_verified = 'Yes' AND u.kyc_status = 'APPROVED' AND u.eligibility = 'Yes'
         ORDER BY h.nomination_count DESC 
         LIMIT :limit";
 
@@ -671,8 +700,12 @@ public function getTopConsistencies($limit = 3)
         u.fullname, 
         u.phone_number 
         FROM " . $this->users_table . " u
-        WHERE u.voter_consistency > 0  AND u.fullname != ''
+        INNER JOIN " . $this->nominations_history_table . " nh ON u.email_address = nh.voter_email
+        WHERE u.voter_consistency > 0 AND u.fullname != '' 
+        AND u.is_cheat != 'Yes' AND u.email_verified = 'Yes' 
+        AND u.kyc_status = 'APPROVED' AND u.eligibility = 'Yes'
         ORDER BY 
+        DATE(nh.voting_date) DESC,
         u.voter_consistency DESC, 
         u.vote_weight DESC, 
         u.registration_date ASC 
@@ -718,7 +751,7 @@ public function ReadAllSubscriptions()
         p.id,
         p.email_address 
         FROM
-        " . $this->subscriptions_table_name . " p 
+        " . $this->subscriptions_table . " p 
         
         ORDER BY id ASC";
 
@@ -870,12 +903,20 @@ public function updateUserKycSpecific(
         //
         if ($kycStatus === "") {$kycStatus = null;}
 
+        $eligibility = 'No';
+        if($kycStatus == 'APPROVED' && $isCheat == 'No') {
+            $eligibility = 'Yes';
+        }
+
+        
+
     $query = "UPDATE " . $this->users_table . " 
               SET 
                 
                 
                 is_cheat =:is_cheat,
-                kyc_status =:kyc_status 
+                kyc_status =:kyc_status,
+                eligibility =:eligibility 
 
               WHERE email_address = :email";
 
@@ -887,6 +928,7 @@ public function updateUserKycSpecific(
 
     $stmt->bindParam(":is_cheat", $isCheat);
     $stmt->bindParam(":kyc_status", $kycStatus);
+    $stmt->bindParam(":eligibility", $eligibility);
 
     // Execute query and return the result
     if ($stmt->execute()) {
@@ -1247,7 +1289,8 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             }
     
             if ($user['eligibility'] !== 'Yes') {
-                return ["status" => false, "message" => $fullname . " you are not eligible to proceed."];
+                // return ["status" => false, "message" => $fullname . " you are not eligible to proceed."];
+                return ["status" => false, "message" => $fullname . " Level 2 Verification (KYC) is required to proceed."];
             }
     
             if (strtoupper($user['kyc_status']) !== 'APPROVED') {
@@ -2107,7 +2150,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
                     // $transactionRef = 'TXN' . time() . rand(100, 999);
                     
                     // Record the payment in payments_table
-                    $paymentQuery = "INSERT INTO " . $this->payments_table_name . " (transaction_reference, email, price, subscription_type, payment_method) 
+                    $paymentQuery = "INSERT INTO " . $this->payments_table . " (transaction_reference, email, price, subscription_type, payment_method) 
                                     VALUES (:transaction_ref, :email, :price, 'donation', :payment_method)";
                     $paymentStmt = $this->conn->prepare($paymentQuery);
                     $paymentStmt->bindParam(":transaction_ref", $reference);
@@ -2133,7 +2176,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
             } else {
                 // For anonymous donations, we'll still record the payment but without an email
                 // $transactionRef = 'TXN' . time() . rand(100, 999);
-                $paymentQuery = "INSERT INTO " . $this->payments_table_name . " (transaction_reference, email, price, subscription_type, payment_method) 
+                $paymentQuery = "INSERT INTO " . $this->payments_table . " (transaction_reference, email, price, subscription_type, payment_method) 
                                 VALUES (:transaction_ref, NULL, :price, 'donation', :payment_method)";
                 $paymentStmt = $this->conn->prepare($paymentQuery);
                 $paymentStmt->bindParam(":transaction_ref", $reference);
@@ -2177,7 +2220,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
         $subscription_type)
     {
         $amount = $amount;
-        $query = "INSERT INTO " . $this->payments_table_name . " SET             
+        $query = "INSERT INTO " . $this->payments_table . " SET             
             transaction_reference=:transaction_reference,
             username=:username,
             firstname=:firstname,
@@ -2618,7 +2661,7 @@ public function UpdatePasswordResetUserPassword($email, $newPassword) {
 
 
 public function DeletePasswordResetEmailToken($email) {
-    $query = "DELETE FROM " . $this->subscriptions_table_name . " WHERE email_address = :email_address";    
+    $query = "DELETE FROM " . $this->subscriptions_table . " WHERE email_address = :email_address";    
     $stmt = $this->conn->prepare($query);    
     if ($stmt === false) {
         // Optional: log error
@@ -2635,7 +2678,7 @@ public function DeletePasswordResetEmailToken($email) {
 
 
 public function UnsubscribeEmail($email) {
-    $query = "DELETE FROM " . $this->subscriptions_table_name . " WHERE email_address = :email_address";
+    $query = "DELETE FROM " . $this->subscriptions_table . " WHERE email_address = :email_address";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(":email_address", $email);
     return $stmt->execute();

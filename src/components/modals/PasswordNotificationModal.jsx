@@ -21,7 +21,7 @@ const customModalStyles = {
   },
 };
 
-const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage, gotoPage }) => {
+const PasswordNotificationModal = ({ isOpen, onRequestClose, notificationType, notificationMessage, gotoPage }) => {
 
       // const navigate = useNavigate();
       // alert(notificationMessage);
@@ -40,10 +40,10 @@ const details = parts.slice(1);
       <div className="flex flex-col w-full px-4 pt-4 z-7000">
         <div className='flex justify-center mt-4'>
           {
-          notificationType === null ?
-                      <InfoIcon className='text-theme' style={{ width: '64px', height: '64px' }}/> 
-                       :
-          notificationType === true ? 
+          // notificationType === null ?
+          //             <InfoIcon className='text-theme' style={{ width: '64px', height: '64px' }}/> 
+          //              :
+                       notificationType === true ? 
             <CheckCircleIcon className='text-green' style={{ width: '64px', height: '64px' }}/> : 
             <CancelIcon className='text-red-500' style={{ width: '64px', height: '64px' }}/>
           }
@@ -70,9 +70,6 @@ const details = parts.slice(1);
             onClick={() => {
               onRequestClose();
 
-              if (mainMessage == "Your request was granted 0 month(s) ago. You can request again in 12 month(s).") { 
-                gotoPage("");
-              }
 
             }}
             style={{ width: '128px', borderWidth: '1px' }}
@@ -94,4 +91,4 @@ goto &&
   );
 };
 
-export default NotificationModal;
+export default PasswordNotificationModal;

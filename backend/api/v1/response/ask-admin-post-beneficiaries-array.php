@@ -74,7 +74,7 @@ $beneficiariesList = '<ul>' . implode('', array_map(function($item) {
                  . $beneficiariesList . "<br><br>"
                  . "Thank you for participating. Kindly join the next cycle, and start mobilizing for nominations.<br><br>"
                  . "Best of luck,<br>"
-                 . "A.S.K Foundations Team";
+                 . "<strong>A.S.K Foundation Team</strong><br>";
 
                  
 
@@ -95,7 +95,7 @@ foreach ($data['beneficiaries'] as $beneficiary) {
                  . "Congratulations!! You have been selected as this week's beneficiary of A.S.K FOUNDATION weekly support initiative.<br><br>"
                  . "Your request is currently being processed.<br><br>"
                  . "Please when you receive the credit alert send us a short VIDEO to our WhatsApp (+2349051047138) telling us your name, how you got to know A.S.K Foundation and how you eventually got nominated.<br><br><br>"
-                 . "<strong>A.S.K Foundations Team</strong><br>";
+                 . "<strong>A.S.K Foundation Team</strong><br>";
 
         sendMailToUser(
             $beneficiary['fullname'] ?? 'User',
