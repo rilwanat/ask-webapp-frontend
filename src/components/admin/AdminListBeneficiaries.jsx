@@ -973,6 +973,9 @@ if (parsedShareRatio.some(isNaN)) {
                           Email Address
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Phone
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Bank Name
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
@@ -1031,6 +1034,9 @@ if (parsedShareRatio.some(isNaN)) {
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                             {request.email_address}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                            {request.user.phone}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                             {request.user.bank_name}
