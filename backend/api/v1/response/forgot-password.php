@@ -36,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($data->email)) {
         $response->InsertPasswordResetTokenForUser($data->email, $resetToken);
 
         // $data->baseName
-        // $passwordResetUrl = 'https://playground.askfoundations.org/reset-password/' . $resetToken;
         $passwordResetUrl = $data->baseName . 'reset-password/' . $resetToken;
 
         // Send email

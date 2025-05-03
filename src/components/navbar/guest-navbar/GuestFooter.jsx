@@ -101,7 +101,7 @@ function GuestFooter({ gotoPage }) {
 
           // alert("dashboard-products " + JSON.stringify(response.data.itemsData, null, 2));
           // alert("" + response.data.message);
-          openNotificationModal(true, "A.S.K Subscribe To Newsletter", "" + response.data.message);
+          openNotificationModal(true, "A.S.K Subscribe To Newsletter", response.data.message);
           
 
           // Store the retrieved data in state variables
@@ -109,7 +109,7 @@ function GuestFooter({ gotoPage }) {
           // setProductsData(response.data.itemsData);
         } else {
           // alert("error1: " + response.data.message);
-          openNotificationModal(false, "A.S.K Subscribe To Newsletter", "error1: " + response.data.message);
+          openNotificationModal(false, "A.S.K Subscribe To Newsletter", response.data.message);
           
         }
   

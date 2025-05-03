@@ -65,6 +65,7 @@ export default function LandingPage({
             <WidgetAboutForHome/>
 
             <WidgetHelpRequests 
+            isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} 
             carouselRequestItems={carouselRequestItems} 
             setCurrentRequestSlide={setCurrentRequestSlide}

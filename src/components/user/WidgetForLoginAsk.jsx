@@ -298,7 +298,7 @@ A community-based charity initiative
 
 
 
-                        <p className='mb-2 text-center' style={{ color: '', fontWeight: '500', fontSize: '20px' }}>You are not logged in. Please register or login to send us your help request.</p>
+                        <p className='mb-2 text-center' style={{ color: '', fontWeight: '500', fontSize: '20px' }}>You are not logged in. Please register or login to be eligible to ASK for help.</p>
 
                           
                           <div className='flex justify-between items-center flex-col md:flex-row '>

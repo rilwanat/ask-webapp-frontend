@@ -238,7 +238,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
   
   
       // openNotificationModal(true, currentPageName, "");
-      // alert(JSON.stringify(adminDashboardStatisticsResponse.data), null, 2);  // Update state with appointments count
+      // alert(JSON.stringify(adminDashboardStatisticsResponse.data.dashboardData[0].Top_Consistencies), null, 2);  // Update state with appointments count
     //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
 
 
@@ -302,15 +302,15 @@ let countFiltered = indexOfFirstFilteredItem + 1;
             
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                                       
-                                      <div className="rounded-lg p-4 flex my-2 mx-1 text-black  bg-white cursor-pointer" 
+                                      {/* <div className="rounded-lg p-4 flex my-2 mx-1 text-black  bg-white cursor-pointer" 
                                       // onClick={() => setActiveTab(2)}
                                       >
                                         <div className="flex flex-row items-center">
                                           <div className="py-2 mr-2">
                                             <div className='flex items-center justify-center p-1 rounded-3xl' style={{height: "48px", width: "48px", background: "#F4F7FE" }} >
-                                              {/* <img className="w-12 h-12 object-scale-down p-1" 
+                                              <img className="w-12 h-12 object-scale-down p-1" 
                                             //   src={bars} 
-                                              alt=""  /> */}
+                                              alt=""  /> 
                                               <PaymentsIcon onClick={() => {
                                                 
                                               }} />
@@ -323,16 +323,16 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                               :
                                               <> 
                                               <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>N{dashboardTotal}</p>
-                                              {/* <div className='flex justify-end items-center'>
+                                              <div className='flex justify-end items-center'>
                                                 <ArrowDropUpIcon style={{ color: '#14CC26' }}/>
                                                 <p className='' style={{ fontSize: '12px', fontWeight: '600', color: '#14CC26' }}>+/-##%</p>
-                                              </div> */}
+                                              </div>
                                               </>
                                             }                                
                                             
                                           </div>
                                         </div>
-                                      </div>
+                                      </div> */}
                                   
                                       <div className="rounded-lg p-4 flex my-2 mx-1 text-black  bg-white cursor-pointer" 
                                       // onClick={() => setActiveTab(1)}
@@ -496,7 +496,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                           <div className='flex flex-row w-full'>
                                             
             
-                                            <div className="w-full md:w-2/6 mb-4 mr-4 h-full flex items-center relative">
+                                            {/* <div className="w-full md:w-2/6 mb-4 mr-4 h-full flex items-center relative">
                   <select
                     id="statusSelect"
                     name="statusSelect"
@@ -506,18 +506,18 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                     }}
                   >
                     <option value="">Month</option>
-                    {/* Map categories here */}
+                    Map categories here
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <KeyboardArrowDownIcon style={{ color: '#254EDB', width: '20px', height: '20px' }}/>
                   </div>
-                </div>
+                </div> */}
             
             
                                           </div>
             
                                           <div className='flex flex-row w-full justify-end'>
-                                          <div className="w-full md:w-2/6 mb-4 mr-4 h-full flex items-center relative">
+                                          {/* <div className="w-full md:w-2/6 mb-4 mr-4 h-full flex items-center relative">
                   <select
                     id="beneficiariesSelect"
                     name="beneficiariesSelect"
@@ -531,7 +531,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <KeyboardArrowDownIcon style={{ color: '#254EDB', width: '20px', height: '20px' }}/>
                   </div>
-                </div>
+                </div> */}
                                             
                                             <div className="w-full md:w-3/6 mb-4 mr-4 h-full flex items-center">
                                               <div className="relative w-full">
@@ -568,14 +568,14 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                           <Bar dataKey="total" fill="#82ca9d" />
                                         </BarChart>
                                       </ResponsiveContainer>*/}
-                                      <ResponsiveContainer width="100%" height={60}>
+                                      <ResponsiveContainer width="100%" height={360}>
   <BarChart
     data={barData}
     layout="vertical"  // This makes the chart horizontal
     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
   >
     <CartesianGrid strokeDasharray="3 3" />
-    <XAxis type="number" />  // Now shows numbers (was YAxis in vertical chart)
+    <XAxis type="number" /> 
     <YAxis 
       type="category" 
       dataKey="name" 

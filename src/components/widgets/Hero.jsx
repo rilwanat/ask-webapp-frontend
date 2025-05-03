@@ -18,9 +18,9 @@ const Hero = ({  }) => {
   const navigate = useNavigate();
   //
   const images = [
-    `https://www.playground.askfoundations.org/images/slider-images/slide1.png?${Date.now()}`,
-    `https://www.playground.askfoundations.org/images/slider-images/slide2.png?${Date.now()}`,
-    `https://www.playground.askfoundations.org/images/slider-images/slide3.png?${Date.now()}`,
+    `https://www.askfoundations.org/images/slider-images/slide1.png?${Date.now()}`,
+    `https://www.askfoundations.org/images/slider-images/slide2.png?${Date.now()}`,
+    `https://www.askfoundations.org/images/slider-images/slide3.png?${Date.now()}`,
 ];
 
   const headerText = [

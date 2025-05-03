@@ -37,38 +37,38 @@ const WidgetShare = ({ helpToken }) => {
   };
 
   return (
-    <div className='flex flex-col bg-theme rounded-lg py-1 px-8 justify-center mt-1'>
+    <div className='flex flex-col bg-theme rounded-lg py-1 px-4 justify-center mt-1'>
+      {/* <div className='text-white text-center text-xs mb-1' style={{ fontWeight: '600', marginTop: '-1px' }}>Share:</div> */}
       <div className='flex items-center'>
-        <div className='text-white' style={{ fontWeight: '600', marginTop: '-1px' }}>Share:</div>
-        <ul className="flex ml-4">
-          <li className='mr-4'>
-            <button onClick={handleCopy} style={{ background: 'none', border: 'none', padding: 0 }} className='object-cover'>
+        {/* <div className='text-white ' style={{ fontWeight: '600', marginTop: '-1px' }}>Share:</div> */}
+        <ul className="flex ml-2">
+          <li className='mr-3'>
+            <button onClick={handleCopy}  
+            className='object-contain w-6 h-6 sm:w-7 sm:h-7 cursor-pointer'>
               <ContentCopyIcon style={{ 
-                cursor: "pointer", 
-                color: copied ? "#4CAF50" : "#ffffff", 
-                width: '28px', 
-                height: '28px' 
-              }}/>
+                color: copied ? "#4CAF50" : "#ffffff",                 
+              }}
+              />
             </button>
           </li>
-          <li className='mr-4'>
+          <li className='mr-3'>
             <a href={shareLinks.whatsapp} target='_blank' rel="noopener noreferrer">
-              <img src={WhatsAppIcon} alt="WhatsApp" style={{cursor: "pointer", width:'28px', height:'28px' }} className='object-cover'/>
+              <img src={WhatsAppIcon} alt="WhatsApp" className='object-contain w-6 h-6 sm:w-7 sm:h-7 cursor-pointer'/>
             </a>
           </li>
-          <li className='mr-4'>
+          <li className='mr-3'>
             <a href={shareLinks.telegram} target='_blank' rel="noopener noreferrer">
-              <img src={TelegramIcon} alt="Telegram" style={{cursor: "pointer", width:'28px', height:'28px' }} className='object-cover'/>
+              <img src={TelegramIcon} alt="Telegram"  className='object-contain w-6 h-6 sm:w-7 sm:h-7 cursor-pointer'/>
             </a>
           </li>
-          <li className='mr-4'>
+          <li className='mr-3'>
             <a href={shareLinks.facebook} target='_blank' rel="noopener noreferrer">
-              <img src={FacebookIcon} alt="Facebook" style={{cursor: "pointer", width:'28px', height:'28px' }} className='object-cover'/>
+              <img src={FacebookIcon} alt="Facebook" className='object-contain w-6 h-6 sm:w-7 sm:h-7 cursor-pointer'/>
             </a>
           </li>
-          <li className='mr-4'>
+          <li className='mr-3'>
             <a href={shareLinks.twitter} target='_blank' rel="noopener noreferrer">
-              <img src={XIcon} alt="Twitter" style={{cursor: "pointer", width:'28px', height:'28px' }} className='object-cover'/>
+              <img src={XIcon} alt="Twitter" className='object-contain w-6 h-6 sm:w-7 sm:h-7 cursor-pointer'/>
             </a>
           </li>
           {/* <li className='mr-4'>
@@ -89,7 +89,7 @@ const WidgetShare = ({ helpToken }) => {
         </ul>
       </div>
       {copied && (
-        <div className="text-white text-sm mt-1">
+        <div className="text-white text-sm mt-1 text-center">
           Link copied to clipboard!
         </div>
       )}

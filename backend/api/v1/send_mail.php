@@ -507,7 +507,7 @@ function sendMailToSubscribe($username, $email, $subject, $message, $attachmentP
     <a href="https://www.youtube.com/@Askfoundations" target="_blank">YouTube</a>
 <br><br>
 <p>
-    <a href="https://playground.askfoundations.org/backend/api/v1/unsubscribe.php?email=' . urlencode($email) . '" style="color: #666666; text-decoration: underline;">
+    <a href="https://askfoundations.org/backend/api/v1/unsubscribe.php?email=' . urlencode($email) . '" style="color: #666666; text-decoration: underline;">
         Unsubscribe from our emails
     </a>
 </p>

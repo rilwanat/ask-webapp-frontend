@@ -344,7 +344,7 @@ const filteredDonations = Array.isArray(donationsData)
           reference: (new Date()).getTime().toString(),
           email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
           amount: price * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-          publicKey: import.meta.env.VITE_PAYSTACK_TEST_PUBLIC_KEY,
+          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
         };
         const initializePayment = usePaystackPayment(config);
         initializePayment({onSuccess: onSuccess, onClose: onClose});
@@ -353,7 +353,7 @@ const filteredDonations = Array.isArray(donationsData)
           reference: (new Date()).getTime().toString(),
           email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
           amount: dollarExchangeRate * (price * 100) , //Amount is cents
-          publicKey: import.meta.env.VITE_PAYSTACK_TEST_PUBLIC_KEY,
+          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
           // currency: "USD"
           
         };
@@ -376,7 +376,7 @@ const filteredDonations = Array.isArray(donationsData)
           reference: (new Date()).getTime().toString(),
           email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
           amount: price * 100, // Amount in Kobo
-          publicKey: import.meta.env.VITE_PAYSTACK_TEST_PUBLIC_KEY,
+          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
           ...(isRecurring && planCode ? { plan: planCode } : {}),
         };
         const initializePayment = usePaystackPayment(config);
@@ -387,7 +387,7 @@ const filteredDonations = Array.isArray(donationsData)
           reference: (new Date()).getTime().toString(),
           email: userDetails?.email_address ?? "anonymousdonor@askfoundations.org",
           amount: price * 100, // Amount in Cents
-          publicKey: import.meta.env.VITE_PAYSTACK_TEST_PUBLIC_KEY,
+          publicKey: import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY,
           ...(isRecurring && planCode ? { plan: planCode, currency: 'USD' } : { currency: 'USD' }),
         };
         const initializePayment = usePaystackPayment(config);

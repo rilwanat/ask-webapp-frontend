@@ -113,6 +113,10 @@ const WidgetNominate = ({
           }
 
 
+          if (!fingerPrint) {
+            openNotificationModal(null, "Nomination", "Please retry again while we confirm your identity");
+            return;
+          }
           
           e.preventDefault();
           setErrorMessage({ message: '' });
@@ -211,13 +215,13 @@ const WidgetNominate = ({
         };
 
   return (
-    <div className='flex flex-col bg-orange rounded-lg p-2 px-8 justify-center items-center my-1 w-50 text-white cursor-pointer' 
+    <div className='flex flex-col bg-orange rounded-lg p-2 px-8 justify-center items-center my-1 w-70 text-white cursor-pointer' 
     onClick={(e) => {
       handleNominate(e);
     }}>
       <div className='flex items-center'>
         <div className='text-white' style={{ fontWeight: '600', marginTop: '-1px' }}>
-        {isLoading ? 'Please wait..' : 'Nominate:'}
+        {isLoading ? 'Please wait..' : 'Confirm Nomination'}
         </div>
         <CheckIcon className='ml-2' />
       </div>

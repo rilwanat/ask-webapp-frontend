@@ -35,7 +35,7 @@ if (
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => false, "message" => "A.S.K: Email unable to Subscribe."));
+        echo json_encode(array("status" => false, "message" => "A.S.K: Sorry, it appears email already subscribed, try another email."));
     }
 
 

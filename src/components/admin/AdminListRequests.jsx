@@ -206,7 +206,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
     } catch (error) {
       setIsDataLoading(false);
       
-      // alert(error);
+      alert(error);
       // Handle errors
       if (error.response && error.response.data) {
         const errorMessage = error.response.data.message;
@@ -353,21 +353,24 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           Nomination Count
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
-                          Remark
+                          Fullname
                         </th>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Remark
+                        </th> */}
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Email Address
                         </th>
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Request Image
-                        </th>
+                        </th> */}
                         {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Help Token
                         </th> */}
 
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Action
-                        </th>
+                        </th> */}
                         
                       </tr>
                     </thead>
@@ -398,15 +401,18 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                             {request.nomination_count	}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {/* {request.tags.join(', ')} */}
-                            {request.remark	}
+                            {request.user.fullname	}
                           </td>
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                            {request.tags.join(', ')}
+                            {request.remark	}
+                          </td> */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
                             {request.email_address}
                           </td>
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {request.request_image	}
-                          </td>
+                          </td> */}
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
                             {request.help_token	}
                           </td> */}
@@ -436,7 +442,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                     </td> */}
                           
                           
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
                           <span
                           className="text-theme cursor-pointer "
                           onClick={(e) => {
@@ -446,7 +452,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           >
                             See Details
                             </span>
-                          </td>
+                          </td> */}
                          
                           
                         </tr>

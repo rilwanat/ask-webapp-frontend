@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Carousel } from 'react-responsive-carousel';
@@ -20,6 +20,9 @@ import NominateNotificationModal from './modals/NominateNotificationModal';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
+import SearchIcon from '@mui/icons-material/Search';
+
+
 export default function SingleRequestsPage({ 
     isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
@@ -34,7 +37,8 @@ export default function SingleRequestsPage({
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const [updatedItem, setUpdatedItem] = useState([]);
-
+     const [searchQuery, setSearchQuery] = useState('');
+  const [filteredItems, setFilteredItems] = useState(allItems);
 
     useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []);
 
@@ -86,7 +90,8 @@ export default function SingleRequestsPage({
         navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
     }
 
-    const [scrollCarousel, setScrollCarousel] = useState(true);
+    const [scrollCarousel, setScrollCarousel] = useState(false);
+    const carouselRef = useRef();
     // Custom carousel configuration to prevent scroll interference
     const carouselConfig = {
         stopAutoPlayOnHover: true,
@@ -105,33 +110,82 @@ export default function SingleRequestsPage({
         className: "touch-pan-y", // Added to prevent scroll interference
         selectedItem: selectedIndex, // Start with the selected item
         onChange: handleChange, // Update selected index when carousel changes
+        ref: carouselRef,
 
         // Add these additional props for better arrow visibility:
-    renderArrowPrev: (onClickHandler, hasPrev, label) =>
-        hasPrev && (
-            <button
-                type="button"
-                onClick={onClickHandler}
-                title={label}
-                className="absolute left-2 z-10 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
-                style={{ top: '50%', transform: 'translateY(-50%)' }}
-            >
-                <KeyboardArrowLeftIcon />
-            </button>
-        ),
-    renderArrowNext: (onClickHandler, hasNext, label) =>
-        hasNext && (
-            <button
-                type="button"
-                onClick={onClickHandler}
-                title={label}
-                className="absolute right-2 z-10 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
-                style={{ top: '50%', transform: 'translateY(-50%)' }}
-            >
-                <KeyboardArrowRightIcon />
-            </button>
-        )
+    // renderArrowPrev: (onClickHandler, hasPrev, label) =>
+    //     hasPrev && (
+    //         <button
+    //             type="button"
+    //             onClick={onClickHandler}
+    //             title={label}
+    //             className="absolute left-2 z-10 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
+    //             style={{ top: '40%', transform: 'translateY(-50%)' }}
+    //         >
+    //             <KeyboardArrowLeftIcon />
+    //         </button>
+    //     ),
+    // renderArrowNext: (onClickHandler, hasNext, label) =>
+    //     hasNext && (
+    //         <button
+    //             type="button"
+    //             onClick={onClickHandler}
+    //             title={label}
+    //             className="absolute right-2 z-10 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
+    //             style={{ top: '40%', transform: 'translateY(-50%)' }}
+    //         >
+    //             <KeyboardArrowRightIcon />
+    //         </button>
+    //     )
     };
+
+
+
+
+    // Handle search input change
+        const [searchTimeout, setSearchTimeout] = useState(null);
+        const handleSearchChange = (e) => {
+          // alert("C");
+          setScrollCarousel(false);
+    
+          const query = e.target.value.toLowerCase();
+          setSearchQuery(query);
+          
+          // Clear previous timeout if it exists
+          if (searchTimeout) clearTimeout(searchTimeout);
+          
+          // Set new timeout
+          setSearchTimeout(setTimeout(() => {
+            if (query === '') {
+              setFilteredItems(allItems);
+              return;
+            }
+        // alert("C");
+            const filtered = allItems.filter(item => {
+              return (
+                item.description.toLowerCase().includes(query) ||
+                item.help_token.toLowerCase().includes(query) ||
+                item.email_address.toLowerCase().includes(query) ||
+                (item.user && item.user.fullname.toLowerCase().includes(query))
+              );
+            });
+        
+            setFilteredItems(filtered);
+            setCurrentRequestSlide(0);
+          }, 1000)); // 300ms delay
+        };
+        // Clean up timeout on unmount
+        useEffect(() => {
+          return () => {
+            if (searchTimeout) clearTimeout(searchTimeout);
+          };
+        }, [searchTimeout]);// 300ms delay
+        // Update filtered items when allItems prop changes
+        useEffect(() => {
+          setFilteredItems(allItems);
+        }, [allItems]);
+
+
 
 
     return (
@@ -150,9 +204,54 @@ export default function SingleRequestsPage({
             />
 
             <div className="flex flex-col items-center p-4 touch-pan-y mb-8">
+
+                <div className="flex flex-col items-center w-full mb-4">
+                
+                      <div className="flex justify-between  ">
+                          <button
+                                type="button"
+                                onClick={() => carouselRef.current?.decrement()}
+                                disabled={selectedIndex === 0}
+                                // title={label}
+                                className="mr-6 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
+                                // style={{ top: '40%', transform: 'translateY(-50%)' }}
+                            >
+                                <KeyboardArrowLeftIcon />
+                            </button>
+
+                            <div className='relative flex items-center justify-center  md:w-auto '>
+                      {/* <SearchIcon className="absolute h-5 w-5 text-white" /> */}
+                      <input
+                        type='text'
+                        placeholder='Search requests'
+                        className='w-full md:w-64 text-center text-white bg-theme border border-theme rounded-lg py-1 focus:outline-none focus:border focus:border-theme placeholder-white'
+                        onChange={handleSearchChange}
+                      />
+                    </div>
+                      
+                      
+                          <button
+                                type="button"
+                                onClick={() => carouselRef.current?.increment()}
+                                disabled={selectedIndex === filteredItems.length - 1}
+                                // title={label}
+                                className="ml-6 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
+                                // style={{ top: '40%', transform: 'translateY(-50%)' }}
+                            >
+                                <KeyboardArrowRightIcon />
+                            </button>
+                      </div>
+                      <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
+                      </div>
+                
+
+            
+
+
                 <div className="w-full max-w-3xl mt-4">
                     <Carousel {...carouselConfig}>
-                        {allItems?.map((item) => (
+                        {/* {allItems?.map((item) => ( */}
+                        {filteredItems?.map((item) => (
                             <motion.div 
                                 key={item.id} 
                                 className="flex flex-col items-center justify-center w-full touch-pan-y select-none cursor-pointer"
@@ -161,6 +260,10 @@ export default function SingleRequestsPage({
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.3 }}
                             >
+                                                    
+
+
+
                                 <div className="w-full text-center">
                                     <h1 className="text-2xl font-bold text-gray-800">
                                         You are viewing {item.user.fullname}'s help request

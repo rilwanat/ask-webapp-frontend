@@ -1,43 +1,100 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import CheckIcon from '@mui/icons-material/Check';
-import ShareIcon from '@mui/icons-material/Share';
-
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 
-
-
-const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide }) => {
+const WidgetBeneficiaries = ({ 
+  isMobile,
+  currentBeneficiarySlide, 
+  carouselBeneficiaryItems, 
+  setCurrentBeneficiarySlide 
+}) => {
   const navigate = useNavigate();
+  const [myCurrentIndex, setMyCurrentIndex] = useState(0);
+  const myItemsPerPage = isMobile ? 1 : 5;
+  const myTotalItems = carouselBeneficiaryItems.length;
+  const [direction, setDirection] = useState(1); // 1 for forward, -1 for backward
+  const carouselRef = useRef(null);
+
+
+  const [isPaused, setIsPaused] = useState(false);
+  // Memoize next function to prevent unnecessary recreations
+  const next = useCallback(() => {
+    setDirection(1);
+    setMyCurrentIndex(prev => (prev + myItemsPerPage) % myTotalItems);
+  }, [myItemsPerPage, myTotalItems]);
+  const prev = useCallback(() => {
+    setDirection(-1);
+    setMyCurrentIndex(prev => (prev - myItemsPerPage + myTotalItems) % myTotalItems);
+  }, [myItemsPerPage, myTotalItems]);
+  
+  useEffect(() => {
+    if (isPaused || myTotalItems === 0) return;
+  
+    const interval = setInterval(() => {
+      next();
+    }, 7000);
+  
+    return () => clearInterval(interval);
+  }, [isPaused, next, myTotalItems]); // Only depend on values that truly affect the effect
+
+//
+    // Touch gesture handlers
+    const handleTouchStart = (e) => {
+      setIsPaused(true);
+      touchStartX.current = e.touches[0].clientX;
+    };
+  
+    const handleTouchMove = (e) => {
+      touchEndX.current = e.touches[0].clientX;
+    };
+  
+    const handleTouchEnd = () => {
+      setIsPaused(false);
+      
+      // Check if swipe was significant enough
+      if (touchStartX.current - touchEndX.current > 50) {
+        next(); // Swipe left
+      } else if (touchEndX.current - touchStartX.current > 50) {
+        prev(); // Swipe right
+      }
+    };
+      //
 
   const navigateTo = (route, data) => {
     navigate(route, { state: data });
   };
 
-  // Custom carousel configuration to prevent scroll interference
-  const carouselConfig = {
-    stopAutoPlayOnHover: true,
-    showIndicators: false,
-    showArrows: true,
-    showStatus: false,
-    showThumbs: false,
-    infiniteLoop: true,
-    autoPlay: true,
-    swipeable: true,
-    emulateTouch: true,
-    swipeScrollTolerance: 5, // Makes vertical scrolling easier
-    preventMovementUntilSwipeScrollTolerance: true,
-    verticalSwipe: 'natural', // Allows natural vertical scrolling
-    stopOnHover: false, // Prevents hover behavior from interfering with scroll
-    interval: 5000,
-    selectedItem: currentBeneficiarySlide,
-    onChange: (index) => setCurrentBeneficiarySlide(index),
-    className: "rounded-lg overflow-hidden w-full"
+  // Infinite loop navigation
+  // const next = () => {
+  //   setDirection(1);
+  //   setMyCurrentIndex(prev => (prev + myItemsPerPage) % myTotalItems);
+  // };
+
+  // const prev = () => {
+  //   setDirection(-1);
+  //   setMyCurrentIndex(prev => 
+  //     (prev - myItemsPerPage + myTotalItems) % myTotalItems
+  //   );
+  // };
+
+  // Get visible items with wrap-around support
+  const getVisibleItems = () => {
+    const endIndex = myCurrentIndex + myItemsPerPage;
+    
+    if (endIndex > myTotalItems) {
+      const overflow = endIndex - myTotalItems;
+      return [
+        ...carouselBeneficiaryItems.slice(myCurrentIndex),
+        ...carouselBeneficiaryItems.slice(0, overflow)
+      ];
+    }
+    return carouselBeneficiaryItems.slice(myCurrentIndex, endIndex);
   };
+
+  const visibleItems = getVisibleItems();
 
   const formatAmount = (amount) => {
     return Number(amount).toLocaleString('en-US', {
@@ -46,85 +103,155 @@ const WidgetBeneficiaries = ({ currentBeneficiarySlide, carouselBeneficiaryItems
     });
   };
 
+  // Animation variants
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? '100%' : '-100%',
+      opacity: 0
+    }),
+    center: {
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction) => ({
+      x: direction < 0 ? '100%' : '-100%',
+      opacity: 0
+    })
+  };
+
   return (
-    <div className="w-full mt-4 touch-pan-y"> {/* Added touch-pan-y for better scroll */}
+    <div className="w-full mt-4 touch-pan-y">
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
-        <div className="w-full p-4">
-          <div className="flex flex-col items-center justify-between">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center justify-center"
-            >
-              <div className="mx-auto">
-                <motion.h1
-                  initial={{ y: -50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
-                  className="text-2xl font-bold text-gray-800 mb-2"
+        <div className="w-full py-4"
+        onMouseEnter={() => setIsPaused(true)}      // For desktop hover
+        onMouseLeave={() => setIsPaused(false)}    // For desktop mouse out
+        // onTouchStart={() => setIsPaused(true)}     // For mobile touch start
+        // onTouchEnd={() => setIsPaused(false)}      // For mobile touch end
+        ref={carouselRef}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        >
+          <div className="relative w-full mx-auto p-4 rounded-lg">
+            <div className="flex flex-col items-center mb-4 ">
+              <div className="flex justify-between w-full ">
+                <button
+                  type="button"
+                  onClick={prev}
+                  className="p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
                 >
-                  <div className='flex flex-col items-center justify-center mt-0 mb-2'>
-                    <p className='mb-2' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Beneficiaries</p>
-                    <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-                  </div>
-                </motion.h1>
+                  <KeyboardArrowLeftIcon />
+                </button>
+                <p className='mb-2 text-center' style={{ fontWeight: '700', fontSize: '24px' }}>Beneficiaries</p>
+                <button
+                  type="button"
+                  onClick={next}
+                  className="p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
+                >
+                  <KeyboardArrowRightIcon />
+                </button>
               </div>
-            </motion.div>
-
-            <div className="w-full touch-pan-y" style={{ touchAction: 'pan-y' }}> {/* Wrapper with touch action */}
-              <Carousel {...carouselConfig}>
-                {carouselBeneficiaryItems.map((item) => (
-                  <div 
-                    key={item.id} 
-                    className="flex flex-col h-full select-none cursor-pointer"
-                    onClick={() => {
-                      navigateTo('/single-beneficiary', { 
-                        selectedItem: item, 
-                        allItems: carouselBeneficiaryItems  
-                      });
-                    }}
-                  >
-                    <div className="flex-1 overflow-hidden">
-                    {/* {import.meta.env.VITE_API_SERVER_URL + "../../../../" + item.user.profile_picture} */}
-                      <img 
-                        className="rounded-lg w-full h-full object-cover"
-                        src={import.meta.env.VITE_API_SERVER_URL + "../../../../" + item.user.profile_picture}
-                        alt={item.title}
-                        style={{
-                          width: '200px',
-                          height: '200px',
-                          margin: '0 auto',
-                          display: 'block'
-                        }}
-                      />
-                    </div>
-
-                    <div className="pt-4 mt-auto">
-                      {/* <h3 className="text-2xl font-bold text-theme">{item.user.fullname}</h3> */}
-                      <p className="text-theme font-bold mt-1">{'₦' + formatAmount(item.amount)}</p>
-                      <p className="text-theme mt-1">{item.date}</p>
-                    </div>
-
-                    <div className="flex flex-col items-center mt-auto">
-                      <div className='flex p-2 rounded-lg items-center justify-center w-50 bg-softTheme mt-2'>
-                        <p className="text-theme">{item.remark}</p>
-                      </div>
-                      <div className={`flex p-2 rounded-lg items-center justify-center w-50 ${item.status === 'approved' ? 'bg-green' : item.status === 'pending' ? 'bg-orange' : ''} mt-2`}>
-                        <p className="text-white mr-2">{item.status.charAt(0).toUpperCase() + item.status.slice(1)}</p>
-                        {
-                          item.status === 'approved' ? 
-                          <CheckCircleIcon className='text-white' style={{  }}/> 
-                          : 
-                          <PendingActionsIcon className='text-white' style={{  }}/>
-                        }
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </Carousel>
+              <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
             </div>
+
+            <div className="relative overflow-hidden w-full h-[520px] ">
+              <AnimatePresence custom={direction} initial={false}>
+                <motion.div
+                  key={myCurrentIndex}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ 
+                    type: 'spring', 
+                    stiffness: 300, 
+                    damping: 30,
+                    duration: 0.5
+                  }}
+                  className="absolute top-0 left-0 right-0 flex gap-6 justify-center "
+                >
+                  {visibleItems.map((item) => (
+                    <div 
+                      key={item.id}
+                      className={`flex flex-col select-none items-center p-4 gap-2 
+                        border rounded-lg  cursor-pointer ${
+                        item.status === 'approved' ? 'border-green' : 
+                        item.status === 'pending' ? 'border-orange' : ''
+                      }`}
+                    >
+                      <div 
+                        className="flex flex-col select-none items-center p-4 gap-2 cursor-pointer"
+                        onClick={() => {
+                          navigateTo('/single-beneficiary', { 
+                            selectedItem: item, 
+                            allItems: carouselBeneficiaryItems  
+                          });
+                        }}
+                      >
+                        <div className="w-[200px] h-[200px] rounded-lg overflow-hidden bg-gray-100">
+                          <img 
+                            src={import.meta.env.VITE_API_SERVER_URL + "../../../../" + item.user.profile_picture}
+                            alt={item.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+
+
+                        
+
+                        <div className="flex flex-col items-center gap-2 w-full">
+                          <div className="pt-2 mt-auto text-center">
+                            <p className="text-theme font-bold mt-1">{'₦' + formatAmount(item.amount)}</p>
+                            <p className="text-theme mt-1">{item.date}</p>
+                          </div>
+
+                          <div className="flex flex-col items-center mt-auto">
+                            <div className='flex p-2 rounded-lg items-center justify-center w-50 bg-softTheme mt-2'>
+                              <p className="text-theme">{item.remark}</p>
+                            </div>
+                            <div className={`flex p-2 rounded-lg items-center justify-center w-50 ${
+                              item.status === 'approved' ? 'bg-green' : 
+                              item.status === 'pending' ? 'bg-orange' : ''
+                            } mt-2`}>
+                              <p className="text-white mr-2">
+                                {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                              </p>
+                              {item.status === 'approved' ? (
+                                <span className="ml-2 text-white">✓</span>
+                              ) : (
+                                <PendingActionsIcon className='text-white' />
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Pagination Indicators */}
+            {/* <div className="flex justify-center mt-6 gap-2 overflow-x-auto py-2 w-full max-w-[100vw]">
+              <div className="flex gap-3 px-4">
+                {Array.from({ length: Math.ceil(myTotalItems / myItemsPerPage) }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setDirection(i > myCurrentIndex/myItemsPerPage ? 1 : -1);
+                      setMyCurrentIndex(i * myItemsPerPage);
+                    }}
+                    className={`flex-shrink-0 w-2 h-2 rounded-full transition-colors cursor-pointer ${
+                      Math.floor(myCurrentIndex/myItemsPerPage) === i 
+                        ? 'bg-theme scale-110' 
+                        : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                    aria-label={`Go to page ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </div> */}
           </div>
         </div>
       </div>

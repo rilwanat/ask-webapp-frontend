@@ -2,8 +2,8 @@
   RewriteEngine On
 
   # 1. Remove www prefix
-  RewriteCond %{HTTP_HOST} ^www\.playground\.askfoundations\.org [NC]
-  RewriteRule ^ https://playground.askfoundations.org%{REQUEST_URI} [R=301,L]
+  RewriteCond %{HTTP_HOST} ^www\.askfoundations\.org [NC]
+  RewriteRule ^ https://askfoundations.org%{REQUEST_URI} [R=301,L]
 
   # 2. Force HTTPS
   RewriteCond %{HTTPS} off

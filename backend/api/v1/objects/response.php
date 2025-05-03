@@ -375,12 +375,11 @@ class Response
 
     public function getTotalIncoming() {
 
-        return 0;
-        $query = "SELECT COUNT(*) AS count FROM " . $this->beneficiaries_table;
+        $query = "SELECT SUM(price) AS total_amount FROM " . $this->payments_table;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row['count'];
+        return $row['total_amount'] ?? 0; // Return 0 if null
     }
 
     public function getTotalOutgoing() {
@@ -472,6 +471,49 @@ public function ReadAllHelpRequestsNotCheat()
         WHERE 
         (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '')
         ORDER BY RAND()";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
+public function ReadAllHelpRequestsNotCheatForAdmin()
+{
+    $query = "SELECT
+        p.id,
+        p.date,
+        p.nomination_count,
+        p.description,
+        p.remark,
+        p.email_address,
+        p.request_image,
+        p.help_token,
+        u.id as user_id,
+        u.fullname as user_fullname,
+        u.email_address as user_email,
+        u.access_key as user_access_key,
+        u.phone_number as user_phone,
+        u.kyc_status as user_kyc_status,
+        u.account_number as user_account_number,
+        u.account_name as user_account_name,
+        u.bank_name as user_bank_name,
+        u.gender as user_gender,
+        u.state_of_residence as user_state,
+        u.profile_picture as user_profile_picture,
+        u.email_verified as user_email_verified,
+        u.registration_date as user_registration_date,
+        u.user_type as user_type,
+        u.eligibility as user_eligibility,
+        u.is_cheat as user_is_cheat,
+        u.opened_welcome_msg as user_opened_welcome_msg, 
+        u.vote_weight as user_vote_weight 
+        FROM
+        " . $this->help_requests_table . " p 
+        INNER JOIN 
+            " . $this->users_table . " u ON u.email_address = p.email_address
+        WHERE 
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '')
+        ORDER BY p.nomination_count DESC";
 
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
@@ -701,14 +743,11 @@ public function getTopConsistencies($limit = 3)
         u.phone_number 
         FROM " . $this->users_table . " u
         INNER JOIN " . $this->nominations_history_table . " nh ON u.email_address = nh.voter_email
-        WHERE u.voter_consistency > 0 AND u.fullname != '' 
-        AND u.is_cheat != 'Yes' AND u.email_verified = 'Yes' 
-        AND u.kyc_status = 'APPROVED' AND u.eligibility = 'Yes'
         ORDER BY 
         DATE(nh.voting_date) DESC,
         u.voter_consistency DESC, 
         u.vote_weight DESC, 
-        u.registration_date ASC 
+        DATE(u.registration_date) ASC 
         LIMIT :limit";
 
     $stmt = $this->conn->prepare($query);
@@ -1267,6 +1306,8 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
 
     public function checkIfUserCanPostHelpRequest($email) 
     {
+        //return ["status" => false, "message" => "We're upgrading. Check back in a few hours."];
+        
         // Step 1: Check user details
         $query_check = "SELECT * FROM " . $this->users_table . " WHERE email_address = :email";
         $stmt_check = $this->conn->prepare($query_check);
@@ -1396,6 +1437,9 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
     
     public function checkIfUserCanUpdateHelpRequest($email) 
     {
+        //return ["status" => false, "message" => "We're upgrading. Check back in a few hours."];
+
+        
         // Step 1: Check user details
         $query_check = "SELECT * FROM " . $this->users_table . " WHERE email_address = :email";
         $stmt_check = $this->conn->prepare($query_check);
@@ -1506,6 +1550,10 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
 
     public function checkIfUserCanNominate($email, $help_token, $fingerPrint) 
 {
+    //return ["status" => false, "message" => "We're upgrading. Check back in a few hours."];
+
+
+
     // Step 1: Check user details
     $query_check = "SELECT * FROM " . $this->users_table . " WHERE email_address = :email";
     $stmt_check = $this->conn->prepare($query_check);
@@ -1559,13 +1607,19 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                    FROM " . $this->nominations_history_table . " nh
                    JOIN " . $this->users_table . " voter ON nh.voter_email = voter.email_address
                    JOIN " . $this->users_table . " nominee ON nh.nominee_email = nominee.email_address
-                   WHERE ((voter.fullname = :voter_fullname AND voter.fullname != '')
-                     OR nh.voter_device_id = :voter_device_id)
+                   WHERE (
+                     (voter.fullname = :voter_fullname AND voter.fullname != '')
+                     OR 
+                     nh.voter_device_id = :voter_device_id 
+                     OR
+                     nh.voter_email = :email 
+                    ) 
                      AND (nh.voter_email != nh.nominee_email OR voter.fullname != nominee.fullname)
                      AND DATE(nh.voting_date) = CURRENT_DATE()";
 $stmt_existing = $this->conn->prepare($query_existing);
 $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
 $stmt_existing->bindValue(":voter_device_id", $fingerPrint, PDO::PARAM_STR); 
+$stmt_existing->bindValue(":email", $email, PDO::PARAM_STR); 
             // $stmt_existing->bindValue(":today", $today, PDO::PARAM_STR);
             if (!$stmt_existing->execute()) {
                 return ["status" => false, "message" => "System error checking nominations"];
