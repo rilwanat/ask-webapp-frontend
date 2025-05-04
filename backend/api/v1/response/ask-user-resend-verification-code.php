@@ -49,7 +49,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ) {
         
 {
-            // Attempt to create user
+
+
+    //check if user is registered
+    $doesUserExist = $response->checkIfUserExists($data->email);
+    //check if token exists for user
+    $doesUserExistInTokenTable = $response->checkIfUserExistsInTokenTable($data->email);
+    //if not insert new token
+    //
+    if ($doesUserExist && !$doesUserExistInTokenTable) {
+        $randomToken = "";
+        $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for ($i = 0; $i < 8; $i++) {
+            $randomToken .= $codeAlphabet[random_int(0, strlen($codeAlphabet) - 1)];
+        }
+        $response->InsertEmailTokenForUser($data->email, $randomToken);
+    }
+    //
+
+
+
+            // Attempt to get token user
             $emailVerificationCode = $response->getEmailVerificationCode($data->email);
             
 
@@ -122,7 +142,7 @@ sendMailToUser($data->email, $data->email, $subject, $message);
     } else {
         // Registration data is incomplete
         http_response_code(400);
-        echo json_encode(array("status" => false, "message" => "Registration data is incomplete."));
+        echo json_encode(array("status" => false, "message" => "Email verification data is incomplete."));
     }
 }
 ?>

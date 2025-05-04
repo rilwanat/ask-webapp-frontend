@@ -22,12 +22,13 @@ const WidgetBeneficiaries = ({
   const [isPaused, setIsPaused] = useState(false);
   // Memoize next function to prevent unnecessary recreations
   const next = useCallback(() => {
+    // alert(myItemsPerPage);
     setDirection(1);
-    setMyCurrentIndex(prev => (prev + myItemsPerPage) % myTotalItems);
+    setMyCurrentIndex(prev => (prev + 1) % myTotalItems);
   }, [myItemsPerPage, myTotalItems]);
   const prev = useCallback(() => {
     setDirection(-1);
-    setMyCurrentIndex(prev => (prev - myItemsPerPage + myTotalItems) % myTotalItems);
+    setMyCurrentIndex(prev => (prev - 1 + myTotalItems) % myTotalItems);
   }, [myItemsPerPage, myTotalItems]);
   
   useEffect(() => {
@@ -120,7 +121,7 @@ const WidgetBeneficiaries = ({
   };
 
   return (
-    <div className="w-full mt-4 touch-pan-y">
+    <div className="w-full -mt-8 touch-pan-y">
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full py-4"
         onMouseEnter={() => setIsPaused(true)}      // For desktop hover
@@ -154,7 +155,7 @@ const WidgetBeneficiaries = ({
               <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
             </div>
 
-            <div className="relative overflow-hidden w-full h-[520px] ">
+            <div className="relative overflow-hidden w-full h-[460px] ">
               <AnimatePresence custom={direction} initial={false}>
                 <motion.div
                   key={myCurrentIndex}
@@ -169,7 +170,19 @@ const WidgetBeneficiaries = ({
                     damping: 30,
                     duration: 0.5
                   }}
-                  className="absolute top-0 left-0 right-0 flex gap-6 justify-center "
+                  className="absolute top-0 left-0 right-0 flex gap-6 justify-center cursor-pointer"
+                  drag="x" // Enable horizontal dragging
+    dragConstraints={{ left: 0, right: 0 }} // Constrain drag to prevent visual glitches
+    onDragEnd={(e, { offset, velocity }) => {
+      // Swipe detection threshold
+      const swipe = Math.abs(offset.x) * velocity.x;
+      
+      if (swipe < -10000) {
+        next(); // Swipe left
+      } else if (swipe > 10000) {
+        prev(); // Swipe right
+      }
+    }}
                 >
                   {visibleItems.map((item) => (
                     <div 

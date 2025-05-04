@@ -40,6 +40,7 @@ import AdminListDonations from './components/admin/AdminListDonations.jsx';
 import AdminListPayments from './components/admin/AdminListPayments.jsx';
 import AdminListAdmins from './components/admin/AdminListAdmins.jsx';
 import AdminBroadcastPage from './components/admin/AdminBroadcastPage.jsx';
+import AdminListNominations from './components/admin/AdminListNominations.jsx';
 
 import AdminSpecificUser from './components/admin/AdminSpecificUser.jsx';
 import AdminSpecificRequest from './components/admin/AdminSpecificRequest.jsx';
@@ -625,6 +626,11 @@ useEffect(() => {
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
              /></ProtectedAdminRoute>}/>
 
+<Route path='/admin-nominations' element={<ProtectedAdminRoute><AdminListNominations isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide} 
+             /></ProtectedAdminRoute>}/>
 
 <Route path='/user-dashboard' element={<ProtectedRoute><UserDashboardPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 

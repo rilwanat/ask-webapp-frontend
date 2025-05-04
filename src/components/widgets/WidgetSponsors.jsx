@@ -28,7 +28,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
   }, [carouselSponsorItems]);
 
   return (
-    <div className="w-full mt-4  bg-gold overflow-hidden h-84"> {/* Hide overflow */}
+    <div className="w-full -mt-4  bg-gold overflow-hidden h-84"> {/* Hide overflow */}
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
           <div className="flex flex-col items-center justify-between">

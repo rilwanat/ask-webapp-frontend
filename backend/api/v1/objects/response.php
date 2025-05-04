@@ -1028,6 +1028,24 @@ public function ReadAllUsers()
     }
 }
 
+public function checkIfUserExistsInTokenTable($email) 
+    {
+        // Check if the user already exists
+        $query_check = "SELECT id FROM " . $this->tokens_table . " WHERE email_address = :email";
+        $stmt_check = $this->conn->prepare($query_check);
+        $stmt_check->bindParam(":email", $email);
+        $stmt_check->execute();
+    
+        // If the row count is greater than 0, it means the user exists
+        if ($stmt_check->rowCount() > 0) {
+            // User already exists
+            return true;
+        } else {
+            // User does not exist
+            return false;
+        }
+    }
+
 public function checkIfUserExists($email) 
     {
         // Check if the user already exists
@@ -2756,6 +2774,58 @@ public function UpdateUserWelcomeMessage($email) {
     }
     return false;
 }
+
+
+public function ReadAllNominationsForAdmin()
+{
+    /* Complete Nomination Statistics */
+        $query = "SELECT 
+        u.fullname as voter, 
+        u.email_address as voter_email, 
+        nominee.fullname as nominee, 
+        nh.voter_device_id as device,
+        DATE_ADD(nh.voting_date, INTERVAL 5 HOUR) as voted_time, 
+        DATE_ADD(u.registration_date, INTERVAL 5 HOUR) as registered, 
+        u.state_of_residence as location,
+        u.vote_weight as dnq,
+
+        u.id as user_id,
+        u.fullname as user_fullname,
+        u.email_address as user_email,
+        u.access_key as user_access_key,
+        u.phone_number as user_phone,
+        u.kyc_status as user_kyc_status,
+        u.account_number as user_account_number,
+        u.account_name as user_account_name,
+        u.bank_name as user_bank_name,
+        u.gender as user_gender,
+        u.state_of_residence as user_state,
+        u.profile_picture as user_profile_picture,
+        u.email_verified as user_email_verified,
+        u.registration_date as user_registration_date,
+        u.user_type as user_type,
+        u.eligibility as user_eligibility,
+        u.is_cheat as user_is_cheat,
+        u.opened_welcome_msg as user_opened_welcome_msg, 
+        u.vote_weight as user_vote_weight 
+
+
+        FROM 
+        " . $this->users_table . " u
+        INNER JOIN 
+        " . $this->nominations_history_table . " nh 
+        ON u.email_address = nh.voter_email
+        LEFT JOIN 
+        " . $this->users_table . " nominee 
+        ON nh.nominee_email = nominee.email_address
+        ORDER BY 
+        nh.voting_date DESC;";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
 
 
 

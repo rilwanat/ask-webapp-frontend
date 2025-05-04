@@ -34,7 +34,7 @@ const WidgetNominate = ({
   handleHelpRequestsData,
 
   navigateAndRefresh,
-  setScrollCarousel,
+  // setScrollCarousel,
 
   setUpdatedItem
 
@@ -104,7 +104,7 @@ const WidgetNominate = ({
           e.stopPropagation(); // Prevent event bubbling
           e.preventDefault();
           
-          setScrollCarousel(false);
+          // setScrollCarousel(false);
 
           
           if (isLoading) {

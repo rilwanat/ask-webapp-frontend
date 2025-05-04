@@ -90,13 +90,13 @@ export default function SingleRequestsPage({
         navigateTo('/single-request', { selectedItem: updatedItem, allItems: data }); // Pass the data, not the function
     }
 
-    const [scrollCarousel, setScrollCarousel] = useState(false);
+    // const [scrollCarousel, setScrollCarousel] = useState(false);
     const carouselRef = useRef();
     // Custom carousel configuration to prevent scroll interference
     const carouselConfig = {
-        stopAutoPlayOnHover: true,
+        // stopAutoPlayOnHover: true,
         showIndicators: false,
-        showArrows: true,
+        showArrows: false,//true,
         showStatus: false,
         showThumbs: false,
         infiniteLoop: true,
@@ -106,37 +106,13 @@ export default function SingleRequestsPage({
         swipeScrollTolerance: 5,
         preventMovementUntilSwipeScrollTolerance: true,
         verticalSwipe: 'natural',
-        stopOnHover: true,
+        // stopOnHover: true,
         className: "touch-pan-y", // Added to prevent scroll interference
         selectedItem: selectedIndex, // Start with the selected item
         onChange: handleChange, // Update selected index when carousel changes
         ref: carouselRef,
+        interval: 0, 
 
-        // Add these additional props for better arrow visibility:
-    // renderArrowPrev: (onClickHandler, hasPrev, label) =>
-    //     hasPrev && (
-    //         <button
-    //             type="button"
-    //             onClick={onClickHandler}
-    //             title={label}
-    //             className="absolute left-2 z-10 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
-    //             style={{ top: '40%', transform: 'translateY(-50%)' }}
-    //         >
-    //             <KeyboardArrowLeftIcon />
-    //         </button>
-    //     ),
-    // renderArrowNext: (onClickHandler, hasNext, label) =>
-    //     hasNext && (
-    //         <button
-    //             type="button"
-    //             onClick={onClickHandler}
-    //             title={label}
-    //             className="absolute right-2 z-10 p-2 bg-theme rounded-lg text-white hover:bg-green cursor-pointer"
-    //             style={{ top: '40%', transform: 'translateY(-50%)' }}
-    //         >
-    //             <KeyboardArrowRightIcon />
-    //         </button>
-    //     )
     };
 
 
@@ -146,7 +122,7 @@ export default function SingleRequestsPage({
         const [searchTimeout, setSearchTimeout] = useState(null);
         const handleSearchChange = (e) => {
           // alert("C");
-          setScrollCarousel(false);
+        //   setScrollCarousel(false);
     
           const query = e.target.value.toLowerCase();
           setSearchQuery(query);
@@ -166,12 +142,14 @@ export default function SingleRequestsPage({
                 item.description.toLowerCase().includes(query) ||
                 item.help_token.toLowerCase().includes(query) ||
                 item.email_address.toLowerCase().includes(query) ||
-                (item.user && item.user.fullname.toLowerCase().includes(query))
+                item.user.fullname.toLowerCase().includes(query)
               );
             });
         
             setFilteredItems(filtered);
             setCurrentRequestSlide(0);
+
+            carouselRef.current?.decrement();
           }, 1000)); // 300ms delay
         };
         // Clean up timeout on unmount
@@ -314,7 +292,7 @@ export default function SingleRequestsPage({
                                         openNotificationModal={openNotificationModal} 
                                         handleHelpRequestsData={handleHelpRequestsData}
                                         navigateAndRefresh={navigateAndRefresh}
-                                        setScrollCarousel={setScrollCarousel}
+                                        // setScrollCarousel={setScrollCarousel}
 
                                         setUpdatedItem={setUpdatedItem}
                                         />

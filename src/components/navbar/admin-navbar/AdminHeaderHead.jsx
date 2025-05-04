@@ -89,7 +89,7 @@ export default function AskHeaderAdminHead({ carouselRequestItems, carouselBenef
                                 Admin Home
                             </p>
                         </div>
-
+                        
                         <div
                             className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
                             onClick={() => {
@@ -129,6 +129,20 @@ export default function AskHeaderAdminHead({ carouselRequestItems, carouselBenef
                                 style={{ fontWeight: '600' }}
                             >
                                 Help Requests
+                            </p>
+                        </div>
+
+                        <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                navigate('/admin-nominations');
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Nominations
                             </p>
                         </div>
 

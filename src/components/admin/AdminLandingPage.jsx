@@ -62,6 +62,10 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 
 
+import { useRef } from 'react';
+import { toPng, toJpeg, toSvg } from 'html-to-image';
+
+
 export default function AdminLandingPage({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
@@ -132,7 +136,35 @@ useEffect(() => {
 
 
 
+    const chartRef = useRef(null);
 
+    const downloadChart = async (format = 'png') => {
+      if (!chartRef.current) return;
+  
+      try {
+        let dataUrl;
+        switch (format) {
+          case 'png':
+            dataUrl = await toPng(chartRef.current);
+            break;
+          case 'jpeg':
+            dataUrl = await toJpeg(chartRef.current);
+            break;
+          case 'svg':
+            dataUrl = await toSvg(chartRef.current);
+            break;
+          default:
+            return;
+        }
+  
+        const link = document.createElement('a');
+        link.download = `chart.${format}`;
+        link.href = dataUrl;
+        link.click();
+      } catch (error) {
+        console.error('Error downloading chart:', error);
+      }
+    };
 
 
 
@@ -533,10 +565,10 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                   </div>
                 </div> */}
                                             
-                                            <div className="w-full md:w-3/6 mb-4 mr-4 h-full flex items-center">
-                                              <div className="relative w-full">
+                                            <div className="w-full md:w-2/6 mb-4 mr-4 h-full flex items-center">
+                                              <div className="relative w-full ">
                                                 <FileDownloadOutlinedIcon style={{ color: '#254EDB' }} className='absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none' />
-                                                  <select
+                                                  {/* <select
                                                     id="statusSelect"
                                                     name="statusSelect"
                                                     className="bg-white border border-gray-300 text-eDoctorTextDropdown text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
@@ -546,8 +578,11 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                                     }}
                                                   >
                                                     <option value="">Save Report</option>
-                                                    {/* Map categories here */}
-                                                  </select>
+                                                  </select> */}
+                                                  <div 
+                                                  className="bg-softTheme border border-theme text-eDoctorTextDropdown text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
+                                                    block w-full pl-10 p-2 appearance-none cursor-pointer"
+                                                  onClick={() => downloadChart('png')} >Save Report</div>
                                               </div>
                                             </div>
             
@@ -568,7 +603,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                           <Bar dataKey="total" fill="#82ca9d" />
                                         </BarChart>
                                       </ResponsiveContainer>*/}
-                                      <ResponsiveContainer width="100%" height={360}>
+                                      <ResponsiveContainer width="100%" height={360}  className='bg-white' ref={chartRef}>
   <BarChart
     data={barData}
     layout="vertical"  // This makes the chart horizontal
