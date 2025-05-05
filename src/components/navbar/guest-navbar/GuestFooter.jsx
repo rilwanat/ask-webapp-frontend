@@ -267,7 +267,7 @@ function GuestFooter({ gotoPage }) {
             
 
 
-            <div className="mt-auto mb-10">
+            <div className="mt-auto mb-14">
                 <div className="bottom-0 w-full text-center">
                     <p className="text-xs py-2 text-white">
                         &copy; 2025 A.S.K Foundation. All rights reserved.
@@ -276,12 +276,12 @@ function GuestFooter({ gotoPage }) {
             </div>
 
 
+            <div className="flex flex-col items-center justify-center mb-0 py-2  bg-theme   fixed bottom-0  w-full z-5000">
+              
+            <p className="font-bold text-xs mb-1 text-white ">
+                        Follow Us:
+                    </p>
 
-
-
-
-
-            <div className="flex justify-center mb-0 py-2  bg-theme   fixed bottom-0  w-full z-5000">
                         <div className="relative z-20">
               <ul className="flex">
                 <li className='mr-4'>

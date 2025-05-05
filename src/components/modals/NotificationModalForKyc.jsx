@@ -6,6 +6,8 @@ import { Zoom } from '@mui/material';
 
 // import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
+import InfoIcon from '@mui/icons-material/Info';
+
 const customModalStyles = {
   content: {
     maxHeight: '340px',
@@ -32,7 +34,11 @@ const NotificationModalForKyc = ({ isOpen, onRequestClose, notificationType, not
     >
       <div className="flex flex-col w-full px-4 pt-4 z-7000">
         <div className='flex justify-center mt-4'>
-          {notificationType === true ? 
+          {
+             notificationType === null ?
+                        <InfoIcon className='text-theme' style={{ width: '64px', height: '64px' }}/> 
+                         :
+          notificationType === true ? 
             <CheckCircleIcon className='text-green' style={{ width: '64px', height: '64px' }}/> : 
             <CancelIcon className='text-red-500' style={{ width: '64px', height: '64px' }}/>
           }

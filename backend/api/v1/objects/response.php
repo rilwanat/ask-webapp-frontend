@@ -940,7 +940,7 @@ public function updateUserKycSpecific(
 
 
         //
-        if ($kycStatus === "") {$kycStatus = null;}
+        if ($kycStatus === "") { $kycStatus = null; }
 
         $eligibility = 'No';
         if($kycStatus == 'APPROVED' && $isCheat == 'No') {
@@ -1031,7 +1031,7 @@ public function ReadAllUsers()
 public function checkIfUserExistsInTokenTable($email) 
     {
         // Check if the user already exists
-        $query_check = "SELECT id FROM " . $this->tokens_table . " WHERE email_address = :email";
+        $query_check = "SELECT id FROM " . $this->tokens_table . " WHERE token_for = :email";
         $stmt_check = $this->conn->prepare($query_check);
         $stmt_check->bindParam(":email", $email);
         $stmt_check->execute();

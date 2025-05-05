@@ -143,7 +143,7 @@ const is11DigitNumber = (input) => {
 
 
        //  alert("Your kyc is pending approval. You will be notified once it is approved.");
-        openNotificationModal(true, "A.S.K: Resend Email Verification", response.data.message);
+        openNotificationModal(null, "A.S.K: Resend Email Verification", response.data.message);
         //  setIsNotificationModalOpen(true);
 
 

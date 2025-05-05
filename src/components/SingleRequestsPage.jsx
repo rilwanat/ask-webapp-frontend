@@ -100,9 +100,9 @@ export default function SingleRequestsPage({
         showStatus: false,
         showThumbs: false,
         infiniteLoop: true,
-        autoPlay: false,// scrollCarousel ? true : false,
-        swipeable: true,
-        emulateTouch: true,
+        autoPlay: false, // scrollCarousel ? true : false,
+        swipeable: false, //true,
+        emulateTouch: false, //true,
         swipeScrollTolerance: 5,
         preventMovementUntilSwipeScrollTolerance: true,
         verticalSwipe: 'natural',
@@ -227,7 +227,9 @@ export default function SingleRequestsPage({
 
 
                 <div className="w-full max-w-3xl mt-4">
-                    <Carousel {...carouselConfig}>
+                    <Carousel 
+                    {...carouselConfig}
+                    >
                         {/* {allItems?.map((item) => ( */}
                         {filteredItems?.map((item) => (
                             <motion.div 
