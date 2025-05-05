@@ -351,6 +351,113 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
          };
 
 
+           const UpdateRequestImage  = async (e) => {
+          
+               
+               // alert("userDetails: " + JSON.stringify(userDetails, null, 2));
+               if (userDetails === null) {
+                 openNotificationModal(false, "A.S.K Update Help Request", `You are not logged in. Please register or login to send your help request.`); 
+                 
+                 return;
+               }
+         
+         
+             //    alert("here");
+         
+         
+         
+                  e.preventDefault();
+                  setErrorMessage({ message: '' });
+                
+                  
+                
+         
+                  try {
+              
+                    const formData = new FormData();
+                    formData.append('email', userDetails.email_address);
+                    // formData.append('description', helpDescription.trim());
+                    // formData.append('fullname', userDetails.fullname);
+                 
+                    if (selectedFile !== null) {
+                     formData.append('image', selectedFile);
+                   } else {
+                     // alert("Please select an image to upload");
+                     openNotificationModal(false, "A.S.K Update Help Request", "Select an image to update");
+                     
+                     return;
+                   }
+         
+                   setIsLoading(true);
+         
+                   //  alert("requestData: " + JSON.stringify(requestData, null, 2));
+              
+                    const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_UPDATE_HELP_REQUEST_IMAGE, formData, {
+                      headers: {
+                            'Content-Type': 'multipart/form-data',
+                           //  'Content-Type': 'application/json',
+                        },
+                    });
+              
+                    setIsLoading(false);
+                    // alert("images res: " + JSON.stringify(response.data, null, 2));
+              // return;
+              
+                    if (response.data.status) {
+                     
+                      // If login is successful
+                      setErrorMessage({ message: '' });
+                      
+         
+                     //  setFullname('');
+                     setHelpDescription('');            
+                     setSelectedFile(null);
+                     setHelpImagePreview(null);
+         
+                     
+                     
+         
+                      openNotificationModal(true, "A.S.K Update Help Request Image", response.data.message);
+                      
+                      
+                       
+         
+              
+                      
+                    } else {
+                      const errors = response.data.errors.map(error => error.msg);
+                      setErrorMessage({ message: response.data.message, errors });
+                      //alert("Failed1");
+                    }
+                  } catch (error) {
+                    setIsLoading(false);
+          
+                    // alert(error);
+                  
+                    if (error.response && error.response.data && error.response.data.message) {
+                    const errorMessage = error.response.data.message;
+                    setErrorMessage({ message: errorMessage });
+         
+                    openNotificationModal(false, "A.S.K Update Help Request Image", errorMessage);
+                       
+         
+                  } else if (error.response && error.response.data && error.response.data.errors) {
+                    const { errors } = error.response.data;
+                    const errorMessages = errors.map(error => error.msg);
+                    const errorMessage = errorMessages.join(', '); // Join all error messages
+                    setErrorMessage({ message: errorMessage });
+         
+                    openNotificationModal(false, "A.S.K Update Help Request Image", errorMessage);
+                       
+                  } else {
+                    setErrorMessage({ message: 'A.S.K Update Help Request Image failed. Please check your data and try again.' });
+         
+                    openNotificationModal(false, "A.S.K Update Help Request Image", 'Please check your data and try again.');
+                       
+                  }
+                }
+                };
+
 
 
 
@@ -512,6 +619,29 @@ isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSr
 /> */}
 
                           <div className='my-2 text-sm text-center' style={{ color: '#c2572b' }}>{errorMessage.message}</div>
+                          
+
+
+                          <div className='flex flex-col  mb-0'>
+<label className="text-sm mb-1">Change Request Image:</label>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className='cursor-pointer border-1 p-2 rounded-lg'
+      />
+</div>
+                          <div className='flex justify-between items-center flex-col md:flex-row '>
+                              
+                              <div  
+                            onClick={(e) => {if (!isLoading) UpdateRequestImage(e)}}
+                            style={{ borderWidth: '0px', width: '100%' }} 
+                            className='mt-4   w:1/2 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
+                              {isLoading ? 'Please wait..' : 'Update Request Image'}
+                              </div>
+                            </div>
+
+
 
                           
                           <div className='flex justify-between items-center flex-col md:flex-row '>

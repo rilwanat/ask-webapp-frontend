@@ -1319,7 +1319,34 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
         return false;
     }
 
+    public function UpdateHelpRequestImage($email, $requestImage)
+    {
+        $query = "";
+        {
+            $query = "UPDATE " . $this->help_requests_table . " SET 
+            
+           request_image = :request_image 
+            WHERE email_address = :email 
+            ";
+        }
+        
 
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":email", $email);
+    
+    // $stmt->bindParam(":description", $description);
+    $stmt->bindParam(":request_image", $requestImage);
+    // $stmt->bindParam(":help_token", $helpToken);
+        
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
 
 
     public function checkIfUserCanPostHelpRequest($email) 

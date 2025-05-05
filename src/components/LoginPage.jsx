@@ -245,7 +245,7 @@ export default function LoginPage({
         try {
     
           const requestData = {   
-            email: loginEmailAddress.trim(),  
+            email: loginEmailAddress.trim().toLowerCase(),  
             password: loginPassword.trim()
           };
     

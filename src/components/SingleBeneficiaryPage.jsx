@@ -18,6 +18,16 @@ export default function SingleBeneficiaryPage({
     const navigate = useNavigate();
     const location = useLocation();
     const { selectedItem, allItems } = location.state || {};
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+// Calculate pagination
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+const currentItems = carouselBeneficiaryItems.slice(indexOfFirstItem, indexOfLastItem);
+const totalPages = Math.ceil(carouselBeneficiaryItems.length / itemsPerPage);
+
+// Change page
+const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     useEffect(() => { 
         window.scrollTo({ top: 0, behavior: 'smooth' }); 
@@ -26,6 +36,7 @@ export default function SingleBeneficiaryPage({
     const gotoPage = (pageName) => {
         navigate("/" + pageName);
     }
+
 
     // Custom carousel configuration to prevent scroll interference
     const carouselConfig = {
@@ -75,7 +86,7 @@ export default function SingleBeneficiaryPage({
                                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 touch-pan-y"
                                 style={{ touchAction: 'pan-y' }}
                             >
-                                {carouselBeneficiaryItems.map((item) => (
+                                {currentItems.map((item) => (
                                     <motion.div
                                         key={item.id}
                                         className="border border-gray-300 shadow-md 
@@ -87,7 +98,7 @@ export default function SingleBeneficiaryPage({
                                         <div className="flex justify-center">
                                         <img 
                                             src={import.meta.env.VITE_API_SERVER_URL + "../../../../" + item.user.profile_picture}
-                                            alt={`Item ${item.id}`} 
+                                            alt={`Beneficiary ${item.id}`} 
                                             className="w-full object-cover rounded-md mt-1"
                                             style={{
                                                 height: '190px',
@@ -108,6 +119,43 @@ export default function SingleBeneficiaryPage({
                                     </motion.div>
                                 ))}
                             </div>
+                        </div>
+
+
+                        {/* Pagination */}
+                        <div className="flex justify-center my-4">
+                            <nav className="inline-flex rounded-md shadow">
+                                <ul className="flex list-style-none">
+                                    <li>
+                                        <button
+                                            onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
+                                            disabled={currentPage === 1}
+                                            className={` cursor-pointer px-3 py-1 rounded-l-md border border-gray-300 ${currentPage === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-white text-theme hover:bg-gray-100'}`}
+                                        >
+                                            Previous
+                                        </button>
+                                    </li>
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
+                                        <li key={number}>
+                                            <button
+                                                onClick={() => paginate(number)}
+                                                className={` cursor-pointer px-3 py-1 border-t border-b border-gray-300 ${currentPage === number ? 'bg-theme text-white' : 'bg-white text-theme hover:bg-gray-100'}`}
+                                            >
+                                                {number}
+                                            </button>
+                                        </li>
+                                    ))}
+                                    <li>
+                                        <button
+                                            onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                            disabled={currentPage === totalPages}
+                                            className={` cursor-pointer px-3 py-1 rounded-r-md border border-gray-300 ${currentPage === totalPages ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-white text-theme hover:bg-gray-100'}`}
+                                        >
+                                            Next
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
 
                     </div>

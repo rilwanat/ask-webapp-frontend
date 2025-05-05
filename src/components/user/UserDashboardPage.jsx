@@ -327,7 +327,7 @@ const [isLoading, setIsLoading] = useState(false);
           <div className='flex flex-col items-center justify-center mt-0 mb-2  w-full'>
             <p className='mb-2 text-center' style={{ color: '', fontWeight: '700', fontSize: '24px' }}>Your KYC has been rejected</p>
             <div className='bg-theme mb-2' style={{ width: '80px', height: '4px' }}></div>
-            <p className='text-center'>Please contact <a className='cursor-pointer text-red-500' onClick={() => {window.location.href = "mailto:info@askfoundations.org";}}>
+            <p className='text-center'>Please contact <a className='cursor-pointer text-red-500' onClick={() => {window.location.href = "mailto:support@askfoundations.org";}}>
             support</a> for more information.</p>
         </div> 
 

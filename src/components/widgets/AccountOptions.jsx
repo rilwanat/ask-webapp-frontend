@@ -248,7 +248,7 @@ const navigate = useNavigate();
         try {
     
           const requestData = {   
-            email: loginEmailAddress.trim(),  
+            email: loginEmailAddress.trim().toLowerCase(),  
             password: loginPassword.trim()
           };
     

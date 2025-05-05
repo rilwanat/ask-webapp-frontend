@@ -74,6 +74,14 @@ const details = parts.slice(1);
                 gotoPage("");
               }
 
+              if (mainMessage == "Help Request image updated successfully.") { 
+                window.location.reload(true);
+              }
+
+              if (mainMessage == "A.S.K Request Deleted Successfully.") { 
+                window.location.reload(true);
+              }
+
             }}
             style={{ width: '128px', borderWidth: '1px' }}
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>
