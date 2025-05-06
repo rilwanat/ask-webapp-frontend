@@ -193,7 +193,7 @@ useEffect(() => {
     || request.nominee.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.device.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.voted_time.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.registered_date.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.registration_date.includes(searchQuery.toLowerCase()) 
     || request.location.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.vote_weight.toLowerCase().includes(searchQuery.toLowerCase()) 
     // || request.tags && request.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 

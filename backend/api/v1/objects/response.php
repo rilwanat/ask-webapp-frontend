@@ -30,6 +30,7 @@ class Response
     
     private $dnq_values_table = "dnq_values_table";
     private $dollar_exchange_rate_table = "dollar_exchange_rate_table";
+    private $daylight_savings_table = "daylight_savings_table";
 
 
     // public $username;
@@ -469,7 +470,7 @@ public function ReadAllHelpRequestsNotCheat()
         INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
         WHERE 
-        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '')
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '' AND u.kyc_status = 'APPROVED')
         ORDER BY RAND()";
 
     $stmt = $this->conn->prepare($query);
@@ -533,7 +534,7 @@ public function ReadAllHelpRequestsEmailsNotCheat()
         INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
         WHERE 
-        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '')
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '' AND u.kyc_status = 'APPROVED')
         ORDER BY RAND()";
 
     $stmt = $this->conn->prepare($query);
@@ -931,32 +932,72 @@ public function updateSelfiImagePath(
 
     return false;
 }
-
 public function updateUserKycSpecific(
     $email, 
     $isCheat,
     $kycStatus
-    ) {
+) {
+    // First get the current user data
+    $getUserQuery = "SELECT 
+                        account_number, 
+                        account_name, 
+                        bank_name, 
+                        gender, 
+                        state_of_residence,
+                        kyc_status,
+                        eligibility
+                    FROM " . $this->users_table . " 
+                    WHERE email_address = :email";
+    
+    $getUserStmt = $this->conn->prepare($getUserQuery);
+    $getUserStmt->bindParam(":email", $email);
+    $getUserStmt->execute();
+    $userData = $getUserStmt->fetch(PDO::FETCH_ASSOC);
 
+    // Clean input
+    if ($kycStatus === "") { 
+        $kycStatus = null; 
+    }
 
-        //
-        if ($kycStatus === "") { $kycStatus = null; }
+    // Determine eligibility
+    $eligibility = 'No';
+    if ($kycStatus == 'APPROVED' && $isCheat == 'No') {
+        $eligibility = 'Yes';
+    }
 
-        $eligibility = 'No';
-        if($kycStatus == 'APPROVED' && $isCheat == 'No') {
-            $eligibility = 'Yes';
+    // Prepare values for update
+    $account_number = $userData['account_number'] ?? null;
+    $account_name = $userData['account_name'] ?? null;
+    $bank_name = $userData['bank_name'] ?? null;
+    $gender = $userData['gender'] ?? null;
+    $state_of_residence = $userData['state_of_residence'] ?? null;
+    $current_kyc_status = $userData['kyc_status'] ?? null;
+
+    // If eligibility is No, set these fields to null
+    if ($eligibility == 'No') {
+        $account_number = null;
+        $account_name = null;
+        $bank_name = null;
+        $gender = null;
+        $state_of_residence = null;
+        $kycStatus = null; // Also clear kyc_status when not eligible
+    } else {
+        // If eligible, keep the existing kyc_status if no new one provided
+        if ($kycStatus === null) {
+            $kycStatus = $current_kyc_status;
         }
-
-        
+    }
 
     $query = "UPDATE " . $this->users_table . " 
               SET 
-                
-                
-                is_cheat =:is_cheat,
-                kyc_status =:kyc_status,
-                eligibility =:eligibility 
-
+                is_cheat = :is_cheat,
+                kyc_status = :kyc_status,
+                eligibility = :eligibility,
+                account_number = :account_number,
+                account_name = :account_name,
+                bank_name = :bank_name,
+                gender = :gender,
+                state_of_residence = :state_of_residence
               WHERE email_address = :email";
 
     // Prepare the SQL statement
@@ -964,18 +1005,19 @@ public function updateUserKycSpecific(
 
     // Bind parameters
     $stmt->bindParam(":email", $email);
-
     $stmt->bindParam(":is_cheat", $isCheat);
     $stmt->bindParam(":kyc_status", $kycStatus);
     $stmt->bindParam(":eligibility", $eligibility);
+    $stmt->bindParam(":account_number", $account_number);
+    $stmt->bindParam(":account_name", $account_name);
+    $stmt->bindParam(":bank_name", $bank_name);
+    $stmt->bindParam(":gender", $gender);
+    $stmt->bindParam(":state_of_residence", $state_of_residence);
 
     // Execute query and return the result
     if ($stmt->execute()) {
         return true;
     }
-
-    // Optionally, log the error or handle it appropriately
-    // error_log("Failed to update customer details: " . implode(":", $stmt->errorInfo()));
 
     return false;
 }
@@ -2365,6 +2407,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
         u.id as user_id,
         u.fullname as user_fullname,
         u.email_address as user_email,
+        u.voter_consistency as voter_consistency,
         u.access_key as user_access_key,
         u.phone_number as user_phone,
         u.kyc_status as user_kyc_status,
@@ -2386,10 +2429,11 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
         INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
          WHERE 
-        (u.is_cheat IS NULL OR u.is_cheat != 'Yes') AND (p.nomination_count > 0) AND (u.fullname != '') 
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes') AND (p.nomination_count > 0) AND (u.fullname != '') AND u.kyc_status = 'APPROVED'
         
         ORDER BY 
             p.nomination_count DESC,
+            u.voter_consistency DESC,
             p.date ASC,
             u.registration_date ASC
         LIMIT :count";
@@ -2806,13 +2850,22 @@ public function UpdateUserWelcomeMessage($email) {
 public function ReadAllNominationsForAdmin()
 {
     /* Complete Nomination Statistics */
+
+    // First get the daylight savings value
+    $daylightQuery = "SELECT value FROM daylight_savings_table LIMIT 1";
+    $daylightStmt = $this->conn->prepare($daylightQuery);
+    $daylightStmt->execute();
+    $daylightResult = $daylightStmt->fetch(PDO::FETCH_ASSOC);
+    $hourInterval = $daylightResult['value'] ?? 5; // Default to 5 if not found
+
+    
         $query = "SELECT 
         u.fullname as voter, 
         u.email_address as voter_email, 
         nominee.fullname as nominee, 
         nh.voter_device_id as device,
-        DATE_ADD(nh.voting_date, INTERVAL 5 HOUR) as voted_time, 
-        DATE_ADD(u.registration_date, INTERVAL 5 HOUR) as registered, 
+        DATE_ADD(nh.voting_date, INTERVAL " . $hourInterval . " HOUR) as voted_time, 
+        DATE_ADD(u.registration_date, INTERVAL " . $hourInterval . " HOUR) as registered, 
         u.state_of_residence as location,
         u.vote_weight as dnq,
 

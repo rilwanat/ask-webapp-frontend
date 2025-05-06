@@ -19,7 +19,7 @@ export default function SingleBeneficiaryPage({
     const location = useLocation();
     const { selectedItem, allItems } = location.state || {};
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 16;
 // Calculate pagination
 const indexOfLastItem = currentPage * itemsPerPage;
 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -83,7 +83,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
                         {/* Grid View */}
                         <div className="w-full py-4 flex justify-center">
                             <div 
-                                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 touch-pan-y"
+                                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 touch-pan-y"
                                 style={{ touchAction: 'pan-y' }}
                             >
                                 {currentItems.map((item) => (
