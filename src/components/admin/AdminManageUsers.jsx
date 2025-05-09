@@ -165,6 +165,7 @@ useEffect(() => {
     const filteredUsers = (users || []).filter((user) =>
     user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.email_address && user.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.voter_consistency && user.voter_consistency.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.phone_number && user.phone_number.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.kyc_status && user.kyc_status.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.account_number && user.account_number.toLowerCase().includes(searchQuery.toLowerCase()) 
@@ -365,6 +366,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           Email Address
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Voter Consistency
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Phone Number
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
@@ -441,6 +445,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                             {user.email_address	}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                            {user.voter_consistency	}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                             {/* {user.tags.join(', ')} */}

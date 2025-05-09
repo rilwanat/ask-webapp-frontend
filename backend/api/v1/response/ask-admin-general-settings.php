@@ -37,12 +37,14 @@ $general_settings_data["generalSettingsData"] = array();
 try {
     // Fetch data from the Response class
     $dnq = $response->getDNQData();
-    $dollaExchange = $response->getDollarExchange();
+    $dollarExchange = $response->getDollarExchange();
+    $daylightSavings = $response->getDaylightSavings();
 
     // Prepare dashboard data item
     $dashboard_item = array(
         "DNQ" => $dnq,
-        "Dollar_Exchange" => $dollaExchange,
+        "Dollar_Exchange" => $dollarExchange,
+        "Daylight_Savings" => $daylightSavings,
 
 
     );

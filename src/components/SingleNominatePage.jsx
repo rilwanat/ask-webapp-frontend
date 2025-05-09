@@ -37,7 +37,8 @@ export default function SingleNominatePage({
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
     userDetails, refreshUserDetails,
-    handleHelpRequestsData
+    handleHelpRequestsData,
+    fingerPrint
 }) {
     const navigate = useNavigate();
     const { helpToken } = useParams();
@@ -268,6 +269,7 @@ export default function SingleNominatePage({
                                 setScrollCarousel={setScrollCarousel}
                                 
                                 setUpdatedItem={setUpdatedItem}
+                                fingerPrint={fingerPrint}
 
                                 />
                             </motion.button>

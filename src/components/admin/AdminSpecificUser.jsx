@@ -568,7 +568,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                     </div>
 
                                     <div className="flex flex-wrap ">
-                                        <div className="w-full md:w-1/2 px-2 mb-4">
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
                                             <label htmlFor="state_of_residence" className="block text-sm font-medium text-white mb-2">State of Residence:</label>
                                             <input type="text" id="state_of_residence" name="state_of_residence"
                                             className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
@@ -578,7 +578,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             />
                                         </div>
                                         
-                                        <div className="w-full md:w-1/2 px-2 mb-4">
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
                                             <label htmlFor="kyc_status" className="block text-sm font-medium text-red-500 mb-2">KYC Status:</label>
                                            
                                             <select
@@ -599,6 +599,16 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                 <option value="APPROVED">APPROVED</option>
                 <option value="REJECTED">REJECTED</option>
             </select>
+                                        </div>
+
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
+                                            <label htmlFor="voter_consistency" className="block text-sm font-medium text-white mb-2">Voter Consistency:</label>
+                                            <input type="text" id="voter_consistency" name="voter_consistency"
+                                            className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
+                                            block w-full p-2.5" placeholder='Voter Consistency' 
+                                            value={selectedUser.voter_consistency} 
+                                            // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
+                                            />
                                         </div>
                                     </div>
 

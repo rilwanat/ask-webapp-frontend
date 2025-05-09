@@ -73,7 +73,7 @@ import ProtectedAdminRoute from './auth/protectedAdminRoute';
 import ProtectedRoute from './auth/protectedRoute';
 
 
-
+import { getFingerprint } from './auth/fingerPrint';
 
 
 function App() {
@@ -98,6 +98,14 @@ function App() {
       //notification modal
 
 
+      const [fingerPrint, setFingerPrint] = useState('');
+      useEffect(() => {
+       const loadFingerprint = async () => {
+         const result = await getFingerprint();
+         setFingerPrint(result); // this is the unique fingerprint
+       };
+       loadFingerprint();
+     }, []); // run only once on mount
 
       
       //USER DETAILS
@@ -418,7 +426,7 @@ useEffect(() => {
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
-            handleHelpRequestsData={handleHelpRequestsData}
+            handleHelpRequestsData={handleHelpRequestsData} 
             />}/>
             <Route path='/about-us' element={<AboutUsPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
@@ -447,13 +455,7 @@ useEffect(() => {
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
-            <Route path='/single-request' element={<SingleRequestsPage isMobile={isMobile}
-            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
-            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
-            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
-            userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
-            handleHelpRequestsData={handleHelpRequestsData}
-             />}/>
+
             <Route path='/single-sponsor' element={<SingleSponsorPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
@@ -467,12 +469,21 @@ useEffect(() => {
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
              />}/>
 
+<Route path='/single-request' element={<SingleRequestsPage isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails} 
+            handleHelpRequestsData={handleHelpRequestsData} 
+            fingerPrint={fingerPrint}
+             />}/>
 <Route path='/help-request/:helpToken' element={<SingleNominatePage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
             userDetails={userDetails} refreshUserDetails={refreshUserDetails}
             handleHelpRequestsData={handleHelpRequestsData}
+            fingerPrint={fingerPrint}
              />}/>
 
 <Route path='/reset-password/:passwordResetToken' element={<PasswordResetPage isMobile={isMobile}

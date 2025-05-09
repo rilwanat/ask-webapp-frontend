@@ -14,7 +14,7 @@ const WidgetHelpRequests = ({
   setCurrentRequestSlide,
   userDetails, 
   refreshUserDetails,
-  handleHelpRequestsData
+  handleHelpRequestsData,
 }) => {
   const navigate = useNavigate();
   const [myCurrentIndex, setMyCurrentIndex] = useState(0);

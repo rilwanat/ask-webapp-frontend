@@ -29,7 +29,8 @@ export default function SingleRequestsPage({
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
     userDetails, refreshUserDetails, 
-    handleHelpRequestsData
+    handleHelpRequestsData,
+    fingerPrint
 }) {
     const navigate = useNavigate();
     const location = useLocation();
@@ -297,6 +298,7 @@ export default function SingleRequestsPage({
                                         // setScrollCarousel={setScrollCarousel}
 
                                         setUpdatedItem={setUpdatedItem}
+                                        fingerPrint={fingerPrint}
                                         />
                                     </motion.div>
                                     <motion.div

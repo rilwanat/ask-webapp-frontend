@@ -97,7 +97,8 @@ export default function GeneralSettingsPage({
   const [gs, setGs] = useState({
           naira: 1,
           dollar: 1,
-          exchange: 1
+          exchange: 1,
+          daylight: 5,
   
       });
       useEffect(() => {
@@ -109,7 +110,9 @@ export default function GeneralSettingsPage({
           setGs({
             naira: parseFloat(settingsData.DNQ[0]?.rate) || 0,
             dollar: parseFloat(settingsData.DNQ[1]?.rate) || 0,
-            exchange: parseFloat(settingsData.Dollar_Exchange?.rate) || 0
+            exchange: parseFloat(settingsData.Dollar_Exchange?.rate) || 0,
+            daylight: parseFloat(settingsData.Daylight_Savings?.value) || 5
+            
           });
         }
       }, [generalSettings]);
@@ -338,6 +341,74 @@ export default function GeneralSettingsPage({
           };
 
 
+          const updateDaylight = async (user) => {
+
+
+            // alert(user.userIsCheat);
+    
+            if (isDataLoading) {
+              return;
+            }
+            
+            
+            
+                  setIsDataLoading(true);
+            
+            
+            
+                
+            
+            
+                
+                try {
+            
+                  const requestData = {
+                    value: gs.daylight.toString().trim()
+                    // kycStatus: user.userKycStatus,
+                };
+                // alert(JSON.stringify(requestData), null, 2);
+                // setIsDataLoading(false);
+                // return;
+            
+            
+            
+            
+                    
+                    var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_DAYLIGHT_VALUE;
+              //  alert(endpoint);
+            //    return;
+            
+              const response = await axiosAdminInstance.post(endpoint, requestData, {
+                          headers: {
+                            "Content-Type": "application/json",
+                            //Authorization: `Bearer ${token}`,
+                          },
+                        });
+            
+                        setIsDataLoading(false);
+                        // alert(JSON.stringify(response.data, null, 2));
+                        if (response.data.status) {
+                            // alert("update-product " + JSON.stringify(response.data, null, 2));
+                            openNotificationModal(true, "Update Daylight Value", response.data.message + "#");
+                            
+            
+            
+                            // navigateActiveTab(1);
+                            // navigate('/manage-users');
+            
+                        } else {
+                            // alert("error: " + response.data.message);
+                            openNotificationModal(false, "Update Daylight Value", response.data.message + "#");
+                            
+                        }
+                } catch (error) {
+                  setIsDataLoading(false);
+                    // alert("error: " + error);
+                    openNotificationModal(false, "Update Daylight Value", error + "#");
+                    
+                }
+            };
+
     return (
         <div className="bg-theme h-full">
 
@@ -538,7 +609,7 @@ export default function GeneralSettingsPage({
 
 
 {/* DNQ Rates */}
-<div className='flex w-full sm:w-1/2 flex-col justify-center items-center px-4 sm:px-16 md:px-8 h-full'>
+<div className='flex w-full sm:w-1/3 flex-col justify-center items-center px-4 sm:px-16 md:px-8 h-full'>
 
 <div className='flex flex-col  gap-6 mt-4 p-4 w-full bg-white items-center justify-center border rounded-lg shadow-lg'>
 <div className="font-semibold">DNQ Rates</div>
@@ -583,7 +654,7 @@ export default function GeneralSettingsPage({
 
 
 {/* Contact Us Section */}
-<div className='flex w-full sm:w-1/2  flex-col justify-center items-center px-4 sm:px-16 md:px-8 h-full '>
+<div className='flex w-full sm:w-1/3  flex-col justify-center items-center px-4 sm:px-16 md:px-8 h-full '>
 <div className='flex flex-col  gap-6 mt-4 p-4 w-full bg-white items-center border rounded-lg shadow-lg '>
 <div className="font-semibold">Dollar Exchange Rate</div>
 
@@ -609,6 +680,48 @@ export default function GeneralSettingsPage({
       onClick={() => updateExhangeRate()}
     >
       { isDataLoading ? 'Please wait..' : "Update Exchange Rate" }
+    </button>
+
+
+    <div className='mt-4'>
+{message && clickedButton == 'contact' && <p className="text-sm text-red-600">{message}</p>}
+</div>
+</div>
+
+
+</div>
+
+
+
+
+
+{/* Daylight Savings Section */}
+<div className='flex w-full sm:w-1/3  flex-col justify-center items-center px-4 sm:px-16 md:px-8 h-full '>
+<div className='flex flex-col  gap-6 mt-4 p-4 w-full bg-white items-center border rounded-lg shadow-lg '>
+<div className="font-semibold">Daylight Savings</div>
+
+<div className="flex flex-wrap ">
+                                        <div className="w-full md:w-full px-2 mb-4">
+                                            <label htmlFor="naira" className="block text-sm font-medium text-black mb-2">Value (Hours):</label>
+                                            <input type="text" id="naira" name="Daylight"
+                                            className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 
+                                            block w-full p-2.5" placeholder='Daylight' 
+                                            value={gs.daylight} 
+                                            onChange={(e) => setGs({ ...gs, daylight: e.target.value })}
+                                            />
+                                        </div>
+
+
+                                    </div>
+
+
+<button
+      className="px-4 py-1 bg-theme text-white rounded-lg cursor-pointer "
+      
+        
+      onClick={() => updateDaylight()}
+    >
+      { isDataLoading ? 'Please wait..' : "Update Daylight Savings" }
     </button>
 
 

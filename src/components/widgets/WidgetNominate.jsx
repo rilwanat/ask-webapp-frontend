@@ -23,7 +23,7 @@ import { setCookie, isAuthenticated } from '../../auth/authUtils'; // Ensure the
 import { jwtDecode } from 'jwt-decode';
 import { getCookie, deleteCookie } from '../../auth/authUtils'; // Import getCookie function
 //
-import { getFingerprint } from '../../auth/fingerPrint';
+
 
 const WidgetNominate = ({ 
   helpToken, userDetails, 
@@ -36,7 +36,9 @@ const WidgetNominate = ({
   navigateAndRefresh,
   // setScrollCarousel,
 
-  setUpdatedItem
+  setUpdatedItem,
+
+  fingerPrint
 
  }) => {
 
@@ -44,14 +46,7 @@ const WidgetNominate = ({
  const [errorMessage, setErrorMessage] = useState('');
 
 
- const [fingerPrint, setFingerPrint] = useState('');
-   useEffect(() => {
-    const loadFingerprint = async () => {
-      const result = await getFingerprint();
-      setFingerPrint(result); // this is the unique fingerprint
-    };
-    loadFingerprint();
-  }, []); // run only once on mount
+
  
 
 
@@ -114,7 +109,7 @@ const WidgetNominate = ({
 
 
           if (!fingerPrint) {
-            openNotificationModal(null, "Nomination", "Please retry again while we confirm your identity");
+            openNotificationModal(null, "Nomination", "Please try again.");
             return;
           }
           

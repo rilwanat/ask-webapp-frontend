@@ -717,10 +717,16 @@ public function getTopNominations($limit = 3)
         u.fullname
         FROM
         " . $this->help_requests_table . " h
-        INNER JOIN users_table u ON h.email_address = u.email_address 
+        INNER JOIN " . $this->users_table . " u ON h.email_address = u.email_address 
         WHERE  u.fullname != ''  
         AND u.is_cheat != 'Yes' AND u.email_verified = 'Yes' AND u.kyc_status = 'APPROVED' AND u.eligibility = 'Yes'
-        ORDER BY h.nomination_count DESC 
+        ORDER BY 
+         
+            h.nomination_count DESC,
+            u.voter_consistency DESC,
+            h.date ASC,
+            u.registration_date ASC 
+
         LIMIT :limit";
 
     $stmt = $this->conn->prepare($query);
@@ -1031,6 +1037,7 @@ public function ReadAllUsers()
                 p.id,
                 p.fullname,
                 p.email_address,
+                p.voter_consistency,
                 -- p.access_key,
                 p.phone_number,
                 p.kyc_status,
@@ -2669,6 +2676,25 @@ public function getDollarExchange()
     return $result ;
 }
 
+public function getDaylightSavings()
+{
+    $query = "SELECT * 
+              FROM " . $this->daylight_savings_table . " 
+              ORDER BY id ASC 
+              LIMIT 1";
+    
+    // Prepare the statement
+    $stmt = $this->conn->prepare($query);
+
+    // Execute the statement
+    $stmt->execute();
+
+    // Fetch the result
+    $result = $stmt->fetch(PDO::PARAM_STR);
+
+    return $result ;
+}
+
 
 public function updateDNQValues($nairaRate, $dollarRate) 
 {
@@ -2745,6 +2771,37 @@ public function updateExchangeRate($rate)
         return [
             'status' => false,
             'message' => 'Failed to update Exchange Rate: ' . $e->getMessage()
+        ];
+    }
+}
+
+public function updateDaylightSavings($value) 
+{
+    try {
+        
+        
+        // Update Daylight value (id = 1)
+        $stmt1 = $this->conn->prepare("
+            UPDATE " . $this->daylight_savings_table . " 
+            SET value = :value 
+            WHERE id = 1 
+        ");
+        $stmt1->bindParam(':value', $value, PDO::PARAM_STR);
+        $stmt1->execute();
+        
+        
+        
+        return [
+            'status' => true,
+            'message' => 'Daylight Savings updated successfully'            
+        ];
+        
+    } catch (PDOException $e) {
+        
+        
+        return [
+            'status' => false,
+            'message' => 'Failed to update Daylight Savings: ' . $e->getMessage()
         ];
     }
 }

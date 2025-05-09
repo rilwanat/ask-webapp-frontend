@@ -47,6 +47,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         "id" => $row['id'],
         "fullname" => $row['fullname'],
         "email_address" => $row['email_address'],
+        "voter_consistency" => $row['voter_consistency'],
         "phone_number" => $row['phone_number'],
         "kyc_status" => $row['kyc_status'],
         "account_number" => $row['account_number'],

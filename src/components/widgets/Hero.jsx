@@ -28,9 +28,9 @@ const Hero = ({  }) => {
 // ];
 
 const images = [
-  'https://www.askfoundations.org/images/slider-images/slide1.png',
-  'https://www.askfoundations.org/images/slider-images/slide2.png',
-  'https://www.askfoundations.org/images/slider-images/slide3.png',
+  'https://www.playground.askfoundations.org/images/slider-images/slide1.png',
+  'https://www.playground.askfoundations.org/images/slider-images/slide2.png',
+  'https://www.playground.askfoundations.org/images/slider-images/slide3.png',
 ];
 
 

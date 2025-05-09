@@ -147,6 +147,7 @@ useEffect(() => {
     request.date.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.nomination_count.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.user.state.toLowerCase().includes(searchQuery.toLowerCase()) 
     // || request.tags && request.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
     // || request.categories && request.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
     // || request.price.includes(searchQuery)
@@ -355,6 +356,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Fullname
                         </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          State
+                        </th>
                         {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Remark
                         </th> */}
@@ -402,6 +406,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                             {request.user.fullname	}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                            {request.user.state }
                           </td>
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                             {request.tags.join(', ')}
