@@ -1054,7 +1054,8 @@ public function ReadAllUsers()
                 p.is_cheat,
                 p.opened_welcome_msg,
                 p.vote_weight 
-            FROM " . $this->users_table . " p  ";
+            FROM " . $this->users_table . " p  
+            ORDER BY p.voter_consistency DESC ";
         
         // Prepare the statement
         $stmt = $this->conn->prepare($query);
