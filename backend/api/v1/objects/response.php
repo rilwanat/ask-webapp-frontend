@@ -1426,7 +1426,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
     
             if ($user['eligibility'] !== 'Yes') {
                 // return ["status" => false, "message" => $fullname . " you are not eligible to proceed."];
-                return ["status" => false, "message" => $fullname . " Level 2 Verification (KYC) is required to proceed."];
+                return ["status" => false, "message" => $fullname . " Level 2 Verification (KYC) is required to proceed. Not eligible."];
             }
     
             if (strtoupper($user['kyc_status']) !== 'APPROVED') {
