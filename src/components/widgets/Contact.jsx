@@ -157,7 +157,12 @@ const isValidEmail = (email) => {
     
               //  alert("requestData: " + JSON.stringify(formData, null, 2));
          
-               const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_SEND_MAIL, formData, {
+               const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_SEND_MAIL, formData, {
                  headers: {
                        'Content-Type': 'multipart/form-data',
                       //  'Content-Type': 'application/json',

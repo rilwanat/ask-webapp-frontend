@@ -321,6 +321,16 @@ export default function GuestMobileNavbar({ carouselRequestItems, carouselBenefi
           Benefactors
         </motion.span>
 
+        <motion.span
+          variants={menuItemVariants}
+          initial="hidden"
+          animate={isMenuOpen ? "visible" : "hidden"}
+          className="text-sm  text-theme cursor-pointer block my-4 mx-8  px-2 py-2 rounded-md hover:bg-theme hover:text-white"
+          style={{ fontWeight: '600' }}
+          onClick={() => {navigateTo('/media', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });}}
+        >
+          Media
+        </motion.span>
 
 
         <motion.span

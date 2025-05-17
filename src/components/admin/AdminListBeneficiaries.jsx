@@ -218,11 +218,15 @@ const [shareType, setShareType] = useState("direct");
          };
          
         //  alert(JSON.stringify(requestData));
-         // var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_SUBSCRIBE_TO_NEWSLETTER;
          //  alert(endpoint);
          //  setIsSubsLoading(false);
          //  return;
-         const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_APPROVE_BENEFICIARY, requestData, {
+         const response = await axiosAdminInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_APPROVE_BENEFICIARY, requestData, {
              headers: {
                  "Content-Type": "application/json",
              },
@@ -336,11 +340,14 @@ const [shareType, setShareType] = useState("direct");
 
 
              setIsDataLoading(true);
-             // var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_SUBSCRIBE_TO_NEWSLETTER;
-             //  alert(endpoint);
              //  setIsSubsLoading(false);
              //  return;
-             const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_POST_BENEFICIARIES_ARRAY, 
+             const response = await axiosAdminInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_POST_BENEFICIARIES_ARRAY, 
               { beneficiaries: beneficiariesRequestData }, {
                  headers: {
                      "Content-Type": "application/json",
@@ -467,7 +474,12 @@ if (parsedShareRatio.some(isNaN)) {
         ;
     
         // Construct endpoint with query params
-        const calculateSharesEndpoint = `${import.meta.env.VITE_API_SERVER_URL}${import.meta.env.VITE_CALCULATE_SHARES}`;
+        const calculateSharesEndpoint = `${(
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+      }${import.meta.env.VITE_CALCULATE_SHARES}`;
   
   
         // Make GET request
@@ -510,7 +522,12 @@ if (parsedShareRatio.some(isNaN)) {
   
   
       try {
-        const beneficiariesRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_BENEFICIARIES;
+        const beneficiariesRequestsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_READ_BENEFICIARIES;
         // alert(beneficiariesRequestsEndpoint);
         const beneficiariesRequestsResponse = await axiosAdminInstance.get(beneficiariesRequestsEndpoint, {
           headers: {
@@ -584,33 +601,10 @@ if (parsedShareRatio.some(isNaN)) {
                              <div className="flex flex-col flex-grow border rounded-lg border-softTheme mx-4 mt-2 mb-12 px-4 " style={{ flexBasis: '50%' }}>                                 
                                  <div className='flex flex-col my-2 '>
 
-                                 {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4 ">                                    
-                                 <label htmlFor="fullname" className="block text-sm font-medium text-white mb-2">Profile Picture:</label>
-                                 <div className="flex justify-center">
-                                                <img 
-                                                // src={import.meta.env.VITE_API_SERVER_URL + "../../../" + selectedUser.profile_picture}
-                                                style={{
-                                                  height: '200px',
-                                                  width: '200px',
-                                              }}
-                                                className="w-full h-40 object-cover rounded-md mt-1" />
-                                                  </div>                                  
-                                    </div> */}
-
                                     
 
                                     <div className="flex flex-wrap ">
-                                        {/* <div className="w-full md:w-1/3 px-2 mb-4">
-                                            <label htmlFor="fullname" className="block text-sm font-medium text-white mb-2">Share Type:</label>
-                                            <select
-    value={shareType}
-    onChange={(e) => setShareType(e.target.value)}
-    className='p-1 rounded text-black'
-  >
-    <option value="direct">Direct</option>
-    <option value="ratio">Ratio</option>
-  </select>
-                                        </div> */}
+                                        
                                         <div className="w-full md:w-1/3 px-2 mb-4">
                                             <label htmlFor="share_type" className="block text-sm font-medium text-white mb-2">Share Type:</label>
                                            

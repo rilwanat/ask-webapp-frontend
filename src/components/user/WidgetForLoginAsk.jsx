@@ -129,7 +129,12 @@ const WidgetForLoginAsk = ({ userDetails, refreshUserDetails, getActiveHelpReque
 
           //  alert("requestData: " + JSON.stringify(requestData, null, 2));
      
-           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CREATE_HELP_REQUEST, formData, {
+           const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_CREATE_HELP_REQUEST, formData, {
              headers: {
                    'Content-Type': 'multipart/form-data',
                   //  'Content-Type': 'application/json',

@@ -259,7 +259,12 @@ if (user.userPassword == "") {
 
 
         
-        var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_DETAILS;
+        var endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_UPDATE_DETAILS;
   //  alert(endpoint);
 //    return;
 
@@ -381,7 +386,12 @@ if (user.userPassword == "") {
                                  {/* <label htmlFor="fullname" className="block text-sm font-medium text-white mb-2">Profile Picture:</label> */}
                                  <div className="flex justify-center">
                                                 <img 
-                                                src={import.meta.env.VITE_API_SERVER_URL + "../../../" + selectedAdmin.profile_picture}
+                                                src={(
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + "../../../" + selectedAdmin.profile_picture}
                                                 style={{
                                                   height: '200px',
                                                   width: '200px',

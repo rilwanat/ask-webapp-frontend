@@ -68,7 +68,12 @@ export default function AdminBroadcastPage({
     setIsDataLoading(true);
 
     try {
-      const endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_BROADCAST;
+      const endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_BROADCAST;
 
       const formData = new FormData();
       formData.append('message', broadcastMessage);

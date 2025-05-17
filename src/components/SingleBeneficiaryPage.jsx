@@ -97,7 +97,12 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
                                     >
                                         <div className="flex justify-center">
                                         <img 
-                                            src={import.meta.env.VITE_API_SERVER_URL + "../../../../" + item.user.profile_picture}
+                                            src={(
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + "../../../../" + item.user.profile_picture}
                                             alt={`Beneficiary ${item.id}`} 
                                             className="w-full object-cover rounded-md mt-1"
                                             style={{

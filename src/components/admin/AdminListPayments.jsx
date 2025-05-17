@@ -176,7 +176,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     try {
       // API payment to get  count
-      const adminPaymentsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_READ_PAYMENTS;
+      const adminPaymentsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_READ_PAYMENTS;
       // alert(adminPaymentsEndpoint);
       const adminPaymentsResponse = await axiosAdminInstance.get(adminPaymentsEndpoint, {
         headers: {

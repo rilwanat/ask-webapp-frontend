@@ -123,8 +123,12 @@ export default function GeneralSettingsPage({
     
         try {
           // API request to get  count
-          // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_DASHBOARD_STATISTICS);
-          const adminGeneralSettingsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_GENERAL_SETTINGS;
+          const adminGeneralSettingsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_GENERAL_SETTINGS;
           // alert(adminDashboardStatisticsEndpoint);
           const adminGeneralSettingsResponse = await axiosAdminInstance.get(adminGeneralSettingsEndpoint, {
             headers: {
@@ -180,7 +184,12 @@ export default function GeneralSettingsPage({
         const formData = new FormData();
         formData.append('image', file, `slide${index + 1}.png`);
       
-        const endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_SLIDER_IMAGE;
+        const endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_UPDATE_SLIDER_IMAGE;
       
         try {
           setIsDataLoading(true);
@@ -236,7 +245,12 @@ export default function GeneralSettingsPage({
         
         
                 
-                var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_DNQ;
+                var endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_UPDATE_DNQ;
           //  alert(endpoint);
         //    return;
         
@@ -305,7 +319,12 @@ export default function GeneralSettingsPage({
           
           
                   
-                  var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_EXCHANGE_RATE;
+                  var endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_UPDATE_EXCHANGE_RATE;
             //  alert(endpoint);
           //    return;
           
@@ -374,7 +393,12 @@ export default function GeneralSettingsPage({
             
             
                     
-                    var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_DAYLIGHT_VALUE;
+                    var endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_UPDATE_DAYLIGHT_VALUE;
               //  alert(endpoint);
             //    return;
             

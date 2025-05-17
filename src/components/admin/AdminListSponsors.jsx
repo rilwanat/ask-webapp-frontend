@@ -224,7 +224,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     try {
       // API request to get  count
-      const adminSponsorsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_SPONSORS_LIST;
+      const adminSponsorsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_SPONSORS_LIST;
       // alert(adminSponsorsEndpoint);
       const adminSponsorsResponse = await axiosAdminInstance.get(adminSponsorsEndpoint, {
         headers: {

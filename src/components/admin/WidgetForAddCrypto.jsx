@@ -154,7 +154,12 @@ const WidgetForAddCrypto = ({ userDetails, refreshUserDetails }) => {
          
          setIsLoading(true);
      
-           const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_ADD_CRYPTO, formData, {
+           const response = await axiosAdminInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_ADD_CRYPTO, formData, {
              headers: {
                    'Content-Type': 'multipart/form-data',
                   //  'Content-Type': 'application/json',

@@ -28,7 +28,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
   }, [carouselSponsorItems]);
 
   return (
-    <div className="w-full -mt-4  bg-gold overflow-hidden h-84"> {/* Hide overflow */}
+    <div className="w-full -mt-4  bg-lightTheme overflow-hidden h-84"> {/* Hide overflow */}
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
           <div className="flex flex-col items-center justify-between">
@@ -49,7 +49,7 @@ const WidgetSponsors = ({ carouselSponsorItems }) => {
                   className="text-2xl font-bold text-gray-800 mb-2"
                 >
                   <div className='flex flex-col items-center justify-center mt-0 mb-2'>
-                    <p className='text-softTheme mb-2' style={{ fontWeight: '700', fontSize: '24px' }}>Benefactors</p>
+                    <p className='text-softTheme mb-2' style={{ fontWeight: '700', fontSize: '24px' }}>Testimonies</p>
                     <div className='bg-softTheme mb-2' style={{ width: '80px', height: '4px' }}></div>
                   </div>
                 </motion.h1>

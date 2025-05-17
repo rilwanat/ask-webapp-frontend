@@ -118,8 +118,12 @@ const is11DigitNumber = (input) => {
 
      //  alert("resendVerificationCode: " + JSON.stringify(requestData, null, 2));
 
-     // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_RESEND_VERFICATION_CODE);
-      const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_RESEND_VERFICATION_CODE, requestData, {
+      const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_RESEND_VERFICATION_CODE, requestData, {
         headers: {
               // 'Content-Type': 'multipart/form-data',
               'Content-Type': 'application/json',
@@ -213,8 +217,12 @@ const is11DigitNumber = (input) => {
 
           //  alert("requestData: " + JSON.stringify(requestData, null, 2));
      
-          // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_VERIFY_EMAIL_CODE);
-           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_VERIFY_EMAIL_CODE, requestData, {
+           const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_VERIFY_EMAIL_CODE, requestData, {
              headers: {
                    // 'Content-Type': 'multipart/form-data',
                    'Content-Type': 'application/json',

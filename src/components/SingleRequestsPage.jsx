@@ -261,7 +261,12 @@ export default function SingleRequestsPage({
                                 >
                                     <img 
                                         // src={item.image} 
-                                        src={import.meta.env.VITE_API_SERVER_URL + "../../../" + item.request_image}
+                                        src={(
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + "../../../" + item.request_image}
                                         alt={item.title} 
                                         className="rounded-lg object-cover"
                                         style={{ 

@@ -176,7 +176,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     try {
       // API donation to get  count
-      const adminBeneficiariesEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_ADMIN_CUMMULATIVE_DONATIONS;
+      const adminBeneficiariesEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_ADMIN_CUMMULATIVE_DONATIONS;
       // alert(adminBeneficiariesEndpoint);
       const adminBeneficiariesResponse = await axiosAdminInstance.get(adminBeneficiariesEndpoint, {
         headers: {

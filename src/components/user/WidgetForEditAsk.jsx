@@ -154,7 +154,12 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
           //  alert("requestData: " + JSON.stringify(requestData, null, 2));
           //  return;
      
-           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_UPDATE_MY_HELP_REQUEST, formData, {
+           const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_UPDATE_MY_HELP_REQUEST, formData, {
              headers: {
                    'Content-Type': 'multipart/form-data',
                   //  'Content-Type': 'application/json',
@@ -284,7 +289,12 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
 
             setIsLoading(true);
        
-             const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_DELETE_MY_HELP_REQUEST, requestData, {
+             const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_DELETE_MY_HELP_REQUEST, requestData, {
                headers: {
                     //  'Content-Type': 'multipart/form-data',
                      'Content-Type': 'application/json',
@@ -392,7 +402,12 @@ const WidgetForEditAsk = ({ userDetails, refreshUserDetails, getActiveHelpReques
          
                    //  alert("requestData: " + JSON.stringify(requestData, null, 2));
               
-                    const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_UPDATE_HELP_REQUEST_IMAGE, formData, {
+                    const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_UPDATE_HELP_REQUEST_IMAGE, formData, {
                       headers: {
                             'Content-Type': 'multipart/form-data',
                            //  'Content-Type': 'application/json',
@@ -599,7 +614,12 @@ A community-based charity initiative
 
 {myCurrentActiveRequestsData.requestmage && (
         <img
-          src={helpImagePreview ?? import.meta.env.VITE_API_SERVER_URL + myCurrentActiveRequestsData.requestmage}
+          src={helpImagePreview ?? (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + myCurrentActiveRequestsData.requestmage}
           alt={`Slide Help Image Preview`}
           className="w-full h-40 object-cover rounded-md mt-1"
         />

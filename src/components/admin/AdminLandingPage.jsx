@@ -257,8 +257,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     try {
       // API request to get  count
-      // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_DASHBOARD_STATISTICS);
-      const adminDashboardStatisticsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_DASHBOARD_STATISTICS;
+      const adminDashboardStatisticsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_DASHBOARD_STATISTICS;
       // alert(adminDashboardStatisticsEndpoint);
       const adminDashboardStatisticsResponse = await axiosAdminInstance.get(adminDashboardStatisticsEndpoint, {
         headers: {
@@ -817,7 +821,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                     ))}
                             </div>
                             <div className='flex w-full justify-end my-4 ' style={{ cursor: 'pointer' }} 
-                            onClick={() => { navigate('/manage-users'); }}
+                            onClick={() => { navigate('/manage-top-users'); }}
                             >
                               <p style={{fontSize: '12px' }}>View All</p>
                             </div>

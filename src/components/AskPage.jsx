@@ -107,10 +107,14 @@ export default function AskPage({
                };
 
             //    alert(JSON.stringify(userDetails), null, 2);
-            // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST);
             try {
               // API request to get  count
-              const myActiveHelpRequestEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST;
+              const myActiveHelpRequestEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST;
               // alert(adminBankCodesEndpoint);
               const myActiveHelpRequestResponse = await axiosInstance.post(myActiveHelpRequestEndpoint, requestData, {
                 headers: {
@@ -169,11 +173,14 @@ useEffect(() => {
              };
 
             //  alert(JSON.stringify(userDetails), null, 2);
-            //  alert(JSON.stringify(requestData), null, 2);
-          // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_GET_MY_HELP_REQUEST);
           try {
             // API request to get  count
-            const checkIfUserCanRequestEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CHECK_IF_USER_CAN_ASK;
+            const checkIfUserCanRequestEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_CHECK_IF_USER_CAN_ASK;
             // alert(adminBankCodesEndpoint);
             const checkIfUserCanRequestResponse = await axiosInstance.post(checkIfUserCanRequestEndpoint, requestData, {
               headers: {

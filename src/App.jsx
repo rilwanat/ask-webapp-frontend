@@ -16,6 +16,7 @@ import SingleNominatePage from './components/SingleNominatePage.jsx';
 import PasswordResetPage from './components/PasswordResetPage.jsx';
 
 import SingleRequestsPage from './components/SingleRequestsPage.jsx';
+import MediaPage from './components/MediaPage.jsx';
 import SingleSponsorPage from './components/SingleSponsorPage.jsx';
 import SingleBeneficiaryPage from './components/SingleBeneficiaryPage.jsx';
 
@@ -36,6 +37,7 @@ import AdminListBeneficiaries from './components/admin/AdminListBeneficiaries.js
 import AdminListSponsors from './components/admin/AdminListSponsors.jsx';
 import AdminListCrypto from './components/admin/AdminListCrypto.jsx';
 import AdminManageUsers from './components/admin/AdminManageUsers.jsx';
+import AdminManageTopUsers from './components/admin/AdminManageTopUsers.jsx';
 import AdminListDonations from './components/admin/AdminListDonations.jsx';
 import AdminListPayments from './components/admin/AdminListPayments.jsx';
 import AdminListAdmins from './components/admin/AdminListAdmins.jsx';
@@ -270,7 +272,13 @@ function App() {
   
   
       try {
-        const helpRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_HELP_REQUESTS;
+        const helpRequestsEndpoint = 
+        (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_READ_HELP_REQUESTS;
         // alert(helpRequestsEndpoint);
         const helpRequestsResponse = await axiosInstance.get(helpRequestsEndpoint, {
           headers: {
@@ -314,7 +322,12 @@ function App() {
   
   
       try {
-        const beneficiariesRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_BENEFICIARIES;
+        const beneficiariesRequestsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_READ_BENEFICIARIES;
         // alert(beneficiariesRequestsEndpoint);
         const beneficiariesRequestsResponse = await axiosInstance.get(beneficiariesRequestsEndpoint, {
           headers: {
@@ -355,7 +368,12 @@ function App() {
   
   
       try {
-        const sponsorsRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_SPONSORS;
+        const sponsorsRequestsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_READ_SPONSORS;
         // alert(beneficiariesRequestsEndpoint);
         const sponsorsRequestsResponse = await axiosInstance.get(sponsorsRequestsEndpoint, {
           headers: {
@@ -456,6 +474,13 @@ useEffect(() => {
              />}/>
 
 
+            <Route path='/media' element={<MediaPage isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
+             />}/>
+
             <Route path='/single-sponsor' element={<SingleSponsorPage isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
@@ -535,6 +560,11 @@ useEffect(() => {
              /></ProtectedAdminRoute>}/>
 
 <Route path='/manage-users' element={<ProtectedAdminRoute><AdminManageUsers isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+             /></ProtectedAdminRoute>}/>
+<Route path='/manage-top-users' element={<ProtectedAdminRoute><AdminManageTopUsers isMobile={isMobile}
             currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
             currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
             currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}

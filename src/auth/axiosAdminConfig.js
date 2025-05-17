@@ -3,7 +3,11 @@ import axios from 'axios';
 import { getCookie } from './authUtils';
 
 const axiosAdminInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: 
+  import.meta.env.VITE_IS_LIVE === 'true' ?
+  import.meta.env.VITE_API_URL :
+  import.meta.env.VITE_API_DEMO_URL
+  ,
 });
 
 axiosAdminInstance.interceptors.request.use(

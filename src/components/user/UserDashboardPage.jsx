@@ -146,7 +146,12 @@ const [isLoading, setIsLoading] = useState(false);
                   baseName: `${window.location.origin}/`
                 };
           
-                const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_FORGOT_PASSWORD, requestData, {
+                const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_FORGOT_PASSWORD, requestData, {
                   headers: {
                         // 'Content-Type': 'multipart/form-data',
                         'Content-Type': 'application/json',
@@ -246,7 +251,12 @@ const [isLoading, setIsLoading] = useState(false);
                               <img
                                   className="block h-24 w-24 max-w-none rounded-full object-cover p-0.5 border-2 border-theme"
                                   // className="absolute top-4 block h-24 w-auto max-w-none"
-                                  src={userDetails && import.meta.env.VITE_API_SERVER_URL + userDetails.profile_picture}
+                                  src={userDetails && (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + userDetails.profile_picture}
                                   alt="Profile Image"
                                   onClick={() => {
                                       // navigate('/');

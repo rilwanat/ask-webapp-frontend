@@ -20,17 +20,16 @@ const Hero = ({  }) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  //
-//   const images = [
-//     `https://www.askfoundations.org/images/slider-images/slide1.png?${Date.now()}`,
-//     `https://www.askfoundations.org/images/slider-images/slide2.png?${Date.now()}`,
-//     `https://www.askfoundations.org/images/slider-images/slide3.png?${Date.now()}`,
-// ];
+const baseDomain = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          "https://www.askfoundations.org" :
+          "https://www.playground.askfoundations.org/"
+        );
 
 const images = [
-  'https://www.playground.askfoundations.org/images/slider-images/slide1.png',
-  'https://www.playground.askfoundations.org/images/slider-images/slide2.png',
-  'https://www.playground.askfoundations.org/images/slider-images/slide3.png',
+  baseDomain + '/images/slider-images/slide1.png',
+  baseDomain + '/images/slider-images/slide2.png',
+  baseDomain + '/images/slider-images/slide3.png',
 ];
 
 

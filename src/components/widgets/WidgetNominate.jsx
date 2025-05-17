@@ -135,7 +135,12 @@ const WidgetNominate = ({
             // alert(JSON.stringify(requestData, null, 2));
             // return;
           
-            const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CREATE_NOMINATION, requestData, {
+            const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_CREATE_NOMINATION, requestData, {
               headers: {
                   // 'Content-Type': 'multipart/form-data',
                   'Content-Type': 'application/json',

@@ -173,7 +173,12 @@ if ((sponsorType === "Select") || (sponsorType === "")) {
           //  alert("AddSponsor: " + JSON.stringify(requestData, null, 2));
 
      
-           const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_ADD_SPONSOR, formData, {
+           const response = await axiosAdminInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_ADD_SPONSOR, formData, {
              headers: {
                    'Content-Type': 'multipart/form-data',
                   //  'Content-Type': 'application/json',

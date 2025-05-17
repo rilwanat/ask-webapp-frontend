@@ -86,7 +86,12 @@ function GuestFooter({ gotoPage }) {
       //  alert(endpoint);
       //  setIsSubsLoading(false);
       //  return;
-      const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_SUBSCRIBE_TO_NEWSLETTER, requestData, {
+      const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_SUBSCRIBE_TO_NEWSLETTER, requestData, {
           headers: {
               "Content-Type": "application/json",
           },

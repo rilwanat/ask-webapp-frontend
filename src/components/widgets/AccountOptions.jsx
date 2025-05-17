@@ -252,7 +252,12 @@ const navigate = useNavigate();
             password: loginPassword.trim()
           };
     
-          const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_LOGIN, requestData, {
+          const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_LOGIN, requestData, {
             headers: {
                   // 'Content-Type': 'multipart/form-data',
                   'Content-Type': 'application/json',
@@ -376,7 +381,12 @@ const navigate = useNavigate();
     
           // alert(JSON.stringify(requestData, null, 2));
         
-          const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_REGISTER, requestData, {
+          const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_REGISTER, requestData, {
             headers: {
                 // 'Content-Type': 'multipart/form-data',
                 'Content-Type': 'application/json',
@@ -494,7 +504,12 @@ const navigate = useNavigate();
               baseName: `${window.location.origin}/`
             };
       
-            const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_FORGOT_PASSWORD, requestData, {
+            const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_FORGOT_PASSWORD, requestData, {
               headers: {
                     // 'Content-Type': 'multipart/form-data',
                     'Content-Type': 'application/json',
@@ -567,7 +582,12 @@ const navigate = useNavigate();
                 email: email
               };
         
-              const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_LOGIN_GOOGLE_APPLE, requestData, {
+              const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_LOGIN_GOOGLE_APPLE, requestData, {
                 headers: {
                       // 'Content-Type': 'multipart/form-data',
                       'Content-Type': 'application/json',
@@ -661,7 +681,12 @@ const navigate = useNavigate();
         
               // alert(JSON.stringify(requestData, null, 2));
             
-              const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_REGISTER_GOOGLE_APPLE, requestData, {
+              const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_REGISTER_GOOGLE_APPLE, requestData, {
                 headers: {
                     // 'Content-Type': 'multipart/form-data',
                     'Content-Type': 'application/json',

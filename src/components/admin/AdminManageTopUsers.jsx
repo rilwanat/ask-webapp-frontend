@@ -66,7 +66,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import NotificationModal from '../modals/NotificationModal';
 
 
-export default function AdminListRequests({ 
+export default function AdminManageTopUsers({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -121,7 +121,26 @@ useEffect(() => {
 
 
 
-
+    const handleUserRowClick = (user, e) => {
+      {                
+          // alert(JSON.stringify(product, null, 2));
+  
+          // const encryptedData = AES.encrypt(JSON.stringify(product), 'encryptionKey').toString();
+          navigate(`/specific-user/${user.id}`, {
+              state: {
+                selectedUser: user, // Pass any data you want as props here
+              }
+            });
+  
+          // setCurrentProduct(product);
+          // navigateActiveTab(8);
+  
+          //
+          
+      }
+      
+  
+    };
 
 
 
@@ -129,35 +148,48 @@ useEffect(() => {
 
     
     
-      const currentPageName = "Help Requests";
+      const currentPageName = "Manage Users";
    
 
 
       const [isDataloading, setIsDataLoading] = useState(true);
-      const [requests, setRequestsData] = useState([]);
+      const [users, setUsersData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const [totalItems, setTotalItems] = useState(requests ? requests.length : 0);
+    const [totalItems, setTotalItems] = useState(users ? users.length : 0);
     const [searchQuery, setSearchQuery] = useState('');
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
-    const filteredRequests = (requests || []).filter((request) =>
-    request.date.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.nomination_count.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.user.state.toLowerCase().includes(searchQuery.toLowerCase()) 
-    // || request.tags && request.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
-    // || request.categories && request.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
-    // || request.price.includes(searchQuery)
+    const filteredUsers = (users || []).filter((user) =>
+    user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.email_address && user.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.voter_consistency && user.voter_consistency.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.phone_number && user.phone_number.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.kyc_status && user.kyc_status.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.account_number && user.account_number.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.account_name && user.account_name.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.bank_name && user.bank_name.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.gender && user.gender.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.state_of_residence && user.state_of_residence.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.email_verified && user.email_verified.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.registration_date && user.registration_date.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.user_type && user.user_type.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.eligibility && user.eligibility.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.is_cheat && user.is_cheat.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.opened_welcome_message && user.opened_welcome_message.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.vote_weight && user.vote_weight.toLowerCase().includes(searchQuery.toLowerCase()) 
+    // || user.tags && user.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
+    // || user.categories && user.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
+    // || user.price.includes(searchQuery)
 );
 
-const totalFilteredItems = filteredRequests.length;
+const totalFilteredItems = filteredUsers.length;
 const totalFilteredPages = Math.ceil(totalFilteredItems / itemsPerPage);
 const indexOfLastFilteredItem = currentPage * itemsPerPage;
 const indexOfFirstFilteredItem = indexOfLastFilteredItem - itemsPerPage;
-const currentFilteredRequests = filteredRequests.slice(
+const currentFilteredUsers = filteredUsers.slice(
   indexOfFirstFilteredItem,
   indexOfLastFilteredItem
 );
@@ -182,24 +214,24 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
     try {
-      // API request to get  count
-      const adminRequestsEndpoint = (
+      // API user to get  count
+      const adminUsersEndpoint = (
           import.meta.env.VITE_IS_LIVE === 'true' ?
           import.meta.env.VITE_API_SERVER_URL :
           import.meta.env.VITE_API_DEMO_SERVER_URL
         )
-        + import.meta.env.VITE_ADMIN_REQUESTS_LIST;
-      // alert(adminRequestsEndpoint);
-      const adminRequestsResponse = await axiosAdminInstance.get(adminRequestsEndpoint, {
+        + import.meta.env.VITE_ADMIN_READ_TOP_USERS;
+      // alert(adminUsersEndpoint);
+      const adminUsersResponse = await axiosAdminInstance.get(adminUsersEndpoint, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      setRequestsData(adminRequestsResponse.data.data);  // Update state with  count
+      setUsersData(adminUsersResponse.data.data);  // Update state with  count
   
   
       // openNotificationModal(true, currentPageName, "");
-      // alert(JSON.stringify(adminRequestsResponse.data.data), null, 2);  // Update state with requests count
+      // alert(JSON.stringify(adminUsersResponse.data.status), null, 2);  // Update state with users count
     //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
 
 
@@ -212,7 +244,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
     } catch (error) {
       setIsDataLoading(false);
       
-      alert(error);
+      // alert(error);
       // Handle errors
       if (error.response && error.response.data) {
         const errorMessage = error.response.data.message;
@@ -226,26 +258,6 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 
-  const handleRequestRowClick = (request, e) => {
-    {                
-        // alert(JSON.stringify(request, null, 2));
-
-        // const encryptedData = AES.encrypt(JSON.stringify(product), 'encryptionKey').toString();
-        navigate(`/specific-request/${request.id}`, {
-            state: {
-              selectedRequest: request, // Pass any data you want as props here
-            }
-          });
-
-        // setCurrentProduct(product);
-        // navigateActiveTab(8);
-
-        //
-        
-    }
-    
-
-  };
 
     
     
@@ -353,33 +365,63 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           SN
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
-                          Date
-                        </th>
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
-                          Nomination Count
-                        </th>
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Fullname
                         </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
-                          State
-                        </th>
-                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
-                          Remark
-                        </th> */}
-                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Email Address
                         </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Voter Consistency
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Phone Number
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                          KYC Status
+                        </th>
                         {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
-                          Request Image
+                          Account Number
                         </th> */}
-                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
-                          Help Token
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Account Name
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Bank Name
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Gender
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          State of Residence
+                        </th>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Profile Picture
                         </th> */}
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                          Email Verified
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Registration Date
+                        </th>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          User Type
+                        </th> */}
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                          Eligibility
+                        </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                          Is Cheat
+                        </th>
+                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Opened Welcome Message
+                        </th> */}
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Vote Weight
+                        </th>
 
-                        {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Action
-                        </th> */}
+                        </th>
                         
                       </tr>
                     </thead>
@@ -388,83 +430,150 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                       // isDataloading ? <Loading />
                       // : 
                     <tbody className='text-xs '>
-                      {currentFilteredRequests.map((request, index) => (
-                          <tr key={request.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
-                          onClick={(e) => handleRequestRowClick(request, e)} 
+                      {currentFilteredUsers.map((user, index) => (
+                          <tr key={user.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
+                        onClick={(e) => handleUserRowClick(user, e)} 
                           style={{ cursor: "pointer" }}
                           >
                           <td className='px-2 py-4 whitespace-no-wrap border-b border-gray-200'>
                           {countFiltered++}
                           </td>
                           {/* <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> */}
-                            {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + request.productImages[0]} */}
-                            {/* <img src={process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + request.productImages[0]}  className="h-10 w-10 object-cover" /> */}
+                            {/* {process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + user.productImages[0]} */}
+                            {/* <img src={process.env.REACT_APP_API_SERVER_650_IMAGE_PATH + user.productImages[0]}  className="h-10 w-10 object-cover" /> */}
                           {/* </td> */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 cursor-pointer" onClick={(e) => {
                             //setShowDialog(false); 
-                            // handleProductClick(request, e);
+                            // handleProductClick(user, e);
                           }}>
-                            {request.date}
+                            {user.fullname}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {request.nomination_count	}
+                            {user.email_address	}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {request.user.fullname	}
+                            {user.voter_consistency	}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {request.user.state }
+                            {/* {user.tags.join(', ')} */}
+                            {user.phone_number	}
                           </td>
-                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
-                            {request.tags.join(', ')}
-                            {request.remark	}
-                          </td> */}
-                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
-                            {request.email_address}
-                          </td>
-                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
-                            {request.request_image	}
-                          </td> */}
-                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
-                            {request.help_token	}
-                          </td> */}
-                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                      <span
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                            {/* {user.kyc_status} */}
+                            <span
                                     style={{
-                                      backgroundColor: request.request_confirmation_status === 'confirmed' ? '#EDFCF2' : request.request_confirmation_status === 'confirmed' ? '#F0F3FF' : '#FFE2E5', 
-                                      color: request.request_confirmation_status === 'confirmed' ? '#4BC573' : request.request_confirmation_status === 'confirmed' ? '#254EDB' : '#F64E60', 
+                                      backgroundColor: user.kyc_status === 'APPROVED' ? '#1cc939' : '#FFE2E5', 
+                                      color: user.kyc_status === 'APPROVED' ? '#000000' : '#F64E60', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
-                                    }>{request.request_confirmation_status}</span>
+                                    }>{user.kyc_status}</span>
+                          </td>
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.account_number}
+                          </td> */}
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.account_name}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.bank_name}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.gender_name}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.state_of_residence}
+                          </td>
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.profile_picture}
+                          </td> */}
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                          <span
+                                    style={{
+                                      backgroundColor: user.email_verified === 'Yes' ? '#1cc939' : '#FFE2E5', 
+                                      color: user.email_verified === 'Yes' ? '#000000' : '#F64E60', 
+                                      borderRadius: '6px'
+                                    
+                                  }} 
+                                    className={'text-white px-2 py-2 '
+                                    }>{user.email_verified}</span>
+                          </td>	
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.registration_date}
+                          </td>
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.user_type}
+                          </td> */}
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                          <span
+                                    style={{
+                                      backgroundColor: user.eligibility === 'Yes' ? '#1cc939' : '#FFE2E5', 
+                                      color: user.eligibility === 'Yes' ? '#000000' : '#F64E60', 
+                                      borderRadius: '6px'
+                                    
+                                  }} 
+                                    className={'text-white px-2 py-2 '
+                                    }>{user.eligibility}</span>
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                          <span
+                                    style={{
+                                      backgroundColor: user.is_cheat === 'Yes' ? '#F64E60' : '#161c34', 
+                                      color: user.is_cheat === 'Yes' ? '#000000' : '#FFFFFF', 
+                                      borderRadius: '6px'
+                                    
+                                  }} 
+                                    className={'text-white px-2 py-2 '
+                                    }>{user.is_cheat}</span>
+                          </td>
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.opened_welcome_message}
+                          </td> */}
+
+
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
+                            {user.help_token	}
+                          </td> */}
+                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                                      <span
+                                    style={{
+                                      backgroundColor: user.request_confirmation_status === 'confirmed' ? '#EDFCF2' : user.request_confirmation_status === 'confirmed' ? '#F0F3FF' : '#FFE2E5', 
+                                      color: user.request_confirmation_status === 'confirmed' ? '#4BC573' : user.request_confirmation_status === 'confirmed' ? '#254EDB' : '#F64E60', 
+                                      borderRadius: '6px'
+                                    
+                                  }} 
+                                    className={'text-white px-2 py-2 '
+                                    }>{user.request_confirmation_status}</span>
                                     </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                       <span
                                     style={{
-                                      backgroundColor: request.request_completion_status === 'completed' ? '#EDFCF2' : request.request_completion_status === 'upcoming' ? '#F0F3FF' : '#FFE2E5', 
-                                      color: request.request_completion_status === 'completed' ? '#4BC573' : request.request_completion_status === 'upcoming' ? '#254EDB' : '#F64E60', 
+                                      backgroundColor: user.request_completion_status === 'completed' ? '#EDFCF2' : user.request_completion_status === 'upcoming' ? '#F0F3FF' : '#FFE2E5', 
+                                      color: user.request_completion_status === 'completed' ? '#4BC573' : user.request_completion_status === 'upcoming' ? '#254EDB' : '#F64E60', 
                                       borderRadius: '6px'
                                     
                                   }} 
                                     className={'text-white px-2 py-2 '
                                     }>
-                                      {request.request_completion_status}
+                                      {user.request_completion_status}
                                       </span>
                                     </td> */}
                           
-                          
-                          {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.vote_weight}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-center ">
                           <span
                           className="text-theme cursor-pointer "
                           onClick={(e) => {
                             //setShowDialog(false); 
-                            // handleProductClick(request, e);
+                            // handleProductClick(user, e);
                           }}
                           >
                             See Details
                             </span>
-                          </td> */}
+                          </td>
                          
                           
                         </tr>

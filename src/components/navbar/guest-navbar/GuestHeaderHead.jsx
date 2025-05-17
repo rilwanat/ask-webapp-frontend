@@ -167,6 +167,20 @@ export default function GuestHeaderHead({ carouselRequestItems, carouselBenefici
                             </p>
                         </div>
 
+                        <div
+                            className="cursor-pointer px-2 py-1 rounded-md mx-4 hover:bg-white hover:text-theme"
+                            onClick={() => {
+                                navigateTo('/media', { selectedItem: carouselSponsorItems[0], allItems: carouselSponsorItems  });
+                            }}
+                        >
+                            <p
+                                className="text-sm cursor-pointer"
+                                style={{ fontWeight: '600' }}
+                            >
+                                Media
+                            </p>
+                        </div>
+
 
 
                         <div

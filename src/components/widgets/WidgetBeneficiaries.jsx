@@ -204,7 +204,12 @@ const WidgetBeneficiaries = ({
                       >
                         <div className="w-[200px] h-[200px] rounded-lg overflow-hidden bg-gray-100">
                           <img 
-                            src={import.meta.env.VITE_API_SERVER_URL + "../../../../" + item.user.profile_picture}
+                            src={(
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + "../../../../" + item.user.profile_picture}
                             alt={item.title}
                             className="w-full h-full object-cover"
                           />

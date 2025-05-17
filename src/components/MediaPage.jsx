@@ -18,14 +18,18 @@ import Contact from './widgets/Contact';
 // import sponsor from '../assets/images/sponsors/sponsor.jpg';
 // import sponsor2 from '../assets/images/sponsors/sponsor2.jpg';
 
+import WidgetTestimonies from './widgets/WidgetTestimonies';
+
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-export default function SingleSponsorPage({ 
+export default function MediaPage({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
     currentSponsorSlide, carouselSponsorItems, setCurrentSponsorSlide,
+        userDetails, refreshUserDetails,
+    handleHelpRequestsData,
  }) {
     const navigate = useNavigate();
 
@@ -60,56 +64,30 @@ export default function SingleSponsorPage({
             
             <HeaderParallax 
                 // imageUrl={askLogo}
-                title={"A.S.K Benefactors"}
+                title={"A.S.K Media"}
                 subtitle={""}
             />
 
-
-<div className="w-full mt-4 touch-pan-y">
-    <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
+            <div className="w-full -mt-8 touch-pan-y">
+      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full py-4">
+          <div className="relative w-full mx-auto p-4 rounded-lg">
+            <div className="flex flex-col items-center mb-4 ">
+              <div className="flex justify-between w-full ">
 
-
-<div className="w-full py-4 flex justify-center ">
-      <div 
-      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 touch-pan-y"
-      >
-        {currentItems.map((item) => (
-          <div key={item.id} className="
-          border border-gray-300 shadow-md
-           p-2 rounded-lg cursor-pointer ">
-            <div className="flex justify-center">
-            <img 
-            src={(
-          import.meta.env.VITE_IS_LIVE === 'true' ?
-          import.meta.env.VITE_API_SERVER_URL :
-          import.meta.env.VITE_API_DEMO_SERVER_URL
-        )
-        + "../../../" + item.image}
-            style={{
-              height: '200px',
-              width: '200px',
-          }}
-            alt={`Item ${item.id}`} className="w-full h-40 object-cover rounded-md mt-1" />
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
               </div>
 
-<div className="flex flex-col items-center  mb-2 mt-auto">
-                  {/* <h3 className="text-2xl font-bold text-theme">{item.score}</h3> */}
-                  <div className='flex text-sm font-bold rounded-lg items-center justify-center w-full text-center mt-2'><p className="text-theme">{'' + item.name}</p> </div>
-                  <div className='flex text-sm  rounded-lg items-center justify-center w-full  mt-0'><p className="text-theme">{'' + item.type}</p></div>
-                </div>
-
-
-          </div>
-        ))}
-      </div>
-    </div>
-            
-
-        </div>
-    </div>
-
-</div>
+<WidgetTestimonies 
+            currentSponsorSlide={currentSponsorSlide} 
+            carouselSponsorItems={carouselSponsorItems} 
+            setCurrentSponsorSlide={setCurrentSponsorSlide} 
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
+            />
 
 
 

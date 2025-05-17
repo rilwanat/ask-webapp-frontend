@@ -215,7 +215,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     try {
       // API user to get  count
-      const adminUsersEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_READ_USERS;
+      const adminUsersEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_READ_USERS;
       // alert(adminUsersEndpoint);
       const adminUsersResponse = await axiosAdminInstance.get(adminUsersEndpoint, {
         headers: {

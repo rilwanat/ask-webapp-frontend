@@ -224,7 +224,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     try {
       // API crypto to get  count
-      const adminCryptosEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_CRYPTOS_LIST;
+      const adminCryptosEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_CRYPTOS_LIST;
       // alert(adminCryptosEndpoint);
       const adminCryptosResponse = await axiosAdminInstance.get(adminCryptosEndpoint, {
         headers: {

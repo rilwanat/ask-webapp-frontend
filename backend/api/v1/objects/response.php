@@ -945,6 +945,7 @@ public function updateUserKycSpecific(
 ) {
     // First get the current user data
     $getUserQuery = "SELECT 
+                        fullname, 
                         account_number, 
                         account_name, 
                         bank_name, 
@@ -972,6 +973,7 @@ public function updateUserKycSpecific(
     }
 
     // Prepare values for update
+    $fullname = $userData['fullname'] ?? null;
     $account_number = $userData['account_number'] ?? null;
     $account_name = $userData['account_name'] ?? null;
     $bank_name = $userData['bank_name'] ?? null;
@@ -981,7 +983,7 @@ public function updateUserKycSpecific(
 
     // If eligibility is No, set these fields to null
     if ($eligibility == 'No') {
-        $account_number = null;
+        $fullname = null;
         $account_name = null;
         $bank_name = null;
         $gender = null;
@@ -996,6 +998,7 @@ public function updateUserKycSpecific(
 
     $query = "UPDATE " . $this->users_table . " 
               SET 
+                fullname = :fullname,
                 is_cheat = :is_cheat,
                 kyc_status = :kyc_status,
                 eligibility = :eligibility,
@@ -1010,6 +1013,7 @@ public function updateUserKycSpecific(
     $stmt = $this->conn->prepare($query);
 
     // Bind parameters
+    $stmt->bindParam(":fullname", $fullname);
     $stmt->bindParam(":email", $email);
     $stmt->bindParam(":is_cheat", $isCheat);
     $stmt->bindParam(":kyc_status", $kycStatus);
@@ -1030,6 +1034,55 @@ public function updateUserKycSpecific(
 
 
 public function ReadAllUsers()
+{
+    try {
+        // Prepare the SQL query using a prepared statement
+        $query = "SELECT
+                p.id,
+                p.fullname,
+                p.email_address,
+                p.voter_consistency,
+                -- p.access_key,
+                p.phone_number,
+                p.kyc_status,
+                p.account_number,
+                p.account_name,
+                p.bank_name,
+                p.gender,
+                p.state_of_residence,
+                p.profile_picture,
+                p.email_verified,
+                p.registration_date,
+                p.user_type,
+                p.eligibility,
+                p.is_cheat,
+                p.opened_welcome_msg,
+                p.vote_weight 
+            FROM " . $this->users_table . " p  
+            ORDER BY p.registration_date DESC ";
+        
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind the email parameter to the prepared statement
+        // $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+        // Execute the statement
+        $stmt->execute();
+
+        return $stmt;
+
+
+    return $user; // User not found
+
+    } catch (Exception $e) {
+        // Log the error message and return null for security
+        // error_log("Error reading user: " . $e->getMessage());
+        return null;
+    }
+}
+
+public function ReadAllTopUsers()
 {
     try {
         // Prepare the SQL query using a prepared statement
@@ -1591,7 +1644,12 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                     u.is_cheat 
                 FROM " . $this->help_requests_table . " p 
                 LEFT JOIN " . $this->users_table . " u ON p.email_address = u.email_address
-                 WHERE p.help_token = :help_token";
+                 WHERE p.help_token = :help_token 
+                 
+                 AND u.is_cheat='No'
+                 AND u.email_verified='Yes'
+                 AND u.kyc_status='Approved'
+                 ";
             
             // Prepare the statement
             $stmt = $this->conn->prepare($query);

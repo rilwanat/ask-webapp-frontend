@@ -3,7 +3,11 @@ import axios from 'axios';
 import { getCookie } from './authUtils';
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: 
+  import.meta.env.VITE_IS_LIVE === 'true' ? 
+  import.meta.env.VITE_API_URL :
+  import.meta.env.VITE_API_DEMO_URL
+  ,
 });
 
 axiosInstance.interceptors.request.use(

@@ -84,7 +84,12 @@ export default function SingleNominatePage({
                 helpToken: helpToken
             };
       
-            const endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_SINGLE_HELP_REQUEST;
+            const endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_READ_SINGLE_HELP_REQUEST;
             // alert(endpoint);
             const response = await axiosInstance.post(endpoint, requestData, {
               headers: {
@@ -237,7 +242,12 @@ export default function SingleNominatePage({
                             className="w-full flex justify-center"
                         >
                             <img 
-                                src={import.meta.env.VITE_API_SERVER_URL + "../../../" + item.request_image}
+                                src={(
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + "../../../" + item.request_image}
                                 alt={item.title} 
                                 className="rounded-lg object-cover"
                                 style={{ 

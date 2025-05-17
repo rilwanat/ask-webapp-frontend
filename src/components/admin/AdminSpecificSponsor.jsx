@@ -238,7 +238,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
     // return;
 
         
-        var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_SPONSOR;
+        var endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_UPDATE_SPONSOR;
   //  alert(endpoint);
 //    return;
 
@@ -344,7 +349,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                  {/* <label htmlFor="fullname" className="block text-sm font-medium text-white mb-2">Profile Picture:</label> */}
                                  <div className="flex justify-center">
                                                 <img 
-                                                src={import.meta.env.VITE_API_SERVER_URL + "../../../" + sponsorData.image}
+                                                src={(
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + "../../../" + sponsorData.image}
                                                 style={{
                                                   height: '200px',
                                                   width: '200px',

@@ -218,50 +218,6 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 
-  // useEffect(() => {
-  //   handleData();
-  // }, []);
-  // const handleData = async () => {
-
-  //   setIsDataLoading(true);
-
-
-  //   try {
-  //     // API user to get  count
-  //     const adminUsersEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_READ_USERS;
-  //     // alert(adminUsersEndpoint);
-  //     const adminUsersResponse = await axiosAdminInstance.get(adminUsersEndpoint, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     setUsersData(adminUsersResponse.data.data);  // Update state with  count
-  
-  
-  //     // openNotificationModal(true, currentPageName, "");
-  //     // alert(JSON.stringify(adminRequestsResponse.data.data), null, 2);  // Update state with users count
-  //   //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
-
-
-
-
-
-  //     // Once all data is fetched, set loading to false
-  //     setIsDataLoading(false);
-  
-  //   } catch (error) {
-  //     setIsDataLoading(false);
-      
-  //     alert(error);
-  //     // Handle errors
-  //     if (error.response && error.response.data) {
-  //       const errorMessage = error.response.data.message;
-  //       openNotificationModal(false, currentPageName + " Error", errorMessage);
-  //     } else {
-  //       openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
-  //     }
-  //   }
-  // };
 
 
 
@@ -312,7 +268,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
         
-        var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_UPDATE_KYC;
+        var endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_UPDATE_KYC;
   //  alert(endpoint);
 //    return;
 
@@ -434,7 +395,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                  {/* <label htmlFor="fullname" className="block text-sm font-medium text-white mb-2">Profile Picture:</label> */}
                                  <div className="flex justify-center">
                                                 <img 
-                                                src={import.meta.env.VITE_API_SERVER_URL + "../../../" + selectedUser.profile_picture}
+                                                src={(
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + "../../../" + selectedUser.profile_picture}
                                                 style={{
                                                   height: '200px',
                                                   width: '200px',

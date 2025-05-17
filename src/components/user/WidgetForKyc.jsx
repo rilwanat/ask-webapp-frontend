@@ -229,7 +229,12 @@ const dataURLtoBlob = (dataURL) => {
 
         try {
             
-            var endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_UPDATE_SELFIE_IMAGE;
+            var endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_UPDATE_SELFIE_IMAGE;
       //  alert(endpoint);
     //    return;
    
@@ -333,7 +338,12 @@ if (!imageSrc) {
            };
           //  alert("requestData: " + JSON.stringify(requestData, null, 2));
      
-           const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_UPDATE_KYC, requestData, {
+           const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_UPDATE_KYC, requestData, {
              headers: {
                    // 'Content-Type': 'multipart/form-data',
                    'Content-Type': 'application/json',
@@ -432,11 +442,14 @@ if (!imageSrc) {
     
         setIsLoading(true);
     
-    
-        // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_READ_BANK_CODES);
         try {
           // API request to get  count
-          const adminBankCodesEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_READ_BANK_CODES;
+          const adminBankCodesEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_READ_BANK_CODES;
           // alert(adminBankCodesEndpoint);
           const adminBankCodesResponse = await axiosInstance.get(adminBankCodesEndpoint, {
             headers: {

@@ -93,7 +93,12 @@ export default function PasswordResetPage({
                 passwordResetToken: passwordResetToken
             };
       
-            const endpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_PASSWORD_RESET;
+            const endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_READ_PASSWORD_RESET;
             // alert(endpoint);
             const response = await axiosInstance.post(endpoint, requestData, {
               headers: {
@@ -195,7 +200,12 @@ export default function PasswordResetPage({
     
           // alert(JSON.stringify(requestData, null, 2));
         
-          const response = await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_RESET_PASSWORD, requestData, {
+          const response = await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_RESET_PASSWORD, requestData, {
             headers: {
                 // 'Content-Type': 'multipart/form-data',
                 'Content-Type': 'application/json',

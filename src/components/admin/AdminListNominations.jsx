@@ -229,7 +229,12 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
     try {
       // API request to get  count
-      const adminNominationsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_ADMIN_READ_NOMINATIONS;
+      const adminNominationsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_ADMIN_READ_NOMINATIONS;
       // alert(adminSponsorsEndpoint);
       const adminNominationsResponse = await axiosAdminInstance.get(adminNominationsEndpoint, {
         headers: {

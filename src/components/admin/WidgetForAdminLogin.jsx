@@ -152,10 +152,13 @@ const is11DigitNumber = (input) => {
           email: loginEmailAddress.trim(),  
           password: loginPassword.trim()
         };
-
-        // alert(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_LOGIN);
   
-        const response = await axiosAdminInstance.post(import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_ADMIN_LOGIN, requestData, {
+        const response = await axiosAdminInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_LOGIN, requestData, {
           headers: {
                 // 'Content-Type': 'multipart/form-data',
                 'Content-Type': 'application/json',

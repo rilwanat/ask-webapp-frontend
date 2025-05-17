@@ -100,7 +100,12 @@ const DonateWidget = ({ userDetails, refreshUserDetails, gotoPage }) => {
     
     
         try {
-          const donationsRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_READ_DONATIONS;
+          const donationsRequestsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_READ_DONATIONS;
           // alert(beneficiariesRequestsEndpoint);
           const donationsRequestsResponse = await axiosInstance.get(donationsRequestsEndpoint, {
             headers: {
@@ -141,7 +146,12 @@ const DonateWidget = ({ userDetails, refreshUserDetails, gotoPage }) => {
     
     
         try {
-          const donationsSubscriptionsRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_PAYSTACK_SUBSCRIPTIONS;
+          const donationsSubscriptionsRequestsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_PAYSTACK_SUBSCRIPTIONS;
           // alert(beneficiariesRequestsEndpoint);
           const donationsSubscriptionsRequestsResponse = await axiosInstance.get(donationsSubscriptionsRequestsEndpoint, {
             headers: {
@@ -182,7 +192,12 @@ const DonateWidget = ({ userDetails, refreshUserDetails, gotoPage }) => {
     
     
         try {
-          const dollarRateRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_DOLLAR_RATE;
+          const dollarRateRequestsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_DOLLAR_RATE;
           // alert(beneficiariesRequestsEndpoint);
           const dollarRateRequestsResponse = await axiosInstance.get(dollarRateRequestsEndpoint, {
             headers: {
@@ -234,7 +249,12 @@ const DonateWidget = ({ userDetails, refreshUserDetails, gotoPage }) => {
         setIsDataLoading(true);
     
         try {
-          const incrememtDNQRequestsEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_INCREMENT_DNQ;
+          const incrememtDNQRequestsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_INCREMENT_DNQ;
           // alert(beneficiariesRequestsEndpoint);
           const incrememtDNQRequestsResponse = await axiosInstance.post(incrememtDNQRequestsEndpoint, requestData, {
             headers: {
@@ -402,7 +422,12 @@ const filteredDonations = Array.isArray(donationsData)
     // Helper function to track subscription in your backend
     const trackSubscription = async (subscriptionCode, planCode) => {
       try {
-        await axiosInstance.post(import.meta.env.VITE_API_SERVER_URL + '/track-subscription', {
+        await axiosInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + '/track-subscription', {
           user_id: userDetails?.id,
           subscription_code: subscriptionCode,
           plan_code: planCode,
@@ -431,7 +456,12 @@ const defaultCrypto =
 
     try {
       // API crypto to get  count
-      const userCryptosEndpoint = import.meta.env.VITE_API_SERVER_URL + import.meta.env.VITE_USER_CRYPTOS_LIST;
+      const userCryptosEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_USER_CRYPTOS_LIST;
       // alert(userCryptosEndpoint);
       const userCryptosResponse = await axiosInstance.get(userCryptosEndpoint, {
         headers: {
@@ -703,7 +733,12 @@ const defaultCrypto =
                       }}>Copy</div>
           </div> 
         <img
-          src={import.meta.env.VITE_API_SERVER_URL + "../../../" + selectedAsset.image}
+          src={(
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + "../../../" + selectedAsset.image}
           alt={selectedAsset.name}
           className="my-2 p-2 w-full h-64 object-contain rounded-md shadow-lg bg-white"
         />
