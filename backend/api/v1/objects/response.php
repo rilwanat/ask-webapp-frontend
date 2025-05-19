@@ -1059,7 +1059,7 @@ public function ReadAllUsers()
                 p.opened_welcome_msg,
                 p.vote_weight 
             FROM " . $this->users_table . " p  
-            ORDER BY p.registration_date DESC ";
+            ORDER BY p.registration_date ASC ";
         
         // Prepare the statement
         $stmt = $this->conn->prepare($query);
@@ -1646,11 +1646,14 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                 LEFT JOIN " . $this->users_table . " u ON p.email_address = u.email_address
                  WHERE p.help_token = :help_token 
                  
-                 AND u.is_cheat='No'
-                 AND u.email_verified='Yes'
-                 AND u.kyc_status='Approved'
+                 
                  ";
             
+            // AND u.is_cheat='No'
+            //      AND u.email_verified='Yes'
+            //      AND u.kyc_status='Approved'
+
+
             // Prepare the statement
             $stmt = $this->conn->prepare($query);
     
@@ -1663,21 +1666,42 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             // Fetch the result
             $request = $stmt->fetch(PDO::FETCH_ASSOC);
     
-            
-
             if ($request === false) {
                 return [
                     'status' => false,
                     'message' => 'Request no longer available'
                 ];
             }
-    
+
+
+            if (
+                $request['is_cheat'] !== 'No' ||
+                 $request['email_verified'] !== 'Yes' ||
+                 $request['kyc_status'] !== 'Approved'
+            ) {
+
+                
             // Check if user is marked as cheat
             if (isset($request['is_cheat']) && $request['is_cheat'] === 'Yes') {
                 return [
                     'status' => false,
                     'message' => 'Request currently not available'
                 ];
+            }
+
+            // Check if fullname is empty due to kyc
+            if (
+                !isset($request['fullname']) || $request['fullname'] === ''
+                ||
+                !isset($request['kyc_status']) || $request['kyc_status'] === '' || $request['kyc_status'] === 'Rejected' || $request['kyc_status'] === 'Pending'
+                ) {
+                return [
+                    'status' => false,
+                    'message' => 'Currently not available'
+                ];
+            }
+
+
             }
     
             // Remove is_cheat from the response since we don't need to expose it

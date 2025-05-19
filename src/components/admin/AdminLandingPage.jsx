@@ -607,11 +607,11 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                           <Bar dataKey="total" fill="#82ca9d" />
                                         </BarChart>
                                       </ResponsiveContainer>*/}
-                                      <ResponsiveContainer width="100%" height={360}  className='bg-white' ref={chartRef}>
+                                      <ResponsiveContainer width="100%" height={480}  className='bg-white' ref={chartRef}>
   <BarChart
     data={barData}
     layout="vertical"  // This makes the chart horizontal
-    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+    margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
   >
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis type="number" /> 
@@ -624,6 +624,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
     <Bar 
       dataKey="total" 
       fill="#82ca9d" 
+      barSize={20}
       radius={[0, 4, 4, 0]}  // Rounded corners on the right side
     />
   </BarChart>
