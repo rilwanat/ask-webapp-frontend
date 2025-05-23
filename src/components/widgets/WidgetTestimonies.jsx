@@ -107,13 +107,18 @@ const handleTestimoniesData = async () => {
     }
   }, [carouselSponsorItems]);
 
+
+  const playlistUrl = "https://youtube.com/playlist?list=PLih08HDQf-eQ40EuTf8P1ttbpJWzy-I3n";
+  const playlistId = "PLih08HDQf-eQ40EuTf8P1ttbpJWzy-I3n";
+
   return (
-    <div className="w-full -mt-4  bg-lightTheme overflow-hidden h-112"> {/* Hide overflow */}
+    <>
+    <div className="w-full -mt-12  bg-lightTheme overflow-hidden h-112"> {/* Hide overflow */}
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
         <div className="w-full p-4">
           <div className="flex flex-col items-center justify-between">
 
-            {/* Header */}
+{/* Header */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -130,6 +135,67 @@ const handleTestimoniesData = async () => {
                 >
                   <div className='flex flex-col items-center justify-center mt-0 mb-2'>
                     <p className='text-softTheme mb-2' style={{ fontWeight: '700', fontSize: '24px' }}>Testimonies</p>
+                    <div className='bg-softTheme mb-2' style={{ width: '80px', height: '4px' }}></div>
+                  </div>
+                </motion.h1>
+              </div>
+            </motion.div>
+
+            {/* Scrollable Sponsor List */}
+            <div className="relative w-full flex justify-center "> {/* Container with fixed height */}
+              
+              <div className="youtube-playlist-container">
+      {/* <h2>Embedded YouTube Playlist</h2> */}
+      <div className="youtube-embed">
+        <iframe
+          width="560"
+          height="315"
+          src={`https://www.youtube.com/embed/videoseries?list=${playlistId}`}
+          title="YouTube playlist player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+      <p className='text-center text-white text-xs mt-2'>
+        <a href={playlistUrl} target="_blank" rel="noopener noreferrer">
+          View playlist on YouTube
+        </a>
+      </p>
+    </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div className="w-full -mt-4  bg-lightTheme overflow-hidden h-112"> {/* Hide overflow */}
+      <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
+        <div className="w-full p-4">
+          <div className="flex flex-col items-center justify-between">
+
+{/* Header */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center justify-center"
+            >
+              <div className="mx-auto">
+                <motion.h1
+                  initial={{ y: -50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="text-2xl font-bold text-gray-800 mb-2"
+                >
+                  <div className='flex flex-col items-center justify-center mt-0 mb-2'>
+                    <p className='text-softTheme mb-2' style={{ fontWeight: '700', fontSize: '24px' }}>Photo Reel</p>
                     <div className='bg-softTheme mb-2' style={{ width: '80px', height: '4px' }}></div>
                   </div>
                 </motion.h1>
@@ -190,10 +256,14 @@ const handleTestimoniesData = async () => {
               </div>
             </div>
 
+
           </div>
         </div>
       </div>
     </div>
+    </>
+    
+    
   );
 };
 
