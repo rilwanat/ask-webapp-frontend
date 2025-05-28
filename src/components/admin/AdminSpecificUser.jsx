@@ -225,6 +225,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 // alert(user.userIsCheat);
+alert(JSON.stringify(user), null, 2);
 
     if (isUpdateDataloading) {
         // alert("please wait..");
@@ -244,6 +245,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
         return;
       }
 
+      if ((user.userKycStatus === null)) {
+user.userKycStatus = "";
+      }
 
     setIsUpdateDataLoading(true);
 
