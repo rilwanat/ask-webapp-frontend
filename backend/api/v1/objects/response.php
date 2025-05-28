@@ -1032,6 +1032,41 @@ public function updateUserKycSpecific(
     return false;
 }
 
+public function updateUserCheatOnly(
+    $email, 
+    $isCheat
+) {
+    
+
+    // Determine eligibility
+    $eligibility = 'Yes';
+    if ($isCheat == 'Yes') {
+        $eligibility = 'No';
+    }
+
+
+    $query = "UPDATE " . $this->users_table . " 
+              SET 
+                is_cheat = :is_cheat,
+                eligibility = :eligibility 
+              WHERE email_address = :email";
+
+    // Prepare the SQL statement
+    $stmt = $this->conn->prepare($query);
+
+    // Bind parameters
+    $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":is_cheat", $isCheat);
+    $stmt->bindParam(":eligibility", $eligibility);
+
+    // Execute query and return the result
+    if ($stmt->execute()) {
+        return true;
+    }
+
+    return false;
+}
+
 
 public function ReadAllUsers()
 {
