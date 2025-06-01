@@ -370,6 +370,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Email Address
                         </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                          Token
+                        </th>
                         {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Request Image
                         </th> */}
@@ -421,6 +424,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           </td> */}
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
                             {request.email_address}
+                          </td>
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
+                            {request.help_token}
                           </td>
                           {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {request.request_image	}

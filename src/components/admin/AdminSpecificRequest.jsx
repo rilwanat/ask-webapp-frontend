@@ -311,9 +311,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
         try {
     
           const requestData = {
-            email: user.userEmail.trim(),
-            isCheat: user.userIsCheat.trim(),
-            kycStatus: user.userKycStatus.trim(),
+            email: user.userEmail,
+            isCheat: user.userIsCheat,
+            kycStatus: user.userKycStatus,
         };
         // alert(JSON.stringify(requestData), null, 2);
         // setIsUpdateDataLoading(false);

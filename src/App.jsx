@@ -224,11 +224,11 @@ function App() {
           user: {
             id: 1,
             fullname: "Ashabi Shobande Kokumo",
-            email_address: "janedoe@example.com",
+            email_address: "ask@askfoundations.org",
             phone: "08000000001",
             kyc_status: "verified",
             account_number: "0987654321",
-            account_name: "Ask Doe",
+            account_name: "Ask Shobande",
             bank_name: "A.S.K Bank",
             gender: "Female",
             state: "Lagos",

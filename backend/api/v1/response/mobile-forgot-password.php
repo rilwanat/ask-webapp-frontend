@@ -1,5 +1,5 @@
 <?php
-// forgot-password.php
+// forgot-password-mobile.php
 
 // CORS headers
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -36,14 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($data->email)) {
         $response->InsertPasswordResetTokenForUser($data->email, $resetToken);
 
         // $data->baseName
-        $passwordResetUrl = $data->baseName . 'reset-password/' . $resetToken;
+        // $passwordResetUrl = $data->baseName . 'reset-password/' . $resetToken;
 
         // Send email
         $subject = "Reset Password - A.S.K Foundation";
         $message = "
             <p>You requested a password reset.</p>
-            <p>Use the link below to reset your password:</p>
-            <a href=". $passwordResetUrl .">" . $passwordResetUrl . "</a>
+            <p>Use the code below to reset your password in A.S.K mobile app:</p>
+            <div 
+style='padding: 10px; background: #f4f4f4; border: 1px dashed #ccc; 
+display: inline-block; font-family: monospace; font-size: 16px; font-weight: bold'>" . substr($resetToken, 0, 4) . "</div>
             <br><br>If you didn't request this, you can ignore this email.
         ";
 

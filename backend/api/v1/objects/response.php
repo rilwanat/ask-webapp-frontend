@@ -1325,6 +1325,34 @@ public function checkIfEmailCodeIsValid($email, $verificationCode)
     return false;
 }
 
+public function checkIfEmailCodeIsValidForMobilePasswordReset($email, $verificationCode) 
+{
+    // Get the most recent token for this email
+    $query = "SELECT token 
+              FROM " . $this->password_reset_tokens_table . " 
+              WHERE email_address = :email 
+              ORDER BY created_at DESC 
+              LIMIT 1";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email", $email);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $tokenData = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Compare the tokens directly (case-sensitive exact match)
+        if (substr($tokenData['token'], 0, 4) === $verificationCode) {
+            // Token is valid - you may want to delete it here to prevent reuse
+            // $this->deleteToken($email, $verificationCode);
+            // 
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 // Optional helper function to delete used tokens
 private function deleteToken($email, $token)
 {
@@ -1676,7 +1704,9 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                     p.request_image,
                     p.help_token,
                     u.fullname,
-                    u.is_cheat 
+                    u.is_cheat,
+                    u.email_verified,
+                    u.kyc_status   
                 FROM " . $this->help_requests_table . " p 
                 LEFT JOIN " . $this->users_table . " u ON p.email_address = u.email_address
                  WHERE p.help_token = :help_token 
@@ -1712,7 +1742,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             if (
                 $request['is_cheat'] !== 'No' ||
                  $request['email_verified'] !== 'Yes' ||
-                 $request['kyc_status'] !== 'Approved'
+                 $request['kyc_status'] !== 'APPROVED'
             ) {
 
                 
@@ -1728,7 +1758,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             if (
                 !isset($request['fullname']) || $request['fullname'] === ''
                 ||
-                !isset($request['kyc_status']) || $request['kyc_status'] === '' || $request['kyc_status'] === 'Rejected' || $request['kyc_status'] === 'Pending'
+                !isset($request['kyc_status']) || $request['kyc_status'] === '' || $request['kyc_status'] === 'REJECTED' || $request['kyc_status'] === 'PENDING'
                 ) {
                 return [
                     'status' => false,
