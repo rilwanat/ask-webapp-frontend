@@ -3111,6 +3111,40 @@ public function ReadAllNominationsForAdmin()
     return $stmt;
 }
 
+public function setPlatform(
+    $email,
+    $platform
+    ) {
+
+
+        
+
+    $query = "UPDATE " . $this->users_table . " 
+              SET 
+              
+                platform =:platform 
+
+              WHERE email_address = :email";
+
+    // Prepare the SQL statement
+    $stmt = $this->conn->prepare($query);
+
+    // Bind parameters
+    $stmt->bindParam(":email", $email);
+
+    $stmt->bindParam(":platform", $platform);
+
+    // Execute query and return the result
+    if ($stmt->execute()) {
+        return true;
+    }
+
+    // Optionally, log the error or handle it appropriately
+    // error_log("Failed to update customer details: " . implode(":", $stmt->errorInfo()));
+
+    return false;
+}
+
 
 
 

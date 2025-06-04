@@ -21,6 +21,7 @@ $db = $database->getConnection();
 $response = new Response($db);
 
 $data = json_decode(file_get_contents("php://input"));
+$platform = empty($data->platform) ? "web" : "mobile";
 
 // Handle login endpoint -> ask-login-user.php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -31,6 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // $authToken = $response->checkIfUserCredentialsIsValid($data->email, $data->password);
         $authToken = $response->generateAuthToken();
 
+        //store platform
+            $response->setPlatform($data->email, $platform);
         $userData = $response->ReadUser($data->email);
 
         if ($userData != null) 
