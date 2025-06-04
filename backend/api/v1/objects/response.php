@@ -1092,7 +1092,8 @@ public function ReadAllUsers()
                 p.eligibility,
                 p.is_cheat,
                 p.opened_welcome_msg,
-                p.vote_weight 
+                p.vote_weight,
+                p.platform  
             FROM " . $this->users_table . " p  
             ORDER BY p.registration_date ASC ";
         
@@ -1141,7 +1142,8 @@ public function ReadAllTopUsers()
                 p.eligibility,
                 p.is_cheat,
                 p.opened_welcome_msg,
-                p.vote_weight 
+                p.vote_weight, 
+                p.platform 
             FROM " . $this->users_table . " p  
             ORDER BY p.voter_consistency DESC ";
         

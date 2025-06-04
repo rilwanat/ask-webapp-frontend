@@ -62,7 +62,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         "eligibility" => $row['eligibility'],
         "is_cheat" => $row['is_cheat'],
         "opened_welcome_msg" => $row['opened_welcome_msg'],
-        "vote_weight" => $row['vote_weight']
+        "vote_weight" => $row['vote_weight'],
+        "platform" => $row['platform']
     );
 
     array_push($users_data["users_data"], $product_item);

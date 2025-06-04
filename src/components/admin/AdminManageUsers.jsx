@@ -180,6 +180,7 @@ useEffect(() => {
     || user.is_cheat && user.is_cheat.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.opened_welcome_message && user.opened_welcome_message.toLowerCase().includes(searchQuery.toLowerCase()) 
     || user.vote_weight && user.vote_weight.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || user.platform && user.platform.toLowerCase().includes(searchQuery.toLowerCase()) 
     // || user.tags && user.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
     // || user.categories && user.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
     // || user.price.includes(searchQuery)
@@ -370,6 +371,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Email Address
                         </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
+                          Platform
+                        </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                           Voter Consistency
                         </th>
@@ -450,6 +454,10 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                             {user.email_address	}
+                          </td>
+                          
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                            {user.platform}
                           </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                             {user.voter_consistency	}
