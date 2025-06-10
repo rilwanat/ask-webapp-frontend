@@ -3149,6 +3149,166 @@ public function setPlatform(
 
 
 
+// Notification function to send a message to Firebase
+function getAccessToken() {
+    $keyFile = __DIR__.'/../keys/ask-platform-63830-firebase-adminsdk-fbsvc-57bace1375.json';
+    $key = json_decode(file_get_contents($keyFile), true);
+
+    $jwtHeader = ['alg' => 'RS256', 'typ' => 'JWT'];
+    $jwtClaimSet = [
+        'iss' => $key['client_email'],
+        'scope' => 'https://www.googleapis.com/auth/datastore',
+        'aud' => 'https://oauth2.googleapis.com/token',
+        'exp' => time() + 3600,
+        'iat' => time()
+    ];
+
+    $jwt = $this->base64url_encode(json_encode($jwtHeader)) . '.' . $this->base64url_encode(json_encode($jwtClaimSet));
+    openssl_sign($jwt, $signature, $key['private_key'], 'SHA256');
+    $jwt .= '.' . $this->base64url_encode($signature);
+
+    $response = file_get_contents('https://oauth2.googleapis.com/token', false, stream_context_create([
+        'http' => [
+            'method' => 'POST',
+            'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+            'content' => http_build_query([
+                'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                'assertion' => $jwt
+            ])
+        ]
+    ]));
+
+    $tokenData = json_decode($response, true);
+    return $tokenData['access_token'];
+}
+
+function base64url_encode($data) {
+    return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+}
+
+function sendFirestoreMessage($chatId, $messageData) {
+    $projectId = 'ask-platform-63830';
+    $accessToken = $this->getAccessToken();
+    $url = "https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents/notifications/$chatId/messages";
+
+    $data = [
+        'fields' => [
+            'message' => ['stringValue' => $messageData['message']],
+            // 'senderId' => ['stringValue' => $messageData['senderId']],
+            // 'senderImage' => ['stringValue' => $messageData['senderImage']],
+            // 'senderName' => ['stringValue' => $messageData['senderName']],
+            // 'receiverId' => ['stringValue' => $messageData['receiverId']],
+            // 'receiverName' => ['stringValue' => $messageData['receiverName']],
+            'timestamp' => ['timestampValue' => date('c')] // ISO8601 timestamp
+        ]
+    ];
+
+    $headers = [
+        "Authorization: Bearer $accessToken",
+        "Content-Type: application/json"
+    ];
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+    if (curl_errno($ch)) {
+        return ['success' => false, 'error' => curl_error($ch)];
+    }
+    curl_close($ch);
+
+    $responseData = json_decode($response, true);
+    if (isset($responseData['name'])) {
+        return ['success' => true, 'messageId' => basename($responseData['name'])];
+    } else {
+        return ['success' => false, 'error' => $responseData['error']['message'] ?? 'Unknown error'];
+    }
+}
+
+
+//Notification function to send a message to Firebase
+
+
+
+
+public function ReadAllTopNominations()
+{
+    try {
+        // Prepare the SQL query using a prepared statement
+        $query = "SELECT
+                n.id,
+                n.date,
+                n.nomination_count,
+                n.description,
+                n.remark,
+                n.email_address,
+                n.request_image, 
+                n.help_token  
+            FROM " . $this->help_requests_table . " n  
+            ORDER BY n.nomination_count DESC 
+            LIMIT 1";
+        
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind the email parameter to the prepared statement
+        // $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+        // Execute the statement
+        $stmt->execute();
+
+        return $stmt;
+
+
+    return $user; // User not found
+
+    } catch (Exception $e) {
+        // Log the error message and return null for security
+        // error_log("Error reading user: " . $e->getMessage());
+        return null;
+    }
+}
+
+public function ReadAllTrailingTopNominations()
+{
+    try {
+        // Prepare the SQL query using a prepared statement
+        $query = "SELECT
+                n.id,
+                n.date,
+                n.nomination_count,
+                n.description,
+                n.remark,
+                n.email_address,
+                n.request_image, 
+                n.help_token  
+            FROM " . $this->help_requests_table . " n  
+            ORDER BY n.nomination_count DESC 
+            LIMIT 4 OFFSET 1";
+        
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind the email parameter to the prepared statement
+        // $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+        // Execute the statement
+        $stmt->execute();
+
+        return $stmt;
+
+
+    return $user; // User not found
+
+    } catch (Exception $e) {
+        // Log the error message and return null for security
+        // error_log("Error reading user: " . $e->getMessage());
+        return null;
+    }
+}
+
 
 }
 ?>

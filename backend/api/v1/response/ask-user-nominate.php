@@ -54,6 +54,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Add nomination
                 if ($response->CreateNomination($data->email, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $data->helpToken)) {
+
+                    $fname = explode(" ", $nominateResult['userData']['fullname'])[0];
+                    //
+                    $messageData = [
+    'message' => 'Hello ' . $fname . ', you have been nominated!',
+    // 'senderId' => 'A.S.K Admin',
+    // 'senderImage' => 'https://example.com/php.jpg',
+    // 'senderName' => 'A.S.K Admin',
+    // 'receiverId' => $nomineeEmail,
+    // 'receiverName' => 'A.S.K User'
+];
+$result = $response->sendFirestoreMessage('adm-'. $nomineeEmail, $messageData);
+//
+
                     http_response_code(200);
                     echo json_encode(["status" => true, "message" => "Successfully Nominated!"]);
                 } else {

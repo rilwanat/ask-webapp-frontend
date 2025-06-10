@@ -43,6 +43,19 @@ if (
 
     if ($response->postBeneficiary($data->email, $data->helpToken, $data->amount, $data->remark )) {
 
+        //
+                    $messageData = [
+    'message' => 'Congratulations! you have been selected as beneficiary!',
+    // 'senderId' => 'A.S.K Admin',
+    // 'senderImage' => 'https://example.com/php.jpg',
+    // 'senderName' => 'A.S.K Admin',
+    // 'receiverId' => $data->email,
+    // 'receiverName' => 'A.S.K User'
+];
+$result = $response->sendFirestoreMessage('adm-'. $data->email, $messageData);
+//
+
+
         // set response code - 201 created
         http_response_code(200);
 
