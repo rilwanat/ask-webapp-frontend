@@ -85,7 +85,7 @@ $result = $response->sendFirestoreMessage('adm-'. $nom_email, $messageData);
 }
 
 
-// Set HTTP response code and return JSON response
-http_response_code(200);
-echo json_encode($response_data);
+// // Set HTTP response code and return JSON response
+// http_response_code(200);
+// echo json_encode($response_data);
 ?>

@@ -34,10 +34,10 @@ $response = new Response($db);
 
 
 // Fetch all users
-$stmt = $response->ReadAllWhereVoterConsistencyIsOne();
+$stmt = $response->ReadAllHelpRequestsNotCheatForAdmin();
 
 // Initialize array to store user data
-$nominations_data["nominations_data"] = array();
+$help_requests_data["helpRequestsData"] = array();
 
 
 ini_set('memory_limit', '-1');
@@ -47,45 +47,35 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     // Extract user data from the row
     $product_item = array(
-
-        "id" => $row['id'],
-        "date" => $row['date'],
-        "nomination_count" => $row['nomination_count'],
-        "description" => $row['description'],
-        "remark" => $row['remark'],
-        "email_address" => $row['email_address'],
-        "request_image" => $row['request_image'],
-        "help_token" => $row['help_token']
+        "email_address" => $row['email_address']
     );
 
-    array_push($nominations_data["nominations_data"], $product_item);
+    array_push($help_requests_data["helpRequestsData"], $product_item);
 
-}
-
-$nom_email = $nominations_data["nominations_data"][0]['email_address'];//"rilwan.at@gmail.com";//
-
-// Check if successfully fetched
-if ($nominations_data["nominations_data"]) {
-
-    //
-                    $messageData = [
-    'message' => 'Hello, you are leading on Nomination, keep sharing to maintain your lead!',
+    
+$messageData = [
+    'message' => 'Hello, A.S.K reminder to mobilize for nomination!',
     // 'senderId' => 'A.S.K Admin',
     // 'senderImage' => 'https://example.com/php.jpg',
     // 'senderName' => 'A.S.K Admin',
     // 'receiverId' => $nom_email,
     // 'receiverName' => 'A.S.K User'
 ];
-$result = $response->sendFirestoreMessage('adm-'. $nom_email, $messageData);
-//
+$result = $response->sendFirestoreMessage('adm-'. $row['email_address'], $messageData);
 
-    $response_data = array("status" => true, "data" => $nominations_data["nominations_data"]);
+}
+
+
+
+// Check if successfully fetched
+if ($help_requests_data["helpRequestsData"]) {
+    $response_data = array("status" => true, "data" => $help_requests_data["helpRequestsData"]);
 } else {
     $response_data = array("status" => false);
 }
 
 
-// Set HTTP response code and return JSON response
-http_response_code(200);
-echo json_encode($response_data);
+// // Set HTTP response code and return JSON response
+// http_response_code(200);
+// echo json_encode($response_data);
 ?>
