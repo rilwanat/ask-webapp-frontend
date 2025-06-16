@@ -34,7 +34,7 @@ $response = new Response($db);
 
 
 // Fetch all users
-$stmt = $response->ReadAllHelpRequestsNotCheatForAdmin();
+$stmt = $response->ReadAllUsers();
 
 // Initialize array to store user data
 $help_requests_data["helpRequestsData"] = array();
@@ -51,18 +51,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     );
 
     array_push($help_requests_data["helpRequestsData"], $product_item);
-
-    
-$messageData = [
-    'message' => 'Hello, A.S.K reminder to mobilize for nomination!',
-    // 'senderId' => 'A.S.K Admin',
-    // 'senderImage' => 'https://example.com/php.jpg',
-    // 'senderName' => 'A.S.K Admin',
-    // 'receiverId' => $nom_email,
-    // 'receiverName' => 'A.S.K User'
-];
-// $result = $response->sendFirestoreMessage('adm-'. 'rilwan.at@gmail.com', $messageData);
-$result = $response->sendFirestoreMessage('adm-'. $row['email_address'], $messageData);
+  
+    $response->updateVoterConsistencySilently($row['email_address']);
 
 }
 

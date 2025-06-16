@@ -165,6 +165,55 @@ class Response
         }
     }
 
+    public function GetNomineeName($email)
+    {
+        try {
+            // Prepare the SQL query using a prepared statement
+            $query = "SELECT
+                    -- p.id,
+                    p.fullname,
+                    -- p.email_address,
+                    -- p.voter_consistency,
+                    -- p.access_key,
+                    -- p.phone_number,
+                    -- p.kyc_status,
+                    -- p.account_number,
+                    -- p.account_name,
+                    -- p.bank_name,
+                    -- p.gender,
+                    -- p.state_of_residence,
+                    -- p.profile_picture,
+                    -- p.email_verified,
+                    -- p.registration_date,
+                    -- p.user_type,
+                    -- p.eligibility,
+                    -- p.is_cheat,
+                    -- p.opened_welcome_msg,
+                    p.vote_weight 
+                FROM " . $this->users_table . " p  WHERE p.email_address = :email";
+            
+            // Prepare the statement
+            $stmt = $this->conn->prepare($query);
+    
+            // Bind the email parameter to the prepared statement
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    
+            // Execute the statement
+            $stmt->execute();
+    
+            // Fetch the result
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+
+        return $user; // User not found
+    
+        } catch (Exception $e) {
+            // Log the error message and return null for security
+            // error_log("Error reading user: " . $e->getMessage());
+            return null;
+        }
+    }
+
     public function ReadUser($email)
     {
         try {
@@ -1555,8 +1604,8 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                 return ["status" => false, "message" => "Bank details are incomplete."];
             }
     
-            // Step 3: Check if a recent beneficiary record exists (within 12 months)
-            $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE email_address = :email_address ORDER BY date DESC LIMIT 1";
+            // Step 3: Check if a recent beneficiary record exists (within 6 months)
+            $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE email_address = :email_address AND voter_consistency >= 30 ORDER BY date DESC LIMIT 1";
             $stmt_beneficiary = $this->conn->prepare($query_beneficiary);
             $stmt_beneficiary->bindParam(":email_address", $email);
             $stmt_beneficiary->execute();
@@ -1568,15 +1617,15 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                 $interval = $now->diff($lastDate);
     
                 // if ($interval->y < 1) {
-                //     return ["status" => false, "message" => "You can only request help again after 12 months."];
+                //     return ["status" => false, "message" => "You can only request help again after 6 months."];
                 // }
 
                 // Calculate total months difference
-                $totalMonths = ($interval->y * 12) + $interval->m;
+                $totalMonths = ($interval->y * 6) + $interval->m;
     
-                if ($totalMonths < 12) {
+                if ($totalMonths < 6) {
                     $elapsedMonths = $totalMonths;
-                    $remainingMonths = 12 - $elapsedMonths;
+                    $remainingMonths = 6 - $elapsedMonths;
         
                     return [
                         "status" => false, 

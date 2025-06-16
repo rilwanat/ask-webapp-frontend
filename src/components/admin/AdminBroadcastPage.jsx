@@ -18,6 +18,8 @@ export default function AdminBroadcastPage({
 }) {
   const navigate = useNavigate();
 
+  const [cloudBroadcastMessage, setCloudBroadcastMessage] = useState('');
+
   const [broadcastMessage, setBroadcastMessage] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -101,6 +103,49 @@ export default function AdminBroadcastPage({
     }
   };
 
+  const sendCloudBroadcast = async () => {
+    if (isDataloading) {
+      openNotificationModal(false, 'Mobile Broadcast', 'Please wait...');
+      return;
+    }
+
+    if (!cloudBroadcastMessage.trim()) {
+      openNotificationModal(false, 'Mobile Broadcast', 'Message is required.');
+      return;
+    }
+
+    setIsDataLoading(true);
+
+    try {
+      const endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_SEND_MANUAL_CLOUD_NOTIFICATION;
+
+      const formData = new FormData();
+      formData.append('message', cloudBroadcastMessage);
+      
+
+      const response = await axiosAdminInstance.post(endpoint, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      setIsDataLoading(false);
+
+      if (response.data.status) {
+        openNotificationModal(true, 'Mobile Broadcast Sent', response.data.message || 'Mobile notification sent successfully.');
+        setCloudBroadcastMessage('');
+      } else {
+        openNotificationModal(false, 'Mobile Broadcast Error', response.data.message);
+      }
+    } catch (error) {
+      setIsDataLoading(false);
+      openNotificationModal(false, 'Mobile Broadcast Error', error.message || 'An error occurred');
+    }
+  };
+
   return (
     <div className="bg-theme h-full">
       <AdminHeader
@@ -149,6 +194,36 @@ export default function AdminBroadcastPage({
                   >
                     <div className="text-s text-white">
                       {isDataloading ? 'Sending...' : 'Send Broadcast'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center px-0 sm:px-16 md:px-24 h-full">
+        <div className="p-4 rounded-lg w-full mt-4">
+          <div className="p-4 bg-theme rounded-lg w-full">
+            <div className="flex w-full">
+              <div className="w-full">
+                <div className="flex flex-col gap-4 w-full">
+                  <textarea
+                    className="w-full h-48 p-4 border border-gray-300 rounded-lg bg-white text-black"
+                    placeholder="Enter mobile notification broadcast message..."
+                    value={cloudBroadcastMessage}
+                    onChange={(e) => setCloudBroadcastMessage(e.target.value)}
+                  />
+
+                  
+
+                  <div
+                    onClick={sendCloudBroadcast}
+                    className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2"
+                  >
+                    <div className="text-s text-white">
+                      {isDataloading ? 'Sending...' : 'Send Mobile Notification Broadcast'}
                     </div>
                   </div>
                 </div>

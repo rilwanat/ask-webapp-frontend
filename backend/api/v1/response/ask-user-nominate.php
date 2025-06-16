@@ -55,10 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Add nomination
                 if ($response->CreateNomination($data->email, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $data->helpToken)) {
 
-                    $fname = explode(" ", $nominateResult['userData']['fullname'])[0];
+                    $fuser = $response->GetNomineeName($nomineeEmail);//explode(" ", $nominateResult['userData']['fullname'])[0];
                     //
                     $messageData = [
-    'message' => 'Hello ' . $fname . ', you have been nominated!',
+    'message' => 'Hello ' . $fuser['fullname'] . ', you have been nominated!',
     // 'senderId' => 'A.S.K Admin',
     // 'senderImage' => 'https://example.com/php.jpg',
     // 'senderName' => 'A.S.K Admin',
