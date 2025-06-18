@@ -62,14 +62,17 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 }
 
-$nom_email = $nominations_data["nominations_data"][0]['email_address'];//"rilwan.at@gmail.com";//
+// $nom_email = "rilwan.at@gmail.com";
+$nom_email = $nominations_data["nominations_data"][0]['email_address'];
+$nom_id = $nominations_data["nominations_data"][0]['id'];
 
 // Check if successfully fetched
 if ($nominations_data["nominations_data"]) {
 
     //
                     $messageData = [
-    'message' => 'Hello, you are leading on Nomination, keep sharing to maintain your lead!',
+    'message' => 'Hello, you are a few positions behind the top Nomination, keep sharing to gain the lead!',
+    'meta' => $nom_id,
     // 'senderId' => 'A.S.K Admin',
     // 'senderImage' => 'https://example.com/php.jpg',
     // 'senderName' => 'A.S.K Admin',

@@ -1604,8 +1604,16 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                 return ["status" => false, "message" => "Bank details are incomplete."];
             }
     
+            //AND voter_consistency >= 30 
             // Step 3: Check if a recent beneficiary record exists (within 6 months)
-            $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE email_address = :email_address AND voter_consistency >= 30 ORDER BY date DESC LIMIT 1";
+            // $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE email_address = :email_address ORDER BY date DESC LIMIT 1";
+            $query_beneficiary = "SELECT b.date 
+                      FROM " . $this->beneficiaries_table . " b
+                      JOIN " . $this->users_table . " u ON b.email_address = u.email_address
+                      WHERE b.email_address = :email_address 
+                      AND u.voter_consistency < 30
+                      ORDER BY b.date DESC 
+                      LIMIT 1";
             $stmt_beneficiary = $this->conn->prepare($query_beneficiary);
             $stmt_beneficiary->bindParam(":email_address", $email);
             $stmt_beneficiary->execute();
@@ -1617,20 +1625,20 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
                 $interval = $now->diff($lastDate);
     
                 // if ($interval->y < 1) {
-                //     return ["status" => false, "message" => "You can only request help again after 6 months."];
+                //     return ["status" => false, "message" => "You can only request help again after 1 months."];
                 // }
 
                 // Calculate total months difference
-                $totalMonths = ($interval->y * 6) + $interval->m;
+                $totalMonths = ($interval->y * 1) + $interval->m;
     
-                if ($totalMonths < 6) {
+                if ($totalMonths < 1) {
                     $elapsedMonths = $totalMonths;
-                    $remainingMonths = 6 - $elapsedMonths;
+                    $remainingMonths = 1 - $elapsedMonths;
         
                     return [
                         "status" => false, 
                         "message" => sprintf(
-                            "Your request was granted %d month(s) ago. You can request again in %d month(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW.",
+                            "Your request was granted %d month(s) ago. You can request again in %d month(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTL FOR 30 DAYS.",
                             $elapsedMonths,
                             $remainingMonths
                         )
@@ -3243,6 +3251,7 @@ function sendFirestoreMessage($chatId, $messageData) {
     $data = [
         'fields' => [
             'message' => ['stringValue' => $messageData['message']],
+            'meta' => ['stringValue' => $messageData['meta']] ?? '',
             // 'senderId' => ['stringValue' => $messageData['senderId']],
             // 'senderImage' => ['stringValue' => $messageData['senderImage']],
             // 'senderName' => ['stringValue' => $messageData['senderName']],

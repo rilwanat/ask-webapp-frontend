@@ -47,14 +47,17 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     // Extract user data from the row
     $product_item = array(
+        "id" => $row['id'],
         "email_address" => $row['email_address']
     );
 
     array_push($help_requests_data["helpRequestsData"], $product_item);
 
+    $nom_id = $help_requests_data["helpRequestsData"][0]['id'];
     
 $messageData = [
     'message' => 'Hello, A.S.K reminder to mobilize for nomination!',
+    'meta' => $nom_id,
     // 'senderId' => 'A.S.K Admin',
     // 'senderImage' => 'https://example.com/php.jpg',
     // 'senderName' => 'A.S.K Admin',
