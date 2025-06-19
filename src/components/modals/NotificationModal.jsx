@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -27,8 +27,12 @@ const NotificationModal = ({ isOpen, onRequestClose, notificationType, notificat
       // alert(notificationMessage);
 
       const parts = notificationMessage.split("#");
-const mainMessage = parts[0];
+      let mainMessage = parts[0];
 const details = parts.slice(1);
+
+if (mainMessage.toLowerCase().startsWith("your request was granted")) { 
+  mainMessage = "As a recent beneficiary, you need to login on mobile app to ASK again.";
+}  
 
   return (
     <Modal
@@ -70,7 +74,7 @@ const details = parts.slice(1);
             onClick={() => {
               onRequestClose();
 
-              if (mainMessage == "Your request was granted 0 month(s) ago. You can request again in 12 month(s).") { 
+              if (mainMessage == "As a recent beneficiary, you need to login on mobile app to ASK again.") {                
                 gotoPage("");
               }
 

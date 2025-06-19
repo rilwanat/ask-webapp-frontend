@@ -1618,33 +1618,70 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             $stmt_beneficiary->bindParam(":email_address", $email);
             $stmt_beneficiary->execute();
     
-            if ($stmt_beneficiary->rowCount() > 0) {
-                $beneficiary = $stmt_beneficiary->fetch(PDO::FETCH_ASSOC);
-                $lastDate = new DateTime($beneficiary['date']);
-                $now = new DateTime();
-                $interval = $now->diff($lastDate);
+            // if ($stmt_beneficiary->rowCount() > 0) {
+            //     $beneficiary = $stmt_beneficiary->fetch(PDO::FETCH_ASSOC);
+            //     $lastDate = new DateTime($beneficiary['date']);
+            //     $now = new DateTime();
+            //     $interval = $now->diff($lastDate);
     
-                // if ($interval->y < 1) {
-                //     return ["status" => false, "message" => "You can only request help again after 1 months."];
-                // }
-
-                // Calculate total months difference
-                $totalMonths = ($interval->y * 1) + $interval->m;
+            //     // Calculate total months difference
+            //     $totalMonths = ($interval->y * 1) + $interval->m;
     
-                if ($totalMonths < 1) {
-                    $elapsedMonths = $totalMonths;
-                    $remainingMonths = 1 - $elapsedMonths;
+            //     if ($totalMonths < 1) {
+            //         $elapsedMonths = $totalMonths;
+            //         $remainingMonths = 1 - $elapsedMonths;
         
-                    return [
-                        "status" => false, 
-                        "message" => sprintf(
-                            "Your request was granted %d month(s) ago. You can request again in %d month(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTL FOR 30 DAYS.",
-                            $elapsedMonths,
-                            $remainingMonths
-                        )
-                    ];
-            }
-            }
+            //         return [
+            //             "status" => false, 
+            //             "message" => sprintf(
+            //                 "Your request was granted %d month(s) ago. You can request again in %d month(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTL FOR 30 DAYS.",
+            //                 $elapsedMonths,
+            //                 $remainingMonths
+            //             )
+            //         ];
+            // }
+            // }
+            if ($stmt_beneficiary->rowCount() > 0) {
+    $beneficiary = $stmt_beneficiary->fetch(PDO::FETCH_ASSOC);
+    $lastDate = new DateTime($beneficiary['date']);
+    $now = new DateTime();
+    $interval = $now->diff($lastDate);
+
+    // Calculate total months difference
+    $totalMonths = ($interval->y * 12) + $interval->m; // Fixed: years should multiply by 12
+
+    if ($totalMonths < 1) {
+        // Less than 1 month? Show days instead
+        $elapsedDays = $interval->days;
+        $remainingDays = 30 - $elapsedDays; // Assuming a 30-day cooldown
+
+        return [
+            "status" => false, 
+            "message" => sprintf(
+                "Your request was granted %d day(s) ago. You can request again in %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                $elapsedDays,
+                $remainingDays
+            )
+        ];
+    } else {
+        // 1+ months? Show months + remaining days
+        $elapsedMonths = $totalMonths;
+        $elapsedDays = $interval->d; // Days beyond full months
+        $remainingMonths = 0; // Adjust based on your cooldown logic
+        $remainingDays = 0;   // Adjust based on your cooldown logic
+
+        return [
+            "status" => false, 
+            "message" => sprintf(
+                "Your request was granted %d month(s) and %d day(s) ago. You can request again in %d month(s) and %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                $elapsedMonths,
+                $elapsedDays,
+                $remainingMonths,
+                $remainingDays
+            )
+        ];
+    }
+}
     
             // Step 4: Ensure user hasn't already submitted a help request
             $query_help_requests = "SELECT id FROM " . $this->help_requests_table . " WHERE email_address = :email_address LIMIT 1";
