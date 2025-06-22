@@ -53,7 +53,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     array_push($help_requests_data["helpRequestsData"], $product_item);
 
-    $nom_id = $help_requests_data["helpRequestsData"][0]['id'];
+    $nom_id = $row['id'];//$help_requests_data["helpRequestsData"][0]['id'];
     
 $messageData = [
     'message' => 'Hello, A.S.K reminder to mobilize for nomination!',

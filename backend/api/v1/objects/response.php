@@ -1658,7 +1658,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
         return [
             "status" => false, 
             "message" => sprintf(
-                "Your request was granted %d day(s) ago. You can request again in %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                "Your request was granted %d day(s) ago. Stay active and come back to ASK in another %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
                 $elapsedDays,
                 $remainingDays
             )
@@ -1673,7 +1673,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
         return [
             "status" => false, 
             "message" => sprintf(
-                "Your request was granted %d month(s) and %d day(s) ago. You can request again in %d month(s) and %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                "Your request was granted %d month(s) and %d day(s) ago. Stay active and come back to ASK in another %d month(s) and %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
                 $elapsedMonths,
                 $elapsedDays,
                 $remainingMonths,
