@@ -58,10 +58,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     array_push($users_data["usersData"], $product_item);
 
   
-    $fuser = explode(" ", $row['fullname']);
+    // $fuser = explode(" ", $row['fullname']);
                     //
                     $messageData = [
-    'message' => 'Hello ' . $fuser[0] . ', ' . $messageBody,
+    // 'message' => 'Hello ' . $fuser[0] . ', ' . $messageBody,
+    'message' => 'Hello, ' . $messageBody,
+    'meta' => "X",
     // 'senderId' => 'A.S.K Admin',
     // 'senderImage' => 'https://example.com/php.jpg',
     // 'senderName' => 'A.S.K Admin',

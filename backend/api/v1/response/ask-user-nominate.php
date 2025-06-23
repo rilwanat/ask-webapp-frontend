@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     //
                     $messageData = [
     'message' => 'Hello ' . $fuser['fullname'] . ', you have been nominated!',
+    'meta' => $nominateResult['nomineeData']['id']
     // 'senderId' => 'A.S.K Admin',
     // 'senderImage' => 'https://example.com/php.jpg',
     // 'senderName' => 'A.S.K Admin',

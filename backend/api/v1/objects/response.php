@@ -1607,7 +1607,7 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             //AND voter_consistency >= 30 
             // Step 3: Check if a recent beneficiary record exists (within 6 months)
             // $query_beneficiary = "SELECT date FROM " . $this->beneficiaries_table . " WHERE email_address = :email_address ORDER BY date DESC LIMIT 1";
-            $query_beneficiary = "SELECT b.date 
+            $query_beneficiary = "SELECT b.date, u.voter_consistency  
                       FROM " . $this->beneficiaries_table . " b
                       JOIN " . $this->users_table . " u ON b.email_address = u.email_address
                       WHERE b.email_address = :email_address 
@@ -1617,6 +1617,17 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
             $stmt_beneficiary = $this->conn->prepare($query_beneficiary);
             $stmt_beneficiary->bindParam(":email_address", $email);
             $stmt_beneficiary->execute();
+
+
+            // Fetch the result
+$result = $stmt_beneficiary->fetch(PDO::FETCH_ASSOC);
+// Store voter_consistency in a variable
+$voterConsistency = null;
+if ($result && isset($result['voter_consistency'])) {
+    $voterConsistency = $result['voter_consistency'];
+    // $result['date'] is also available if needed
+}
+
     
             // if ($stmt_beneficiary->rowCount() > 0) {
             //     $beneficiary = $stmt_beneficiary->fetch(PDO::FETCH_ASSOC);
@@ -1658,7 +1669,8 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
         return [
             "status" => false, 
             "message" => sprintf(
-                "Your request was granted %d day(s) ago. Stay active and come back to ASK in another %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                // "Your request was granted %d day(s) ago. Stay active and come back to ASK in another %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                "Your request was granted %d day(s) ago. Stay active and come back to ASK in another " . (30 - $voterConsistency) . " day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
                 $elapsedDays,
                 $remainingDays
             )
@@ -1673,7 +1685,8 @@ public function CreateHelpRequest($email, $fullname, $description, $requestImage
         return [
             "status" => false, 
             "message" => sprintf(
-                "Your request was granted %d month(s) and %d day(s) ago. Stay active and come back to ASK in another %d month(s) and %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                // "Your request was granted %d month(s) and %d day(s) ago. Stay active and come back to ASK in another %d month(s) and %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                "Your request was granted %d month(s) and %d day(s) ago. Stay active and come back to ASK in another %d month(s) and " . (30 - $voterConsistency) . " day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
                 $elapsedMonths,
                 $elapsedDays,
                 $remainingMonths,
