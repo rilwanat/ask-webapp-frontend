@@ -2041,7 +2041,7 @@ $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
 /**
  * Silently updates voter consistency without returning any value
  */
-private function updateVoterConsistencySilently($email) {
+public function updateVoterConsistencySilently($email) {
     try {
         // Get current consistency
         $currentConsistency = $this->getCurrentConsistency($email);
