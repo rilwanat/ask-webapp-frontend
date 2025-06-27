@@ -62,6 +62,7 @@ function sendMailToUser($username, $email, $subject, $message) {
     }
     .content {
         padding: 20px;
+        font-size: 16px;
     }
     .content p {
         margin: 15px 0;

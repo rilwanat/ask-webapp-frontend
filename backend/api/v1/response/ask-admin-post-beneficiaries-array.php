@@ -72,11 +72,11 @@ $beneficiariesList = '<ul>' . implode('', array_map(function($item) {
                 // "Dear " . $row['user_fullname'] . ",<br><br>"
                  . "The following requests have been selected as beneficiaries for this cycle:<br>"
                  . $beneficiariesList . "<br><br>"
-                 . "Thank you for participating. Kindly join the next cycle, and start mobilizing for nominations.<br><br>"
+                 . "Thank you for participating. You got ". $row['nomination_count'] ." nominations in this cycle. Kindly join the next cycle, and start mobilizing for nominations.<br><br>"
                  . "Best of luck,<br>"
                  . "<strong>A.S.K Foundation Team</strong><br>";
 
-                 
+
 
                 sendMailToUser(
                     explode(" ", $row['user_fullname'])[0], //$row['user_fullname'],
@@ -92,10 +92,39 @@ foreach ($data['beneficiaries'] as $beneficiary) {
     if (!empty($beneficiary['email'])) {
         $message = "" 
         // "Dear " . ($beneficiary['fullname'] ?? 'User') . ",<br><br>"
-                 . "Congratulations!! You have been selected as this week's beneficiary of A.S.K FOUNDATION weekly support initiative.<br><br>"
-                 . "Your request is currently being processed.<br><br>"
-                 . "Please when you receive the credit alert send us a short VIDEO to our WhatsApp (+2349051047138) telling us your name, how you got to know A.S.K Foundation and how you eventually got nominated.<br><br><br>"
+                 . "Congratulations!! You have been selected as a beneficiary of A.S.K FOUNDATION financial support initiative.<br><br>"
+                 . "To process your request, kindly contact us on Whatsapp (+2349051047138) to ACCEPT the nomination and affirm your willingness to acknowledge receipt through a short video.<br><br>"
+                 . "Upon receipt of credit alert, please  tell us through a video:<br>"
+                 . "<ol>"
+                 . "<li>your name</li>"
+                 . "<li>how you got to know A.S.K Foundation</li>"
+                 . "<li>how you eventually got nominated</li>"
+                 . "<li>your plans for your grant</li>"
+                 . "</ol>"
+                 . "<br><br>"
+                 . "<strong>ATTENTION</strong><br>"
+                 . "Beneficiaries for business support can get further support if you remain active on the platform and share progress report on your business.<br>"
+                 . "<br><br>"
                  . "<strong>A.S.K Foundation Team</strong><br>";
+
+
+                                  
+
+                 $messageData = [
+    'message' => 'Congratulations!! You have been selected as a beneficiary of A.S.K FOUNDATION financial support initiative.',
+    'meta' => 'X',
+    // 'senderId' => 'A.S.K Admin',
+    // 'senderImage' => 'https://example.com/php.jpg',
+    // 'senderName' => 'A.S.K Admin',
+    // 'receiverId' => $nom_email,
+    // 'receiverName' => 'A.S.K User'
+];
+// $result = $response->sendFirestoreMessage('adm-'. 'rilwan.at@gmail.com', $messageData);
+$result = $response->sendFirestoreMessage('adm-'. $row['email_address'], $messageData);
+
+
+
+
 
         sendMailToUser(
             $beneficiary['fullname'] ?? 'User',

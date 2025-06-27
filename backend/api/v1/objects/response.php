@@ -2843,7 +2843,15 @@ function postBeneficiariesArray($beneficiaries) {
                 $this->conn->rollBack();
                 return false;
             }
-        }
+
+            
+
+        // Update beneficiary record in users table
+        $updateUserStmt = $this->conn->prepare("UPDATE " . $this->users_table . " 
+                                SET voter_consistency = 1 WHERE email_address = ?");
+        $updateUserStmt->execute([$email]);
+        
+    }
 
         
         
@@ -2851,6 +2859,7 @@ function postBeneficiariesArray($beneficiaries) {
         $resetStmt = $this->conn->prepare("UPDATE " . $this->help_requests_table . " 
                                 SET nomination_count = 0");
         $resetStmt->execute();
+
 
 
 
