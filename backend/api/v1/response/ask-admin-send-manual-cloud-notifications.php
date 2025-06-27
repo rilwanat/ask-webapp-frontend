@@ -62,7 +62,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     //
                     $messageData = [
     // 'message' => 'Hello ' . $fuser[0] . ', ' . $messageBody,
-    'message' => 'Hello, ' . $messageBody,
+    'message' => '' . $messageBody,
     'meta' => "X",
     // 'senderId' => 'A.S.K Admin',
     // 'senderImage' => 'https://example.com/php.jpg',
