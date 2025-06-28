@@ -576,6 +576,7 @@ public function ReadAllHelpRequestsEmailsNotCheat()
         p.id,
         
         p.email_address,
+        p.nomination_count,
         u.fullname as user_fullname,
         u.email_address as user_email 
         FROM
@@ -2850,15 +2851,22 @@ function postBeneficiariesArray($beneficiaries) {
         $updateUserStmt = $this->conn->prepare("UPDATE " . $this->users_table . " 
                                 SET voter_consistency = 1 WHERE email_address = ?");
         $updateUserStmt->execute([$email]);
+
+
+
+
+
+
+        // Reset all nominations in history table
+        $resetStmt = $this->conn->prepare("UPDATE " . $this->help_requests_table . " 
+                                SET nomination_count = 0");
+        $resetStmt->execute();
         
     }
 
         
         
-        // Reset all nominations in history table
-        $resetStmt = $this->conn->prepare("UPDATE " . $this->help_requests_table . " 
-                                SET nomination_count = 0");
-        $resetStmt->execute();
+        
 
 
 
