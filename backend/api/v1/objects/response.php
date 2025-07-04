@@ -2856,11 +2856,11 @@ function postBeneficiariesArray($beneficiaries) {
 
 
 
-
-        // Reset all nominations in history table
-        $resetStmt = $this->conn->prepare("UPDATE " . $this->help_requests_table . " 
-                                SET nomination_count = 0");
-        $resetStmt->execute();
+//following no longer done here
+        // // Reset all nominations in history table
+        // $resetStmt = $this->conn->prepare("UPDATE " . $this->help_requests_table . " 
+        //                         SET nomination_count = 0");
+        // $resetStmt->execute();
         
     }
 
@@ -2883,6 +2883,28 @@ function postBeneficiariesArray($beneficiaries) {
         // Log error if needed
         error_log("Beneficiary processing error: " . $e->getMessage());
         return false;
+    }
+}
+
+
+function resetAllNominationCount() {
+    try {
+        // Reset all nominations in history table
+        $resetStmt = $this->conn->prepare("UPDATE " . $this->help_requests_table . " 
+                                SET nomination_count = 0");
+        $resetStmt->execute();
+        
+        // Return true on success
+        return true;
+        
+    } catch (PDOException $e) {
+        // Log error
+        error_log("Reset All Nomination Count processing error: " . $e->getMessage());
+        // Return false on failure
+        return false;
+        
+        // Alternatively, you could re-throw the exception:
+        // throw $e;
     }
 }
 

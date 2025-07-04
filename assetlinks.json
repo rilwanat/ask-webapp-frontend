@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.rbapps.ask_mobile",
+      "sha256_cert_fingerprints": [
+        "FA:4C:C0:62:AF:7D:62:67:DA:18:6D:66:86:B9:DA:1E:E2:16:78:10:45:C5:10:DC:51:CA:21:9D:1B:5A:4A:B6"
+      ]
+    }
+  }
+]

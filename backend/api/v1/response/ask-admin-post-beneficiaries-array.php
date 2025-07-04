@@ -51,6 +51,10 @@ if (
         // Send email to all other requests
         $requests = $response->ReadAllHelpRequestsEmailsNotCheat();
 
+
+        //rest all nomination count       
+        $response->resetAllNominationCount();
+
         // Prepare the base email content
         $subject = "A.S.K Notification of Beneficiary Selection";
 
@@ -71,7 +75,7 @@ $beneficiariesList = '<ul>' . implode('', array_map(function($item) {
                 $message = "" 
                 // "Dear " . $row['user_fullname'] . ",<br><br>"
                  . "The following requests have been selected as beneficiaries for this cycle:<br>"
-                 . $beneficiariesList . "<br><br>"
+                 . $beneficiariesList . "<br>"
                  . "Thank you for participating. You got ". $row['nomination_count'] ." nominations in this cycle. Kindly join the next cycle, and start mobilizing for nominations.<br><br>"
                  . "Best of luck,<br>"
                  . "<strong>A.S.K Foundation Team</strong><br>";
