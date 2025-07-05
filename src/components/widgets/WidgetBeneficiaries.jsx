@@ -83,6 +83,12 @@ const WidgetBeneficiaries = ({
 
   // Get visible items with wrap-around support
   const getVisibleItems = () => {
+    // If we have fewer items than needed, just return all items
+  if (myTotalItems <= myItemsPerPage) {
+    return carouselBeneficiaryItems;
+  }
+
+  
     const endIndex = myCurrentIndex + myItemsPerPage;
     
     if (endIndex > myTotalItems) {
