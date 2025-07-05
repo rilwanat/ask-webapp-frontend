@@ -752,7 +752,7 @@ A community-based charity initiative
 												<option value="Edo">Edo</option>
 												<option value="Ekiti">Ekiti</option>
 												<option value="Enugu">Enugu</option>
-												<option value="FCT">Federal Capital Territory</option>
+												<option value="FCT">FCT</option>
 												<option value="Gombe">Gombe</option>
 												<option value="Imo">Imo</option>
 												<option value="Jigawa">Jigawa</option>

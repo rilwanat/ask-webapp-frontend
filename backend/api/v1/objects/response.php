@@ -650,6 +650,34 @@ public function ReadAllBeneficiaries()
     }
 }
 
+public function ReadAllStates()
+{
+    $query = "SELECT DISTINCT state_of_residence 
+              FROM " . $this->users_table . " 
+              WHERE state_of_residence IS NOT NULL AND state_of_residence != '' 
+              ORDER BY state_of_residence ASC";
+
+    try {
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception("Failed to prepare query: " . $this->conn->error);
+        }
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to execute query: " . $stmt->error);
+        }
+        
+        return $stmt;
+    } catch (Exception $e) {
+        // Log the error
+        error_log("Error in ReadAllStates: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+
 public function ReadAllSponsors()
 {
     $query = "SELECT
@@ -2658,8 +2686,14 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
     }
 
 
-    public function GenerateBeneficiariesNotCheat($count)
+    public function GenerateBeneficiariesNotCheat($count, $state)
 {
+
+    $appendStateQuery = "";
+    if ($state != "") {
+        $appendStateQuery = " AND u.state_of_residence = :state";
+    }
+
     $query = "SELECT
         p.id,
         p.date,
@@ -2695,7 +2729,7 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
             " . $this->users_table . " u ON u.email_address = p.email_address
          WHERE 
         (u.is_cheat IS NULL OR u.is_cheat != 'Yes') AND (p.nomination_count > 0) AND (u.fullname != '') AND u.kyc_status = 'APPROVED'
-        
+        ". $appendStateQuery ."
         ORDER BY 
             p.nomination_count DESC,
             u.voter_consistency DESC,
@@ -2705,6 +2739,11 @@ public function CreateCrypto($cryptoNetwork, $cryptoAddress, $requestImage)
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':count', $count, PDO::PARAM_INT);
+
+        if ($state != "") {
+            $stmt->bindParam(':state', $state, PDO::PARAM_STR);
+        }
+
         $stmt->execute();
         return $stmt;
 }
@@ -2864,13 +2903,7 @@ function postBeneficiariesArray($beneficiaries) {
         
     }
 
-        
-        
-        
-
-
-
-
+     
         
         // Commit if all operations succeeded
         $this->conn->commit();
@@ -2885,6 +2918,97 @@ function postBeneficiariesArray($beneficiaries) {
         return false;
     }
 }
+
+
+// function postBeneficiariesArrayForState($beneficiaries) {
+//     try {
+//         // Validate input
+//         if (!is_array($beneficiaries) || empty($beneficiaries)) {
+//             throw new Exception("No beneficiaries provided");
+//         }
+
+
+
+
+        
+//         // Start transaction
+//         $this->conn->beginTransaction();
+        
+//         // Process each beneficiary
+//         foreach ($beneficiaries as $beneficiary) {
+//             $email = $beneficiary['email'];
+//             $helpToken = $beneficiary['helpToken'];
+//             $amount = $beneficiary['amount'];
+//             $remark = $beneficiary['remark'] ?? ''; // Optional field with default value
+            
+//             // First get the nomination_count from the request table (within transaction)
+//             $stmt = $this->conn->prepare("SELECT nomination_count FROM " . $this->help_requests_table . " 
+//                                 WHERE email_address = ? AND help_token = ? LIMIT 1");
+//             $stmt->execute([$email, $helpToken]);
+//             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+//             if (!$row) {
+//                 $this->conn->rollBack();
+//                 return false;
+//             }
+            
+//             $nominationCount = $row['nomination_count'];
+            
+//             // Create beneficiary record
+//             $stmt = $this->conn->prepare("INSERT INTO " . $this->beneficiaries_table . " 
+//                                 (email_address, amount, nomination_count, remark) 
+//                                 VALUES (?, ?, ?, ?)");
+//             $stmt->execute([$email, $amount, $nominationCount, $remark]);
+            
+//             if ($stmt->rowCount() === 0) {
+//                 $this->conn->rollBack();
+//                 return false;
+//             }
+            
+//             // Delete request record
+//             $stmt = $this->conn->prepare("DELETE FROM " . $this->help_requests_table . " 
+//                                 WHERE email_address = ? AND help_token = ?");
+//             $stmt->execute([$email, $helpToken]);
+            
+//             if ($stmt->rowCount() === 0) {
+//                 $this->conn->rollBack();
+//                 return false;
+//             }
+
+            
+
+//         // Update beneficiary record in users table
+//         $updateUserStmt = $this->conn->prepare("UPDATE " . $this->users_table . " 
+//                                 SET voter_consistency = 1 WHERE email_address = ?");
+//         $updateUserStmt->execute([$email]);
+
+
+
+
+
+// //following no longer done here
+//         // // Reset all nominations in history table
+//         // $resetStmt = $this->conn->prepare("UPDATE " . $this->help_requests_table . " 
+//         //                         SET nomination_count = 0");
+//         // $resetStmt->execute();
+        
+//     }
+
+     
+        
+//         // Commit if all operations succeeded
+//         $this->conn->commit();
+//         return true;
+        
+//     } catch (PDOException $e) {
+//         if ($this->conn->inTransaction()) {
+//             $this->conn->rollBack();
+//         }
+//         // Log error if needed
+//         error_log("Beneficiary processing error: " . $e->getMessage());
+//         return false;
+//     }
+// }
 
 
 function resetAllNominationCount() {

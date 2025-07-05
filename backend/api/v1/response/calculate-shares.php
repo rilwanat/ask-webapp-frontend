@@ -53,6 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $amount = (float) $data->totalAmount;
         $ratios = isset($data->shareRatio) ? $data->shareRatio : [];
 
+        $state = isset($data->state) ? $data->state : "";
+
         $shares = [];
 
         if ($count <= 0 || $amount <= 0) {
@@ -82,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         //
-        $stmt = $response->GenerateBeneficiariesNotCheat($count);
+        $stmt = $response->GenerateBeneficiariesNotCheat($count, $state);
 
         $beneficiaries_requests_data["beneficiariesRequestsData"] = array();
 ini_set('memory_limit', '-1');

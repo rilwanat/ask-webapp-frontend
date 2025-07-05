@@ -135,6 +135,9 @@ useEffect(() => {
       const [isDataloading, setIsDataLoading] = useState(false);
       const [generatedBeneficiaries, setGeneratedBeneficiariesData] = useState([]);
       const [generatedBeneficiariesRatios, setGeneratedBeneficiariesRatios] = useState([]);
+      const [allStatesData, setAllStatesData] = useState([]);
+
+      
 
 
       const [allBeneficiaries, setAllBeneficiariesData] = useState([]);  
@@ -172,6 +175,7 @@ const [shareType, setShareType] = useState("direct");
   const [totalAmount, setTotalAmount] = useState("");
   const [shareRatio, setShareRatio] = useState("");
   const [remark, setRemark] = useState("");
+  const [state, setState] = useState("");
   
 
 
@@ -285,6 +289,13 @@ const [shareType, setShareType] = useState("direct");
 
        const postBeneficiaries = async (beneficiaries) => { 
 
+        if (state !== "") {
+          openNotificationModal(false, "A.S.K Post Beneficiaries", "You selected a state, use the Post State Beneficiaries button instead.");
+          return;
+        }
+
+
+
         if (beneficiaries === null) {
           return;
         }
@@ -369,7 +380,7 @@ const [shareType, setShareType] = useState("direct");
                 setTotalAmount("");
                 setShareRatio("");
                  setRemark("");
-
+                 setState("");
 
                  setGeneratedBeneficiariesData([]);
                  setGeneratedBeneficiariesRatios(null);
@@ -412,6 +423,148 @@ const [shareType, setShareType] = useState("direct");
                // setErrorMessage({ message: 'A.S.K Subscribe To Newsletter failed. Please check your data and try again.' });
        
                openNotificationModal(false, "A.S.K Post Beneficiaries", 'Please check your data and try again.');
+                 //  setIsNotificationModalOpen(true);
+             }
+           }
+           };
+
+       const postStateBeneficiaries = async (beneficiaries) => { 
+
+        if (state == "") {
+          openNotificationModal(false, "A.S.K Post State Beneficiaries", "You didn't select a state, use the Post Beneficiaries button instead.");
+          return;
+        }
+
+
+
+        if (beneficiaries === null) {
+          return;
+        }
+
+        if (Number(generatedBeneficiaries.length) !== Number(numberOfBeneficiaries)) {
+          // alert(generatedBeneficiaries.length + " " + numberOfBeneficiaries);
+          openNotificationModal(false, "A.S.K Post State Beneficiaries", "Count mismatch: Number of beneficiaries not equal to Generated beneficiaries count");
+          return;
+        }
+ 
+        
+
+        // alert(JSON.stringify(beneficiaries));
+        // return;
+        // $email, $helpToken, $amount
+    
+        // setIsDataLoading
+        // alert("X");
+        // isDataLoading
+             if (isDataloading) {
+               // alert('Please wait');
+               openNotificationModal(false, "A.S.K Post State Beneficiaries", "Please wait..");
+               
+               return;
+             }
+       
+            //  // Validate email before proceeding
+            //  if (!isValidEmail(email)) {
+            //    // alert('Please enter a valid email address');
+            //    openNotificationModal(false, "A.S.K Subscribe To Newsletter", "Please enter a valid email address");
+               
+            //    return;
+            //  }
+       
+       
+       
+            
+             try {
+         
+               // Transform the JSON data into the required format
+        const beneficiariesRequestData = generatedBeneficiaries.map((beneficiary, index) => ({
+          email: beneficiary.email_address,
+          helpToken: beneficiary.help_token,
+          amount: generatedBeneficiariesRatios[index],
+          remark: beneficiary.remark,
+
+          fullname: beneficiary.user.fullname,
+          nomination_count: beneficiary.nomination_count,
+        }));
+             
+            //  alert(JSON.stringify(beneficiariesRequestData));
+            //  return;
+
+
+             setIsDataLoading(true);
+             //  setIsSubsLoading(false);
+             //  return;
+             const response = await axiosAdminInstance.post((
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_POST_STATE_BENEFICIARIES_ARRAY, 
+              { beneficiaries: beneficiariesRequestData }, {
+                 headers: {
+                     "Content-Type": "application/json",
+                 },
+             });
+             
+             
+             setIsDataLoading(false);
+               //alert(JSON.stringify(response.data, null, 2));
+         
+               if (response.data.status) {
+                //  setEmail("");
+       
+                 // alert("dashboard-products " + JSON.stringify(response.data.itemsData, null, 2));
+                 // alert("" + response.data.message);
+
+                setShareType("direct");
+                setNumberOfBeneficiaries("");
+                setTotalAmount("");
+                setShareRatio("");
+                 setRemark("");
+                 setState("");
+
+
+                 setGeneratedBeneficiariesData([]);
+                 setGeneratedBeneficiariesRatios(null);
+
+
+                 handleAllBeneficiariesData();
+                 openNotificationModal(true, "A.S.K Post State Beneficiaries", "" + response.data.message);
+                 
+       
+                 // Store the retrieved data in state variables
+         
+                 // setProductsData(response.data.itemsData);
+               } else {
+                 // alert("error1: " + response.data.message);
+                 openNotificationModal(false, "A.S.K Post State Beneficiaries", "error1: " + response.data.message);
+                 
+               }
+         
+             } catch (error) {
+               setIsDataLoading(false);
+       
+              //  alert(error);
+             
+               if (error.response && error.response.data && error.response.data.message) {
+               const errorMessage = error.response.data.message;
+               // setErrorMessage({ message: errorMessage });
+       
+               openNotificationModal(false, "A.S.K Post State Beneficiaries", errorMessage);
+                 //  setIsNotificationModalOpen(true);
+       
+             } else if (error.response && error.response.data && error.response.data.errors) {
+               const { errors } = error.response.data;
+               const errorMessages = errors.map(error => error.msg);
+               const errorMessage = errorMessages.join(', '); // Join all error messages
+               // setErrorMessage({ message: errorMessage });
+       
+               openNotificationModal(false, "A.S.K Post State Beneficiaries", errorMessage);
+                 //  setIsNotificationModalOpen(true);
+             } else {
+               // setErrorMessage({ message: 'A.S.K Subscribe To Newsletter failed. Please check your data and try again.' });
+       
+               openNotificationModal(false, "A.S.K Post State Beneficiaries", 'Please check your data and try again.');
                  //  setIsNotificationModalOpen(true);
              }
            }
@@ -469,10 +622,16 @@ if (parsedShareRatio.some(isNaN)) {
           "numberOfBeneficiaries": numberOfBeneficiaries,
           "totalAmount": totalAmount,
           "shareRatio": parsedShareRatio,
-          "remark": remark
+          "remark": remark,
+          "state": state
         }
         ;
+
+        // setIsDataLoading(false);
+        // alert(JSON.stringify(requestData, null, 2));
+        // return;
     
+
         // Construct endpoint with query params
         const calculateSharesEndpoint = `${(
           import.meta.env.VITE_IS_LIVE === 'true' ?
@@ -562,10 +721,58 @@ if (parsedShareRatio.some(isNaN)) {
       }
     };
 
+
+        const handleGetAllStates = async () => {
+  
+      setIsDataLoading(true);
+  
+  
+      try {
+        const allStatesRequestsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_READ_ALL_STATES;
+        // alert(allStatesRequestsEndpoint);
+        const allStatesRequestsResponse = await axiosAdminInstance.get(allStatesRequestsEndpoint, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setAllStatesData(allStatesRequestsResponse.data.data);  // Update state with  count
+    
+    
+        // openNotificationModal(true, currentPageName, "");
+        // alert(JSON.stringify(allStatesRequestsResponse.data.data), null, 2);  // Update state with appointments count
+      //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+  
+  
+  
+  
+  
+        // Once all data is fetched, set loading to false
+        setIsDataLoading(false);
+    
+      } catch (error) {
+        setIsDataLoading(false);
+        
+        // alert(error);
+        // Handle errors
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
+          openNotificationModal(false, "All States" + " Error", errorMessage);
+        } else {
+          openNotificationModal(false, "All States" + " Error", "An unexpected error occurred.");
+        }
+      }
+    };
+
     
 
     useEffect(() => { 
       handleAllBeneficiariesData(); 
+      handleGetAllStates();
   }, []);
     
 
@@ -673,7 +880,7 @@ if (parsedShareRatio.some(isNaN)) {
                                         </div>
 
 
-                                        <div className="w-full md:w-1/2 px-2 mb-4">
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
                                             <label htmlFor="kyc_status" className="block text-sm font-medium text-red-300 mb-2">Remark:</label>
                                            
                                             <select
@@ -694,6 +901,32 @@ if (parsedShareRatio.some(isNaN)) {
                 <option value="Wild Card">Wild Card</option>
             </select>
                                         </div>
+
+
+                                        <div className="w-full md:w-1/3 px-2 mb-4">
+                                            <label htmlFor="state" className="block text-sm font-medium text-purple-500 mb-2">State:</label>
+                                           
+                                            <select
+                id="state"
+                name="state"
+                className="bg-gray-50 border border-gray-300 text-black text-sm focus:ring-gray-500 focus:border-gray-500 rounded-lg 
+                    block w-full p-2.5"
+                    value={state}
+                    // disabled
+                    onChange={(e) => {
+                      setGeneratedBeneficiariesData([]);
+                      setState(e.target.value);                    
+                  }}
+            >
+                <option value="">Select State</option>
+                {allStatesData.map((item, index) => (
+    <option key={index} value={item.state_of_residence}>
+      {item.state_of_residence}
+    </option>
+  ))}
+            </select>
+                                        </div>
+                                        
 
                                     </div>
 
@@ -757,6 +990,14 @@ if (parsedShareRatio.some(isNaN)) {
                     style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
                       {/* <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " /> */}
                       <div className="text-s " style={{color: '#ffffff'}}>{isDataloading ? "Fetching.." : 'Post Beneficiaries'}</div>
+                    </div>
+
+
+                    <div  
+                    onClick={() => postStateBeneficiaries(generatedBeneficiaries)} 
+                    style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-purple-500 border border-softTheme cursor-pointer mb-4 mx-2">
+                      {/* <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " /> */}
+                      <div className="text-s " style={{color: '#ffffff'}}>{isDataloading ? "Fetching.." : 'Post State Beneficiaries'}</div>
                     </div>
             </div>
 
