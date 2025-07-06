@@ -652,10 +652,12 @@ public function ReadAllBeneficiaries()
 
 public function ReadAllStates()
 {
-    $query = "SELECT DISTINCT state_of_residence 
-              FROM " . $this->users_table . " 
-              WHERE state_of_residence IS NOT NULL AND state_of_residence != '' 
-              ORDER BY state_of_residence ASC";
+    $query = "SELECT DISTINCT u.state_of_residence 
+              FROM " . $this->users_table . " u
+              INNER JOIN help_requests_table h ON u.email_address = h.email_address
+              WHERE u.state_of_residence IS NOT NULL 
+              AND u.state_of_residence != '' 
+              ORDER BY u.state_of_residence ASC";
 
     try {
         $stmt = $this->conn->prepare($query);
