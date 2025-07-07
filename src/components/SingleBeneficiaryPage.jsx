@@ -62,6 +62,21 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
         });
       };
 
+        const formatDateWithDay = (isoDateTime) => {
+  try {
+    const date = new Date(isoDateTime);
+    const options = { 
+      weekday: 'short', 
+      day: 'numeric', 
+      month: 'short', 
+      year: 'numeric' 
+    };
+    return date.toLocaleDateString('en-US', options);
+  } catch (e) {
+    return "Day Month Year";
+  }
+}
+
     return (
         <div className="touch-pan-y">
             <GuestHeader isMobile={isMobile}
@@ -118,7 +133,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
                                             </div>
                                             <div className='flex flex-col text-sm rounded-lg items-center justify-center w-full mt-0'>
                                                 <p className="text-green  font-bold text-center">{'₦' + formatAmount(item.amount)}</p>
-                                                <p className="text-theme text-center">{item.date}</p>
+                                                <p className="text-theme text-center">{formatDateWithDay(item.date)}</p>
                                             </div>
                                         </div>
                                     </motion.div>

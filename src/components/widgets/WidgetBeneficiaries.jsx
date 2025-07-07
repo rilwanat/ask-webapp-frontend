@@ -126,6 +126,23 @@ const WidgetBeneficiaries = ({
     })
   };
 
+
+  const formatDateWithDay = (isoDateTime) => {
+  try {
+    const date = new Date(isoDateTime);
+    const options = { 
+      weekday: 'short', 
+      day: 'numeric', 
+      month: 'short', 
+      year: 'numeric' 
+    };
+    return date.toLocaleDateString('en-US', options);
+  } catch (e) {
+    return "Day Month Year";
+  }
+}
+
+
   return (
     <div className="w-full -mt-8 touch-pan-y">
       <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24">
@@ -227,7 +244,7 @@ const WidgetBeneficiaries = ({
                         <div className="flex flex-col items-center gap-2 w-full">
                           <div className="pt-2 mt-auto text-center">
                             <p className="text-theme font-bold mt-1">{'₦' + formatAmount(item.amount)}</p>
-                            <p className="text-theme mt-1">{item.date}</p>
+                            <p className="text-theme mt-1">{formatDateWithDay(item.date)}</p>
                           </div>
 
                           <div className="flex flex-col items-center mt-auto">
