@@ -882,6 +882,12 @@ let countFilteredForRequests = indexOfFirstFilteredItemForRequests + 1;
     {                
         // alert(JSON.stringify(request, null, 2));
 
+        if (totalAmount === "" || isNaN(totalAmount)) {
+          openNotificationModal(false, "A.S.K Beneficiaries", "Please enter a valid Total Amount");
+          return;
+
+        }
+
 setGeneratedBeneficiariesRatios(prev => [...prev, totalAmount]);
 
 
@@ -890,7 +896,10 @@ setGeneratedBeneficiariesRatios(prev => [...prev, totalAmount]);
     ...request,
     totalAmount: totalAmount,
     remark: remark,
+    // state: state
   };
+
+  // alert(JSON.stringify(requestWithAmount, null, 2));
 
         // Prevent adding duplicate entries
   if (!generatedBeneficiaries.some(item => item.id === request.id)) {
@@ -1456,6 +1465,9 @@ isChecked && (
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-center leading-4 text-theme  tracking-wider'>
                           Status
                         </th>
+                        <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                                    State
+                                  </th>
                         <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                           Nomination Count
                         </th>
@@ -1516,6 +1528,9 @@ isChecked && (
                                     className={'text-white px-2 py-2 '
                                     }>{beneficiary.status}</span>
                           </td>	
+                          <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
+                            {beneficiary.user.state}
+                          </td>
                           <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                             {beneficiary.nomination_count}
                           </td>

@@ -801,19 +801,19 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                     <div className='mr-2 bg-theme' style={{ width: '6px', height: '100%', }}></div>
 
                                     
-                                            <div className='flex flex-col'>
+                                            <div className='flex flex-col '>
                                             <p style={{fontSize: '14px', fontWeight: 'bold'}}>{requestData.fullname}</p>
-                                          <p style={{fontSize: '10px'}}>{requestData.name}</p>
+                                          {/* <p style={{fontSize: '10px'}}>{requestData.name}</p> */}
                                           <div className='flex flex-col'>
-                                          <p style={{fontSize: '10px'}} className='mr-4'>{requestData.registration_date}</p>
+                                          {/* <p style={{fontSize: '10px'}} className='mr-4'>{requestData.registration_date}</p> */}
                                           <p style={{fontSize: '10px'}}>{requestData.email_address}</p>
-                                          <p style={{fontSize: '12px', fontWeight: 'bold'}}>{requestData.phone_number}</p>
+                                          {/* <p style={{fontSize: '12px', fontWeight: 'bold'}}>{requestData.phone_number}</p> */}
                                           </div>
                                       </div>
                                       </div>
                                       <div className='flex flex-col items-end'>
                                       <p style={{fontSize: '12px', fontWeight: 'bold' }}>{requestData.voter_consistency}</p>
-                                      {/* <p style={{fontSize: '12px' }} className=''>{requestData.email_address}</p> */}
+                                      <p style={{fontSize: '12px' }} className=''>{'Active: ' + requestData.Active}</p>
                                       </div>
                                       
                                       

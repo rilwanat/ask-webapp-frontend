@@ -821,21 +821,45 @@ public function getTopNominations($limit = 3)
 
 public function getTopConsistencies($limit = 3)
 {
-    $query = "SELECT
-        u.id,
-        u.registration_date,
-        u.voter_consistency, 
-        u.email_address,
-        u.fullname, 
-        u.phone_number 
-        FROM " . $this->users_table . " u
-        INNER JOIN " . $this->nominations_history_table . " nh ON u.email_address = nh.voter_email
+    // $query = "SELECT
+    //     u.id,
+    //     u.registration_date,
+    //     u.voter_consistency, 
+    //     u.email_address,
+    //     u.fullname, 
+    //     u.phone_number 
+    //     FROM " . $this->users_table . " u
+    //     INNER JOIN " . $this->nominations_history_table . " nh ON u.email_address = nh.voter_email
+    //     ORDER BY 
+    //     DATE(nh.voting_date) DESC,
+    //     u.voter_consistency DESC, 
+    //     u.vote_weight DESC, 
+    //     DATE(u.registration_date) ASC 
+    //     LIMIT :limit";
+
+        $query = "SELECT
+            u.voter_consistency,
+            u.fullname,
+            u.email_address,
+            COUNT(nht.voter_email) AS Active
+        FROM 
+            " . $this->users_table . " u
+        INNER JOIN 
+            " . $this->nominations_history_table . " nht ON u.email_address = nht.voter_email
+        WHERE 
+            u.platform = 'mobile'
+        GROUP BY 
+            u.voter_consistency,
+            u.fullname,
+            u.email_address,
+            u.vote_weight
         ORDER BY 
-        DATE(nh.voting_date) DESC,
-        u.voter_consistency DESC, 
-        u.vote_weight DESC, 
-        DATE(u.registration_date) ASC 
+            u.voter_consistency DESC,
+            u.vote_weight DESC,
+            MAX(DATE(nht.voting_date)) DESC,
+            MIN(DATE(u.registration_date)) ASC
         LIMIT :limit";
+
 
     $stmt = $this->conn->prepare($query);
     $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);

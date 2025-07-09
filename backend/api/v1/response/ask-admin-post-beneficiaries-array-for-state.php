@@ -57,7 +57,7 @@ if (
         // $response->resetAllNominationCount();
 
         // Prepare the base email content
-        $subject = "A.S.K Notification of State Beneficiary Selection";
+        $subject = "A.S.K Notification of Special Beneficiary Selection";
 
         // Get list of selected beneficiaries for the email
         $selectedBeneficiaries = array_map(function($b) {
@@ -75,7 +75,7 @@ $beneficiariesList = '<ul>' . implode('', array_map(function($item) {
                 // Personalize each email with the recipient's name
                 $message = "" 
                 // "Dear " . $row['user_fullname'] . ",<br><br>"
-                 . "The following requests have been selected as State beneficiaries:<br>"
+                 . "The following requests have been selected as Special beneficiaries:<br>"
                  . $beneficiariesList . "<br>"
                 //  . "Thank you for participating. You got ". $row['nomination_count'] ." nominations in this cycle. Kindly join the next cycle, and start mobilizing for nominations.<br><br>"
                  . "Best of luck,<br>"
@@ -97,7 +97,7 @@ foreach ($data['beneficiaries'] as $beneficiary) {
     if (!empty($beneficiary['email'])) {
         $message = "" 
         // "Dear " . ($beneficiary['fullname'] ?? 'User') . ",<br><br>"
-                 . "Congratulations!! You have been selected as a State beneficiary of A.S.K FOUNDATION financial support initiative.<br><br>"
+                 . "Congratulations!! You have been selected as a Special beneficiary of A.S.K FOUNDATION financial support initiative.<br><br>"
                  . "To process your request, kindly contact us on Whatsapp (+2349051047138) to ACCEPT the nomination and affirm your willingness to acknowledge receipt through a short video.<br><br>"
                  . "Upon receipt of credit alert, please  tell us through a video:<br>"
                  . "<ol>"
@@ -116,7 +116,7 @@ foreach ($data['beneficiaries'] as $beneficiary) {
                                   
 
                  $messageData = [
-    'message' => 'Congratulations!! You have been selected as a State beneficiary of A.S.K FOUNDATION financial support initiative.',
+    'message' => 'Congratulations!! You have been selected as a Special beneficiary of A.S.K FOUNDATION financial support initiative.',
     'meta' => 'X',
     // 'senderId' => 'A.S.K Admin',
     // 'senderImage' => 'https://example.com/php.jpg',
@@ -147,14 +147,14 @@ $result = $response->sendFirestoreMessage('adm-'. $row['email_address'], $messag
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => true, "message" => "A.S.K Post State Beneficiaries: Posted Successfully."));
+        echo json_encode(array("status" => true, "message" => "A.S.K Post Special Beneficiaries: Posted Successfully."));
     } else {
 
         // set response code - 503 service unavailable
         http_response_code(200);
 
         // tell the user
-        echo json_encode(array("status" => false, "message" => "A.S.K Post State Beneficiaries: Post not found or already done."));
+        echo json_encode(array("status" => false, "message" => "A.S.K Post Special Beneficiaries: Post not found or already done."));
     }
 
 
