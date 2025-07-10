@@ -38,7 +38,7 @@ if ($message === '') {
 $messageBody = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
 
 // Fetch all users
-$stmt = $response->ReadAllUsers();
+$stmt = $response->ReadAllUsersOnMobile();
 
 // Initialize array to store user data
 $users_data["usersData"] = array();

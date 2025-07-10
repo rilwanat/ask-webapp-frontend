@@ -34,7 +34,7 @@ $response = new Response($db);
 
 
 // Fetch all users
-$stmt = $response->ReadAllHelpRequestsNotCheatForAdmin();
+$stmt = $response->ReadAllHelpRequestsNotCheatForAdminOnMobile();
 
 // Initialize array to store user data
 $help_requests_data["helpRequestsData"] = array();

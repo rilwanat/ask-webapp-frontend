@@ -570,6 +570,50 @@ public function ReadAllHelpRequestsNotCheatForAdmin()
     return $stmt;
 }
 
+
+public function ReadAllHelpRequestsNotCheatForAdminOnMobile()
+{
+    $query = "SELECT
+        p.id,
+        p.date,
+        p.nomination_count,
+        p.description,
+        p.remark,
+        p.email_address,
+        p.request_image,
+        p.help_token,
+        u.id as user_id,
+        u.fullname as user_fullname,
+        u.email_address as user_email,
+        u.access_key as user_access_key,
+        u.phone_number as user_phone,
+        u.kyc_status as user_kyc_status,
+        u.account_number as user_account_number,
+        u.account_name as user_account_name,
+        u.bank_name as user_bank_name,
+        u.gender as user_gender,
+        u.state_of_residence as user_state,
+        u.profile_picture as user_profile_picture,
+        u.email_verified as user_email_verified,
+        u.registration_date as user_registration_date,
+        u.user_type as user_type,
+        u.eligibility as user_eligibility,
+        u.is_cheat as user_is_cheat,
+        u.opened_welcome_msg as user_opened_welcome_msg, 
+        u.vote_weight as user_vote_weight 
+        FROM
+        " . $this->help_requests_table . " p 
+        INNER JOIN 
+            " . $this->users_table . " u ON u.email_address = p.email_address
+        WHERE 
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '') AND p.platform = 'mobile'
+        ORDER BY p.nomination_count DESC";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
 public function ReadAllHelpRequestsEmailsNotCheat()
 {
     $query = "SELECT
@@ -1199,6 +1243,57 @@ public function ReadAllUsers()
                 p.vote_weight,
                 p.platform  
             FROM " . $this->users_table . " p  
+            ORDER BY p.registration_date ASC ";
+        
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind the email parameter to the prepared statement
+        // $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+        // Execute the statement
+        $stmt->execute();
+
+        return $stmt;
+
+
+    return $user; // User not found
+
+    } catch (Exception $e) {
+        // Log the error message and return null for security
+        // error_log("Error reading user: " . $e->getMessage());
+        return null;
+    }
+}
+
+public function ReadAllUsersOnMobile()
+{
+    try {
+        // Prepare the SQL query using a prepared statement
+        $query = "SELECT
+                p.id,
+                p.fullname,
+                p.email_address,
+                p.voter_consistency,
+                -- p.access_key,
+                p.phone_number,
+                p.kyc_status,
+                p.account_number,
+                p.account_name,
+                p.bank_name,
+                p.gender,
+                p.state_of_residence,
+                p.profile_picture,
+                p.email_verified,
+                p.registration_date,
+                p.user_type,
+                p.eligibility,
+                p.is_cheat,
+                p.opened_welcome_msg,
+                p.vote_weight,
+                p.platform  
+            FROM " . $this->users_table . " p  
+            WHERE p.platform = 'mobile' 
             ORDER BY p.registration_date ASC ";
         
         // Prepare the statement
@@ -3582,6 +3677,7 @@ public function ReadAllTrailingTopNominations()
                 n.request_image, 
                 n.help_token  
             FROM " . $this->help_requests_table . " n  
+            WHERE n.nomination_count > 0
             ORDER BY n.nomination_count DESC 
             LIMIT 4 OFFSET 1";
         
