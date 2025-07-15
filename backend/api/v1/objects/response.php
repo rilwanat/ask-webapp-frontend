@@ -606,7 +606,7 @@ public function ReadAllHelpRequestsNotCheatForAdminOnMobile()
         INNER JOIN 
             " . $this->users_table . " u ON u.email_address = p.email_address
         WHERE 
-        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '') AND p.platform = 'mobile'
+        (u.is_cheat IS NULL OR u.is_cheat != 'Yes' AND u.fullname != '') AND u.platform = 'mobile'
         ORDER BY p.nomination_count DESC";
 
     $stmt = $this->conn->prepare($query);
@@ -1853,7 +1853,7 @@ if ($result && isset($result['voter_consistency'])) {
             $stmt_help_requests->execute();
     
             if ($stmt_help_requests->rowCount() > 0) {
-                return ["status" => false, "message" => "Hmm, it seems you have already submitted a previous help request this week."];
+                return ["status" => false, "message" => "You have a pending request, proceed to manage your request."];
             }
     
             // All checks passed

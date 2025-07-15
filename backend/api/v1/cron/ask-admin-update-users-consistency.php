@@ -11,8 +11,8 @@
 // include_once '../objects/response.php';
 
 // Option 1: Hardcoded absolute path (quick fix)
-include_once '/home/askfimzp/playground.askfoundations.org/backend/api/v1/config/database.php';
-include_once '/home/askfimzp/playground.askfoundations.org/backend/api/v1/objects/response.php';
+include_once '/home/askfimzp/public_html/backend/api/v1/config/database.php';
+include_once '/home/askfimzp/public_html/backend/api/v1/objects/response.php';
 
 $database = new Database();
 $db = $database->getConnection();
