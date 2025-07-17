@@ -148,6 +148,7 @@ useEffect(() => {
     || request.nomination_count.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.user.state.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
     // || request.tags && request.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
     // || request.categories && request.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
     // || request.price.includes(searchQuery)
