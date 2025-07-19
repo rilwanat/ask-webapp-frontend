@@ -670,7 +670,7 @@ isLoading={isLoading} setIsLoading={setIsLoading} imageSrc={imageSrc} setImageSr
                           onClick={(e) => {if (!isLoading) UpdateHelpRequest(e)}}
                           style={{ borderWidth: '0px', width: '100%' }} 
                           className='mt-4 sm:mr-1 w:1/2 text-center  rounded-sm px-4 py-2  text-sm cursor-pointer bg-theme text-white  hover:text-softTheme'>
-                            {isLoading ? 'Please wait..' : 'Edit Request'}
+                            {isLoading ? 'Please wait..' : 'Update Request'}
                             </div>
 
                             <div  
