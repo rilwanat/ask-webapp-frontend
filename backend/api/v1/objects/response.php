@@ -214,6 +214,51 @@ class Response
         }
     }
 
+        public function FindPotentialCheats()
+{
+    try {
+        // Prepare the SQL query
+        $query = "
+            SELECT 
+                u1.id AS id1, 
+                u1.fullname AS name1,
+                u2.id AS id2, 
+                u2.fullname AS name2
+            FROM 
+                users_table u1
+            JOIN 
+                users_table u2 
+            ON 
+                (
+                    REPLACE(u1.fullname, '  ', ' ') = REPLACE(u2.fullname, '  ', ' ') 
+                    AND u1.fullname != u2.fullname
+                )
+                AND u1.id != u2.id
+                AND u1.is_cheat = 'No'
+                AND u2.is_cheat = 'No'
+            ORDER BY 
+                REPLACE(u1.fullname, '  ', ' '), u1.id
+        ";
+        
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch all results (not just one row)
+        $potentialCheats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $potentialCheats; // Return all potential cheat pairs
+    
+    } catch (Exception $e) {
+        // Log the error message and return null for security
+        error_log("Error finding potential cheats: " . $e->getMessage());
+        return null;
+    }
+}
+
+
     public function ReadUser($email)
     {
         try {
@@ -3538,6 +3583,28 @@ public function setPlatform(
     return false;
 }
 
+
+public function getFullnameByEmail($email) {
+    $query = "SELECT fullname FROM " . $this->users_table . " 
+              WHERE email_address = :email LIMIT 1";
+
+    // Prepare the SQL statement
+    $stmt = $this->conn->prepare($query);
+
+    // Bind parameters
+    $stmt->bindParam(":email", $email);
+
+    // Execute query
+    if ($stmt->execute()) {
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['fullname'] ?? null; // Return fullname or null if not found
+    }
+
+    // Optionally log errors
+    error_log("Failed to fetch fullname: " . implode(":", $stmt->errorInfo()));
+    
+    return false;
+}
 
 
 // Notification function to send a message to Firebase

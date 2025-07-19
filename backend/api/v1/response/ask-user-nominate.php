@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $votingWeight = $nominateResult['userData']['vote_weight'];
 
     $nomineeEmail = $nominateResult['nomineeData']['email_address'];
-    // $nomineeFullname = $nominateResult['nomineeData']['fullname_for_comparison'];
+    $nomineeFullname = $response->getFullnameByEmail($nomineeEmail);
 
                 // Add nomination
                 if ($response->CreateNomination($data->email, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $data->helpToken)) {
@@ -70,7 +70,7 @@ $result = $response->sendFirestoreMessage('adm-'. $nomineeEmail, $messageData);
 //
 
                     http_response_code(200);
-                    echo json_encode(["status" => true, "message" => "Successfully Nominated!"]);
+                    echo json_encode(["status" => true, "message" => "Successfully Nominated!" . " " . $nomineeFullname]);
                 } else {
                     http_response_code(500);
                     echo json_encode(["status" => false, "message" => "Unable to create Nomination!"]);

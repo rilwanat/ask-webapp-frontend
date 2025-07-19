@@ -74,7 +74,8 @@ const details = parts.slice(1);
                 gotoPage('user-dashboard');
               }
 
-              if ( mainMessage === "SUCCESSFULLY NOMINATED!") {
+              // if ( mainMessage === "SUCCESSFULLY NOMINATED!") {
+              if (mainMessage.toUpperCase().includes("SUCCESSFULLY NOMINATED")) {
                 navigateAndRefresh(updatedItem);
               }
             }}

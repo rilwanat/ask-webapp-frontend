@@ -247,8 +247,11 @@ let countFiltered = indexOfFirstFilteredItem + 1;
   const [dashboardOutgoing, setDashboardOutgoing] = useState(0);
 
 
+   const [potentialCheats, setPotentialCheats] = useState([]);
+
   useEffect(() => {
     handleData();
+    handlePotentialCheats();
   }, []);
   const handleData = async () => {
 
@@ -297,6 +300,56 @@ let countFiltered = indexOfFirstFilteredItem + 1;
       }
     }
   };
+
+
+  const handlePotentialCheats = async () => {
+
+    setIsDataLoading(true);
+
+
+    try {
+      // API request to get  count
+      const adminPotentialCheatsEndpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_POTENTIAL_CHEATS;
+      // alert(adminPotentialCheatsEndpoint);
+      const adminPotentialCheatsResponse = await axiosAdminInstance.get(adminPotentialCheatsEndpoint, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      
+      setPotentialCheats(adminPotentialCheatsResponse.data);  // Update state with  count
+  
+  
+      // openNotificationModal(true, currentPageName, "");
+      // alert(JSON.stringify(adminPotentialCheatsResponse.data), null, 2);  // Update state with appointments count
+    //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
+
+
+
+
+
+      // Once all data is fetched, set loading to false
+      setIsDataLoading(false);
+  
+    } catch (error) {
+      setIsDataLoading(false);
+      
+      // alert(error);
+      // Handle errors
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message;
+        openNotificationModal(false, currentPageName + " Error", errorMessage);
+      } else {
+        openNotificationModal(false, currentPageName + " Error", "An unexpected error occurred.");
+      }
+    }
+  };
+
 
 
 
@@ -823,6 +876,57 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                             </div>
                             <div className='flex w-full justify-end my-4 ' style={{ cursor: 'pointer' }} 
                             onClick={() => { navigate('/manage-top-users'); }}
+                            >
+                              <p style={{fontSize: '12px' }}>View All</p>
+                            </div>
+                            </div>
+
+
+                            <div className='rounded-lg shadow-lg px-4 mx-0 border-black-200 border-2 bg-red-300 mt-4'>
+                            <div className="flex justify-between my-2 pb-2 " style={{ }}>
+                                <div className="flex w-full items-center justify-between  bg-">
+                                    <div className="text-s font-bold pr-2 ">Potential Cheats</div>
+                                    <div className="text-s px-2 mr-0 rounded bg-red-800" style={{  color: '#ffffff' }}>{
+                                      isDataloading ? <MiniLoading />
+                                      : 
+                                    potentialCheats?.count
+                                    }</div>
+                                </div>
+                                
+                            </div>
+                            <div>
+                                {potentialCheats?.data?.map((potentialCheat, index) => (
+                                    <div key={index} 
+                                    className='flex justify-between rounded-lg my-2' style={{ padding: '10px 10px', backgroundColor: '#ffffff'}}
+                                    // onClick={(e) => navigateToAppointments()}
+                                    >
+                                    <div className='flex'>
+                                    
+                                    <div className='mr-2 bg-red-500' style={{ width: '6px', height: '100%', }}></div>
+
+                                    
+                                            <div className='flex flex-col '>
+                                            <p style={{fontSize: '14px', fontWeight: 'bold'}}>{potentialCheat.normalized_name}</p>
+                                          {/* <p style={{fontSize: '10px'}}>{requestData.name}</p> */}
+                                          <div className='flex flex-col'>
+                                          {/* <p style={{fontSize: '10px'}} className='mr-4'>{requestData.registration_date}</p> */}
+                                          {/* <p style={{fontSize: '10px'}}>{potentialCheat.email_address}</p> */}
+                                          {/* <p style={{fontSize: '12px', fontWeight: 'bold'}}>{requestData.phone_number}</p> */}
+                                          </div>
+                                      </div>
+                                      </div>
+                                      {/* <div className='flex flex-col items-end'>
+                                      <p style={{fontSize: '12px', fontWeight: 'bold' }}>{requestData.voter_consistency}</p>
+                                      <p style={{fontSize: '12px' }} className=''>{'Active: ' + requestData.Active}</p>
+                                      </div> */}
+                                      
+                                      
+                                      
+                                  </div>
+                                    ))}
+                            </div>
+                            <div className='flex w-full justify-end my-4 ' style={{ cursor: 'pointer' }} 
+                            onClick={() => { navigate('/manage-users'); }}
                             >
                               <p style={{fontSize: '12px' }}>View All</p>
                             </div>
