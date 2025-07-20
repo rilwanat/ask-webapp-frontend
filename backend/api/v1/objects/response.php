@@ -716,7 +716,9 @@ public function ReadAllBeneficiaries()
     FROM
         " . $this->beneficiaries_table . " p 
     LEFT JOIN 
-        " . $this->users_table . " u ON u.email_address = p.email_address
+        " . $this->users_table . " u ON u.email_address = p.email_address 
+    WHERE 
+        u.kyc_status = 'APPROVED' 
     ORDER BY 
         p.date DESC";
 
