@@ -135,7 +135,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
                                                 <p className="text-green  font-bold text-center">{'₦' + formatAmount(item.amount)}</p>
                                                 <p className="text-theme text-center">{formatDateWithDay(item.date)}</p>
                                             </div>
-                                            <div className='flex p-2 rounded-lg items-center justify-center w-full bg-softTheme mt-2'>
+                                            <div className='flex p-2 rounded-lg items-center justify-center w-full bg-softTheme mt-2 text-sm text-center'>
                                                 <p className="text-theme">{item.remark}</p>
                                             </div>
                                         </div>
