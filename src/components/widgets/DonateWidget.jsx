@@ -51,7 +51,7 @@ const DonateWidget = ({ userDetails, refreshUserDetails, gotoPage }) => {
   const [donatePrice, setDonatePrice] = useState(0);
   const currentPriceRef = useRef(0);
   const [donateType, setDonateType] = useState("naira");
-  const [donateRecurring, setDonateRecurring] = useState(false);
+  const [donateRecurring, setDonateRecurring] = useState(true);
 
   const [dollarExchangeRate, setDollarExchangeRate] = useState(1);
   
