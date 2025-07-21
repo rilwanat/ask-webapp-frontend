@@ -21,6 +21,7 @@ class Response
     private $nominations_history_table = "nominations_history_table";
     private $donations_table = "donations_table";
     private $tokens_table = "tokens_table";
+    private $delete_account_tokens_table = "delete_account_tokens_table";
     private $bank_codes_table = "bank_codes_table";
     private $crypto_info_table = "crypto_info_table";
     private $subscriptions_table = "subscribe_table";
@@ -3771,6 +3772,125 @@ public function ReadAllTrailingTopNominations()
     }
 }
 
+
+
+
+
+public function checkIfUserExistsInDeleteTokenTable($email) 
+{
+    try {
+        // Check if the user exists and get their token
+        $query = "SELECT email_token FROM " . $this->delete_account_tokens_table . " 
+                 WHERE token_for = :email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['email_token']; // Return existing token
+        }
+        return false; // User doesn't exist or token expired
+    
+    } catch (PDOException $e) {
+        // error_log("Error checking user token: " . $e->getMessage());
+        return false;
+    }
+}
+public function InsertEmailTokenForDeleteUser($email, $randomToken)
+    {
+        // $customer_id = strval(time());
+
+        $query = "INSERT INTO " . $this->delete_account_tokens_table . " SET             
+            
+            token_for=:token_for,
+            email_token=:email_token
+            ";
+    
+        // prepare query
+        $stmt = $this->conn->prepare($query);    
+        
+        
+        $stmt->bindParam(":token_for", $email);
+        $stmt->bindParam(":email_token", $randomToken);
+
+        
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+    
+        return false; // User creation failed
+    }
+
+
+
+public function DeleteAccount($email, $deleteToken)
+{
+    try {
+        // First check if token is valid
+        $tokenQuery = "SELECT id FROM " . $this->delete_account_tokens_table . " 
+                      WHERE token_for = :email AND email_token = :deleteToken";
+        $tokenStmt = $this->conn->prepare($tokenQuery);
+        $tokenStmt->bindParam(":email", $email);
+        $tokenStmt->bindParam(":deleteToken", $deleteToken);
+        $tokenStmt->execute();
+
+        // If token is not valid
+        if ($tokenStmt->rowCount() === 0) {
+            // error_log("Invalid or expired token for email: " . $email);
+            return [
+                'status' => false,
+                'message' => 'Invalid or expired token'
+            ];
+        }
+
+        // Begin transaction
+        $this->conn->beginTransaction();
+
+        // Delete the user account
+        $deleteQuery = "DELETE FROM " . $this->users_table . " 
+                       WHERE email_address = :email";
+        $deleteStmt = $this->conn->prepare($deleteQuery);
+        $deleteStmt->bindParam(":email", $email);
+        $deleteStmt->execute();
+
+        // Check if user was actually deleted
+        if ($deleteStmt->rowCount() === 0) {
+            $this->conn->rollBack();
+            return [
+                'status' => false,
+                'message' => 'Account not found'
+            ];
+        }
+
+        // Delete the token after successful account deletion
+        $deleteTokenQuery = "DELETE FROM " . $this->delete_account_tokens_table . " 
+                           WHERE token_for = :email";
+        $deleteTokenStmt = $this->conn->prepare($deleteTokenQuery);
+        $deleteTokenStmt->bindParam(":email", $email);
+        $deleteTokenStmt->execute();
+
+        // Commit transaction
+        $this->conn->commit();
+
+        return [
+            'status' => true,
+            'message' => 'Account deleted successfully'
+        ];
+
+    } catch (PDOException $e) {
+        // Rollback transaction on error
+        if ($this->conn->inTransaction()) {
+            $this->conn->rollBack();
+        }
+        error_log("Delete account error: " . $e->getMessage());
+        return [
+            'status' => false,
+            'message' => 'An error occurred while deleting account'
+        ];
+    }
+}
 
 }
 ?>

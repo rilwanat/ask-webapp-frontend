@@ -86,6 +86,13 @@ if (mainMessage.toLowerCase().startsWith("your request was granted")) {
                 window.location.reload(true);
               }
 
+
+
+              if (mainMessage == "Account deleted successfully.") {
+
+window.location.href = '/';
+              }
+
             }}
             style={{ width: '128px', borderWidth: '1px' }}
             className='text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1'>

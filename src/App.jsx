@@ -3,6 +3,10 @@ import { useState, useEffect } from 'react';
 
 import askLogo from './assets/images/ask-logo.png';
 
+
+
+import DeleteAccountPage from './components/DeleteAccountPage.jsx';
+
 import LandingPage from './components/LandingPage.jsx';
 import AboutUsPage from './components/AboutUsPage.jsx';
 import ContactUsPage from './components/ContactUsPage.jsx';
@@ -437,6 +441,13 @@ useEffect(() => {
         <div>
 
           <Routes>
+<Route path='/delete-account' element={<DeleteAccountPage isMobile={isMobile}
+            currentRequestSlide={currentRequestSlide} carouselRequestItems={helpRequestsData} setCurrentRequestSlide={setCurrentRequestSlide} 
+            currentBeneficiarySlide={currentBeneficiarySlide} carouselBeneficiaryItems={beneficiariesData} setCurrentBeneficiarySlide={setCurrentBeneficiarySlide}
+            currentSponsorSlide={currentSponsorSlide} carouselSponsorItems={sponsorsData} setCurrentSponsorSlide={setCurrentSponsorSlide}
+            userDetails={userDetails} refreshUserDetails={refreshUserDetails}
+             />}/>
+
 
                         
             <Route path='/' element={<LandingPage isMobile={isMobile}
