@@ -3845,6 +3845,22 @@ public function DeleteAccount($email, $deleteToken)
             ];
         }
 
+
+
+        
+        // Check if user exists in beneficiaries table
+        $beneficiaryCheck = "SELECT id FROM " . $this->beneficiaries_table . " WHERE email_address = :email";
+        $beneficiaryStmt = $this->conn->prepare($beneficiaryCheck);
+        $beneficiaryStmt->bindParam(":email", $email);
+        $beneficiaryStmt->execute();
+        if ($beneficiaryStmt->rowCount() > 0) {
+            return [
+                'status' => false,
+                'message' => 'Cannot delete account - user exists in beneficiaries table. Please contact support on: info@askfoundations.org'
+            ];
+        }
+
+
         // Begin transaction
         $this->conn->beginTransaction();
 

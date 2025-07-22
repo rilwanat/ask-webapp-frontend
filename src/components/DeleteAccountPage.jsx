@@ -211,6 +211,7 @@ export default function DeleteAccountPage({
   
             // alert("dashboard-products " + JSON.stringify(response.data.itemsData, null, 2));
             // alert("" + response.data.message);
+            deleteCookie("user");
             openNotificationModal(true, "A.S.K Delete Account", response.data.message);
             
   
