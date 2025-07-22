@@ -117,9 +117,10 @@ sendMailToUser($data->email, $data->email, $subject, $message);
 
 
 $response->createSubscribe($data->email);
+$userData = $response->ReadUser($data->email);
                 // User created successfully, return authentication token
                 http_response_code(200);
-                echo json_encode(array("status" => true, "message" => "Registration successful.", "token" => $authToken,
+                echo json_encode(array("status" => true, "message" => "Registration successful.", "token" => $authToken, "userData" => $userData
 
             ));
             } else {
