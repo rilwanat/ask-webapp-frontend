@@ -3856,7 +3856,7 @@ public function DeleteAccount($email, $deleteToken)
         if ($beneficiaryStmt->rowCount() > 0) {
             return [
                 'status' => false,
-                'message' => 'Cannot delete account - user exists in beneficiaries table. Please contact support on: info@askfoundations.org'
+                'message' => 'Cannot delete account - user exists in beneficiaries table. Please contact support on: support@askfoundations.org'
             ];
         }
 
