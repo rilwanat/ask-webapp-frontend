@@ -323,10 +323,10 @@ let countFiltered = indexOfFirstFilteredItem + 1;
       });
       
       setPotentialCheats(adminPotentialCheatsResponse.data);  // Update state with  count
-  
+  // alert(JSON.stringify(adminPotentialCheatsResponse.data), null, 2);  // Update state with appointments count
   
       // openNotificationModal(true, currentPageName, "");
-      // alert(JSON.stringify(adminPotentialCheatsResponse.data), null, 2);  // Update state with appointments count
+      // 
     //   // {"status":true,"message":"Total amount calculated successfully","total_amount":"2311.60"}
 
 
@@ -441,7 +441,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                               isDataloading ? <div className='my-2'><MiniLoading /></div>
                                               :
                                               <> 
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Incoming)}</p>
+                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Incoming)}</p>}
                                               {/* <div className='flex justify-end items-center'>
                                                 <ArrowDropDownIcon style={{ color: '#E63D46' }}/>
                                                 <p className='' style={{ fontSize: '12px', fontWeight: '600', color: '#E63D46' }}>+/-##%</p>
@@ -470,7 +470,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                               isDataloading ? <div className='my-2'><MiniLoading /></div>
                                               :
                                               <>
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Outgoing)}</p>
+                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Outgoing)}</p>}
                                               {/* <div className='flex justify-end items-center'>
                                                 <ArrowDropDownIcon style={{ color: '#E63D46' }}/>
                                                 <p className='' style={{ fontSize: '12px', fontWeight: '600', color: '#E63D46' }}>+/-##%</p>
@@ -511,8 +511,10 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                           <div className="flex flex-col py-2 ml-2">
                                             {
                                               isDataloading ? <MiniLoading />
-                                              : 
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Users}</p>
+                                              : <>
+                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Users}</p>}
+                                              </>
+                                              
                                             }                                
                                             <p className=' text-eDoctorTextGray' style={{ fontSize: '18px', fontWeight: '500' }}>Users</p>
                                             {/* <p className='text-sm'><strong>{!(dashboard.length > 0) ? '-' : dashboard[0].Total_Commodities}</strong></p> */}
@@ -538,7 +540,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                           {
                                               isDataloading ? <MiniLoading />
                                               : 
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Help_Requests}</p>
+                                              <>
+                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Help_Requests}</p>}
+                                              </>
                                             }                                
                                             <p className=' text-eDoctorTextGray' style={{ fontSize: '18px' }}>Help Requests</p>
                                             {/* <p className='text-sm'><strong>{!(dashboard.length > 0) ? '-' : dashboard[0].Total_Markets}</strong></p>  */}
@@ -565,7 +569,11 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                           {
                                               isDataloading ? <MiniLoading />
                                               : 
-                                              <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Beneficiaries}</p>
+                                              <>
+                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Beneficiaries}</p>}
+                                              </>
+                                              
+
                                             }                                
                                             <p className=' text-eDoctorTextGray' style={{ fontSize: '18px' }}>Beneficiaries</p>
                                             {/* <p className='text-sm'><strong>{!(dashboard.length > 0) ? '-' : dashboard[0].Total_Markets}</strong></p>  */}
@@ -706,8 +714,10 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                     <div className="text-s font-bold pr-2">Top Nominations</div>
                                     <div className="text-s px-2 mr-0 rounded bg-orange" style={{  color: '#ffffff' }}>{
                                       isDataloading ? <MiniLoading />
-                                      : 
-                                    dashboard.dashboardData[0].Top_Nominations.length
+                                      : <>
+                                      {dashboard.dashboardData[0] && dashboard.dashboardData[0].Top_Nominations.length}
+                                      </>
+                                    
                                     }</div>
                                 </div>
                                 
@@ -838,7 +848,9 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                     <div className="text-s px-2 mr-0 rounded bg-theme" style={{  color: '#ffffff' }}>{
                                       isDataloading ? <MiniLoading />
                                       : 
-                                    dashboard.dashboardData[0].Top_Consistencies.length
+                                    <>
+                                    {}
+                                    </>
                                     }</div>
                                 </div>
                                 

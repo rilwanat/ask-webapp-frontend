@@ -66,7 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 'receiverId' => $nomineeEmail,
     // 'receiverName' => 'A.S.K User'
 ];
+if ($response->checkIfNomineeExistsForTodayInNominations($nomineeEmail)) {
+
+} else {
 $result = $response->sendFirestoreMessage('adm-'. $nomineeEmail, $messageData);
+}
 //
 
                     http_response_code(200);

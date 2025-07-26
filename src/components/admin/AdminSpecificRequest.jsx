@@ -362,6 +362,91 @@ let countFiltered = indexOfFirstFilteredItem + 1;
             
         }
     };
+
+
+
+       const updateUserCheatOnly = async (user) => {
+
+
+// alert(user.userEmailAddress);
+// alert(user.userIsCheat);
+// alert(JSON.stringify(user), null, 2);
+// return;
+
+    if (isUpdateDataloading) {
+            // alert("please wait..");
+            openNotificationModal(false, "Update User", "Please wait...#");
+            return;
+        }
+    
+        if ((user.userIsCheat === "Select") || (user.userIsCheat === "")) {
+            openNotificationModal(false, "Update User", `Select Cheat Status#`);
+            
+            return;
+          }
+
+
+    setIsUpdateDataLoading(true);
+
+
+
+    
+
+
+    
+    try {
+
+      const requestData = {
+            email: user.userEmail,
+            isCheat: user.userIsCheat,
+    };
+    // alert(JSON.stringify(requestData), null, 2);
+    // setIsUpdateDataLoading(false);
+    // return;
+
+
+
+
+        
+        var endpoint = (
+          import.meta.env.VITE_IS_LIVE === 'true' ?
+          import.meta.env.VITE_API_SERVER_URL :
+          import.meta.env.VITE_API_DEMO_SERVER_URL
+        )
+        + import.meta.env.VITE_ADMIN_UPDATE_CHEAT_ONLY;
+  //  alert(endpoint);
+//    return;
+
+  const response = await axiosAdminInstance.post(endpoint, requestData, {
+              headers: {
+                "Content-Type": "application/json",
+                //Authorization: `Bearer ${token}`,
+              },
+            });
+
+            setIsUpdateDataLoading(false);
+            // alert(JSON.stringify(response.data, null, 2));
+            if (response.data.status) {
+                // alert("update-product " + JSON.stringify(response.data, null, 2));
+                openNotificationModal(true, "Update User", response.data.userData.fullname + "'s " + response.data.message);
+                
+
+
+                // navigateActiveTab(1);
+                // navigate('/manage-users');
+
+            } else {
+                // alert("error: " + response.data.message);
+                openNotificationModal(false, "Update User", response.data.message);
+                
+            }
+    } catch (error) {
+        setIsUpdateDataLoading(false);
+        // alert("error: " + error);
+        openNotificationModal(false, "Update User", error);
+        
+    }
+};  
     
     
 
@@ -783,18 +868,24 @@ let countFiltered = indexOfFirstFilteredItem + 1;
 
 
 
-
                                  </div>
 
 
                                  <hr className='mb-4'/>
                                  {
-                                    
+                                    <div>
+                                    <div  
+                    onClick={() => updateUserCheatOnly(requestData)} 
+                    style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
+                      <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " />
+                      <div className="text-s " style={{color: '#ff0000'}}>{isUpdateDataloading ? "Updating.." : 'Update Cheat ONLY'}</div>
+                    </div>
                                     <div  
                     onClick={() => updateUser(requestData)} 
                     style={{ }} className="flex justify-center items-center rounded-lg px-4 py-2 bg-theme border border-softTheme cursor-pointer mb-4 mx-2">
                       <UpdateIcon style={{ color: '#ffffff', borderRadius: '0px'}} className="mr-2 " />
                       <div className="text-s " style={{color: '#ffffff'}}>{isUpdateDataloading ? "Updating.." : 'Update Cheat & KYC'}</div>
+                    </div>
                     </div>
                                     
                                  }

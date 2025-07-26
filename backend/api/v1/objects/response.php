@@ -219,27 +219,56 @@ class Response
 {
     try {
         // Prepare the SQL query
+        // $query = "
+        //     SELECT 
+        //         u1.id AS id1, 
+        //         u1.fullname AS name1,
+        //         u2.id AS id2, 
+        //         u2.fullname AS name2
+        //     FROM 
+        //         users_table u1
+        //     JOIN 
+        //         users_table u2 
+        //     ON 
+        //         (
+        //             REPLACE(u1.fullname, '  ', ' ') = REPLACE(u2.fullname, '  ', ' ') 
+        //             AND u1.fullname != u2.fullname
+        //         )
+        //         AND u1.id != u2.id
+        //         AND u1.is_cheat = 'No'
+        //         AND u2.is_cheat = 'No'
+        //     ORDER BY 
+        //         REPLACE(u1.fullname, '  ', ' '), u1.id
+        // ";
         $query = "
-            SELECT 
-                u1.id AS id1, 
-                u1.fullname AS name1,
-                u2.id AS id2, 
-                u2.fullname AS name2
-            FROM 
-                users_table u1
-            JOIN 
-                users_table u2 
-            ON 
-                (
-                    REPLACE(u1.fullname, '  ', ' ') = REPLACE(u2.fullname, '  ', ' ') 
-                    AND u1.fullname != u2.fullname
-                )
-                AND u1.id != u2.id
-                AND u1.is_cheat = 'No'
-                AND u2.is_cheat = 'No'
-            ORDER BY 
-                REPLACE(u1.fullname, '  ', ' '), u1.id
-        ";
+SELECT 
+    u1.id AS id1, 
+    u1.fullname AS name1,
+    u2.id AS id2, 
+    u2.fullname AS name2
+FROM 
+    users_table u1
+JOIN 
+    users_table u2 
+ON 
+    u1.id != u2.id
+    AND u1.is_cheat = 'No'
+    AND u2.is_cheat = 'No'
+    AND (
+        -- Case 1: Names match when double spaces are normalized
+        REPLACE(u1.fullname, '  ', ' ') = REPLACE(u2.fullname, '  ', ' ')
+        -- Case 2: Names are exact reverses of each other
+        OR (
+            u1.fullname LIKE '% %' 
+            AND u2.fullname LIKE '% %'
+            AND SUBSTRING_INDEX(u1.fullname, ' ', 1) = SUBSTRING_INDEX(u2.fullname, ' ', -1)
+            AND SUBSTRING_INDEX(u1.fullname, ' ', -1) = SUBSTRING_INDEX(u2.fullname, ' ', 1)
+        )
+    )
+    AND u1.fullname != u2.fullname
+ORDER BY 
+    REPLACE(u1.fullname, '  ', ' '), u1.id
+    "; // Just get some sample data
         
         // Prepare the statement
         $stmt = $this->conn->prepare($query);
@@ -3533,7 +3562,8 @@ public function ReadAllNominationsForAdmin()
         u.eligibility as user_eligibility,
         u.is_cheat as user_is_cheat,
         u.opened_welcome_msg as user_opened_welcome_msg, 
-        u.vote_weight as user_vote_weight 
+        u.vote_weight as user_vote_weight,
+        u.voter_consistency as user_voter_consistency 
 
 
         FROM 
@@ -3846,7 +3876,15 @@ public function DeleteAccount($email, $deleteToken)
         }
 
 
-
+// Delete subscriptions_table record
+            $stmt = $this->conn->prepare("DELETE FROM " . $this->subscriptions_table . " 
+                                WHERE email_address = ?");
+            $stmt->execute([$email]);            
+            // if ($stmt->rowCount() === 0) {
+            //     $this->conn->rollBack();
+            //     return false;
+            // }
+            
         
         // Check if user exists in beneficiaries table
         $beneficiaryCheck = "SELECT id FROM " . $this->beneficiaries_table . " WHERE email_address = :email";
@@ -3907,6 +3945,28 @@ public function DeleteAccount($email, $deleteToken)
         ];
     }
 }
+
+
+
+public function checkIfNomineeExistsForTodayInNominations($email) 
+    {
+        $today = date('Y-m-d');
+        // Check if the user already exists
+        $query_check = "SELECT id FROM " . $this->nominations_history_table . " WHERE nominee_email = :email AND DATE(voting_date) = :today";
+        $stmt_check = $this->conn->prepare($query_check);
+        $stmt_check->bindParam(":email", $email);
+        $stmt_check->bindParam(":today", $today);
+        $stmt_check->execute();
+    
+        // If the row count is greater than 0, it means the user exists
+        if ($stmt_check->rowCount() > 0) {
+            // User already exists
+            return true;
+        } else {
+            // User does not exist
+            return false;
+        }
+    }
 
 }
 ?>

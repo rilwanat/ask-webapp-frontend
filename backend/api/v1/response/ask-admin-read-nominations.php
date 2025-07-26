@@ -43,13 +43,13 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         "id" => $row['user_id'],
         "fullname" => $row['user_fullname'],
         "email_address" => $row['user_email'],
-        "phone" => $row['user_phone'],
+        "phone_number" => $row['user_phone'],
         "kyc_status" => $row['user_kyc_status'],
         "account_number" => $row['user_account_number'],
         "account_name" => $row['user_account_name'],
         "bank_name" => $row['user_bank_name'],
         "gender" => $row['user_gender'],
-        "state" => $row['user_state'],
+        "state_of_residence" => $row['user_state'],
         "profile_picture" => $row['user_profile_picture'],
         "email_verified" => $row['user_email_verified'],
         "registration_date" => $row['user_registration_date'],
@@ -57,7 +57,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         "eligibility" => $row['user_eligibility'],
         "is_cheat" => $row['user_is_cheat'],
         "opened_welcome_msg" => $row['user_opened_welcome_msg'],
-        "vote_weight" => $row['user_vote_weight']
+        "vote_weight" => $row['user_vote_weight'],
+        "voter_consistency" => $row['user_voter_consistency']
+
     )
 
     );

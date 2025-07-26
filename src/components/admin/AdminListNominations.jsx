@@ -142,7 +142,7 @@ useEffect(() => {
 
     const handleNominationRowClick = (user, e) => {
       {                
-          // alert(JSON.stringify(request, null, 2));
+          // alert(JSON.stringify(user, null, 2));
   
           // const encryptedData = AES.encrypt(JSON.stringify(product), 'encryptionKey').toString();
           navigate(`/specific-user/${user.id}`, {
@@ -188,14 +188,14 @@ useEffect(() => {
         setCurrentPage(1);
     };
     const filteredNominations = (nominations || []).filter((request) =>
-    request.voter.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.voter_email.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.nominee.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.device.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.voted_time.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.registration_date.includes(searchQuery.toLowerCase()) 
-    || request.location.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.vote_weight.toLowerCase().includes(searchQuery.toLowerCase()) 
+    request.voter && request.voter.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.voter_email && request.voter_email.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.nominee && request.nominee.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.device && request.device.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.voted_time && request.voted_time.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.registration_date && request.registration_date.includes(searchQuery.toLowerCase()) 
+    || request.location && request.location.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.vote_weight && request.vote_weight.toLowerCase().includes(searchQuery.toLowerCase()) 
     // || request.tags && request.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
     // || request.categories && request.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
     // || request.price.includes(searchQuery)
