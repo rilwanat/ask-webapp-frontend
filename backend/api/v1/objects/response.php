@@ -3949,24 +3949,33 @@ public function DeleteAccount($email, $deleteToken)
 
 
 public function checkIfNomineeExistsForTodayInNominations($email) 
-    {
-        $today = date('Y-m-d');
-        // Check if the user already exists
-        $query_check = "SELECT id FROM " . $this->nominations_history_table . " WHERE nominee_email = :email AND DATE(voting_date) = :today";
-        $stmt_check = $this->conn->prepare($query_check);
-        $stmt_check->bindParam(":email", $email);
-        $stmt_check->bindParam(":today", $today);
-        $stmt_check->execute();
+{
+    $today = date('Y-m-d');
+    // Log the date being used for comparison
+    // error_log("Checking if nominee exists for today. Today's date being used for comparison: " . $today);
+    // error_log("Checking email: " . $email);
+
+    // Check if the user already exists
+    $query_check = "SELECT id FROM " . $this->nominations_history_table . " WHERE nominee_email = :email AND DATE(voting_date) = :today";
+    // error_log("SQL query being executed: " . $query_check); // Log the query
     
-        // If the row count is greater than 0, it means the user exists
-        if ($stmt_check->rowCount() > 0) {
-            // User already exists
-            return true;
-        } else {
-            // User does not exist
-            return false;
-        }
+    $stmt_check = $this->conn->prepare($query_check);
+    $stmt_check->bindParam(":email", $email);
+    $stmt_check->bindParam(":today", $today);
+    $stmt_check->execute();
+
+    $rowCount = $stmt_check->rowCount();
+    // error_log("Number of rows found: " . $rowCount); // Log the row count
+    
+    // If the row count is greater than 1, it means the user exists, put into consideration prior insert which makes it 1
+    if ($rowCount > 1) {
+        // error_log("Nominee with email " . $email . " already exists in nominations for " . $today);
+        return true;
+    } else {
+        // error_log("Nominee with email " . $email . " does not exist in nominations for " . $today);
+        return false;
     }
+}
 
 }
 ?>

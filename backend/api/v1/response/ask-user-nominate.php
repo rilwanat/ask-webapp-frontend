@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $fuser = $response->GetNomineeName($nomineeEmail);//explode(" ", $nominateResult['userData']['fullname'])[0];
                     // explode(" ", $fuser['fullname'])[0]
                     $messageData = [
-    'message' => 'Hello ' . explode(" ", $fuser['fullname'])[0] . ', you have been nominated!',
+    'message' => 'Hello ' . explode(" ", $fuser['fullname'])[0] . ', you are getting nominated! Mobilize for more!',
     'meta' => $nominateResult['nomineeData']['id']
     // 'senderId' => 'A.S.K Admin',
     // 'senderImage' => 'https://example.com/php.jpg',
@@ -71,7 +71,7 @@ if ($response->checkIfNomineeExistsForTodayInNominations($nomineeEmail)) {
 } else {
 $result = $response->sendFirestoreMessage('adm-'. $nomineeEmail, $messageData);
 }
-//
+
 
                     http_response_code(200);
                     echo json_encode(["status" => true, "message" => "Successfully Nominated!" . " " . $nomineeFullname]);
