@@ -150,7 +150,10 @@ useEffect(() => {
         setCurrentPage(1);
     };
     const filteredBeneficiaries = (allBeneficiaries || []).filter((request) =>
-    request.date.toLowerCase().includes(searchQuery.toLowerCase()) 
+    request.user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.user.bank_name.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.user.state.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.date.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.nomination_count.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
     // || request.tags && request.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
@@ -1658,7 +1661,9 @@ isChecked && (
                     <tbody className='text-xs '>
                       {currentFilteredBeneficiaries.map((request, index) => (
                           <tr key={request.id} className={index % 2 === 0 ? 'bg-white' : 'bg-softTheme'}
-                        // onClick={(e) => handlerequestRowClick(request, e)} 
+                        onClick={(e) => {
+                          // alert(JSON.stringify(request, null, 2));
+                        }} 
                           style={{ cursor: "pointer" }}
                           >
                           <td className='px-2 py-4 whitespace-no-wrap border-b border-gray-200'>

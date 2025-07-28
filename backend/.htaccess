@@ -26,5 +26,5 @@
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "DENY"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
-  Header set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=(self), payment=()"
 </IfModule>

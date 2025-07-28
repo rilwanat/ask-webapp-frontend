@@ -1856,29 +1856,7 @@ if ($result && isset($result['voter_consistency'])) {
 }
 
     
-            // if ($stmt_beneficiary->rowCount() > 0) {
-            //     $beneficiary = $stmt_beneficiary->fetch(PDO::FETCH_ASSOC);
-            //     $lastDate = new DateTime($beneficiary['date']);
-            //     $now = new DateTime();
-            //     $interval = $now->diff($lastDate);
-    
-            //     // Calculate total months difference
-            //     $totalMonths = ($interval->y * 1) + $interval->m;
-    
-            //     if ($totalMonths < 1) {
-            //         $elapsedMonths = $totalMonths;
-            //         $remainingMonths = 1 - $elapsedMonths;
-        
-            //         return [
-            //             "status" => false, 
-            //             "message" => sprintf(
-            //                 "Your request was granted %d month(s) ago. You can request again in %d month(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTL FOR 30 DAYS.",
-            //                 $elapsedMonths,
-            //                 $remainingMonths
-            //             )
-            //         ];
-            // }
-            // }
+            
             if ($stmt_beneficiary->rowCount() > 0) {
     $beneficiary = $stmt_beneficiary->fetch(PDO::FETCH_ASSOC);
     $lastDate = new DateTime($beneficiary['date']);
@@ -1896,8 +1874,7 @@ if ($result && isset($result['voter_consistency'])) {
         return [
             "status" => false, 
             "message" => sprintf(
-                // "Your request was granted %d day(s) ago. Stay active and come back to ASK in another %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
-                "Your request was granted %d day(s) ago. Stay active and come back to ASK in another " . (30 - $voterConsistency) . " day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                "Your request was granted %d day(s) ago. Stay active and come back to ASK in another " . (30 - $voterConsistency) . " day(s).#",
                 $elapsedDays,
                 $remainingDays
             )
@@ -1912,8 +1889,7 @@ if ($result && isset($result['voter_consistency'])) {
         return [
             "status" => false, 
             "message" => sprintf(
-                // "Your request was granted %d month(s) and %d day(s) ago. Stay active and come back to ASK in another %d month(s) and %d day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
-                "Your request was granted %d month(s) and %d day(s) ago. Stay active and come back to ASK in another %d month(s) and " . (30 - $voterConsistency) . " day(s).#KINDLY COMMIT TO NOMINATING OTHERS FOR NOW OR VOTE CONSISTENTLY FOR 30 DAYS.",
+                "Your request was granted %d month(s) and %d day(s) ago. Stay active and come back to ASK in another %d month(s) and " . (30 - $voterConsistency) . " day(s).#",
                 $elapsedMonths,
                 $elapsedDays,
                 $remainingMonths,
