@@ -132,7 +132,7 @@ useEffect(() => {
       const [isDataloading, setIsDataLoading] = useState(true);
       const [payments, setPaymentsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10);
+    const [itemsPerPage] = useState(50);
     const [totalItems, setTotalItems] = useState(payments ? payments.length : 0);
     const [searchQuery, setSearchQuery] = useState('');
     const handleSearchChange = (e) => {

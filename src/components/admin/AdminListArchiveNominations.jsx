@@ -66,7 +66,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import NotificationModal from '../modals/NotificationModal';
 
 
-export default function AdminListSponsoAdminListNominationsrs({ 
+export default function AdminListArchiveNominations({ 
   isMobile,
     currentRequestSlide, carouselRequestItems, setCurrentRequestSlide,
     currentBeneficiarySlide, carouselBeneficiaryItems, setCurrentBeneficiarySlide,
@@ -173,7 +173,7 @@ useEffect(() => {
 
     
     
-      const currentPageName = "Nominations";
+      const currentPageName = "Archive Nominations";
     
 
 
@@ -234,7 +234,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
           import.meta.env.VITE_API_SERVER_URL :
           import.meta.env.VITE_API_DEMO_SERVER_URL
         )
-        + import.meta.env.VITE_USER_ADMIN_READ_NOMINATIONS;
+        + import.meta.env.VITE_USER_ADMIN_READ_ARCHIVE_NOMINATIONS;
       // alert(adminSponsorsEndpoint);
       const adminNominationsResponse = await axiosAdminInstance.get(adminNominationsEndpoint, {
         headers: {

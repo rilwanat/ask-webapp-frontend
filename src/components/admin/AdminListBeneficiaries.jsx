@@ -142,7 +142,7 @@ useEffect(() => {
 
       const [allBeneficiaries, setAllBeneficiariesData] = useState([]);  
   const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10);
+    const [itemsPerPage] = useState(50);
     const [totalItems, setTotalItems] = useState(allBeneficiaries ? allBeneficiaries.length : 0);
     const [searchQuery, setSearchQuery] = useState('');
     const handleSearchChange = (e) => {
@@ -802,7 +802,7 @@ if (parsedShareRatio.some(isNaN)) {
 
       const [requests, setRequestsData] = useState([]);
   const [currentPageForRequests, setCurrentPageForRequests] = useState(1);
-    const [itemsPerPageForRequests] = useState(10);
+    const [itemsPerPageForRequests] = useState(50);
     const [totalItemsForRequests, setTotalItemsForRequests] = useState(requests ? requests.length : 0);
     const [searchQueryForRequests, setSearchQueryForRequests] = useState('');
     const handleSearchChangeForRequests = (e) => {

@@ -19,6 +19,7 @@ class Response
     private $beneficiaries_table = "beneficiaries_table";
     private $sponsors_table = "sponsors_table";
     private $nominations_history_table = "nominations_history_table";
+    private $archive_nominations_table = "archive_nominations_table";
     private $donations_table = "donations_table";
     private $tokens_table = "tokens_table";
     private $delete_account_tokens_table = "delete_account_tokens_table";
@@ -2223,8 +2224,8 @@ $stmt_existing->bindValue(":voter_fullname", $fullname, PDO::PARAM_STR);
 
 
             
-            // Step 6: Silently update voter consistency
-            $this->updateVoterConsistencySilently($email);
+            // // Step 6: Silently update voter consistency
+            // $this->updateVoterConsistencySilently($email);
             
             // All checks passed
             return [
@@ -2381,6 +2382,41 @@ private function getCurrentConsistency($email) {
             }
 
             return false; // fail if update fails
+        }
+
+        return false;
+    }
+
+    public function CreateArchiveNomination($email, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $helpToken)
+    {
+        $query = "";
+        {
+            $query = "INSERT INTO " . $this->archive_nominations_table . " SET 
+            
+            voter_email=:voter_email,
+            voter_device_id=:voter_device_id,
+
+            voting_weight=:voting_weight,
+            nominee_email=:nominee_email,
+            help_token=:help_token
+            ";
+        }
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":voter_email", $email);
+        // $stmt->bindParam(":voter_fullname", $voterFullname);
+        $stmt->bindParam(":voter_device_id", $voterDeviceId);
+
+        $stmt->bindParam(":voting_weight", $votingWeight);
+        $stmt->bindParam(":nominee_email", $nomineeEmail);
+        // $stmt->bindParam(":nominee_fullname", $nomineeFullname);
+        $stmt->bindParam(":help_token", $helpToken);
+        
+        // execute query
+        if ($stmt->execute()) {
+            return true;
         }
 
         return false;
@@ -3546,6 +3582,67 @@ public function ReadAllNominationsForAdmin()
         " . $this->users_table . " u
         INNER JOIN 
         " . $this->nominations_history_table . " nh 
+        ON u.email_address = nh.voter_email
+        LEFT JOIN 
+        " . $this->users_table . " nominee 
+        ON nh.nominee_email = nominee.email_address
+        ORDER BY 
+        nh.voting_date DESC;";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+}
+
+
+public function ReadAllArchiveNominationsForAdmin()
+{
+    /* Complete Nomination Statistics */
+
+    // First get the daylight savings value
+    $daylightQuery = "SELECT value FROM daylight_savings_table LIMIT 1";
+    $daylightStmt = $this->conn->prepare($daylightQuery);
+    $daylightStmt->execute();
+    $daylightResult = $daylightStmt->fetch(PDO::FETCH_ASSOC);
+    $hourInterval = $daylightResult['value'] ?? 5; // Default to 5 if not found
+
+    
+        $query = "SELECT 
+        u.fullname as voter, 
+        u.email_address as voter_email, 
+        nominee.fullname as nominee, 
+        nh.voter_device_id as device,
+        DATE_ADD(nh.voting_date, INTERVAL " . $hourInterval . " HOUR) as voted_time, 
+        DATE_ADD(u.registration_date, INTERVAL " . $hourInterval . " HOUR) as registered, 
+        u.state_of_residence as location,
+        u.vote_weight as dnq,
+
+        u.id as user_id,
+        u.fullname as user_fullname,
+        u.email_address as user_email,
+        u.access_key as user_access_key,
+        u.phone_number as user_phone,
+        u.kyc_status as user_kyc_status,
+        u.account_number as user_account_number,
+        u.account_name as user_account_name,
+        u.bank_name as user_bank_name,
+        u.gender as user_gender,
+        u.state_of_residence as user_state,
+        u.profile_picture as user_profile_picture,
+        u.email_verified as user_email_verified,
+        u.registration_date as user_registration_date,
+        u.user_type as user_type,
+        u.eligibility as user_eligibility,
+        u.is_cheat as user_is_cheat,
+        u.opened_welcome_msg as user_opened_welcome_msg, 
+        u.vote_weight as user_vote_weight,
+        u.voter_consistency as user_voter_consistency 
+
+
+        FROM 
+        " . $this->users_table . " u
+        INNER JOIN 
+        " . $this->archive_nominations_table . " nh 
         ON u.email_address = nh.voter_email
         LEFT JOIN 
         " . $this->users_table . " nominee 

@@ -194,7 +194,7 @@ useEffect(() => {
 
   const [products, setProductsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10);
+    const [itemsPerPage] = useState(50);
     const [totalItems, setTotalItems] = useState(products ? products.length : 0);
     const [searchQuery, setSearchQuery] = useState('');
     const handleSearchChange = (e) => {
@@ -441,7 +441,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                               isDataloading ? <div className='my-2'><MiniLoading /></div>
                                               :
                                               <> 
-                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Incoming)}</p>}
+                                              {dashboard.dashboardData && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Incoming)}</p>}
                                               {/* <div className='flex justify-end items-center'>
                                                 <ArrowDropDownIcon style={{ color: '#E63D46' }}/>
                                                 <p className='' style={{ fontSize: '12px', fontWeight: '600', color: '#E63D46' }}>+/-##%</p>
@@ -470,7 +470,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                               isDataloading ? <div className='my-2'><MiniLoading /></div>
                                               :
                                               <>
-                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Outgoing)}</p>}
+                                              {dashboard.dashboardData && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '24px' }}>{'₦' + formatAmount(dashboard.dashboardData[0].Total_Outgoing)}</p>}
                                               {/* <div className='flex justify-end items-center'>
                                                 <ArrowDropDownIcon style={{ color: '#E63D46' }}/>
                                                 <p className='' style={{ fontSize: '12px', fontWeight: '600', color: '#E63D46' }}>+/-##%</p>
@@ -512,7 +512,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                             {
                                               isDataloading ? <MiniLoading />
                                               : <>
-                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Users}</p>}
+                                              {dashboard.dashboardData && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Users}</p>}
                                               </>
                                               
                                             }                                
@@ -541,7 +541,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                               isDataloading ? <MiniLoading />
                                               : 
                                               <>
-                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Help_Requests}</p>}
+                                              {dashboard.dashboardData && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Help_Requests}</p>}
                                               </>
                                             }                                
                                             <p className=' text-eDoctorTextGray' style={{ fontSize: '18px' }}>Help Requests</p>
@@ -570,7 +570,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                               isDataloading ? <MiniLoading />
                                               : 
                                               <>
-                                              {dashboard.dashboardData[0] && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Beneficiaries}</p>}
+                                              {dashboard.dashboardData && <p className='font-bold text-eDoctorDarkGray' style={{ fontSize: '30px' }}>{dashboard.dashboardData[0].Total_Beneficiaries}</p>}
                                               </>
                                               
 
@@ -715,7 +715,7 @@ let countFiltered = indexOfFirstFilteredItem + 1;
                                     <div className="text-s px-2 mr-0 rounded bg-orange" style={{  color: '#ffffff' }}>{
                                       isDataloading ? <MiniLoading />
                                       : <>
-                                      {dashboard.dashboardData[0] && dashboard.dashboardData[0].Top_Nominations.length}
+                                      {dashboard.dashboardData && dashboard.dashboardData[0].Top_Nominations.length}
                                       </>
                                     
                                     }</div>

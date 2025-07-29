@@ -55,6 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Add nomination
                 if ($response->CreateNomination($data->email, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $data->helpToken)) {
 
+                    //for archive
+                    $response->CreateArchiveNomination($data->email, $voterConsistency, $voterDeviceId, $votingWeight, $nomineeEmail, $data->helpToken);
+                    
+
                     $fuser = $response->GetNomineeName($nomineeEmail);//explode(" ", $nominateResult['userData']['fullname'])[0];
                     // explode(" ", $fuser['fullname'])[0]
                     $messageData = [
