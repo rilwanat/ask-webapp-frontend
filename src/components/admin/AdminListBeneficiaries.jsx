@@ -150,7 +150,7 @@ useEffect(() => {
         setCurrentPage(1);
     };
     const filteredBeneficiaries = (allBeneficiaries || []).filter((request) =>
-    request.user && request.user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
+    request.user.fullname && request.user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.user.bank_name && request.user.bank_name.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.user.state && request.user.state.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.date && request.date.toLowerCase().includes(searchQuery.toLowerCase()) 
@@ -811,10 +811,11 @@ if (parsedShareRatio.some(isNaN)) {
     };
     const filteredRequestsForRequests = (requests || []).filter((request) =>
     request.date && request.date.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.user.fullname && request.user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.nomination_count && request.nomination_count.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.email_address && request.email_address.toLowerCase().includes(searchQuery.toLowerCase()) 
     || request.description && request.description.toLowerCase().includes(searchQuery.toLowerCase()) 
-    || request.user && request.user.state.toLowerCase().includes(searchQuery.toLowerCase()) 
+    || request.user.state && request.user.state.toLowerCase().includes(searchQuery.toLowerCase()) 
     // || request.tags && request.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) 
     // || request.categories && request.categories.some(category => category.toLowerCase().includes(searchQuery.toLowerCase()))
     // || request.price.includes(searchQuery)
@@ -892,13 +893,19 @@ let countFilteredForRequests = indexOfFirstFilteredItemForRequests + 1;
 
         }
 
-setGeneratedBeneficiariesRatios(prev => [...prev, totalAmount]);
+        var ratiodTotalAmount = totalAmount;
+        if (!isNaN(numberOfBeneficiaries)) {
+          ratiodTotalAmount = totalAmount / numberOfBeneficiaries;
+        }
+        // alert(ratiodTotalAmount);
+
+setGeneratedBeneficiariesRatios(prev => [...prev, ratiodTotalAmount]);
 
 
         // Create new request object with totalAmount
   const requestWithAmount = {
     ...request,
-    totalAmount: totalAmount,
+    totalAmount: ratiodTotalAmount,
     remark: remark,
     // state: state
   };
@@ -1194,9 +1201,9 @@ isChecked && (
                                   <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                                     Token
                                   </th>
-                                  <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
+                                  {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-left leading-4 text-theme  tracking-wider'>
                                     Description
-                                  </th>
+                                  </th> */}
                                   {/* <th style={{ }} className=' px-2 py-3 border-b border-gray-300 text-right leading-4 text-theme  tracking-wider'>
                                     Request Image
                                   </th> */}
@@ -1252,9 +1259,9 @@ isChecked && (
                                     <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
                                       {request.help_token}
                                     </td>
-                                    <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
+                                    {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-left">
                                       {request.description}
-                                    </td>
+                                    </td> */}
                                     {/* <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                                       {request.request_image	}
                                     </td> */}
